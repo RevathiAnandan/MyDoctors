@@ -3,6 +3,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patientprofile.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
@@ -10,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../dashboard_screen.dart';
+import 'NavDrawer.dart';
 
 class PatientDashboard extends StatefulWidget {
   String id;
@@ -55,7 +57,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
               children: <Widget>[
                 Container(
                     padding: EdgeInsets.only(left:20.0,right: 20.0,top: 10.0,bottom: 0.0),
-                    height: MediaQuery.of(context).size.height * 15/100,
+                    height: MediaQuery.of(context).size.height * 20/100,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: new Color(0xff1264D1),
@@ -70,7 +72,15 @@ class _PatientDashboardState extends State<PatientDashboard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-//                          Image.asset('assets/images/sidenav.png'),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => NavDrawer(widget.mobile)),
+                                  );
+                                },
+                                child: Image.asset('assets/images/sidenav.png'),
+                              ),
                               GestureDetector(
                                   onTap: (){
                                     Navigator.push(
@@ -79,31 +89,35 @@ class _PatientDashboardState extends State<PatientDashboard> {
                                     );
                                   },
                                   child:new CircleAvatar(
+                                    radius: 30,
                                     backgroundImage: (_image!= null)? new NetworkImage(_image):AssetImage('assets/images/user_profile.png'),
                                   )
                               ),
-                              new Column(
-                                children: [
-                                  Text(dname!= null?dname:"null",style: new TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-                                  Text(widget.mobile,style: new TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      IconButton(
-                                        icon:Icon(Icons.arrow_left,color: Colors.white,
-                                        ),
-                                        onPressed: (){
-                                          AuthService().signOut(context);
-                                        },
-                                      ),
-                                      Text("Logout",style: new TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-
-                                    ],
-                                  )
-                                ],
-                              )
                             ],
                           ),
+                          new Column(
+                              children: [
+                                Text((dname== null)? "Hi" :dname,style: new TextStyle(color:Colors.white,fontSize: 35,fontWeight: FontWeight.bold,fontFamily: "Lato")),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(widget.mobile,style: new TextStyle(color:Colors.white,fontSize: 20,fontFamily: "Lato")),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     IconButton(
+                                //       icon:Icon(Icons.arrow_left,color: Colors.white,
+                                //       ),
+                                //       onPressed: (){
+                                //         AuthService().signOut(context);
+                                //       },
+                                //     ),
+                                //     Text("Logout",style: new TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontFamily: "Lato")),
+                                //
+                                //   ],
+                                // )
+                              ]
+                          )
                         ],
                       ),
                     )
@@ -111,70 +125,104 @@ class _PatientDashboardState extends State<PatientDashboard> {
               ],
             ),
             Container(
-              padding: EdgeInsets.all(16),
-              child: Text("My Doctor",style: new TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Row(
-//                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: IconButton(
-                              icon:Icon(Icons.add,color: Colors.white,
-                              ),
-                              onPressed: () {
-                                _openPopup(context);
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("Add Doctors")
-                    ],
+              height: 550,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 25,top: 16,right: 16,bottom: 16),
+                    child: Text("My Doctors",style: new TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold,fontFamily: "Lato")),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-//                            child: Image.asset('assets/images/grid.png')
-                            child: IconButton(
-                              icon:Image.asset('assets/images/grid.png'),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
-                                  ),
-                                );
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    height: 120,
+                    width: 350,
+                    //color: Color.fromRGBO(245,247,250,0),
+                    padding: EdgeInsets.only(bottom: 16,left: 16,right: 16,top: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 150,
+                              height: 60,
+                              child:  GestureDetector(
+                                onTap: (){
+                                  _openPopup(context);
 //                                checkmobile();
-                              },
+                                },
+                                child: Card(
+                                  color: Color(0xff1264D1),
+                                  //color: new Color(0xffACCCF8),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  child: Center(
+                                      child: Text('Add Doctor',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),)
+//                               IconButton(
+//                                 icon:Icon(Icons.add,color: Colors.white,
+//                                 ),
+//                                 onPressed: () {
+//                                   _openPopup(context);
+// //                                checkmobile();
+//                                 },
+//                               ),
+
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            SizedBox(height: 5.0),
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("See All")
-                    ],
-                  ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 150,
+                              height: 60,
+                              child:  GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
+                                    ),
+                                  );
+//                                checkmobile();
+                                },
+                                child: Card(
+                                  color: Color(0xff1264D1),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  child: Center(
+                                      child: Text('See All',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),
+                                      )
+                                    //IconButton(
+//                                 color: Colors.white,
+//                                 icon:Image.asset('assets/images/grid.png'),
+//                                 onPressed: () {
+//                                   Navigator.push(
+//                                     context,
+//                                     MaterialPageRoute(
+//                                       builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
+//                                     ),
+//                                   );
+// //                                checkmobile();
+//                                 },
+//                               ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                          ],
+                        ),
 //                Column(
 //                  mainAxisAlignment: MainAxisAlignment.spaceAround,
 //                  children: <Widget>[
@@ -202,136 +250,180 @@ class _PatientDashboardState extends State<PatientDashboard> {
 //                    Text("View Contacts")
 //                  ],
 //                ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text("My Hospital",style: new TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Row(
-//                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: IconButton(
-                              icon:Icon(Icons.add,color: Colors.white,
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 25,top: 16,right: 16,bottom: 16),
+                    child: Text("My Hospitals",style: new TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold,fontFamily: "Lato")),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 16,left: 16,right: 16,top: 25),
+                    height: 120,
+                    width: 350,
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+
+                              width: 150,
+                              height: 60,
+                              child:  GestureDetector(
+                                onTap: (){
+                                  _openPopup(context);
+                                },
+                                child: Card(
+                                  color: Color(0xff1264D1),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                    child: Center(child: Text('Add Hospitals',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),))
+                                  // child: Center(
+                                  //   child: IconButton(
+                                  //     icon:Icon(Icons.add,color: Colors.white,
+                                  //     ),
+                                  //     onPressed: () {
+                                  //       _openPopup(context);
+                                  //     },
+                                  //   ),
+                                  //
+                                  // ),
+                                ),
                               ),
-                              onPressed: () {
-                                _openPopup(context);
-                              },
                             ),
+                            SizedBox(height: 5.0),
 
-                          ),
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("Add Doctors")
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                              child: Image.asset('assets/images/grid.png')
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("See All")
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text("My Labs",style: new TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Row(
-//                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: IconButton(
-                              icon:Icon(Icons.add,color: Colors.white,
-                              ),
-                              onPressed: () {
-
-                              },
-                            ),
-
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("Add Doctors")
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 60,
-                        child:  Card(
-                          color: new Color(0xffACCCF8),
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 150,
+                              height: 60,
+                              child:  Card(
+                                color: Color(0xff1264D1),
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                child: Center(
 //                              child: Image.asset('assets/images/grid.png')
-                            child: IconButton(
-                              icon:Image.asset('assets/images/grid.png'),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
-                                  ),
-                                );
-//                                checkmobile();
-                              },
+                                    child: Text('See All',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),)
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text("See All")
-                    ],
-                  ),
+                            SizedBox(height: 5.0),
 
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 25,top: 16,right: 16,bottom: 16),
+                    child: Text("My Labs",style: new TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold,fontFamily: "Lato")),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 16,left: 16,right: 16,top: 25),
+                    height: 120,
+                    width: 350,
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 150,
+                              height: 60,
+                              child:  Card(
+                                color: Color(0xff1264D1),
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    //todo: adding labs
+                                  },
+                                  child: Center(
+//                              child: Image.asset('assets/images/grid.png')
+                                      child: Text('Add Labs',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),)
+                                    // child: Center(
+                                    //   child: IconButton(
+                                    //     icon:Icon(Icons.add,color: Colors.white,
+                                    //     ),
+                                    //     onPressed: () {
+                                    //
+                                    //     },
+                                    //   ),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 150,
+                              height: 60,
+                              child:  GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
+                                        ),
+                                      );
+//                                checkmobile();
+                                },
+                                child: Card(
+                                  color: Color(0xff1264D1),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  child: Center(child: Text('See All',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),))
+//                                 Center(
+// //                              child: Image.asset('assets/images/grid.png')
+//                                   child: IconButton(
+//                                     icon:Image.asset('assets/images/grid.png'),
+//                                     onPressed: () {
+//                                       Navigator.push(
+//                                         context,
+//                                         MaterialPageRoute(
+//                                           builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
+//                                         ),
+//                                       );
+// //                                checkmobile();
+//                                     },
+//                                   ),
+//                                 ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
+            )
 
           ],
         ),

@@ -1,6 +1,7 @@
 
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ApiService{
 
@@ -42,17 +43,17 @@ class ApiService{
     try {
       return fb.reference().child("Prescription").child(pmobile).push()
           .set({
-            "patientMobile":pmobile,
-            "patientName":pname,
-            "doctorMobile":dmobile,
-            "diagnosis":diagnosis,
-            "details": medicine,
-            "bp":bp,
-            "weight":weight,
-            "pulse":pulse,
-            "nextVisit":nextVisit,
-            "labTest": lab,
-            "date":totaldate
+        "patientMobile":pmobile,
+        "patientName":pname,
+        "doctorMobile":dmobile,
+        "diagnosis":diagnosis,
+        "details": medicine,
+        "bp":bp,
+        "weight":weight,
+        "pulse":pulse,
+        "nextVisit":nextVisit,
+        "labTest": lab,
+        "date":totaldate
       }
       );
 
@@ -78,17 +79,34 @@ class ApiService{
 
   }
 
-   getUsers(String id,String mobile,String category) {
+  getUsers(String id,String mobile,String category) {
     print(id);
     FirebaseDatabase fb = FirebaseDatabase.instance;
     try {
-       var db = fb.reference().child("User").child(mobile).child("image");
-       db.once().then((DataSnapshot snapshot){
-         print (snapshot.value);
-         return snapshot.value;
+      var db = fb.reference().child("User").child(mobile).child("image");
+      db.once().then((DataSnapshot snapshot){
+        print (snapshot.value);
+        return snapshot.value;
 //      print (db);
 
-       });
+      });
+
+    } catch (e) {
+      print(e);
+    }
+
+  }
+
+  getUserDetails(String mobile){
+    FirebaseDatabase fb = FirebaseDatabase.instance;
+    try {
+      var db = fb.reference().child("User").child(mobile);
+      db.once().then((DataSnapshot snapshot){
+        print (snapshot.value);
+        return snapshot.value;
+//      print (db);
+
+      });
 
     } catch (e) {
       print(e);
@@ -97,7 +115,7 @@ class ApiService{
   }
 
 
-  Future updateProfile(String id,String mobile,String category,String downloadUrl,String doctorId,String hospitalName,String specialist,String degree,String dName,String email) async{
+  Future updateProfile(String id,String mobile,String category,String downloadUrl,String doctorId,String hospitalName,String specialist,String degree,String dName,String email, String qrdata) async{
     print(id);
     try {
       return fb.reference().child('User').child(mobile)
@@ -111,7 +129,8 @@ class ApiService{
         "specialist": specialist,
         "degree": degree,
         "Name": dName,
-        "emailId": email
+        "emailId": email,
+        "QrCode" : qrdata
       });
 
     } catch (e) {

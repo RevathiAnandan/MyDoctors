@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/Precription.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 
 class ShowPrecription extends StatefulWidget {
   Prescription prescripe;
@@ -52,7 +54,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           Container(
                             width: 200,
                             child: Text(
-                              refreshValue['hospitalName'],
+                              refreshValue['hospitalName']!=null?refreshValue['hospitalName']:"Yet to be updated",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 24,fontFamily: 'Lato'),
                             ),
@@ -62,7 +64,8 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                             child: Container(
                               height: 50,
                               width: 150,
-                              child: Text(refreshValue['mobile'],style: TextStyle(
+                              child: Text(refreshValue['mobile']!=null?refreshValue['mobile']:"Yet to be updated",
+                                  style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
                             ),
                           )
@@ -84,13 +87,13 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                         children: [
                           Column(
                               children:[
-                                Text(refreshValue['Name'],style: TextStyle(
+                                Text(refreshValue['Name']!=null?refreshValue['Name']:"Yet to be updated",style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                                Text(refreshValue['registerId'],style: TextStyle(
+                                Text(refreshValue['registerId']!=null?refreshValue['registerId']:"Yet to be updated",style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                                Text(refreshValue['specialist'],style: TextStyle(
+                                Text(refreshValue['specialist']!=null?refreshValue['specialist']:"Yet to be updated",style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                                Text(refreshValue['emailId'],style: TextStyle(
+                                Text(refreshValue['emailId']!=null?refreshValue['emailId']:"Yet to be updated",style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
                               ]
                           ),
@@ -119,7 +122,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                   child: Container(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
-                      'Patient Name:'+widget.prescripe.patientName+','+ widget.prescripe.patientMobile,
+                      'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                     ),
@@ -254,63 +257,70 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     }
   }
 
-  DataTable dataBody() {
-    return DataTable(
-      columns: [
-        DataColumn(
-            label: Text("Diagnosis",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        ),
-        DataColumn(
-            label: Text("Medicine/Tests",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        ),
-        DataColumn(
-            label: Text("Dosage",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        ),
-        DataColumn(
-            label: Text("Duration",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        ),
-        DataColumn(
-            label: Text("Days",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        )
-      ],
-
-      rows: widget.prescripe.details.map((e) =>
-          DataRow(
-              cells: [
-                DataCell(
-                  Text(widget.prescripe.diagnosis, style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
-                ),
-                DataCell(
-                    Text(e.medicine,style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
-                ),
-                DataCell(
-                    Text(e.dosage, style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
-                ),
-                DataCell(
-                    Text(e.duration, style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
-                ),
-                DataCell(
-                    Text(e.days,style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
-                )
-              ]
+  SingleChildScrollView dataBody() {
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+              label: Text("Diagnosis",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
-      ).toList(),
-      columnSpacing: 20.0,
+          DataColumn(
+              label: Text("Medicine/Tests",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+          ),
+          DataColumn(
+              label: Text("Dosage",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+          ),
+          DataColumn(
+              label: Text("Duration",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+          ),
+          DataColumn(
+              label: Text("Days",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+          ),
+          // DataColumn(
+          //     label: Text("Hello",
+          //         style: TextStyle(
+          //             fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+          // )
+        ],
+
+        rows: widget.prescripe.details.map((e) =>
+            DataRow(
+                cells: [
+                  DataCell(
+                    Text(widget.prescripe.diagnosis, style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
+                  ),
+                  DataCell(
+                      Text(e.medicine,style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
+                  ),
+                  DataCell(
+                      Text(e.dosage, style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
+                  ),
+                  DataCell(
+                      Text(e.duration, style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
+                  ),
+                  DataCell(
+                      Text(e.days,style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
+                  )
+                ]
+            ),
+        ).toList(),
+        columnSpacing: 20.0,
+      ),
     );
   }
 
@@ -318,7 +328,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     return DataTable(
       columns: [
         DataColumn(
-            label: Text("Test:",
+            label: Text("Lab Tests:",
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
         ),

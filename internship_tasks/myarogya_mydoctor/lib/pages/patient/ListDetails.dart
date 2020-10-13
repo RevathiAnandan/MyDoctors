@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/chat_model.dart';
+import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 
 import 'NavDrawer.dart';
 class ListDetails extends StatefulWidget {
@@ -13,44 +14,45 @@ class ListDetails extends StatefulWidget {
 class _ListDetailsState extends State<ListDetails> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavDrawer(),
-      body: new Container(
-        child: Column(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left:20.0,right: 20.0,top: 10.0,bottom: 10.0),
-                  height: MediaQuery.of(context).size.height * 20/100,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: new Color(0xff1264D1),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft:Radius.circular(15) ,
-                        bottomRight: Radius.circular(15)
+    return SafeArea(
+      child: Scaffold(
+        //drawer: SelectionScreen(),
+        body: new Container(
+          child: Column(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left:20.0,right: 20.0,top: 10.0,bottom: 10.0),
+                    height: MediaQuery.of(context).size.height * 20/100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: new Color(0xff1264D1),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft:Radius.circular(15) ,
+                          bottomRight: Radius.circular(15)
+                      ),
+                    ),
+                    child:Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset('assets/images/sidenav.png'),
+                            Image.asset('assets/images/user_profile.png')
+                          ],
+                        ),
+                        Container(
+//                        padding: EdgeInsets.all(20),
+                          child:Text(widget.choice,style: new TextStyle(color:Colors.white,fontSize:32,fontWeight: FontWeight.bold,fontFamily: "Lato")),
+                        )
+                      ],
                     ),
                   ),
-                  child:Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset('assets/images/sidenav.png'),
-                          Image.asset('assets/images/user_profile.png')
-                        ],
-                      ),
-                      Container(
-//                        padding: EdgeInsets.all(20),
-                        child:Text(widget.choice,style: new TextStyle(color:Colors.white,fontSize:32,fontWeight: FontWeight.bold,fontFamily: "Lato")),
-                      )
-                    ],
-                  ),
-                ),
 
-              ],
+                ],
 
-            ),
+              ),
 //            Column(
 //              children: [
 //                Container(
@@ -95,7 +97,8 @@ class _ListDetailsState extends State<ListDetails> {
 //              ],
 //            ),
 
-          ],
+            ],
+          ),
         ),
       ),
     );

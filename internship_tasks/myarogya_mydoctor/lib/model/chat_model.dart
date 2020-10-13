@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 
-  class ChatModel {
+class ChatModel {
   final String patientMobile;
   final String pid;
   final String pname;
@@ -9,14 +9,14 @@ import 'package:firebase_database/firebase_database.dart';
 //  final String pimage;
 
   ChatModel._({this.patientMobile, this.pid, this.pname});
-    factory ChatModel.fromJson(dynamic json) {
+  factory ChatModel.fromJson(dynamic json) {
 
-      return new ChatModel._(
+    return new ChatModel._(
         patientMobile: json['patientMobile'] as String,
         pid: json['pid'] as String,
         pname: json['pname'] as String
-      );
-    }
+    );
+  }
 }
 
 //class ChatModel {

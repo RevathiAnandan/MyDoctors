@@ -767,7 +767,13 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                    print("test"+labDetails.toString());
                    ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labDetails,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString());
                    AuthService().toast("Prescription Created Successfully!!");
-                   Navigator.of(context).pop();
+                   //Navigator.pop(context);
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) =>DashBoardScreen(widget.dmobile,"MY PATIENT"),
+                     ),
+                   );
                   },
                   color: Colors.blue,
                 ),

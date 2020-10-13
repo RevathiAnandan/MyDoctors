@@ -22,6 +22,9 @@ class MyScreen extends StatefulWidget {
 }
 
 class MyScreenState extends State<MyScreen> {
+
+  String _image;
+  String dname;
   List dummyData = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var isLoading = false;
@@ -34,6 +37,15 @@ class MyScreenState extends State<MyScreen> {
     }else{
       getMyDoctor();
     }
+    var db = fb.reference().child("User").child(widget.mobile);
+    db.once().then((DataSnapshot snapshot){
+      print (snapshot.value['Name']);
+      setState(() {
+        _image =  snapshot.value['image'];
+        dname =  snapshot.value['Name'];
+        print ("image"+_image);
+      });
+    });
 
   }
   @override
@@ -51,7 +63,7 @@ class MyScreenState extends State<MyScreen> {
           new ListTile(
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,
-              backgroundColor: Colors.grey,
+              backgroundImage: (_image!= null)? new NetworkImage(_image):AssetImage('assets/images/user_profile.png'),
 //                  backgroundImage: Image.asset('assets/images/grid.png'),
             ),
             title: new Row(

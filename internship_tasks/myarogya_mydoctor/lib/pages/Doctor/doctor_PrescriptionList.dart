@@ -61,6 +61,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
                   ),
 
                   onTap: (){
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>ShowPrecription(dummyData[i],widget.dmobile,widget.pmobile),

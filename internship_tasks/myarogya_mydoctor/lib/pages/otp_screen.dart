@@ -18,10 +18,19 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   String text = '';
+  bool _isButtonDisabled= false;
   void _onKeyboardTap(String value) {
     setState(() {
       text = text + value;
     });
+  }
+  // ignore: missing_return
+  bool _buttonDisable(){
+    setState ( () {
+      _isButtonDisabled = true;
+      return _isButtonDisabled;
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -90,39 +99,85 @@ class _OtpScreenState extends State<OtpScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                         Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text('Welcome', style: TextStyle(color: Colors.black, fontSize: 26, fontWeight: FontWeight.w500,fontFamily: "Lato"))
-                        ),
-                        Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text('Enter 6 digits verification code sent to your number', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato"))
-                        ),
-                        Container(
-                          constraints: const BoxConstraints(
-                              maxWidth: 500
+                    child: Container(
+                      width: 400,
+                      height: 500,
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 80,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              otpNumberWidget(0),
-                              otpNumberWidget(1),
-                              otpNumberWidget(2),
-                              otpNumberWidget(3),
-                              otpNumberWidget(4),
-                              otpNumberWidget(5),
+                           Align(
+                             alignment: Alignment.centerLeft,
+                             child: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Text('Welcome', style: TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.w900,fontFamily: "Lato"))
+                          ),
+                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'Enter 6 digits verification code sent to your            ',
+                                        style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: "Lato")),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        widget.mobile,
+                                          style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: "Lato")
+                                      ),
+                                    )
+                                  ],
+                                )
+                            ),
+                          ),
+                          SizedBox(
+                            height: 100,
+                          ),
+                          Container(
+                            constraints: const BoxConstraints(
+                                maxWidth: 500
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                otpNumberWidget(0),
+                                otpNumberWidget(1),
+                                otpNumberWidget(2),
+                                otpNumberWidget(3),
+                                otpNumberWidget(4),
+                                otpNumberWidget(5),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Didn’t receive the code?', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato")),
+                              InkWell(
+                                onTap: (){
+                                  AuthService().signIn(widget.creds);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SelectionScreen()),
+                                  );
+                                },
+                                  child: Text('  Resend!', style: TextStyle(color: Colors.blueAccent, fontSize: 14,fontWeight: FontWeight.w400, fontFamily: "Lato"))),
                             ],
                           ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text('Didn’t receive the code? Resend', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato"))
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -140,12 +195,14 @@ class _OtpScreenState extends State<OtpScreen> {
                             side: BorderSide(color: Colors.blueAccent)
                         ),
                         padding: EdgeInsets.all(16),
-                        onPressed: (){
-                        AuthService().signIn(widget.creds);
+                        //todo: Check again here
+                        onPressed: _isButtonDisabled ? null : (){
+                          AuthService().signIn(widget.creds);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectionScreen()),
                           );
+                          _buttonDisable();
                         },
                         color: Colors.blue,
                       ),
@@ -177,21 +234,23 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget otpNumberWidget(int position) {
     try {
       return Container(
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         decoration: BoxDecoration(
+          color: Colors.blueAccent,
             border: Border.all(color: Colors.blueAccent, width: 0),
             borderRadius: const BorderRadius.all(Radius.circular(8))
         ),
-        child: Center(child: Text(text[position], style: TextStyle(color: Colors.blueAccent),)),
+        child: Center(child: Text(text[position], style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w500),)),
       );
     } catch (e) {
       return Container(
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         decoration: BoxDecoration(
+            color: Colors.blueAccent,
             border: Border.all(color: Colors.blueAccent, width: 0),
-            borderRadius: const BorderRadius.all(Radius.circular(8))
+            borderRadius: const BorderRadius.all(Radius.circular(15))
         ),
       );
     }

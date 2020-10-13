@@ -45,6 +45,8 @@ dependencies:
   uuid: ^2.2.2
   fluttertoast: ^7.1.1
   firebase_messaging: ^6.0.16
+  qr_flutter: ^3.2.0
+  barcode_scan: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
