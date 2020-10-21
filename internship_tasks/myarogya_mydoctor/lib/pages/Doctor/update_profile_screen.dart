@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 //import 'package:myarogya_mydoctor/pages/chat_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 //import 'package:myarogya_mydoctor/services/authService.dart';
@@ -34,7 +35,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   TextEditingController _degree = new TextEditingController();
   TextEditingController _dName = new TextEditingController();
   TextEditingController _email = new TextEditingController();
-  TextEditingController _phone = new TextEditingController();
+  //TextEditingController _phone = new TextEditingController();
+  TextEditingController _address = new TextEditingController();
+  TextEditingController _interval = new TextEditingController();
+  TextEditingController _hours = new TextEditingController();
+
   var qrData;
   File _image;
 
@@ -55,54 +60,43 @@ class _ProfileScreenState extends State<ProfileScreen>
             Column(
               children: <Widget>[
                 Container(
-                  height: 120,
+                  height: 130,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: new Color(0xff1264D1),
+                    color: Colors.redAccent,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15)),
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
                           ),
-                          Expanded(
-                            child: new Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(height: 30),
-                                Container(
-                                  child: Text(
-                                    'Hello Doctor !',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 26,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: "Lato"),
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                    child: Text(
-                                        'please fill out the following details to create your profile',
-                                        style: TextStyle(
-                                            color: new Color(0xffCBD2D9),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: "Lato"))),
-                              ],
-                            ),
-                          ),
-                        ],
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ),
+                      Text(
+                        'Hello Doctor !',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Lato"),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'please fill out the following details to create your profile',
+                        style: TextStyle(
+                            color: new Color(0xffCBD2D9),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Lato"),
                       ),
                     ],
                   ),
@@ -158,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             //       mainAxisAlignment: MainAxisAlignment.center,
                             //       children: <Widget>[
                             //         new CircleAvatar(
-                            //           backgroundColor: Colors.blueAccent,
+                            //           backgroundColor: Colors.redAccent,
                             //           radius: 20.0,
                             //           child: new IconButton(
                             //             icon: Icon(Icons.camera_alt),
@@ -187,9 +181,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   children: <Widget>[
                                     Text("Professional Details",
                                         style: new TextStyle(
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: "Lato",
-                                            color: Colors.blueAccent)),
+                                            color: Colors.redAccent)),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -210,12 +205,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
@@ -224,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("Hospital name",
+                                    Text("Hospital Name",
                                         style: new TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontFamily: "Lato")),
@@ -241,16 +236,47 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
                                       controller: _hospitalName,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text("Hospital Address",
+                                        style: new TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: "Lato")),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              20.0, 5.0, 20.0, 5.0),
+                                          prefixIcon: new Icon(Icons.home,
+                                              color: new Color(0xffACCCF8)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          filled: true,
+                                          fillColor: Colors.grey[100],
+                                          hintText: ""),
+                                      controller: _address,
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -273,12 +299,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
@@ -305,22 +331,90 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
                                       controller: _degree,
                                     ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text("Consulting Hours",
+                                        style: new TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: "Lato")),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              20.0, 5.0, 20.0, 5.0),
+                                          prefixIcon: new Icon(
+                                              Icons.timer,
+                                              color: new Color(0xffACCCF8)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          filled: true,
+                                          fillColor: Colors.grey[100],
+                                          hintText: ""),
+                                      controller: _hours,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text("Consulting Interval",
+                                        style: new TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: "Lato")),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              20.0, 5.0, 20.0, 5.0),
+                                          prefixIcon: new Icon(
+                                              Icons.timer,
+                                              color: new Color(0xffACCCF8)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          filled: true,
+                                          fillColor: Colors.grey[100],
+                                          hintText: ""),
+                                      controller: _interval,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Text("Personal Details",
                                         style: new TextStyle(
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: "Lato",
-                                            color: Colors.blueAccent)),
+                                            color: Colors.redAccent)),
                                     SizedBox(
                                       height: 5,
                                     ),
@@ -332,24 +426,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       height: 5,
                                     ),
                                     TextFormField(
+
                                       decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(Icons.person,
-                                              color: new Color(0xffACCCF8)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: "Dr."),
+                                        prefixText: 'Dr.',
+                                        contentPadding: EdgeInsets.fromLTRB(
+                                            20.0, 5.0, 20.0, 5.0),
+                                        prefixIcon: new Icon(Icons.person,
+                                            color: new Color(0xffACCCF8)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                            borderSide: BorderSide(
+                                                color: Colors.redAccent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                            borderSide: BorderSide(
+                                                color: Colors.redAccent)),
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
+                                      ),
                                       controller: _dName,
                                     ),
                                     SizedBox(
@@ -363,28 +459,28 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       height: 5,
                                     ),
                                     TextFormField(
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                          prefixIcon: new Icon(
-                                              Icons.phone_android,
-                                              color: new Color(0xffACCCF8)),
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 15.0, 20.0, 5.0),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      autofocus: false,
-                                      initialValue: widget.mobile
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                            prefixIcon: new Icon(
+                                                Icons.phone_android,
+                                                color: new Color(0xffACCCF8)),
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 15.0, 20.0, 5.0),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        autofocus: false,
+                                        initialValue: widget.mobile
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -406,12 +502,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: Colors.blueAccent)),
+                                                  color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
@@ -434,18 +530,21 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             borderRadius:
                                             BorderRadius.circular(25.0),
                                             side: BorderSide(
-                                                color: Colors.blueAccent)),
+                                                color: Colors.redAccent)),
                                         padding: EdgeInsets.all(16),
                                         onPressed: () async {
                                           updatingProfile(
-                                              _image,
-                                              _doctorId.text,
-                                              _hospitalName.text,
-                                              _specialist.text,
-                                              _degree.text,
-                                              _dName.text,
-                                              _email.text,
+                                            _image,
+                                            _doctorId.text,
+                                            _hospitalName.text,
+                                            _specialist.text,
+                                            _degree.text,
+                                            _dName.text,
+                                            _email.text,
                                               qrData,
+                                            _address.text,
+                                            _hours.text,
+                                            _interval.text,
                                           );
                                           setState(() {
                                             qrData=widget.mobile;
@@ -485,15 +584,17 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Future<void> updatingProfile(File image, String doctorId, String hospitalName,
-      String specialist, String degree, String dName, String email,String Qrdata) async {
-    String fileName = "image" + widget.userId;
-    StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask = reference.putFile(_image);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    if (taskSnapshot.error == null) {
-      if (widget.userId != null && widget.mobile != null) {
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        ApiService().updateProfile(
+      String specialist, String degree, String dName, String email,String Qrdata,String address, String hours,String interval) async {
+
+    if(image != null){
+      String fileName = "image" + widget.userId;
+      StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+      StorageUploadTask uploadTask = reference.putFile(_image);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      if (taskSnapshot.error == null) {
+        if (widget.userId != null && widget.mobile != null) {
+          final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+          ApiService().updateProfile(
             widget.userId,
             widget.mobile,
             ConstantUtils().Doctor,
@@ -504,12 +605,36 @@ class _ProfileScreenState extends State<ProfileScreen>
             degree,
             dName,
             email,
-           Qrdata,
-        );
+            Qrdata,
+            address,
+            hours,
+            interval,
+          );
+        }else {
+          if (widget.userId != null && widget.mobile != null) {
+            ApiService().updateProfile(
+              widget.userId,
+              widget.mobile,
+              ConstantUtils().Doctor,
+              null,
+              doctorId,
+              hospitalName,
+              specialist,
+              degree,
+              dName,
+              email,
+              Qrdata,
+              address,
+              hours,
+              interval,
+            );
+          }
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DoctorDashboard(widget.userId, widget.mobile),
+            builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
           ),
         );
 //        await Firestore.instance

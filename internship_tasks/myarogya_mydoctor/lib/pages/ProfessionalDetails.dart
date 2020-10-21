@@ -17,14 +17,14 @@ class _ProfessionalDetailsState extends State<ProfessionalDetails> {
           TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                prefixIcon: new Icon(Icons.person,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.person,color: Colors.redAccent,),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -36,15 +36,15 @@ class _ProfessionalDetailsState extends State<ProfessionalDetails> {
           SizedBox(height: 5,),
           TextFormField(
             decoration: InputDecoration(
-                prefixIcon: new Icon(Icons.business,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.business,color: Colors.redAccent,),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -57,14 +57,14 @@ class _ProfessionalDetailsState extends State<ProfessionalDetails> {
           TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                prefixIcon: new Icon(Icons.business_center,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.business_center,color: Colors.redAccent,),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -77,14 +77,14 @@ class _ProfessionalDetailsState extends State<ProfessionalDetails> {
           TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                prefixIcon: new Icon(Icons.calendar_today,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.calendar_today,color: Colors.redAccent,),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""

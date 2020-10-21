@@ -79,7 +79,7 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                               style: new TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Lato",
-                                  color: Colors.blueAccent)),
+                                  color: Colors.redAccent)),
                           SizedBox(
                             height: 10,
                           ),
@@ -95,17 +95,17 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                 contentPadding: EdgeInsets.fromLTRB(
                                     20.0, 15.0, 20.0, 5.0),
                                 prefixIcon: new Icon(Icons.person,
-                                    color: new Color(0xffACCCF8)),
+                                    color: Colors.redAccent,),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: ""),
@@ -132,12 +132,12 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: ""),
@@ -160,17 +160,17 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                     20.0, 15.0, 20.0, 5.0),
                                 prefixIcon: new Icon(
                                     Icons.business_center,
-                                    color: new Color(0xffACCCF8)),
+                                    color: Colors.redAccent,),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: ""),
@@ -193,17 +193,17 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                     20.0, 15.0, 20.0, 5.0),
                                 prefixIcon: new Icon(
                                     Icons.library_books,
-                                    color: new Color(0xffACCCF8)),
+                                    color: Colors.redAccent,),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: ""),
@@ -214,7 +214,7 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                               style: new TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Lato",
-                                  color: Colors.blueAccent)),
+                                  color: Colors.redAccent)),
                           SizedBox(
                             height: 5,
                           ),
@@ -230,17 +230,17 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                 contentPadding: EdgeInsets.fromLTRB(
                                     20.0, 15.0, 20.0, 5.0),
                                 prefixIcon: new Icon(Icons.person,
-                                    color: new Color(0xffACCCF8)),
+                                    color: Colors.redAccent,),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: "Dr."),
@@ -262,19 +262,19 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                               decoration: InputDecoration(
                                   prefixIcon: new Icon(
                                       Icons.phone_android,
-                                      color: new Color(0xffACCCF8)),
+                                      color: Colors.redAccent,),
                                   contentPadding: EdgeInsets.fromLTRB(
                                       20.0, 15.0, 20.0, 5.0),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(8)),
                                       borderSide: BorderSide(
-                                          color: Colors.blueAccent)),
+                                          color: Colors.redAccent)),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(8)),
                                       borderSide: BorderSide(
-                                          color: Colors.blueAccent)),
+                                          color: Colors.redAccent)),
                                   filled: true,
                                   fillColor: Colors.grey[100],
                                   hintText: ""),
@@ -296,17 +296,17 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                                 contentPadding: EdgeInsets.fromLTRB(
                                     20.0, 5.0, 20.0, 5.0),
                                 prefixIcon: new Icon(Icons.email,
-                                    color: new Color(0xffACCCF8)),
+                                    color: Colors.redAccent,),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: Colors.blueAccent)),
+                                        color: Colors.redAccent)),
                                 filled: true,
                                 fillColor: Colors.grey[100],
                                 hintText: ""),
@@ -341,7 +341,7 @@ class _NewDoctorScreenState extends State<NewDoctorScreen> with SingleTickerProv
                     borderRadius:
                     BorderRadius.circular(25.0),
                     side: BorderSide(
-                        color: Colors.blueAccent)),
+                        color: Colors.redAccent)),
                 padding: EdgeInsets.all(16),
                 onPressed: () {
                 addDoctor(duser.Name, widget.scancode);

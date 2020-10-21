@@ -61,7 +61,6 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
                   ),
 
                   onTap: (){
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>ShowPrecription(dummyData[i],widget.dmobile,widget.pmobile),
@@ -82,7 +81,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
                 );
         },
         child: Icon(Icons.send),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.redAccent,
       ),
 
     );

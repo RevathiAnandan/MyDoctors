@@ -27,7 +27,7 @@ class _ListDetailsState extends State<ListDetails> {
                     height: MediaQuery.of(context).size.height * 20/100,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: new Color(0xff1264D1),
+                      color: Colors.redAccent,
                       borderRadius: BorderRadius.only(
                           bottomLeft:Radius.circular(15) ,
                           bottomRight: Radius.circular(15)

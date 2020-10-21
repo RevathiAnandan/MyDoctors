@@ -18,19 +18,10 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   String text = '';
-  bool _isButtonDisabled= false;
   void _onKeyboardTap(String value) {
     setState(() {
       text = text + value;
     });
-  }
-  // ignore: missing_return
-  bool _buttonDisable(){
-    setState ( () {
-      _isButtonDisabled = true;
-      return _isButtonDisabled;
-    });
-
   }
   @override
   Widget build(BuildContext context) {
@@ -65,12 +56,12 @@ class _OtpScreenState extends State<OtpScreen> {
 //                  textColor: Colors.white,
 //                  shape: RoundedRectangleBorder(
 //                      borderRadius: BorderRadius.circular(25.0),
-//                      side: BorderSide(color: Colors.blueAccent)
+//                      side: BorderSide(color: Colors.redAccent)
 //                  ),
 //                  padding: EdgeInsets.all(16),
 //                  onPressed: (){
 //                  },
-//                  color: Colors.blue,
+//                  color: Colors.redAccent,
 //                ),
 //              ),
 //              NumericKeyboard(
@@ -99,85 +90,39 @@ class _OtpScreenState extends State<OtpScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Expanded(
-                    child: Container(
-                      width: 400,
-                      height: 500,
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                         Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text('Welcome', style: TextStyle(color: Colors.black, fontSize: 26, fontWeight: FontWeight.w500,fontFamily: "Lato"))
+                        ),
+                        Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text('Enter 6 digits verification code sent to your number', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato"))
+                        ),
+                        Container(
+                          constraints: const BoxConstraints(
+                              maxWidth: 500
                           ),
-                           Align(
-                             alignment: Alignment.centerLeft,
-                             child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Text('Welcome', style: TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.w900,fontFamily: "Lato"))
-                          ),
-                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                        'Enter 6 digits verification code sent to your            ',
-                                        style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: "Lato")),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        widget.mobile,
-                                          style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: "Lato")
-                                      ),
-                                    )
-                                  ],
-                                )
-                            ),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          Container(
-                            constraints: const BoxConstraints(
-                                maxWidth: 500
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                otpNumberWidget(0),
-                                otpNumberWidget(1),
-                                otpNumberWidget(2),
-                                otpNumberWidget(3),
-                                otpNumberWidget(4),
-                                otpNumberWidget(5),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Didn’t receive the code?', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato")),
-                              InkWell(
-                                onTap: (){
-                                  AuthService().signIn(widget.creds);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SelectionScreen()),
-                                  );
-                                },
-                                  child: Text('  Resend!', style: TextStyle(color: Colors.blueAccent, fontSize: 14,fontWeight: FontWeight.w400, fontFamily: "Lato"))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              otpNumberWidget(0),
+                              otpNumberWidget(1),
+                              otpNumberWidget(2),
+                              otpNumberWidget(3),
+                              otpNumberWidget(4),
+                              otpNumberWidget(5),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text('Didn’t receive the code? Resend', style: TextStyle(color: Colors.grey, fontSize: 14, fontFamily: "Lato"))
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -192,19 +137,17 @@ class _OtpScreenState extends State<OtpScreen> {
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.blueAccent)
+                            side: BorderSide(color: Colors.redAccent)
                         ),
                         padding: EdgeInsets.all(16),
-                        //todo: Check again here
-                        onPressed: _isButtonDisabled ? null : (){
-                          AuthService().signIn(widget.creds);
+                        onPressed: (){
+                        AuthService().signIn(widget.creds);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectionScreen()),
                           );
-                          _buttonDisable();
                         },
-                        color: Colors.blue,
+                        color: Colors.redAccent,
                       ),
                     ),
                   ),
@@ -234,23 +177,21 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget otpNumberWidget(int position) {
     try {
       return Container(
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         decoration: BoxDecoration(
-          color: Colors.blueAccent,
-            border: Border.all(color: Colors.blueAccent, width: 0),
+            border: Border.all(color: Colors.redAccent, width: 0),
             borderRadius: const BorderRadius.all(Radius.circular(8))
         ),
-        child: Center(child: Text(text[position], style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w500),)),
+        child: Center(child: Text(text[position], style: TextStyle(color: Colors.redAccent),)),
       );
     } catch (e) {
       return Container(
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         decoration: BoxDecoration(
-            color: Colors.blueAccent,
-            border: Border.all(color: Colors.blueAccent, width: 0),
-            borderRadius: const BorderRadius.all(Radius.circular(15))
+            border: Border.all(color: Colors.redAccent, width: 0),
+            borderRadius: const BorderRadius.all(Radius.circular(8))
         ),
       );
     }

@@ -35,7 +35,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   height: 120,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: new Color(0xff1264D1),
+                    color: Colors.redAccent,
                     borderRadius: BorderRadius.only(
                         bottomLeft:Radius.circular(15) ,
                         bottomRight: Radius.circular(15)
@@ -104,7 +104,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   new CircleAvatar(
-                                    backgroundColor: Colors.blueAccent,
+                                    backgroundColor: Colors.redAccent,
                                     radius: 20.0,
                                     child: new IconButton(
                                       icon:Icon(Icons.camera_alt),
@@ -131,7 +131,7 @@ class _PatientProfileState extends State<PatientProfile> {
                           height: MediaQuery.of(context).size.height * 60/100,
                           child: ListView(
                             children: <Widget>[
-                              Text("Personal Details",style: new TextStyle(fontWeight: FontWeight.bold,fontFamily: "Lato",color: Colors.blueAccent)),
+                              Text("Personal Details",style: new TextStyle(fontWeight: FontWeight.bold,fontFamily: "Lato",color: Colors.redAccent)),
                               SizedBox(height: 5,),
                               Text("Name",style: new TextStyle(fontWeight: FontWeight.normal,fontFamily: "Lato")),
                               SizedBox(height: 5,),
@@ -141,11 +141,11 @@ class _PatientProfileState extends State<PatientProfile> {
                                     prefixIcon: new Icon(Icons.person,color: new Color(0xffACCCF8)),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     filled: true, fillColor: Colors.grey[100],
                                     hintText: ""
@@ -162,11 +162,11 @@ class _PatientProfileState extends State<PatientProfile> {
                                     contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     filled: true, fillColor: Colors.grey[100],
                                     hintText: "",
@@ -184,11 +184,11 @@ class _PatientProfileState extends State<PatientProfile> {
                                     prefixIcon: new Icon(Icons.email,color: new Color(0xffACCCF8)),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     filled: true, fillColor: Colors.grey[100],
                                     hintText: ""
@@ -203,11 +203,11 @@ class _PatientProfileState extends State<PatientProfile> {
                                     prefixIcon: new Icon(Icons.email,color: new Color(0xffACCCF8)),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.blueAccent)
+                                        borderSide: BorderSide(color: Colors.redAccent)
                                     ),
                                     filled: true, fillColor: Colors.grey[100],
                                     hintText: ""
@@ -223,7 +223,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                   textColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      side: BorderSide(color: Colors.blueAccent)
+                                      side: BorderSide(color: Colors.redAccent)
                                   ),
                                   padding: EdgeInsets.all(16),
                                   onPressed: (){

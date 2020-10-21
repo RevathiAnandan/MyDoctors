@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/pages/login_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -32,9 +34,9 @@ class AuthService{
     final uid = user.uid.toString();
     final usermobile = user.phoneNumber.toString();
     if( SharedPrefUtil().readPrefStr(ConstantUtils().Category) == ConstantUtils().Doctor){
-      return DoctorDashboard(uid,usermobile);
+      return DoctorNewDashboard(uid,usermobile);
     }else{
-      return PatientDashboard(uid,usermobile);
+      return PatientNewDashboard(uid,usermobile);
     }
   }
 
@@ -87,13 +89,13 @@ class AuthService{
         if((snapshot.value) == "Doctor"){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DoctorDashboard(uid,mobile)),
+            MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,mobile)),
           );
         }
         else{
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PatientDashboard(uid,mobile)),
+            MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,mobile)),
           );
         }
       });

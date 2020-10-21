@@ -10,6 +10,7 @@ import 'package:myarogya_mydoctor/pages/Doctor/createPrecription.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_PrescriptionList.dart';
 import 'package:myarogya_mydoctor/pages/patient/PrescriptionList.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
+import 'package:myarogya_mydoctor/services/ApiService.dart';
 
 class MyScreen extends StatefulWidget {
   String mobile;
@@ -22,9 +23,6 @@ class MyScreen extends StatefulWidget {
 }
 
 class MyScreenState extends State<MyScreen> {
-
-  String _image;
-  String dname;
   List dummyData = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var isLoading = false;
@@ -37,23 +35,15 @@ class MyScreenState extends State<MyScreen> {
     }else{
       getMyDoctor();
     }
-    var db = fb.reference().child("User").child(widget.mobile);
-    db.once().then((DataSnapshot snapshot){
-      print (snapshot.value['Name']);
-      setState(() {
-        _image =  snapshot.value['image'];
-        dname =  snapshot.value['Name'];
-        print ("image"+_image);
-      });
-    });
 
   }
   @override
   Widget build(BuildContext context) {
     return  isLoading
         ? Center(
-        child: CircularProgressIndicator() ):
-    (dummyData.isEmpty? Center(child: Text("No Data Found!!")):new ListView.builder(
+        child: Text("No Doctors Added") ):
+    (dummyData.isEmpty? Center(child: Text("No Data Found!!")):
+    new ListView.builder(
       itemCount:dummyData.length,
       itemBuilder: (context, i) => new Column(
         children: <Widget>[
@@ -63,7 +53,7 @@ class MyScreenState extends State<MyScreen> {
           new ListTile(
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,
-              backgroundImage: (_image!= null)? new NetworkImage(_image):AssetImage('assets/images/user_profile.png'),
+              backgroundColor: Colors.grey,
 //                  backgroundImage: Image.asset('assets/images/grid.png'),
             ),
             title: new Row(
@@ -73,10 +63,6 @@ class MyScreenState extends State<MyScreen> {
                   dummyData[i].name != null ? dummyData[i].name : "" ,
                   style: new TextStyle(fontWeight: FontWeight.bold),
                 ),
-//                    new Text(
-//                      dummyData[i]['patientMobile'],
-//                      style: new TextStyle(color: Colors.grey, fontSize: 14.0),
-//                    ),
               ],
             ),
             subtitle: new Container(
@@ -86,12 +72,21 @@ class MyScreenState extends State<MyScreen> {
                 style: new TextStyle(color: Colors.grey, fontSize: 15.0),
               ),
             ),
+            trailing: FlatButton(
+              child: Text("Book",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+              textColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  side: BorderSide(color: Colors.redAccent)
+              ),
+              padding: EdgeInsets.all(10),
+              onPressed: () async{
+              ApiService().appointment(widget.mobile, dummyData[i].phone,dummyData[i].name);
+              },
+              color: Colors.redAccent,
+            ),
             onTap: (){
               if(widget.category == "MY PATIENT"){
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(builder: (context) => CreatePrescription(dummyData[i].phone,widget.mobile,dummyData[i].name)),
-//                );
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DoctorPrescriptionList(widget.mobile,dummyData[i].phone,dummyData[i].name)),
@@ -129,13 +124,6 @@ class MyScreenState extends State<MyScreen> {
           });
 
         });
-
-
-//        setState(() {
-//          dummyData = snapshot.value;
-//          isLoading = false;
-//        });
-//        print(dummyData[0]);
       }
       );
 
@@ -161,13 +149,6 @@ class MyScreenState extends State<MyScreen> {
           });
 
         });
-
-
-//        setState(() {
-//          dummyData = snapshot.value;
-//          isLoading = false;
-//        });
-//        print(dummyData[0]);
       }
       );
 

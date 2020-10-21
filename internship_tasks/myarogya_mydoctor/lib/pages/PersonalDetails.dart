@@ -17,14 +17,14 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                prefixIcon: new Icon(Icons.person,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.person,color: Colors.redAccent,),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -36,15 +36,15 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           SizedBox(height: 5,),
           TextFormField(
             decoration: InputDecoration(
-                prefixIcon: new Icon(Icons.phone_android,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.phone_android,color: Colors.redAccent,),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -57,14 +57,14 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           TextFormField(
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                prefixIcon: new Icon(Icons.email,color: new Color(0xffACCCF8)),
+                prefixIcon: new Icon(Icons.email,color: Colors.redAccent,),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    borderSide: BorderSide(color: Colors.blueAccent)
+                    borderSide: BorderSide(color: Colors.redAccent)
                 ),
                 filled: true, fillColor: Colors.grey[100],
                 hintText: ""
@@ -79,7 +79,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  side: BorderSide(color: Colors.blueAccent)
+                  side: BorderSide(color: Colors.redAccent)
               ),
               padding: EdgeInsets.all(16),
               onPressed: (){

@@ -41,11 +41,11 @@ class _PescriptionListState extends State<PescriptionList> {
               height: 10.0,
             ),
             new ListTile(
-//                 leading: new CircleAvatar(
-//                   foregroundColor: Theme.of(context).primaryColor,
-//                   backgroundColor: Colors.grey,
-// //                  backgroundImage: Image.asset('assets/images/grid.png'),
-//                 ),
+                leading: new CircleAvatar(
+                  foregroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Colors.grey,
+//                  backgroundImage: Image.asset('assets/images/grid.png'),
+                ),
                 title: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[

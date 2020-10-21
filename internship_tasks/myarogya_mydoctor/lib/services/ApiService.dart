@@ -1,21 +1,32 @@
 
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-
+import 'package:intl/intl.dart';
 class ApiService{
 
   FirebaseDatabase fb = FirebaseDatabase.instance;
-  Future createUser(String id,String mobile,String category,String fcmToken) async{
+  Future createUser(String id,String mobile,String category) async{
     print(id);
     try {
-      return fb.reference().child('User').child(mobile)
-          .set({
-        'id': id,
-        'mobile': mobile,
-        'category': category,
-        'fcmToken':fcmToken
-      });
+      if(category == "Doctor"){
+        return fb.reference().child('User').child(mobile)
+            .set({
+          'id': id,
+          'mobile': mobile,
+          'category': category,
+          'myPatient': "mypatient"
+        });
+      }else{
+        return fb.reference().child('User').child(mobile)
+            .set({
+          'id': id,
+          'mobile': mobile,
+          'category': category,
+          'myDoctor': "mydoctor"
+        });
+      }
+
+
 
     } catch (e) {
       print(e);
@@ -115,7 +126,21 @@ class ApiService{
   }
 
 
-  Future updateProfile(String id,String mobile,String category,String downloadUrl,String doctorId,String hospitalName,String specialist,String degree,String dName,String email, String qrdata) async{
+  Future updateProfile(
+      String id,
+      String mobile,
+      String category,
+      String downloadUrl,
+      String doctorId,
+      String hospitalName,
+      String specialist,
+      String degree,
+      String dName,
+      String email,
+      String qrdata,
+      String address,
+      String hours,
+      String interval) async{
     print(id);
     try {
       return fb.reference().child('User').child(mobile)
@@ -126,8 +151,11 @@ class ApiService{
         "image": downloadUrl,
         "registerId": doctorId,
         "hospitalName": hospitalName,
+        "Hospital Address": address,
         "specialist": specialist,
         "degree": degree,
+        "Consulting Hours":hours,
+        "Consulting Interval":interval,
         "Name": dName,
         "emailId": email,
         "QrCode" : qrdata
@@ -156,9 +184,24 @@ class ApiService{
     } catch (e) {
       print(e);
     }
-
   }
-
-
-
+  
+  Future appointment(String pmobile,String dmobile,String pname) async{
+    try{
+      final now = new DateTime.now();
+      String formatter = DateFormat('yMd').format(now);// 28/03/2020
+      var db = fb.reference().child("Appointment").push();
+      db.set({
+        "doctorMobile":dmobile,
+        "patientMobile":pmobile,
+        "patientName":pname,
+        "status":"booking",
+        "date": formatter
+      });
+    }catch(e){
+      print(e);
+    }
+  }
+  
+  
 }

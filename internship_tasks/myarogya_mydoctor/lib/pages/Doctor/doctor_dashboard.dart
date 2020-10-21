@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
-import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/push_notification_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../dashboard_screen.dart';
+import 'package:myarogya_mydoctor/pages/contact_screen.dart';
 class DoctorDashboard extends StatefulWidget {
   String id;
   String mobile;
@@ -34,6 +34,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot){
       print (snapshot.value['Name']);
@@ -60,7 +61,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                       height: MediaQuery.of(context).size.height/4,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: new Color(0xff1264D1),
+                        color: Colors.redAccent,
                         borderRadius: BorderRadius.only(
                             bottomLeft:Radius.circular(15) ,
                             bottomRight: Radius.circular(15)
@@ -76,10 +77,10 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                   onTap: (){
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => NavDrawer(widget.mobile)),
+                                      MaterialPageRoute(builder: (context) => NavDrawer(widget.mobile,dname)),
                                     );
                                   },
-                                    child: Image.asset('assets/images/sidenav.png'),
+                                  child: Image.asset('assets/images/sidenav.png'),
                                 ),
                                 GestureDetector(
                                     onTap: (){
@@ -137,8 +138,8 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                        borderRadius: BorderRadius.all(Radius.circular(20))
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
                       ),
                       height: 120,
                       width: 350,
@@ -189,14 +190,14 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                 height: 60,
                                 child:  GestureDetector(
                                   onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
-                                    ),
-                                  );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
+                                      ),
+                                    );
 //                                checkmobile();
-                                },
+                                  },
                                   child: Card(
                                     color: Color(0xff1264D1),
                                     elevation: 6,
@@ -237,7 +238,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                       height: 120,
                       width: 350,
                       decoration: BoxDecoration(
-                          color: Colors.blue[50],
+                          color: Colors.redAccent,
                           borderRadius: BorderRadius.all(Radius.circular(20))
                       ),
                       child: Row(
@@ -308,7 +309,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                       height: 120,
                       width: 350,
                       decoration: BoxDecoration(
-                          color: Colors.blue[50],
+                          color: Colors.redAccent,
                           borderRadius: BorderRadius.all(Radius.circular(20))
                       ),
 
@@ -467,6 +468,16 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
           DialogButton(
             onPressed: (){
               addPatient(name.text,"+91"+phone.text);
+              // int index;
+              // Contact contact = _contacts?.elementAt(index);
+              // for(int i=0;i<_contacts.length;i++){
+              //   // ignore: unrelated_type_equality_checks
+              //   if("+91${phone.text}" == contact.phones.elementAt(i).value){
+              //     AuthService().toast("The Number already Exists");
+              //   }else{
+              //     addPatient(name.text,"+91"+phone.text);
+              //   }
+              // }
             },
             child: Text(
               "Add",
@@ -502,18 +513,19 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
     }
   }
   checkmobile(String pname,String pmobile){
-    var db = fb.reference().child("User");
+    var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot){
-//      print("snapshot${snapshot.value}
-      ApiService().addPatientToDoctor(pmobile,widget.mobile,pname);
-      ApiService().addDoctorToPatient(pmobile,widget.mobile,dname);
       Map<dynamic, dynamic > values = snapshot.value;
       values.forEach((key,values) {
-//        print(values);
-//        if(key == pname) {
-        var refreshToken = values;
-        print(refreshToken);
-
+        print(values);
+//        if(values['phone'] == pmobile) {
+//          print("Already Number Exist");
+//          AuthService().toast("The Number already Exists");
+//        }
+//        else{
+          ApiService().addPatientToDoctor(pmobile,widget.mobile,pname);
+          ApiService().addDoctorToPatient(pmobile,widget.mobile,dname);
+//        }
 //        }else{
 //          //Sent an Invite to  this number to install the app.
 //
