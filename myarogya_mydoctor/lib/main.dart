@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.redAccent,
         ),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen()
+        //home: SplashScreen()
 //      home: CreatePrescription()
         //home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
-        //home: DoctorNewDashboard("n0ArBCBcZDO64cjnqenp9f39zvr2","+918610905528")
+        home: DoctorNewDashboard("n0ArBCBcZDO64cjnqenp9f39zvr2","+918610905528")
     );
   }
 }
