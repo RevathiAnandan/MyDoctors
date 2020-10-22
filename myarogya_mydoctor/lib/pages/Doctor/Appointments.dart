@@ -55,7 +55,7 @@ class _AppointmentsState extends State<Appointments> {
               ),
               actions: [
                     IconButton(
-                      icon: Icon(Icons.search_rounded, color: Colors.white),
+                      //icon: Icon(Icons.search_rounded, color: Colors.white),
                       onPressed: () {
                         showSearch(context: context, delegate: DataSearch());
                       },
