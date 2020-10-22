@@ -186,7 +186,7 @@ class ApiService{
     }
   }
   
-  Future appointment(String pmobile,String dmobile,String pname) async{
+  Future appointment(String pmobile,String dmobile,String pname,String status) async{
     try{
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);// 28/03/2020
@@ -195,9 +195,10 @@ class ApiService{
         "doctorMobile":dmobile,
         "patientMobile":pmobile,
         "patientName":pname,
-        "status":"booking",
+        "status": status,
         "date": formatter
       });
+      return status;
     }catch(e){
       print(e);
     }

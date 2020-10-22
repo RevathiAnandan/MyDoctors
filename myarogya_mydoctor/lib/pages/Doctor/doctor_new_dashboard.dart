@@ -41,19 +41,6 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
       onWillPop: () async => false,
       child: SafeArea(
         child: Scaffold(
-          // appBar: GradientAppBar(
-          //   title: widgetName.elementAt(selectedIndex),
-          //   backgroundColorStart: Colors.redAccent,
-          //   backgroundColorEnd: Colors.redAccent,
-          //   actions: [
-          //     IconButton(
-          //       icon: Icon(Icons.search_rounded, color: Colors.white),
-          //       onPressed: () {
-          //         showSearch(context: context, delegate: DataSearch());
-          //       },
-          //     )
-          //   ],
-          // ),
           body: Center(
             child: _widgetOptions()[selectedIndex],
           ),

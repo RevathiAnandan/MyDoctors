@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/MyPatient.dart';
 import 'package:myarogya_mydoctor/model/chat_model.dart';
 import 'package:myarogya_mydoctor/model/myDoctorModel.dart';
@@ -11,6 +12,9 @@ import 'package:myarogya_mydoctor/pages/Doctor/doctor_PrescriptionList.dart';
 import 'package:myarogya_mydoctor/pages/patient/PrescriptionList.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class MyScreen extends StatefulWidget {
   String mobile;
@@ -24,12 +28,15 @@ class MyScreen extends StatefulWidget {
 
 class MyScreenState extends State<MyScreen> {
   List dummyData = [];
+  List appoint = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var isLoading = false;
+  Timer timer;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 15), (Timer t) => getAppointments());
     if(widget.category == "MY PATIENT"){
       getMyPatient();
     }else{
@@ -73,7 +80,7 @@ class MyScreenState extends State<MyScreen> {
               ),
             ),
             trailing: FlatButton(
-              child: Text("Book",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+              child: Text("Book Now",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -81,7 +88,8 @@ class MyScreenState extends State<MyScreen> {
               ),
               padding: EdgeInsets.all(10),
               onPressed: () async{
-              ApiService().appointment(widget.mobile, dummyData[i].phone,dummyData[i].name);
+              ApiService().appointment(widget.mobile, dummyData[i].phone,dummyData[i].name,"Waiting");
+              AuthService().toast("Requesting for Confirmation");
               },
               color: Colors.redAccent,
             ),
@@ -155,6 +163,34 @@ class MyScreenState extends State<MyScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+
+  Future<Appointmnet> getAppointments() async {
+    try {
+      var db = await fb.reference().child("Appointment");
+      db.once().then((DataSnapshot snapshot) {
+        print(snapshot.value);
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((key, values) {
+          var refreshToken = Appointmnet.fromJson(values);
+          print(refreshToken);
+          setState(() {
+            if (refreshToken.patientMobile == widget.mobile) {
+              appoint.add(refreshToken);
+              print(appoint[0].status);
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+  _openContext(){
+
   }
 
 }
