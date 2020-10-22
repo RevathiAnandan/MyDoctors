@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/createPrecription.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         //home: SplashScreen()
 //      home: CreatePrescription()
-        //home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+       //home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
         home: DoctorNewDashboard("n0ArBCBcZDO64cjnqenp9f39zvr2","+918610905528")
+//       home: ProfileScreen("n0ArBCBcZDO64cjnqenp9f39zvr2","+918610905528")
     );
   }
 }

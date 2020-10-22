@@ -131,7 +131,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -227,7 +227,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -322,7 +322,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -417,7 +417,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -512,7 +512,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -607,7 +607,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(
@@ -702,7 +702,7 @@ class _HospitalsState extends State<Hospitals> {
                                   ),
                                   Row(
                                     children: [
-                                      //Icon(Icons.local_hospital_outlined),
+                                      Icon(Icons.local_hospital_outlined,),
                                       Text(
                                         "Hospital",
                                         style: TextStyle(

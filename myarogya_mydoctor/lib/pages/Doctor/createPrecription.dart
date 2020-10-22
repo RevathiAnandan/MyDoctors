@@ -1,5 +1,6 @@
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -728,7 +729,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                 ),
                               ),
                               Positioned(
-                                left: 290,
+                                left:300,
                                 top: 23,
                                 child: MaterialButton(
                                   elevation: 8,
@@ -742,7 +743,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                   ),
                                   shape: CircleBorder(
                                   ),
-                                  color: Colors.redAccent[600],
+                                  color: Colors.redAccent,
                                 ),
                               )
                             ],

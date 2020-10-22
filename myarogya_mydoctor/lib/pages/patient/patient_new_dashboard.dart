@@ -41,20 +41,20 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       onWillPop: () async => false,
       child: Scaffold(
 
-        // appBar: GradientAppBar(
-        //   title: widgetName.elementAt(selectedIndex),
-        //   backgroundColorStart: Colors.redAccent,
-        //   backgroundColorEnd: Colors.redAccent,
-        //   actions: [
-        //     IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
-        //     onPressed: (){
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
-        //       );
-        //     },)
-        //   ],
-        // ),
+        appBar: GradientAppBar(
+          title: widgetName.elementAt(selectedIndex),
+          backgroundColorStart: Colors.redAccent,
+          backgroundColorEnd: Colors.redAccent,
+          actions: [
+            IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
+              );
+            },)
+          ],
+        ),
         body: Center(
           child: _widgetOptions()[selectedIndex],
         ),

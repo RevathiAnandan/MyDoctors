@@ -24,18 +24,35 @@ class Prescription{
     List<Details> _tags = tagObjsJson.map((tagJson) => Details.fromJson(tagJson)).toList();
     List<LabTest> _tags1 = tagObjsJson1.map((tag) => LabTest.fromJson(tag)).toList();
 
-    return new Prescription._(
-      patientMobile: json['patientMobile'] as String,
-      patientName: json['patientName'] as String,
-      doctorMobile: json['doctorMobile'] as String,
-      details: _tags,
-      labTest: _tags1,
-      diagnosis: json['diagnosis'] as String,
-      bp: json['bp'] as String,
-      weight: json['weight'] as String,
-      pulse: json['pulse'] as String,
-      nextVisit: json['nextVisit'] as String,
-      date: json['date'] as String,
-    );
+    if(_tags1 != null){
+      return new Prescription._(
+        patientMobile: json['patientMobile'] as String,
+        patientName: json['patientName'] as String,
+        doctorMobile: json['doctorMobile'] as String,
+        details: _tags,
+        labTest: _tags1,
+        diagnosis: json['diagnosis'] as String,
+        bp: json['bp'] as String,
+        weight: json['weight'] as String,
+        pulse: json['pulse'] as String,
+        nextVisit: json['nextVisit'] as String,
+        date: json['date'] as String,
+      );
+    }else{
+
+      return new Prescription._(
+        patientMobile: json['patientMobile'] as String,
+        patientName: json['patientName'] as String,
+        doctorMobile: json['doctorMobile'] as String,
+        details: _tags,
+        diagnosis: json['diagnosis'] as String,
+        bp: json['bp'] as String,
+        weight: json['weight'] as String,
+        pulse: json['pulse'] as String,
+        nextVisit: json['nextVisit'] as String,
+        date: json['date'] as String,
+      );
+    }
+
   }
 }

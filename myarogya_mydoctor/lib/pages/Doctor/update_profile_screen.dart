@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:datetime_picker_formfield/time_picker_formfield.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 //import 'package:myarogya_mydoctor/pages/chat_screen.dart';
@@ -13,6 +14,8 @@ import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 //import '../PersonalDetails.dart';
 //import '../ProfessionalDetails.dart';
@@ -40,8 +43,12 @@ class _ProfileScreenState extends State<ProfileScreen>
   TextEditingController _interval = new TextEditingController();
   TextEditingController _hours = new TextEditingController();
 
+
   var qrData;
   File _image;
+  bool editable;
+  DateTime starttym;
+  DateTime endtym;
 
   @override
   void initState() {
@@ -352,28 +359,78 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(
-                                              Icons.timer,
-                                              color: new Color(0xffACCCF8)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _hours,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 170,
+                                          child: DateTimePickerFormField(
+                                            inputType: InputType.time,
+                                            format: DateFormat("HH:mm"),
+                                            editable: false,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                labelStyle: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20
+                                                ),
+                                                labelText: 'Start Time',
+                                                hasFloatingPlaceholder: false
+                                            ),
+                                            onChanged: (dt) {
+                                              setState(() => starttym = dt);
+                                              print('Selected date: $starttym');
+                                            },
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 50,
+                                          width: 170,
+                                          child: DateTimePickerFormField(
+                                            inputType: InputType.time,
+                                            format: DateFormat("HH:mm"),
+                                            editable: false,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                                labelStyle: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20
+                                                ),
+                                                labelText: 'End Time',
+                                                hasFloatingPlaceholder: false,
+                                            ),
+                                            onChanged: (dt) {
+                                              setState(() => endtym = dt);
+                                              print('Selected date: $endtym');
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    // DateFormat("HH:mm"),
+                                    // TextFormField(
+                                    //   decoration: InputDecoration(
+                                    //       contentPadding: EdgeInsets.fromLTRB(
+                                    //           20.0, 5.0, 20.0, 5.0),
+                                    //       prefixIcon: new Icon(
+                                    //           Icons.timer,
+                                    //           color: new Color(0xffACCCF8)),
+                                    //       enabledBorder: OutlineInputBorder(
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(8)),
+                                    //           borderSide: BorderSide(
+                                    //               color: Colors.redAccent)),
+                                    //       focusedBorder: OutlineInputBorder(
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(8)),
+                                    //           borderSide: BorderSide(
+                                    //               color: Colors.redAccent)),
+                                    //       filled: true,
+                                    //       fillColor: Colors.grey[100],
+                                    //       hintText: ""),
+                                    //   controller: _hours,
+                                    // ),
                                     SizedBox(
                                       height: 5,
                                     ),
@@ -533,6 +590,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 color: Colors.redAccent)),
                                         padding: EdgeInsets.all(16),
                                         onPressed: () async {
+
                                           updatingProfile(
                                             _image,
                                             _doctorId.text,
@@ -541,9 +599,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             _degree.text,
                                             _dName.text,
                                             _email.text,
-                                              qrData,
+                                            qrData,
                                             _address.text,
-                                            _hours.text,
+                                            starttym.toString(),
+                                            endtym.toString(),
                                             _interval.text,
                                           );
                                           setState(() {
@@ -584,7 +643,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Future<void> updatingProfile(File image, String doctorId, String hospitalName,
-      String specialist, String degree, String dName, String email,String Qrdata,String address, String hours,String interval) async {
+      String specialist, String degree, String dName, String email,String Qrdata,String address, String starttym,String endtym,String interval) async {
 
     if(image != null){
       String fileName = "image" + widget.userId;
@@ -607,7 +666,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             email,
             Qrdata,
             address,
-            hours,
+            starttym,
+            endtym,
             interval,
           );
         }else {
@@ -616,7 +676,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               widget.userId,
               widget.mobile,
               ConstantUtils().Doctor,
-              null,
+              "null",
               doctorId,
               hospitalName,
               specialist,
@@ -625,7 +685,8 @@ class _ProfileScreenState extends State<ProfileScreen>
               email,
               Qrdata,
               address,
-              hours,
+              starttym,
+              endtym,
               interval,
             );
           }

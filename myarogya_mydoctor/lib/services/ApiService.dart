@@ -139,7 +139,8 @@ class ApiService{
       String email,
       String qrdata,
       String address,
-      String hours,
+      String starttym,
+      String endtym,
       String interval) async{
     print(id);
     try {
@@ -154,7 +155,8 @@ class ApiService{
         "Hospital Address": address,
         "specialist": specialist,
         "degree": degree,
-        "Consulting Hours":hours,
+        "Start Time":starttym,
+        "End Time":endtym,
         "Consulting Interval":interval,
         "Name": dName,
         "emailId": email,
@@ -186,19 +188,37 @@ class ApiService{
     }
   }
   
-  Future appointment(String pmobile,String dmobile,String pname,String status) async{
+  Future appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key) async{
     try{
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);// 28/03/2020
-      var db = fb.reference().child("Appointment").push();
-      db.set({
-        "doctorMobile":dmobile,
-        "patientMobile":pmobile,
-        "patientName":pname,
-        "status": status,
-        "date": formatter
-      });
-      return status;
+      if(status == "View"){
+        var db = fb.reference().child("Appointment").child(key);
+        db.update({
+          "doctorMobile":dmobile,
+          "patientMobile":pmobile,
+          "patientName":pname,
+          "status": status,
+          "date": formatter,
+          "Token": token,
+          "BookingTime":bookingTime
+        });
+        return status;
+      }else{
+        var db = fb.reference().child("Appointment").push();
+        db.set({
+          "doctorMobile":dmobile,
+          "patientMobile":pmobile,
+          "patientName":pname,
+          "status": status,
+          "date": formatter,
+          "Token": token,
+          "BookingTime":bookingTime
+        });
+        return status;
+      }
+
+
     }catch(e){
       print(e);
     }
