@@ -1,5 +1,6 @@
 // import 'dart:html';
 
+import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../chat_screen.dart';
 
@@ -25,13 +28,28 @@ class _AppointmentsState extends State<Appointments> {
   List keys1 = [];
   DateTime start1;
   var interval1;
+  String dname;
+  TextEditingController name = new TextEditingController();
+  TextEditingController phone = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   FirebaseDatabase fb = FirebaseDatabase.instance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getPermission();
     getprofileDetails();
     getAppointments();
+    var db = fb.reference().child("User").child(widget.mobile);
+    db.once().then((DataSnapshot snapshot){
+      print (snapshot.value['Name']);
+      setState(() {
+        //_image =  snapshot.value['image'];
+        dname =  snapshot.value['Name'];
+        //print ("image"+_image);
+      });
+    });
+
   }
 
   @override
@@ -70,7 +88,11 @@ class _AppointmentsState extends State<Appointments> {
                     onPressed: () {
                       showSearch(context: context, delegate: DataSearch());
                     },
-                  )
+                  ),
+                  IconButton(icon: Icon(Icons.add,color: Colors.white),
+                    onPressed: (){
+                      _openPopup(context);
+                    },),
                 ],
               ),
               new SliverPadding(
@@ -245,16 +267,16 @@ class _AppointmentsState extends State<Appointments> {
                                           fontSize: 25)),
                                   title: Text(dummyData[i].patientName),
                                   subtitle: Text(dummyData[i].patientMobile),
-                                  // trailing: (dummyData[i].status != "Waiting!")
-                                  //     ? Container(
-                                  //       child: Card(
-                                  //           child: Text(
-                                  //               " "
-                                  //           ),
-                                  // ),
-                                  //     )
-                                  //     :
-                                  trailing: FlatButton(
+                                  trailing: (dummyData[i].status != "Waiting!")
+                                      ? Container(
+                                        child: Card(
+                                            child: Text(
+                                                " "
+                                            ),
+                                  ),
+                                      )
+                                      :
+                                  FlatButton(
                                           child: Text("Confirm",
                                               style: TextStyle(
                                                   color: Colors.white,
@@ -340,6 +362,88 @@ class _AppointmentsState extends State<Appointments> {
       print(e);
     }
   }
+  _openPopup(context) {
+    Alert(
+        context: context,
+        title: "Add Contact",
+        content: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                labelText: 'Name',
+              ),
+              controller: name,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.phone_android),
+                labelText: 'Mobile Number',
+              ),
+              controller: phone,
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: (){
+              addPatient(name.text,"+91"+phone.text);
+              // int index;
+              // Contact contact = _contacts?.elementAt(index);
+              // for(int i=0;i<_contacts.length;i++){
+              //   // ignore: unrelated_type_equality_checks
+              //   if("+91${phone.text}" == contact.phones.elementAt(i).value){
+              //     AuthService().toast("The Number already Exists");
+              //   }else{
+              //     addPatient(name.text,"+91"+phone.text);
+              //   }
+              // }
+            },
+            child: Text(
+              "Add",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+      await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
+  }
+  addPatient(String name , String phone)async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if(permission == PermissionStatus.granted){
+      Contact newContact = new Contact();
+      newContact.givenName = name;
+      newContact.phones = [
+        Item(label: "mobile", value:phone)
+      ];
+      await ContactsService.addContact(newContact);
 
+      checkmobile(name,phone);
+      Navigator.of(context).pop();
+    }
+  }
+  checkmobile(String pname,String pmobile){
+    var db = fb.reference().child("User").child(widget.mobile);
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic > values = snapshot.value;
+      values.forEach((key,values) {
+        print(values);
+
+        ApiService().addPatientToDoctor(pmobile,widget.mobile,pname);
+        ApiService().addDoctorToPatient(pmobile,widget.mobile,dname);
+
+      });
+    });
+  }
   var fiftyDaysFromNow;
 }

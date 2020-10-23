@@ -50,7 +50,8 @@ class _HospitalsState extends State<Hospitals> {
                 ),
               ];
             },
-            body: ListView(children: [
+            body: ListView(
+                children: [
               Container(
                 // width: MediaQuery.of(context).size.width,
                 // height: MediaQuery.of(context).size.height,

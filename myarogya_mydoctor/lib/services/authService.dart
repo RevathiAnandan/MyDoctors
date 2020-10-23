@@ -12,7 +12,7 @@ import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class AuthService{
-  String actualCode;
+
   AuthCredential creds;
 
   //Handle Auth
@@ -71,8 +71,8 @@ class AuthService{
     FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
-  signInWithOTP(context,smscode){
-    AuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId: actualCode, smsCode: smscode);
+  signInWithOTP(context,String smscode,String verId){
+    AuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId: verId, smsCode: smscode);
     signIn(authCredential);
   }
 

@@ -31,6 +31,7 @@ class MyScreen extends StatefulWidget {
 class MyScreenState extends State<MyScreen> {
   List dummyData = [];
   List appoint = [];
+  var buttonStatus;
   bool _isButtondisable;
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var isLoading = false;
@@ -86,28 +87,7 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):buttonstatus(appoint[i].status,i),
-                         // : buttonstatus(appoint[i].status,i),
-                      // trailing: FlatButton(
-                      //   child: Text(
-                      //     "Book Now",
-                      //     style: TextStyle(
-                      //         color: Colors.white,
-                      //         fontFamily: "Lato",
-                      //         fontSize: 14),
-                      //   ),
-                      //   textColor: Colors.white,
-                      //   shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(25.0),
-                      //       side: BorderSide(color: Colors.redAccent)),
-                      //   padding: EdgeInsets.all(10),
-                      //     onPressed: () async {
-                      //       ApiService().appointment(widget.mobile,
-                      //           dummyData[i].phone, dummyData[i].name, "Waiting",0,"","");
-                      //       AuthService().toast("Requesting for Confirmation");
-                      //     },
-                      //   color: Colors.redAccent,
-                      // ),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ? buttonstatus(buttonStatus,i) : buttonstatus(appoint[i].status,i),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(
@@ -176,7 +156,7 @@ class MyScreenState extends State<MyScreen> {
           setState(() {
             dummyData.add(refreshToken);
             print(dummyData);
-            isLoading = false;
+
           });
         });
       });
@@ -190,21 +170,37 @@ class MyScreenState extends State<MyScreen> {
     //appoint[0].status="Book Now";
     try {
       var db = await fb.reference().child("Appointment");
-      db.once().then((DataSnapshot snapshot) {
-        print(snapshot.value);
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((key, values) {
-          var refreshToken = Appointmnet.fromJson(values);
-          print(refreshToken);
-          setState(() {
-            if (refreshToken.patientMobile == widget.mobile) {
-              appoint.add(refreshToken);
-              print(appoint[0].status);
+      if(db != null){
+        db.once().then((DataSnapshot snapshot) {
+          print(snapshot.value);
+          if(snapshot.value == null){
+            isLoading = false;
+            setState(() {
+              buttonStatus = "Book Now";
+            });
+          }else{
+            Map<dynamic, dynamic> values = snapshot.value;
+            values.forEach((key, values) {
+              var refreshToken = Appointmnet.fromJson(values);
+              print(refreshToken);
+              setState(() {
+                if (refreshToken.patientMobile == widget.mobile) {
+                  appoint.add(refreshToken);
+                  print(appoint[0].status);
+                  isLoading = false;
+                }
+              });
+            });
+          }
 
-            }
-          });
         });
-      });
+      }else{
+        isLoading = false;
+        setState(() {
+          buttonStatus = "Book Now";
+        });
+      }
+
     } catch (e) {
       print(e);
     }
@@ -217,6 +213,9 @@ class MyScreenState extends State<MyScreen> {
               ApiService().appointment(widget.mobile,
                   dummyData[i].phone, dummyData[i].name, "Waiting!",0,"","");
               AuthService().toast("Requesting for Confirmation");
+              setState(() {
+                buttonStatus = "Waiting!";
+              });
 
           }if(status == "Waiting!"){
             //todo: Button disable
@@ -257,4 +256,5 @@ class MyScreenState extends State<MyScreen> {
         ),
         ).show();
   }
+
 }

@@ -10,8 +10,9 @@ import 'package:numeric_keyboard/numeric_keyboard.dart';
 class OtpScreen extends StatefulWidget {
   final AuthCredential creds;
   String mobile;
+  String verId;
 
-  OtpScreen(this.creds,this.mobile);
+  OtpScreen(this.creds,this.mobile,this.verId);
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -141,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         padding: EdgeInsets.all(16),
                         onPressed: (){
-                        AuthService().signIn(widget.creds);
+                        AuthService().signInWithOTP(context,text,widget.verId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectionScreen()),

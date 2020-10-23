@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       filled: true,
 
                       fillColor: Colors.grey[100],
-                      hintText: "+91 xxxxxxxxx"
+                      hintText: "Enter Mobile Number"
                   ),
                   controller: _phoneController,
                 ),
@@ -85,10 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 //      AuthService().signIn(authResult).then((AuthResult value){
               print('${authResult.toString()}');
+              // print('${authResult['zzb'].toString()}');
 //      });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile)),
+        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile,this.verficationId)),
       );
 
     };
@@ -102,17 +103,18 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       print('${verId.toString()}');
     };
+    print('${smsSent.toString()}');
     final PhoneCodeAutoRetrievalTimeout autoTimeout =(String verId){
       this.verficationId = verId;
     };
 
     _auth.verifyPhoneNumber(
-        phoneNumber: mobile,
+        phoneNumber: "+91$mobile",
         timeout: Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationfailed,
         codeSent: smsSent,
-        codeAutoRetrievalTimeout: null
+        codeAutoRetrievalTimeout: null,
     );
 //    if( receiveCode == true) {
 //      Navigator.push(
