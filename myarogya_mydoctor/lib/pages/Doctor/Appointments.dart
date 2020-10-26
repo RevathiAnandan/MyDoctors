@@ -1,14 +1,10 @@
-// import 'dart:html';
-
 import 'dart:async';
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
-import 'package:myarogya_mydoctor/pages/Doctor/sample.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
@@ -16,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../chat_screen.dart';
 
 class Appointments extends StatefulWidget {
   String mobile;
@@ -41,8 +36,8 @@ class _AppointmentsState extends State<Appointments> {
     // TODO: implement initState
     super.initState();
     _getPermission();
-    timer =
-        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
+//    timer =
+//        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
     getprofileDetails();
     var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot) {
@@ -87,7 +82,7 @@ class _AppointmentsState extends State<Appointments> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search_rounded, color: Colors.white),
+                  icon: Icon(Icons.search, color: Colors.white),
                   onPressed: () {
                     showSearch(context: context, delegate: DataSearch());
                   },
@@ -327,8 +322,7 @@ class _AppointmentsState extends State<Appointments> {
           var refreshToken = Appointmnet.fromJson(values);
           print(refreshToken);
           setState(() {
-            if (refreshToken.doctorMobile == widget.mobile &&
-                refreshToken.date == formatter) {
+            if (refreshToken.doctorMobile == widget.mobile) {
               dummyData.add(refreshToken);
               keys1.add(key);
               print(dummyData[0].status);
@@ -351,6 +345,7 @@ class _AppointmentsState extends State<Appointments> {
         start1 = DateTime.parse(start);
         interval1 = int.parse(interval);
       });
+      getAppointments();
     } catch (e) {
       print(e);
     }
@@ -382,16 +377,6 @@ class _AppointmentsState extends State<Appointments> {
           DialogButton(
             onPressed: () {
               addPatient(name.text, "+91" + phone.text);
-              // int index;
-              // Contact contact = _contacts?.elementAt(index);
-              // for(int i=0;i<_contacts.length;i++){
-              //   // ignore: unrelated_type_equality_checks
-              //   if("+91${phone.text}" == contact.phones.elementAt(i).value){
-              //     AuthService().toast("The Number already Exists");
-              //   }else{
-              //     addPatient(name.text,"+91"+phone.text);
-              //   }
-              // }
             },
             child: Text(
               "Add",
@@ -412,6 +397,7 @@ class _AppointmentsState extends State<Appointments> {
     } else {
       return permission;
     }
+
   }
 
   addPatient(String name, String phone) async {

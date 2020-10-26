@@ -167,6 +167,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                             ),
+                            Text(
+                              'Diagnosis: '+widget.prescripe.diagnosis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
+                            ),
                           ],
                         )
                     ),
@@ -261,11 +266,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     return SingleChildScrollView(
       child: DataTable(
         columns: [
-          DataColumn(
-              label: Text("Diagnosis",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-          ),
+//          DataColumn(
+//              label: Text("Diagnosis",
+//                  style: TextStyle(
+//                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+//          ),
           DataColumn(
               label: Text("Medicine/Tests",
                   style: TextStyle(
@@ -296,10 +301,10 @@ class _PrescriptionPageState extends State<ShowPrecription> {
         rows: widget.prescripe.details.map((e) =>
             DataRow(
                 cells: [
-                  DataCell(
-                    Text(widget.prescripe.diagnosis, style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
-                  ),
+//                  DataCell(
+//                    Text(widget.prescripe.diagnosis, style: TextStyle(
+//                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
+//                  ),
                   DataCell(
                       Text(e.medicine,style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))

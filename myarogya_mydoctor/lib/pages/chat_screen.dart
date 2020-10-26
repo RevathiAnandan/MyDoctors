@@ -42,8 +42,8 @@ class MyScreenState extends State<MyScreen> {
     // TODO: implement initState
     super.initState();
     _isButtondisable = false;
-    timer =
-        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
+//    timer =
+//        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
     if (widget.category == "MY PATIENT") {
       getMyPatient();
     } else {
@@ -87,7 +87,7 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ? buttonstatus(buttonStatus,i) : buttonstatus(appoint[i].status,i),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus(buttonStatus,i) : (appoint.asMap().containsKey(i)?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(
@@ -160,6 +160,7 @@ class MyScreenState extends State<MyScreen> {
           });
         });
       });
+      getAppointments();
     } catch (e) {
       print(e);
     }
@@ -247,12 +248,12 @@ class MyScreenState extends State<MyScreen> {
 
   }
   _openPopup(context,index) {
-    var booking_time = appoint[index].BookingTime.split(" ");
+    var booking_time = appoint[index].BookingTime;
     Alert(
         context: context,
         title: "Booking Information",
         content: Center(
-          child: Text("""Your Appointment Booked Successfully!! Please be Ready on ${booking_time[1]}""",textAlign: TextAlign.center,),
+          child: Text("Booking Time:${booking_time}  Token:${appoint[index].Token}",textAlign: TextAlign.center,),
         ),
         ).show();
   }
