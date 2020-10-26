@@ -20,6 +20,6 @@ class _LabtestsState extends State<Labtests> {
           ],
         )
 
-    );;
+    );
   }
 }

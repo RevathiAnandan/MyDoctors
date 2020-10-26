@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       filled: true,
 
                       fillColor: Colors.grey[100],
-                      hintText: "Enter Mobile Number"
+                      hintText: "+91 xxxxxxxxx"
                   ),
                   controller: _phoneController,
                 ),
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //      });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile,this.verficationId)),
+        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile)),
       );
 
     };
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     _auth.verifyPhoneNumber(
-        phoneNumber: "+91$mobile",
+        phoneNumber: "+91{$mobile}",
         timeout: Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationfailed,

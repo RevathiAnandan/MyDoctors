@@ -64,7 +64,6 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-
         appBar: GradientAppBar(
           title: widgetName.elementAt(selectedIndex),
           backgroundColorStart: Colors.redAccent,
@@ -88,15 +87,15 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         ),
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.grey,size: 25), title: Text('MyDoctor',)),
+              BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.grey), title: Text('MyDoctor',)),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.hotel,color: Colors.grey,size: 25), title: Text('My Hospital')),
+                  icon: Icon(Icons.hotel,color: Colors.grey), title: Text('My Hospital')),
               BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.list,color: Colors.grey,size: 25), title: Text('My Ads')),
+                  icon: Icon(Icons.list,color: Colors.grey), title: Text('My Ads')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings,color: Colors.grey,size: 25), title: Text('Settings'))
-            ],
+                  icon: Icon(Icons.settings,color: Colors.grey), title: Text('Settings'))
+        ],
             currentIndex: selectedIndex,
             fixedColor: Colors.grey,
             onTap: onItemTapped
@@ -177,7 +176,6 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       ApiService().addDoctorToPatient(widget.mobile,phone,pname);
       Map<dynamic, dynamic > values = snapshot.value;
       values.forEach((key,values) {
-
         var refreshToken = values;
         print(refreshToken);
 

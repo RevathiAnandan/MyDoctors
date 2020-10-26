@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+import 'dart:async';
+
 import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
@@ -29,6 +31,7 @@ class _AppointmentsState extends State<Appointments> {
   DateTime start1;
   var interval1;
   String dname;
+  Timer timer;
   TextEditingController name = new TextEditingController();
   TextEditingController phone = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -38,286 +41,276 @@ class _AppointmentsState extends State<Appointments> {
     // TODO: implement initState
     super.initState();
     _getPermission();
+    timer =
+        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
     getprofileDetails();
-    getAppointments();
     var db = fb.reference().child("User").child(widget.mobile);
-    db.once().then((DataSnapshot snapshot){
-      print (snapshot.value['Name']);
+    db.once().then((DataSnapshot snapshot) {
+      print(snapshot.value['Name']);
       setState(() {
         //_image =  snapshot.value['image'];
-        dname =  snapshot.value['Name'];
+        dname = snapshot.value['Name'];
         //print ("image"+_image);
       });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Scaffold(
-        body: NestedScrollView(
+    return Scaffold(
+      body:
+        NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 250.0,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "            Appointments",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 250.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    "          Appointments",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  background: Image.network(
-                    "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
-                    fit: BoxFit.cover,
-                  ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.search_rounded, color: Colors.white),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch());
-                    },
-                  ),
-                  IconButton(icon: Icon(Icons.add,color: Colors.white),
-                    onPressed: (){
-                      _openPopup(context);
-                    },),
-                ],
+                background: Image.network(
+                  "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                  fit: BoxFit.cover,
+                ),
               ),
-              new SliverPadding(
-                padding: new EdgeInsets.all(1.0),
-                sliver: new SliverList(
-                    delegate: SliverChildListDelegate([
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Container(
-                                  width: 130,
-                                  height: 40,
-                                  child: Card(
-                                    color: new Color(0xffFFFFFF),
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Center(
-                                        child: GestureDetector(
-                                            onTap: () => Navigator.pop(context),
-                                            child: Text("My Waiting",
-                                                style: new TextStyle(
-                                                    color: Colors.redAccent,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Lato")))),
-                                  ),
-                                ),
-                                Text("40",
-                                    style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Lato")),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Container(
-                                  width: 130,
-                                  height: 40,
-                                  child: Card(
-                                    color: new Color(0xffFFFFFF),
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Center(
-                                        child: GestureDetector(
-                                            onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DashBoardScreen(
-                                                              widget.mobile,
-                                                              "MY PATIENT")),
-                                                ),
-                                            child: Text("My Patient",
-                                                style: new TextStyle(
-                                                    color: Colors.redAccent,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Lato")))),
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Text("40",
-                                    style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Lato")),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[]),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Column(
-//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Container(
-                                  width: 130,
-                                  height: 40,
-                                  child: Card(
-                                    color: new Color(0xffFFFFFF),
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Center(
-                                        child: GestureDetector(
-                                            onTap: () => Navigator.pop(context),
-                                            child: Text("Next Visit",
-                                                style: new TextStyle(
-                                                    color: Colors.redAccent,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Lato")))),
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Text("40",
-                                    style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Lato")),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ])),
-              ),
-            ];
-          },
-          body: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      flex: 0,
-                      child: Card(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount:
-                                dummyData.length < 20 ? dummyData.length : null,
-                            itemBuilder: (context, i) => new Column(
-                              children: <Widget>[
-                                new Divider(
-                                  height: 10.0,
-                                ),
-                                ListTile(
-                                  leading: Text((i + 1).toString(),
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Lato",
-                                          color: Colors.redAccent,
-                                          fontSize: 25)),
-                                  title: Text(dummyData[i].patientName),
-                                  subtitle: Text(dummyData[i].patientMobile),
-                                  trailing: (dummyData[i].status != "Waiting!")
-                                      ? Container(
-                                        child: Card(
-                                            child: Text(
-                                                " "
-                                            ),
-                                  ),
-                                      )
-                                      :
-                                  FlatButton(
-                                          child: Text("Confirm",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: "Lato",
-                                                  fontSize: 14)),
-                                          textColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.0),
-                                              side: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          padding: EdgeInsets.all(10),
-                                          onPressed: () async {
-                                            if (i == 0) {
-                                            } else {
-                                              start1 = start1.add(new Duration(
-                                                  minutes: interval1));
-                                            }
-                                            ApiService().appointment(
-                                                dummyData[i].patientMobile,
-                                                widget.mobile,
-                                                dummyData[i].patientName,
-                                                "View",
-                                                i + 1,
-                                                start1.toString(),
-                                                keys1[i]);
-                                          },
-                                          color: Colors.redAccent,
-                                        ),
-                                )
-                              ],
-                            ),
-                          )),
-                    )
-                  ],
-                )
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.search_rounded, color: Colors.white),
+                  onPressed: () {
+                    showSearch(context: context, delegate: DataSearch());
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.add, color: Colors.white),
+                  onPressed: () {
+                    _openPopup(context);
+                  },
+                ),
               ],
+            ),
+            new SliverPadding(
+              padding: new EdgeInsets.all(1.0),
+              sliver: new SliverList(
+                  delegate: SliverChildListDelegate([
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Container(
+                                width: 130,
+                                height: 40,
+                                child: Card(
+                                  color: new Color(0xffFFFFFF),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: GestureDetector(
+                                          onTap: () => Navigator.pop(context),
+                                          child: Text("My Waiting",
+                                              style: new TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Lato")))),
+                                ),
+                              ),
+                              Text("40",
+                                  style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Lato")),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Container(
+                                width: 130,
+                                height: 40,
+                                child: Card(
+                                  color: new Color(0xffFFFFFF),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: GestureDetector(
+                                          onTap: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DashBoardScreen(
+                                                            widget.mobile,
+                                                            "MY PATIENT")),
+                                              ),
+                                          child: Text("My Patient",
+                                              style: new TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Lato")))),
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Text("40",
+                                  style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Lato")),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[]),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Column(
+//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Container(
+                                width: 130,
+                                height: 40,
+                                child: Card(
+                                  color: new Color(0xffFFFFFF),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: GestureDetector(
+                                          onTap: () => Navigator.pop(context),
+                                          child: Text("Next Visit",
+                                              style: new TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Lato")))),
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Text("40",
+                                  style: new TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Lato")),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ])),
+            ),
+          ];
+        },
+        body: Card(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount:
+            dummyData.length < 20 ? dummyData.length : null,
+            itemBuilder: (context, i) => new Column(
+          children: <Widget>[
+            new Divider(
+              height: 10.0,
+            ),
+            ListTile(
+              leading: Text((i + 1).toString(),
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Lato",
+                      color: Colors.redAccent,
+                      fontSize: 25)),
+              title: Text(dummyData[i].patientName),
+              subtitle: Text(dummyData[i].patientMobile),
+              trailing: (dummyData[i].status != "Waiting!")
+                  ? Container(
+                      child: Card(
+                        child: Text(""),
+                      ),
+                    )
+                  : FlatButton(
+                      child: Text("Confirm",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Lato",
+                              fontSize: 14)),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(25.0),
+                          side: BorderSide(
+                              color: Colors.redAccent)),
+                      padding: EdgeInsets.all(10),
+                      onPressed: () async {
+                        if (i == 0) {
+                        } else {
+                          start1 = start1.add(
+                              new Duration(minutes: interval1));
+                        }
+                        ApiService().appointment(
+                            dummyData[i].patientMobile,
+                            widget.mobile,
+                            dummyData[i].patientName,
+                            "View",
+                            i + 1,
+                            start1.toString(),
+                            keys1[i]);
+                      },
+                      color: Colors.redAccent,
+                    ),
+
+            ),
+            new Divider(
+              height: 10.0,
+            ),
+          ],
             ),
           ),
         ),
-      ),
+     // ),
+    ),
     );
   }
 
@@ -362,6 +355,7 @@ class _AppointmentsState extends State<Appointments> {
       print(e);
     }
   }
+
   _openPopup(context) {
     Alert(
         context: context,
@@ -386,8 +380,8 @@ class _AppointmentsState extends State<Appointments> {
         ),
         buttons: [
           DialogButton(
-            onPressed: (){
-              addPatient(name.text,"+91"+phone.text);
+            onPressed: () {
+              addPatient(name.text, "+91" + phone.text);
               // int index;
               // Contact contact = _contacts?.elementAt(index);
               // for(int i=0;i<_contacts.length;i++){
@@ -406,44 +400,44 @@ class _AppointmentsState extends State<Appointments> {
           )
         ]).show();
   }
+
   Future<PermissionStatus> _getPermission() async {
     final PermissionStatus permission = await Permission.contacts.status;
     if (permission != PermissionStatus.granted &&
         permission != PermissionStatus.denied) {
       final Map<Permission, PermissionStatus> permissionStatus =
-      await [Permission.contacts].request();
+          await [Permission.contacts].request();
       return permissionStatus[Permission.contacts] ??
           PermissionStatus.undetermined;
     } else {
       return permission;
     }
   }
-  addPatient(String name , String phone)async {
+
+  addPatient(String name, String phone) async {
     final PermissionStatus permission = await Permission.contacts.status;
-    if(permission == PermissionStatus.granted){
+    if (permission == PermissionStatus.granted) {
       Contact newContact = new Contact();
       newContact.givenName = name;
-      newContact.phones = [
-        Item(label: "mobile", value:phone)
-      ];
+      newContact.phones = [Item(label: "mobile", value: phone)];
       await ContactsService.addContact(newContact);
 
-      checkmobile(name,phone);
+      checkmobile(name, phone);
       Navigator.of(context).pop();
     }
   }
-  checkmobile(String pname,String pmobile){
+
+  checkmobile(String pname, String pmobile) {
     var db = fb.reference().child("User").child(widget.mobile);
-    db.once().then((DataSnapshot snapshot){
-      Map<dynamic, dynamic > values = snapshot.value;
-      values.forEach((key,values) {
+    db.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
         print(values);
-
-        ApiService().addPatientToDoctor(pmobile,widget.mobile,pname);
-        ApiService().addDoctorToPatient(pmobile,widget.mobile,dname);
-
+        ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
+        ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
       });
     });
   }
+
   var fiftyDaysFromNow;
 }

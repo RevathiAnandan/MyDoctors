@@ -43,7 +43,7 @@ class MyScreenState extends State<MyScreen> {
     super.initState();
     _isButtondisable = false;
     timer =
-        Timer.periodic(Duration(seconds: 15), (Timer t) => getAppointments());
+        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
     if (widget.category == "MY PATIENT") {
       getMyPatient();
     } else {
@@ -65,11 +65,11 @@ class MyScreenState extends State<MyScreen> {
                       height: 10.0,
                     ),
                     new ListTile(
-                      leading: new CircleAvatar(
-                        foregroundColor: Theme.of(context).primaryColor,
-                        backgroundColor: Colors.grey,
-//                  backgroundImage: Image.asset('assets/images/grid.png'),
-                      ),
+//                       leading: new CircleAvatar(
+//                         foregroundColor: Theme.of(context).primaryColor,
+//                         backgroundColor: Colors.grey,
+// //                  backgroundImage: Image.asset('assets/images/grid.png'),
+//                       ),
                       title: new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[

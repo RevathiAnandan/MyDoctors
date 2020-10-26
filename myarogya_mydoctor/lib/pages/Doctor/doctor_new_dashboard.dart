@@ -45,13 +45,17 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
             child: _widgetOptions()[selectedIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            selectedIconTheme: IconThemeData(
+              color: Colors.red,
+              size: 30
+            ),
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,size: 25,), title: Text('MyAppointment')),
+              BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,), title: Text('MyAppointment')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.hotel,color: Colors.redAccent,size: 25,), title: Text('My Hospital')),
-              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.redAccent,size: 25,), title: Text('My Labs')),
+                  icon: Icon(Icons.hotel,color: Colors.redAccent,), title: Text('My Hospital')),
+              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.redAccent,), title: Text('My Labs')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.list,color: Colors.redAccent,size: 25,), title: Text('My Ads')),
+                  icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings,color: Colors.redAccent,size: 25,), title: Text('Settings'))
             ],

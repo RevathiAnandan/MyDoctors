@@ -172,7 +172,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
                     child: dataBody(),
@@ -277,12 +277,12 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
           DataColumn(
-              label: Text("Duration",
+              label: Text("To be taken",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
           DataColumn(
-              label: Text("Days",
+              label: Text("Duration",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
@@ -313,7 +313,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
                   ),
                   DataCell(
-                      Text(e.days,style: TextStyle(
+                      Text("${e.days }Days",style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
                   )
                 ]

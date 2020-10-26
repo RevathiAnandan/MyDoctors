@@ -12,7 +12,7 @@ class OtpScreen extends StatefulWidget {
   String mobile;
   String verId;
 
-  OtpScreen(this.creds,this.mobile,this.verId);
+  OtpScreen(this.creds,this.mobile);
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -142,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         padding: EdgeInsets.all(16),
                         onPressed: (){
-                        AuthService().signInWithOTP(context,text,widget.verId);
+                        AuthService().signIn(widget.creds);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectionScreen()),
