@@ -23,14 +23,14 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
   List<Widget> _widgetOptions() => [
     Appointments(widget.mobile),
     Hospitals(),
-    Text('My Labs'),
+//    Text('My Labs'),
     Text('My Ads'),
     Text('Setting'),
   ];
  final widgetName = [
    Text('My Appointments'),
    Text('My Hospitals'),
-   Text('My Labs'),
+//   Text('My Labs'),
    Text('My Ads'),
    Text('Settings'),
  ];
@@ -53,7 +53,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
               BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,), title: Text('MyAppointment')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.hotel,color: Colors.redAccent,), title: Text('My Hospital')),
-              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.redAccent,), title: Text('My Labs')),
+//              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.redAccent,), title: Text('My Labs')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
               BottomNavigationBarItem(

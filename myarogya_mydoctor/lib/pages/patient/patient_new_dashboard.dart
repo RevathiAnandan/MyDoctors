@@ -33,14 +33,14 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
   List<Widget> _widgetOptions() => [
     MyScreen(widget.mobile,"MY DOCTOR"),
     Text('My Hospitals'),
-    Text('My Labs'),
+//    Text('My Labs'),
     Text('My Ads'),
     Text('Setting'),
   ];
   final widgetName = [
     Text('My Doctors'),
     Text('My Hospitals'),
-    Text('My Labs'),
+//    Text('My Labs'),
     Text('My Ads'),
     Text('Settings'),
   ];
@@ -90,7 +90,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
               BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.grey), title: Text('MyDoctor',)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.hotel,color: Colors.grey), title: Text('My Hospital')),
-              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
+//              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.list,color: Colors.grey), title: Text('My Ads')),
               BottomNavigationBarItem(

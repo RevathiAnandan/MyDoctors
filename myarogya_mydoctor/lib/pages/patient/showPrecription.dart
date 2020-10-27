@@ -167,11 +167,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                             ),
-                            Text(
-                              'Diagnosis: '+widget.prescripe.diagnosis,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
-                            ),
+
                           ],
                         )
                     ),
@@ -355,4 +351,5 @@ class _PrescriptionPageState extends State<ShowPrecription> {
       dividerThickness: 0.0,
     );
   }
+
 }
