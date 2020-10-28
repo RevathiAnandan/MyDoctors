@@ -169,8 +169,6 @@ class MyScreenState extends State<MyScreen> {
   }
 
   Future<Appointmnet> getAppointments() async {
-     //appointstatus=false;
-    //appoint[0].status="Book Now";
     try {
       var db = await fb.reference().child("Appointment");
       var db1 = db.orderByChild("patientName");

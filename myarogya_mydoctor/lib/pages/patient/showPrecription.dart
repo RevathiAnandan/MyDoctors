@@ -172,7 +172,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'BP: '+widget.prescripe.bp,
+                              'BP: '+widget.prescripe.bp +'/'+widget.prescripe.bpHigh,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                             ),
@@ -213,10 +213,20 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    child: dataBodyTest(),
+//                  Container(
+//                    child: dataBodyTest(),
+//                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child:Container(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Lab Test:   '+widget.prescripe.labTest,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                      ),
+                    ),
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
@@ -254,9 +264,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
           refreshValue =  snapshot.value;
           isLoading = false;
         });
-//      getPrecriptionDetails();
-
-//      print (doctorProfileInfo.Name);
 
       });
 
@@ -357,32 +364,32 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     );
   }
 
-  DataTable dataBodyTest() {
-    return DataTable(
-      columns: [
-        DataColumn(
-            label: Text("Lab Tests:",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-        ),
-
-      ],
-
-      rows: widget.prescripe.labTest.map((e) =>
-          DataRow(
-              cells: [
-                DataCell(
-                  Text(e.test, style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
-                ),
-
-              ]
-          ),
-      ).toList(),
-      columnSpacing: 0.0,
-      dividerThickness: 0.0,
-    );
-  }
+//  DataTable dataBodyTest() {
+//    return DataTable(
+//      columns: [
+//        DataColumn(
+//            label: Text("Lab Tests:",
+//                style: TextStyle(
+//                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
+//        ),
+//
+//      ],
+//
+//      rows: widget.prescripe.labTest.map((e) =>
+//          DataRow(
+//              cells: [
+//                DataCell(
+//                  Text(e.test, style: TextStyle(
+//                      fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
+//                ),
+//
+//              ]
+//          ),
+//      ).toList(),
+//      columnSpacing: 0.0,
+//      dividerThickness: 0.0,
+//    );
+//  }
 
  String datesplit(String date1){
     var date = date1.split(" ");

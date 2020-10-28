@@ -31,6 +31,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
       with SingleTickerProviderStateMixin {
   TabController _tabController;
   bool showFab = true;
+  bool duplicate = false;
   FirebaseUser user;
   TextEditingController name = new TextEditingController();
   TextEditingController phone = new TextEditingController();
@@ -159,7 +160,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         buttons: [
           DialogButton(
             onPressed: (){
-              (widget.category=="MY PATIENT")?addPatient(name.text, "+91" + phone.text):addDoctor(name.text,"+91"+phone.text);
+              (widget.category=="MY PATIENT")?checkDuplication("+91" + phone.text,name.text):addDoctor(name.text,"+91"+phone.text);
             },
             child: Text(
               "Add",
@@ -202,6 +203,67 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         print(values);
       });
     });
+  }
+  checkDuplication(String phone,String name){
+    var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic > values = snapshot.value;
+      print(snapshot.value);
+      values.forEach((key,values) {
+        var refreshToken = values["phone"].toString();
+        if(refreshToken == phone){
+          setState(() {
+            duplicate = true;
+          });
+        }else{
+          setState(() {
+            duplicate = false;
+          });
+        }
+        print("Values!!!"+values["phone"].toString());
+        print(refreshToken);
+      });
+    });
+    checkDuplicate(phone,name);
+  }
+  checkDuplicate(String phone,String name){
+    if(duplicate == true){
+      addDoctor(name , phone);
+    }else{
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+    }
+  }
+
+  checkDuplicationDoctor(String phone,String name){
+    var db = fb.reference().child("User").child(widget.mobile).child("myPatient");
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic > values = snapshot.value;
+      print(snapshot.value);
+      values.forEach((key,values) {
+        var refreshToken = values["phone"].toString();
+        if(refreshToken == phone){
+          setState(() {
+            duplicate = true;
+          });
+        }else{
+          setState(() {
+            duplicate = false;
+          });
+        }
+        print("Values!!!"+values["phone"].toString());
+        print(refreshToken);
+      });
+    });
+    checkDuplicate(phone,name);
+  }
+  checkDuplicateDoctor(String phone,String name){
+    if(duplicate == true){
+      addPatient(name , phone);
+    }else{
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+    }
   }
 
 }

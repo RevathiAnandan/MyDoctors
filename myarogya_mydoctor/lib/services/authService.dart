@@ -109,7 +109,7 @@ class AuthService{
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.redAccent,
         textColor: Colors.white,
         fontSize: 16.0
     );

@@ -26,6 +26,7 @@ class PatientNewDashboard extends StatefulWidget {
 
 class _PatientNewDashboardState extends State<PatientNewDashboard> {
   int selectedIndex = 0;
+  bool duplicate = false;
   String dname;
   TextEditingController name = new TextEditingController();
   TextEditingController phone = new TextEditingController();
@@ -145,7 +146,8 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         buttons: [
           DialogButton(
             onPressed: (){
-              addDoctor(name.text,"+91"+phone.text);
+              checkDuplication("+91"+phone.text,name.text);
+//              addDoctor(name.text,"+91"+phone.text);
             },
             child: Text(
               "Add",
@@ -192,4 +194,35 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       });
     });
   }
+  checkDuplication(String phone,String name){
+    var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic > values = snapshot.value;
+      print(snapshot.value);
+      values.forEach((key,values) {
+        var refreshToken = values["phone"].toString();
+        if(refreshToken == phone){
+          setState(() {
+            duplicate = true;
+          });
+        }else{
+          setState(() {
+            duplicate = false;
+          });
+        }
+        print("Values!!!"+values["phone"].toString());
+        print(refreshToken);
+      });
+    });
+    checkDuplicate(phone,name);
+  }
+  checkDuplicate(String phone,String name){
+    if(duplicate == true){
+      addDoctor(name , phone);
+    }else{
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+    }
+  }
+
 }

@@ -26,6 +26,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
   TextEditingController d3Controller = TextEditingController();
   TextEditingController daysController = TextEditingController();
   TextEditingController bpController = TextEditingController();
+  TextEditingController bpController1 = TextEditingController();
   TextEditingController pulseController = TextEditingController();
   TextEditingController labController = TextEditingController();
   TextEditingController weightController = TextEditingController();
@@ -182,7 +183,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Medicine/Tests',
+                            'Medicine',
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.6), fontSize: 18),
                           ),
@@ -466,31 +467,99 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                   ),
                                 ),
 
-                                Container(
-                                  height: 50,
-                                  width: 170,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                                  child:  TextField(
-                                    controller: bpController,
-                                    onEditingComplete: () =>
-                                        FocusScope.of(context).nextFocus(),
-                                    maxLength: 100,
-                                    keyboardType: TextInputType.number,
+//                                Container(
+//                                  height: 50,
+//                                  width: 170,
+//                                  decoration: BoxDecoration(
+//                                      color: Colors.grey[200],
+//                                      borderRadius:
+//                                      BorderRadius.all(Radius.circular(10))),
+//                                  child:  TextField(
+//                                    controller: bpController,
+//                                    onEditingComplete: () =>
+//                                        FocusScope.of(context).nextFocus(),
+//                                    maxLength: 100,
+//                                    keyboardType: TextInputType.number,
+//
+//                                    // textAlign: TextAlign.center,,
+//                                    decoration: InputDecoration(
+//                                        contentPadding: EdgeInsets.all(16.0),
+//                                        border: InputBorder.none,
+//                                        counterText: ""),
+//                                    style: TextStyle(
+//                                        fontWeight: FontWeight.bold,
+//                                        fontSize: 15,
+//                                        color: Colors.black),
+//                                  ),
+//                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[200],
+                                                      borderRadius: BorderRadius.circular(14)),
+                                                  child: TextField(
+                                                    controller:  bpController,
+                                                    onEditingComplete: () =>
+                                                        FocusScope.of(context).nextFocus(),
+                                                    maxLength: 3,
+                                                    keyboardType: TextInputType.number,
+                                                    inputFormatters: <TextInputFormatter>[
+                                                      FilteringTextInputFormatter.digitsOnly
+                                                    ],
+                                                    // textAlign: TextAlign.center,
+                                                    decoration: InputDecoration(
+                                                        contentPadding: EdgeInsets.all(16.0),
+                                                        border: InputBorder.none,
+                                                        counterText: ""),
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[200],
+                                                      borderRadius: BorderRadius.circular(14)),
+                                                  child: TextField(
+                                                    controller:  bpController1,
+                                                    onEditingComplete: () =>
+                                                        FocusScope.of(context).nextFocus(),
+                                                    maxLength: 3,
+                                                    keyboardType: TextInputType.number,
+                                                    inputFormatters: <TextInputFormatter>[
+                                                      FilteringTextInputFormatter.digitsOnly
+                                                    ],
+                                                    // textAlign: TextAlign.center,
+                                                    decoration: InputDecoration(
+                                                        contentPadding: EdgeInsets.all(16.0),
+                                                        border: InputBorder.none,
+                                                        counterText: ""),
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
 
-                                    // textAlign: TextAlign.center,,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.all(16.0),
-                                        border: InputBorder.none,
-                                        counterText: ""),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: Colors.black),
-                                  ),
-                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ))
                               ],
                             ),
                           ),
@@ -529,6 +598,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                               onEditingComplete: () =>
                                                   FocusScope.of(context)
                                                       .nextFocus(),
+                                              maxLength: 3,
                                               keyboardType: TextInputType.number,
                                               inputFormatters: <TextInputFormatter>[
                                                 FilteringTextInputFormatter
@@ -634,6 +704,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                     onEditingComplete: () =>
                                                         FocusScope.of(context)
                                                             .nextFocus(),
+                                                    maxLength: 3,
                                                     keyboardType:
                                                     TextInputType.number,
 
@@ -768,9 +839,9 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                     onPressed: (){
                       print("values"+medicineDetails.toString());
                       print("test"+labDetails.toString());
-                      ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labController.text,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString());
+                      ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labController.text,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString(),bpController1.text);
                       AuthService().toast("Prescription Created Successfully!!");
-                      //Navigator.pop(context);
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

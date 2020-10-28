@@ -10,6 +10,7 @@ import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,6 +31,7 @@ class _AppointmentsState extends State<Appointments> {
   DateTime start1;
   var interval1;
   String dname;
+  bool duplicate = false;
   Timer timer;
   TextEditingController name = new TextEditingController();
   TextEditingController phone = new TextEditingController();
@@ -47,9 +49,7 @@ class _AppointmentsState extends State<Appointments> {
     db.once().then((DataSnapshot snapshot) {
       print(snapshot.value['Name']);
       setState(() {
-        //_image =  snapshot.value['image'];
         dname = snapshot.value['Name'];
-        //print ("image"+_image);
       });
     });
   }
@@ -98,7 +98,7 @@ class _AppointmentsState extends State<Appointments> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.emoji_people_rounded, color: Colors.white),
+                  icon: Icon(Icons.people, color: Colors.white),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -393,7 +393,8 @@ class _AppointmentsState extends State<Appointments> {
         buttons: [
           DialogButton(
             onPressed: () {
-              addPatient(name.text, "+91" + phone.text);
+              checkDuplication("+91"+phone.text,name.text);
+//              addPatient(name.text, "+91" + phone.text);
             },
             child: Text(
               "Add",
@@ -440,6 +441,36 @@ class _AppointmentsState extends State<Appointments> {
         ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
       });
     });
+  }
+  checkDuplication(String phone,String name){
+    var db = fb.reference().child("User").child(widget.mobile).child("myPatient");
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic > values = snapshot.value;
+      print(snapshot.value);
+      values.forEach((key,values) {
+        var refreshToken = values["phone"].toString();
+        if(refreshToken == phone){
+          setState(() {
+            duplicate = true;
+          });
+        }else{
+          setState(() {
+            duplicate = false;
+          });
+        }
+        print("Values!!!"+values["phone"].toString());
+        print(refreshToken);
+      });
+    });
+    checkDuplicate(phone,name);
+  }
+  checkDuplicate(String phone,String name){
+    if(duplicate == true){
+      addPatient(name , phone);
+    }else{
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+    }
   }
 
   var fiftyDaysFromNow;
