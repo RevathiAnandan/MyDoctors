@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/pages/otp_screen.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 
@@ -33,6 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text("Enter Mobile Number", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal,fontFamily: "Lacto"),),
                 SizedBox(height: 10,),
                 TextFormField(
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                    ],
                   decoration: InputDecoration(
                       prefixIcon: new Icon(Icons.phone_android,color: Colors.redAccent),
                       enabledBorder: OutlineInputBorder(

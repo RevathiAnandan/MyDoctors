@@ -1,6 +1,7 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/Appointments.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
@@ -129,6 +130,9 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
               controller: name,
             ),
             TextField(
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(10),
+              ],
               decoration: InputDecoration(
                 icon: Icon(Icons.phone_android),
                 labelText: 'Mobile Number',
@@ -185,7 +189,6 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       values.forEach((key,values) {
         var refreshToken = values;
         print(refreshToken);
-
       });
     });
   }

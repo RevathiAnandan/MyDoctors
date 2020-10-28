@@ -4,6 +4,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
@@ -363,7 +364,7 @@ class _AppointmentsState extends State<Appointments> {
     }
   }
 
-  _openPopup(context) {
+  _openPopup(context)  {
     Alert(
         context: context,
         title: "Add Contact",
@@ -377,6 +378,9 @@ class _AppointmentsState extends State<Appointments> {
               controller: name,
             ),
             TextField(
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(10),
+              ],
               decoration: InputDecoration(
                 icon: Icon(Icons.phone_android),
                 labelText: 'Mobile Number',

@@ -87,7 +87,7 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus(buttonStatus,i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(

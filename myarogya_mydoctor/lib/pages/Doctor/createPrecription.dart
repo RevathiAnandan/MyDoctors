@@ -83,7 +83,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
       }
     });
   }
-  String _chosenValue2 = 'Before Food';
+  String _chosenValue2 = 'Before Meal';
 
   DateTime date1;
   DateTime date2;
