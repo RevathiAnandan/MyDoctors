@@ -407,7 +407,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                     iconSize: 42,
                                     value: _chosenValue2,
                                     underline: SizedBox(),
-                                    items: <String>['Before Food', 'After Food']
+                                    items: <String>['Before Meal', 'After Meal']
                                         .map<DropdownMenuItem<String>>((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -581,6 +581,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                   height: 50,
                                   width: 170,
                                   child: DateTimePickerFormField(
+                                    dateOnly: true,
                                     inputType: InputType.date,
                                     format: DateFormat("yyyy-MM-dd"),
                                     initialDate: DateTime.now(),
@@ -634,7 +635,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                         FocusScope.of(context)
                                                             .nextFocus(),
                                                     keyboardType:
-                                                    TextInputType.text,
+                                                    TextInputType.number,
 
                                                     // textAlign: TextAlign.center,
                                                     decoration: InputDecoration(
@@ -728,24 +729,24 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                       color: Colors.black),
                                 ),
                               ),
-                              Positioned(
-                                left:300,
-                                top: 23,
-                                child: MaterialButton(
-                                  elevation: 8,
-                                  onPressed: () {
-                                    addLabtests();
-                                  },
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 25,
-                                  ),
-                                  shape: CircleBorder(
-                                  ),
-                                  color: Colors.redAccent,
-                                ),
-                              )
+                              // Positioned(
+                              //   left:300,
+                              //   top: 23,
+                              //   child: MaterialButton(
+                              //     elevation: 8,
+                              //     onPressed: () {
+                              //       addLabtests();
+                              //     },
+                              //     child: Icon(
+                              //       Icons.add,
+                              //       color: Colors.white,
+                              //       size: 25,
+                              //     ),
+                              //     shape: CircleBorder(
+                              //     ),
+                              //     color: Colors.redAccent,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
@@ -767,7 +768,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                     onPressed: (){
                       print("values"+medicineDetails.toString());
                       print("test"+labDetails.toString());
-                      ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labDetails,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString());
+                      ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labController.text,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString());
                       AuthService().toast("Prescription Created Successfully!!");
                       //Navigator.pop(context);
                       Navigator.push(

@@ -54,7 +54,7 @@ class MyScreenState extends State<MyScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Center( child:CircularProgressIndicator())
+        ? Center(child:CircularProgressIndicator())
         : (dummyData.isEmpty
             ? Center(child: Text("No Data Found!!"))
             : new ListView.builder(
@@ -87,7 +87,7 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus(buttonStatus,i) : (appoint.asMap().containsKey(i)?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus(buttonStatus,i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(
@@ -114,14 +114,15 @@ class MyScreenState extends State<MyScreen> {
   }
 
   Future<Patient> getMyPatient() async {
-    isLoading = true;
+    // isLoading = true;
     try {
       var db = await fb
           .reference()
           .child("User")
           .child(widget.mobile)
           .child("myPatient");
-      db.once().then((DataSnapshot snapshot) {
+      var db1 = db.orderByChild("MyPatient");
+      db1.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {
@@ -130,7 +131,7 @@ class MyScreenState extends State<MyScreen> {
           setState(() {
             dummyData.add(refreshToken);
             print(dummyData);
-            isLoading = false;
+            // isLoading = false;
           });
         });
       });
@@ -140,14 +141,15 @@ class MyScreenState extends State<MyScreen> {
   }
 
   Future<Patient> getMyDoctor() async {
-    isLoading = true;
+    // isLoading = true;
     try {
       var db = await fb
           .reference()
           .child("User")
           .child(widget.mobile)
           .child("myDoctor");
-      db.once().then((DataSnapshot snapshot) {
+      var db1 = db.orderByChild("name");
+      db1.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {
@@ -171,11 +173,12 @@ class MyScreenState extends State<MyScreen> {
     //appoint[0].status="Book Now";
     try {
       var db = await fb.reference().child("Appointment");
-      if(db != null){
-        db.once().then((DataSnapshot snapshot) {
+      var db1 = db.orderByChild("patientName");
+      if(db1 != null){
+        db1.once().then((DataSnapshot snapshot) {
           print(snapshot.value);
           if(snapshot.value == null){
-            isLoading = false;
+            // isLoading = false;
             setState(() {
               buttonStatus = "Book Now";
             });
@@ -188,7 +191,7 @@ class MyScreenState extends State<MyScreen> {
                 if (refreshToken.patientMobile == widget.mobile) {
                   appoint.add(refreshToken);
                   print(appoint[0].status);
-                  isLoading = false;
+                  // isLoading = false;
                 }
               });
             });
@@ -196,7 +199,7 @@ class MyScreenState extends State<MyScreen> {
 
         });
       }else{
-        isLoading = false;
+        // isLoading = false;
         setState(() {
           buttonStatus = "Book Now";
         });
@@ -252,6 +255,7 @@ class MyScreenState extends State<MyScreen> {
     Alert(
         context: context,
         title: "Booking Information",
+        buttons: [],
         content: Center(
           child: Text("Booking Time:${booking_time}  Token:${appoint[index].Token}",textAlign: TextAlign.center,),
         ),

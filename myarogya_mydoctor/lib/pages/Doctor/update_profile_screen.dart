@@ -3,6 +3,7 @@ import 'dart:io';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:datetime_picker_formfield/time_picker_formfield.dart';
@@ -207,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           contentPadding: EdgeInsets.fromLTRB(
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(Icons.person,
-                                              color: new Color(0xffACCCF8)),
+                                              color:  Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -236,7 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     TextFormField(
                                       decoration: InputDecoration(
                                           prefixIcon: new Icon(Icons.business,
-                                              color: new Color(0xffACCCF8)),
+                                              color:  Colors.redAccent),
                                           contentPadding: EdgeInsets.fromLTRB(
                                               20.0, 5.0, 20.0, 5.0),
                                           enabledBorder: OutlineInputBorder(
@@ -269,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           contentPadding: EdgeInsets.fromLTRB(
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(Icons.home,
-                                              color: new Color(0xffACCCF8)),
+                                              color: Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -301,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(
                                               Icons.business_center,
-                                              color: new Color(0xffACCCF8)),
+                                              color:  Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -333,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(
                                               Icons.library_books,
-                                              color: new Color(0xffACCCF8)),
+                                              color:  Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -447,7 +448,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(
                                               Icons.timer,
-                                              color: new Color(0xffACCCF8)),
+                                              color: Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -489,7 +490,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         contentPadding: EdgeInsets.fromLTRB(
                                             20.0, 5.0, 20.0, 5.0),
                                         prefixIcon: new Icon(Icons.person,
-                                            color: new Color(0xffACCCF8)),
+                                            color:  Colors.redAccent),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(8)),
@@ -520,7 +521,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         decoration: InputDecoration(
                                             prefixIcon: new Icon(
                                                 Icons.phone_android,
-                                                color: new Color(0xffACCCF8)),
+                                                color:  Colors.redAccent),
                                             contentPadding: EdgeInsets.fromLTRB(
                                                 20.0, 15.0, 20.0, 5.0),
                                             enabledBorder: OutlineInputBorder(
@@ -554,7 +555,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           contentPadding: EdgeInsets.fromLTRB(
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(Icons.email,
-                                              color: new Color(0xffACCCF8)),
+                                              color:  Colors.redAccent),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
@@ -611,7 +612,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           //Navigator.pop(context);
                                         },
                                         //TODO: Take the mobile number and generate bar code
-                                        color: new Color(0xff2F80ED),
+                                        color: Colors.redAccent,
                                       ),
                                     ),
                                     SizedBox(
@@ -698,10 +699,33 @@ class _ProfileScreenState extends State<ProfileScreen>
             builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
           ),
         );
-//        await Firestore.instance
-//                  .collection("Users/Doctor")
-//                  .add({"id":userId,"image": downloadUrl,"doctorId": doctorId,"hospitalName": hospitalName,"specialist": specialist,"degree": degree,"doctorName": dName,"phoneNumber": phone,"emailId": email});
-      } else {}
+       }
+    }else{
+      if (widget.userId != null && widget.mobile != null) {
+        ApiService().updateProfile(
+          widget.userId,
+          widget.mobile,
+          ConstantUtils().Doctor,
+          "null",
+          doctorId,
+          hospitalName,
+          specialist,
+          degree,
+          dName,
+          email,
+          Qrdata,
+          address,
+          starttym,
+          endtym,
+          interval,
+        );
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+        ),
+      );
     }
   }
 }

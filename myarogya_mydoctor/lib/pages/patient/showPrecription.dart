@@ -37,13 +37,14 @@ class _PrescriptionPageState extends State<ShowPrecription> {
       child: Scaffold(
           body: SingleChildScrollView(
             child: Container(
+              //padding: EdgeInsets.only(left: 20, top: 20, right: 20),
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 230,
-                    padding: EdgeInsets.only(left: 20, top: 20, right: 20),
+                     padding: EdgeInsets.only(left: 20, top: 20, right: 20),
                     child:  isLoading
                         ? Center(
                         child: CircularProgressIndicator() ): Column(
@@ -117,30 +118,48 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                   SizedBox(
                     height: 25,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Container(
+                  //     padding: EdgeInsets.only(left: 20),
+                  //     child: Text(
+                  //       'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 25,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'Date: '+widget.prescripe.date,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                  Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            'Date: '+datesplit(widget.prescripe.date),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            'Time: '+timesplit(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 25,
@@ -167,14 +186,27 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                             ),
-
                           ],
                         )
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
+            Align(
+              alignment: Alignment.centerLeft,
+                  child:Container(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                    'Diagnosis:   '+widget.prescripe.diagnosis,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
+                  ),
+                  ),
+            ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
                   Container(
                     child: dataBody(),
                   ),
@@ -192,7 +224,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       padding: EdgeInsets.only(left: 16.0),
-                      child: Text('Prescribed on '+widget.prescripe.nextVisit,
+                      child: Text('Next Visit on '+datesplit(widget.prescripe.nextVisit),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                       ),
@@ -320,7 +352,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                 ]
             ),
         ).toList(),
-        columnSpacing: 20.0,
+        columnSpacing: 28.0,
       ),
     );
   }
@@ -352,4 +384,13 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     );
   }
 
+ String datesplit(String date1){
+    var date = date1.split(" ");
+    return date[0];
+  }
+  String timesplit(){
+    var time = widget.prescripe.date.split(" ");
+    var time1 = time[1].split(".");
+    return time1[0];
+  }
 }

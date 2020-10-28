@@ -31,12 +31,12 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Prescriptions"),
+          title: Text("Reports"),
         ),
         body:isLoading
             ? Center(
             child: CircularProgressIndicator() ):
-        (dummyData.isEmpty?Center(child: Text("No Prescription Found!!")):new ListView.builder(
+        (dummyData.isEmpty?Center(child: Text("No Reports Found!!")):new ListView.builder(
           itemCount:dummyData.length ,
           itemBuilder: (context, i) => new Column(
             children: <Widget>[

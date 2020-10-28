@@ -7,6 +7,7 @@ import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
 
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 class DoctorNewDashboard extends StatefulWidget {
   String id;
@@ -21,11 +22,16 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
 
 
   List<Widget> _widgetOptions() => [
-    Appointments(widget.mobile),
+    Appointments(widget.mobile,widget.id),
     Hospitals(),
 //    Text('My Labs'),
     Text('My Ads'),
-    Text('Setting'),
+    GestureDetector(
+      onTap:() {
+        AuthService().signOut(context);
+        },
+        child:Text('Setting'),
+    ),
   ];
  final widgetName = [
    Text('My Appointments'),

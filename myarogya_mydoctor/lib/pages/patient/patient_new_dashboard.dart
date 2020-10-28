@@ -10,6 +10,7 @@ import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patientprofile.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -35,7 +36,12 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     Text('My Hospitals'),
 //    Text('My Labs'),
     Text('My Ads'),
-    Text('Setting'),
+    GestureDetector(
+      onTap:() {
+        AuthService().signOut(context);
+      },
+      child:Text('Setting'),
+    ),
   ];
   final widgetName = [
     Text('My Doctors'),
@@ -128,6 +134,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
                 labelText: 'Mobile Number',
               ),
               controller: phone,
+              keyboardType: TextInputType.number,
             ),
           ],
         ),

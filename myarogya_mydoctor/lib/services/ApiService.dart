@@ -49,7 +49,7 @@ class ApiService{
     }
 
   }
-  Future addPrecription(String pmobile,String dmobile,String pname,List medicine,List lab,String diagnosis,String bp,String weight,String pulse,String nextVisit,String totaldate) async{
+  Future addPrecription(String pmobile,String dmobile,String pname,List medicine,String lab,String diagnosis,String bp,String weight,String pulse,String nextVisit,String totaldate) async{
 
     try {
       return fb.reference().child("Prescription").child(pmobile).push()

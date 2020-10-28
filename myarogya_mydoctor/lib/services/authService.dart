@@ -92,7 +92,7 @@ class AuthService{
             MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,mobile)),
           );
         }
-        else{
+        else if((snapshot.value) == "Patient"){
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,mobile)),

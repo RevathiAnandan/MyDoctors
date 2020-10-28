@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
@@ -15,7 +17,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Appointments extends StatefulWidget {
   String mobile;
-  Appointments(this.mobile);
+  String id;
+  Appointments(this.mobile,this.id);
   @override
   _AppointmentsState createState() => _AppointmentsState();
 }
@@ -93,6 +96,15 @@ class _AppointmentsState extends State<Appointments> {
                     _openPopup(context);
                   },
                 ),
+                IconButton(
+                  icon: Icon(Icons.emoji_people_rounded, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen(widget.id,widget.mobile)),
+                    );
+                  },
+                ),
               ],
             ),
             new SliverPadding(
@@ -121,7 +133,7 @@ class _AppointmentsState extends State<Appointments> {
                                           BorderRadius.circular(20)),
                                   child: Center(
                                       child: GestureDetector(
-                                          onTap: () => Navigator.pop(context),
+                                          // onTap: () => Navigator.pop(context),
                                           child: Text("My Waiting",
                                               style: new TextStyle(
                                                   color: Colors.redAccent,
@@ -370,6 +382,7 @@ class _AppointmentsState extends State<Appointments> {
                 labelText: 'Mobile Number',
               ),
               controller: phone,
+              keyboardType: TextInputType.number,
             ),
           ],
         ),

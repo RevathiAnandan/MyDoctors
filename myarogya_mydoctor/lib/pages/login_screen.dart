@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       filled: true,
 
                       fillColor: Colors.grey[100],
-                      hintText: "+91 xxxxxxxxx"
+                      hintText: "Enter the mobile number"
                   ),
                   controller: _phoneController,
                 ),
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     padding: EdgeInsets.all(16),
                     onPressed: (){
-                      registerUser(_phoneController.text, context);
+                      registerUser("+91"+_phoneController.text, context);
                     },
                     color: Colors.redAccent,
                   ),
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     _auth.verifyPhoneNumber(
-        phoneNumber: "+91{$mobile}",
+        phoneNumber: mobile,
         timeout: Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationfailed,
