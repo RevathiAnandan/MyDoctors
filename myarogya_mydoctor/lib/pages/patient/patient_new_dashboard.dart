@@ -78,16 +78,16 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
           backgroundColorEnd: Colors.redAccent,
           actions: [
             IconButton(icon: Icon(Icons.add,color: Colors.white),
-            onPressed: (){
-              _openPopup(context);
-            },),
+              onPressed: (){
+                _openPopup(context);
+              },),
             IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
-              );
-            },),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
+                );
+              },),
           ],
         ),
         body: Center(
@@ -103,7 +103,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
                   icon: Icon(Icons.list,color: Colors.grey), title: Text('My Ads')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings,color: Colors.grey), title: Text('Settings'))
-        ],
+            ],
             currentIndex: selectedIndex,
             fixedColor: Colors.grey,
             onTap: onItemTapped
@@ -187,6 +187,8 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     db.once().then((DataSnapshot snapshot){
       ApiService().addPatientToDoctor(widget.mobile,phone,dname);
       ApiService().addDoctorToPatient(widget.mobile,phone,pname);
+      AuthService().toast("Added Successfully!!");
+      duplicate = false;
       Map<dynamic, dynamic > values = snapshot.value;
       values.forEach((key,values) {
         var refreshToken = values;
@@ -199,29 +201,34 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     db.once().then((DataSnapshot snapshot){
       Map<dynamic, dynamic > values = snapshot.value;
       print(snapshot.value);
-      values.forEach((key,values) {
-        var refreshToken = values["phone"].toString();
-        if(refreshToken == phone){
-          setState(() {
+      if(values == null){
+        duplicate = false;
+      }else{
+        values.forEach((key,values) {
+          var refreshToken = values["phone"].toString();
+          if(refreshToken == phone){
             duplicate = true;
-          });
-        }else{
-          setState(() {
-            duplicate = false;
-          });
-        }
-        print("Values!!!"+values["phone"].toString());
-        print(refreshToken);
-      });
-    });
-    checkDuplicate(phone,name);
+          }
+          print("Values!!!"+values["phone"].toString());
+          print(refreshToken);
+          print(duplicate);
+        });
+      }
+      checkDuplicate(phone,name);
+    }
+
+    );
+
   }
   checkDuplicate(String phone,String name){
-    if(duplicate == true){
+    if(duplicate == false){
       addDoctor(name , phone);
-    }else{
+      print("not"+ duplicate.toString());
+    }else if(duplicate == true){
       Navigator.pop(context);
       AuthService().toast("The Number Already Exist");
+      duplicate = false;
+      print("exist"+ duplicate.toString());
     }
   }
 

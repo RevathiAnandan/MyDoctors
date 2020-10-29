@@ -3,10 +3,10 @@ import 'dart:io';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:datetime_picker_formfield/time_picker_formfield.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 //import 'package:myarogya_mydoctor/pages/chat_screen.dart';
@@ -62,10 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: new Container(
-        child: ListView(
-          children: <Widget>[
-            Column(
+      body: SingleChildScrollView(
+        child:Container(
+            child: Column(
               children: <Widget>[
                 Container(
                   height: 130,
@@ -176,16 +175,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ],),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: new Column(
                             children: <Widget>[
                               new Container(
-                                height: MediaQuery.of(context).size.height *
-                                    60 /
-                                    100,
-                                child: ListView(
+                                height: MediaQuery.of(context).size.height,
+                                child: Column(
                                   children: <Widget>[
                                     Text("Professional Details",
                                         style: new TextStyle(
@@ -284,6 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           filled: true,
                                           fillColor: Colors.grey[100],
                                           hintText: ""),
+                                      validator: (_address) => _address==null?"Invalid Address":null,
                                       controller: _address,
                                     ),
                                     SizedBox(
@@ -366,10 +364,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         Container(
                                           height: 50,
                                           width: 170,
-                                          child: DateTimePickerFormField(
-                                            inputType: InputType.time,
+                                          child: DateTimeField(
+                                            readOnly: true,
+                                            //inputType: InputType.time,
                                             format: DateFormat("HH:mm"),
-                                            editable: false,
+                                            //editable: false,
                                             decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 labelStyle: TextStyle(
@@ -377,8 +376,30 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     fontSize: 20
                                                 ),
                                                 labelText: 'Start Time',
-                                                hasFloatingPlaceholder: false
+                                                floatingLabelBehavior: FloatingLabelBehavior.never
                                             ),
+                                            onShowPicker: (context, dt) async {
+                                              final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                builder: (context, child) => MediaQuery(
+                                                    data: MediaQuery.of(context)
+                                                        .copyWith(alwaysUse24HourFormat: true),
+                                                    child: child),
+                                              );
+                                                  return DateTimeField.convert(time);
+                                              // await showCupertinoModalPopup(
+                                              //     context: context,
+                                              //     builder: (context) {
+                                              //       return CupertinoDatePicker(
+                                              //         onDateTimeChanged: (dt) {
+                                              //           starttym = dt;
+                                              //         },
+                                              //       );
+                                              //     });
+                                              // setState(() {});
+                                              // return starttym;
+                                            },
                                             onChanged: (dt) {
                                               setState(() => starttym = dt);
                                               print('Selected date: $starttym');
@@ -388,10 +409,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         Container(
                                           height: 50,
                                           width: 170,
-                                          child: DateTimePickerFormField(
-                                            inputType: InputType.time,
+                                          child: DateTimeField(
+                                            readOnly: true,
+                                            //inputType: InputType.time,
                                             format: DateFormat("HH:mm"),
-                                            editable: false,
+                                            //editable: false,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
                                                 labelStyle: TextStyle(
@@ -399,8 +421,30 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     fontSize: 20
                                                 ),
                                                 labelText: 'End Time',
-                                                hasFloatingPlaceholder: false,
+                                                floatingLabelBehavior: FloatingLabelBehavior.never
                                             ),
+                                            onShowPicker: (context, dt) async {
+                                              final time = await showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                builder: (context, child) => MediaQuery(
+                                                    data: MediaQuery.of(context)
+                                                        .copyWith(alwaysUse24HourFormat: true),
+                                                    child: child),
+                                              );
+                                              return DateTimeField.convert(time);
+                                              // await showCupertinoModalPopup(
+                                              //     context: context,
+                                              //     builder: (context) {
+                                              //       return CupertinoDatePicker(
+                                              //         onDateTimeChanged: (dt) {
+                                              //           starttym = dt;
+                                              //         },
+                                              //       );
+                                              //     });
+                                              // setState(() {});
+                                              // return starttym;
+                                            },
                                             onChanged: (dt) {
                                               setState(() => endtym = dt);
                                               print('Selected date: $endtym');
@@ -630,9 +674,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             )
-          ],
-        ),
-      ),
+      ),)
     );
   }
 
@@ -693,12 +735,12 @@ class _ProfileScreenState extends State<ProfileScreen>
           }
         }
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+        //   ),
+        // );
        }
     }else{
       if (widget.userId != null && widget.mobile != null) {
@@ -720,12 +762,12 @@ class _ProfileScreenState extends State<ProfileScreen>
           interval,
         );
       }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+      //   ),
+      // );
     }
   }
 }

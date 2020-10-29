@@ -160,13 +160,15 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         buttons: [
           DialogButton(
             onPressed: (){
-              (widget.category=="MY PATIENT")?checkDuplication("+91" + phone.text,name.text):addDoctor(name.text,"+91"+phone.text);
+              print("Button is pressed");
+              print(widget.category);
+              checkDuplication("+91" + phone.text, name.text, widget.category);
             },
             child: Text(
               "Add",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-          )
+          ),
         ]).show();
   }
   addPatient(String name, String phone) async {
@@ -198,71 +200,83 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     db.once().then((DataSnapshot snapshot) {
       ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
       ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
+      AuthService().toast("Added Successfully!!");
+      duplicate = false;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
         print(values);
       });
     });
   }
-  checkDuplication(String phone,String name){
-    var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
-    db.once().then((DataSnapshot snapshot){
-      Map<dynamic, dynamic > values = snapshot.value;
-      print(snapshot.value);
-      values.forEach((key,values) {
-        var refreshToken = values["phone"].toString();
-        if(refreshToken == phone){
-          setState(() {
-            duplicate = true;
-          });
-        }else{
-          setState(() {
+  checkDuplication(String phone,String name,String category){
+    if(category=="MY DOCTOR"){
+        var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
+        db.once().then((DataSnapshot snapshot){
+        Map<dynamic, dynamic > values = snapshot.value;
+        print(snapshot.value);
+        if(values == null){
             duplicate = false;
-          });
+        }else{
+            values.forEach((key,values) {
+            var refreshToken = values["phone"].toString();
+            if(refreshToken == phone){
+                duplicate = true;
+            }
+            print("Values!!!"+values["phone"].toString());
+            print(refreshToken);
+            print(duplicate);
+            });
         }
-        print("Values!!!"+values["phone"].toString());
-        print(refreshToken);
-      });
-    });
-    checkDuplicate(phone,name);
-  }
-  checkDuplicate(String phone,String name){
-    if(duplicate == true){
-      addDoctor(name , phone);
-    }else{
-      Navigator.pop(context);
-      AuthService().toast("The Number Already Exist");
-    }
-  }
-
-  checkDuplicationDoctor(String phone,String name){
+        checkDuplicate(phone,name,category);
+      }
+    );
+    }else if(category=="MY PATIENT"){
     var db = fb.reference().child("User").child(widget.mobile).child("myPatient");
     db.once().then((DataSnapshot snapshot){
-      Map<dynamic, dynamic > values = snapshot.value;
-      print(snapshot.value);
-      values.forEach((key,values) {
-        var refreshToken = values["phone"].toString();
-        if(refreshToken == phone){
-          setState(() {
-            duplicate = true;
-          });
-        }else{
-          setState(() {
-            duplicate = false;
-          });
-        }
-        print("Values!!!"+values["phone"].toString());
-        print(refreshToken);
-      });
-    });
-    checkDuplicate(phone,name);
-  }
-  checkDuplicateDoctor(String phone,String name){
-    if(duplicate == true){
-      addPatient(name , phone);
+    Map<dynamic, dynamic > values = snapshot.value;
+    print(snapshot.value);
+    if(values == null){
+    duplicate = false;
     }else{
-      Navigator.pop(context);
-      AuthService().toast("The Number Already Exist");
+    values.forEach((key,values) {
+    var refreshToken = values["phone"].toString();
+    if(refreshToken == phone){
+    duplicate = true;
+    }
+    print("Values!!!"+values["phone"].toString());
+    print(refreshToken);
+    print(duplicate);
+    });
+    }
+    checkDuplicate(phone,name,category);
+    }
+
+    );
+    }
+
+
+  }
+  checkDuplicate(String phone,String name,String category){
+    if(category=="MY PATIENT"){
+      if(duplicate == false){
+          addDoctor(name , phone);
+          print("not"+ duplicate.toString());
+      }else if(duplicate == true){
+        Navigator.pop(context);
+        AuthService().toast("The Number Already Exist");
+        duplicate = false;
+        print("exist"+ duplicate.toString());
+      }
+    }else if(category=="MY PATIENT"){
+    if(duplicate == false){
+        addPatient(name , phone);
+        print("not"+ duplicate.toString());
+    }else if(duplicate == true){
+        Navigator.pop(context);
+        AuthService().toast("The Number Already Exist");
+        duplicate = false;
+        print("exist"+ duplicate.toString());
+    }
     }
   }
 

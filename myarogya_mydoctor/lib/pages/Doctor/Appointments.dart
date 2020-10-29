@@ -434,11 +434,13 @@ class _AppointmentsState extends State<Appointments> {
   checkmobile(String pname, String pmobile) {
     var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot) {
+      ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
+      ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
+      AuthService().toast("Added Successfully!!");
+      duplicate = false;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
         print(values);
-        ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
-        ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
       });
     });
   }
@@ -447,29 +449,34 @@ class _AppointmentsState extends State<Appointments> {
     db.once().then((DataSnapshot snapshot){
       Map<dynamic, dynamic > values = snapshot.value;
       print(snapshot.value);
-      values.forEach((key,values) {
-        var refreshToken = values["phone"].toString();
-        if(refreshToken == phone){
-          setState(() {
+      if(values == null){
+        duplicate = false;
+      }else{
+        values.forEach((key,values) {
+          var refreshToken = values["phone"].toString();
+          if(refreshToken == phone){
             duplicate = true;
-          });
-        }else{
-          setState(() {
-            duplicate = false;
-          });
-        }
-        print("Values!!!"+values["phone"].toString());
-        print(refreshToken);
-      });
-    });
-    checkDuplicate(phone,name);
+          }
+          print("Values!!!"+values["phone"].toString());
+          print(refreshToken);
+          print(duplicate);
+        });
+      }
+      checkDuplicate(phone,name);
+    }
+
+    );
+
   }
   checkDuplicate(String phone,String name){
-    if(duplicate == true){
+    if(duplicate == false){
       addPatient(name , phone);
-    }else{
+      print("not"+ duplicate.toString());
+    }else if(duplicate == true){
       Navigator.pop(context);
       AuthService().toast("The Number Already Exist");
+      duplicate = false;
+      print("exist"+ duplicate.toString());
     }
   }
 

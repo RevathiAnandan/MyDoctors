@@ -218,7 +218,6 @@ class MyScreenState extends State<MyScreen> {
               setState(() {
                 buttonStatus = "Waiting!";
               });
-
           }if(status == "Waiting!"){
             //todo: Button disable
           }
@@ -259,5 +258,4 @@ class MyScreenState extends State<MyScreen> {
         ),
         ).show();
   }
-
 }
