@@ -32,6 +32,7 @@ class MyScreen extends StatefulWidget {
 class MyScreenState extends State<MyScreen> {
   List dummyData = [];
   List appoint = [];
+  List status = [];
   var buttonStatus;
   bool _isButtondisable;
   FirebaseDatabase fb = FirebaseDatabase.instance;
@@ -88,7 +89,8 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+//                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(
@@ -159,7 +161,6 @@ class MyScreenState extends State<MyScreen> {
           setState(() {
             dummyData.add(refreshToken);
             print(dummyData);
-
           });
         });
       });
@@ -189,11 +190,42 @@ class MyScreenState extends State<MyScreen> {
               setState(() {
                 if (refreshToken.patientMobile == widget.mobile) {
                   appoint.add(refreshToken);
+
                   print(appoint[0].status);
                   // isLoading = false;
                 }
               });
             });
+
+//
+//            for (int k = 0; k < appoint.length; k++)
+//            {
+//              for (int j = 0; j < dummyData.length; j++)
+//                if(appoint[k].doctorMobile == dummyData[j].phone)
+//                {
+//                  status.add(appoint[j].status);
+//
+//                }else{
+//                  status.add("Book Now");
+//                }
+//            }
+//            print("Status::"+status.toString());
+
+
+
+            for(int index = 0 ;index <= appoint.length; index++){
+              print (index);
+//                    if(appoint.asMap().containsKey(index)){
+              if(dummyData[index].phone == appoint[index].doctorMobile){
+                status.add(appoint[index].status);
+              }else {
+                status.add("Book Now");
+              }
+//                    }else{
+//                        status.add("Book Now");
+//                    }
+              print ("Status"+status.toString());
+            }
           }
 
         });
