@@ -32,6 +32,7 @@ class MyScreen extends StatefulWidget {
 class MyScreenState extends State<MyScreen> {
   List dummyData = [];
   List appoint = [];
+  List<String> appointkey = [];
   List status = [];
   var buttonStatus;
   bool _isButtondisable;
@@ -89,10 +90,12 @@ class MyScreenState extends State<MyScreen> {
                               new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
-//                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
-                      onTap: () {
-                        if (widget.category == "MY PATIENT") {
+                     //trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[appoint[i].Index].status,i):(appoint[i].Index==i.toString()?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i):buttonstatus("Book Now",i)))),
+                     trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+//                       trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
+                      //trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ?(appoint.asMap().containsKey(int.parse(appoint[i].Index))?Text("11"): buttonstatus("Book Now",i)):(appoint.asMap().containsKey(i)?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i): buttonstatus("Book Now",i)),
+    onTap: () {
+    if (widget.category == "MY PATIENT") {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -160,7 +163,7 @@ class MyScreenState extends State<MyScreen> {
           print(refreshToken);
           setState(() {
             dummyData.add(refreshToken);
-            print(dummyData);
+            print(dummyData.length);
           });
         });
       });
@@ -186,12 +189,15 @@ class MyScreenState extends State<MyScreen> {
             Map<dynamic, dynamic> values = snapshot.value;
             values.forEach((key, values) {
               var refreshToken = Appointmnet.fromJson(values);
+              print("Harun");
               print(refreshToken);
+
               setState(() {
                 if (refreshToken.patientMobile == widget.mobile) {
                   appoint.add(refreshToken);
-
                   print(appoint[0].status);
+                  appointkey.add(key);
+                  print(appointkey.toString());
                   // isLoading = false;
                 }
               });
@@ -213,19 +219,19 @@ class MyScreenState extends State<MyScreen> {
 
 
 
-            for(int index = 0 ;index <= appoint.length; index++){
-              print (index);
-//                    if(appoint.asMap().containsKey(index)){
-              if(dummyData[index].phone == appoint[index].doctorMobile){
-                status.add(appoint[index].status);
-              }else {
-                status.add("Book Now");
-              }
-//                    }else{
-//                        status.add("Book Now");
-//                    }
-              print ("Status"+status.toString());
-            }
+//             for(int index = 0 ;index <= appoint.length; index++){
+//               print (index);
+// //                    if(appoint.asMap().containsKey(index)){
+//               if(dummyData[index].phone == appoint[index].doctorMobile){
+//                 status.add(appoint[index].status);
+//               }else {
+//                 status.add("Book Now");
+//               }
+// //                    }else{
+// //                        status.add("Book Now");
+// //                    }
+//               print ("Status"+status.toString());
+//             }
           }
 
         });
@@ -246,7 +252,7 @@ class MyScreenState extends State<MyScreen> {
         onPressed: (){
           if(status == "Book Now"){
               ApiService().appointment(widget.mobile,
-                  dummyData[i].phone, dummyData[i].name, "Waiting!",0,"","");
+                  dummyData[i].phone, dummyData[i].name, "Waiting!",0,"","",i.toString());
               AuthService().toast("Requesting for Confirmation");
               setState(() {
                 buttonStatus = "Waiting!";

@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/Precription.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:date_format/date_format.dart';
 
 class ShowPrecription extends StatefulWidget {
   Prescription prescripe;
@@ -99,11 +100,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                 children:[
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text('Morning:9:30am to 1:30pm',style: TextStyle(
+                                  Text("Morning: "+timesplit1(refreshValue['Morning Start Time']) +" to "+timesplit1(refreshValue['Morning End Time']) ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text('Evening:6:00pm to 10:00pm',style: TextStyle(
+                                  Text("Evening: "+timesplit1(refreshValue['Evening Start Time']) +" to "+timesplit1(refreshValue['Evening End Time']) ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text('Sunday:9:30am to 12:00pm',style: TextStyle(
+                                  Text("Sunday: "+timesplit1(refreshValue['Sunday Start Time']) +" to "+timesplit1(refreshValue['Sunday End Time']) ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   SizedBox(
                                     height: 2,
@@ -406,5 +407,9 @@ class _PrescriptionPageState extends State<ShowPrecription> {
   String timesplit(){
     var time = widget.prescripe.date.split("/")[1];
     return time;
+  }
+  timesplit1(String time){
+    var time1 = time.split("/")[1];
+    return time1;
   }
 }

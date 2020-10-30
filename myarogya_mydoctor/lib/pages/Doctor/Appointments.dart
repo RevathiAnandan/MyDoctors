@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
+import 'package:myarogya_mydoctor/model/patient.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 import 'package:intl/intl.dart';
+import 'package:date_format/date_format.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -28,6 +30,8 @@ class Appointments extends StatefulWidget {
 
 class _AppointmentsState extends State<Appointments> {
   List dummyData = [];
+  List dummyData1 = [];
+  List refresh = [];
   List keys1 = [];
   DateTime start1;
   var interval1;
@@ -47,12 +51,28 @@ class _AppointmentsState extends State<Appointments> {
 //        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
     getprofileDetails();
     var db = fb.reference().child("User").child(widget.mobile);
+    var db1 = fb.reference().child("User").child(widget.mobile).child("myPatient");
     db.once().then((DataSnapshot snapshot) {
+      print(snapshot.value['category']);
       print(snapshot.value['Name']);
       setState(() {
         dname = snapshot.value['Name'];
       });
     });
+    db1.once().then((DataSnapshot snapshot) {
+      print(snapshot.value);
+      Map<dynamic, dynamic > values = snapshot.value;
+      values.forEach((key, values) {
+        print(values);
+        var refreshToken = Patient.fromJson(values);
+        refresh.add(refreshToken);
+      });
+      print(refresh.length);
+      for (var value in snapshot.value.values){
+        //print(value);
+      }
+    });
+
   }
 
   @override
@@ -202,7 +222,7 @@ class _AppointmentsState extends State<Appointments> {
                                 ),
                               ),
                               SizedBox(height: 5.0),
-                              Text("40",
+                              Text(refresh.length.toString(),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -285,11 +305,24 @@ class _AppointmentsState extends State<Appointments> {
               title: Text(dummyData[i].patientName),
               subtitle: Text(dummyData[i].patientMobile),
               trailing: (dummyData[i].status != "Waiting!")
-                  ? Container(
-                      child: Card(
-                        child: Text(""),
-                      ),
-                    )
+                  ? FlatButton(
+                child: Text(timesplit(start1),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Lato",
+                        fontSize: 14)),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.circular(25.0),
+                    side: BorderSide(
+                        color: Colors.redAccent)),
+                padding: EdgeInsets.all(10),
+                color: Colors.redAccent,
+                onPressed: () {
+                  AuthService().toast("Next Appointment:"+timesplit(start1));
+                },
+              )
                   : FlatButton(
                       child: Text("Confirm",
                           style: TextStyle(
@@ -306,8 +339,10 @@ class _AppointmentsState extends State<Appointments> {
                       onPressed: () async {
                         if (i == 0) {
                         } else {
-                          start1 = start1.add(
-                              new Duration(minutes: interval1));
+                          setState(() {
+                            start1 = start1.add(
+                                new Duration(minutes: interval1));
+                          });
                         }
                         ApiService().appointment(
                             dummyData[i].patientMobile,
@@ -316,7 +351,7 @@ class _AppointmentsState extends State<Appointments> {
                             "View",
                             i + 1,
                             start1.toString(),
-                            keys1[i]);
+                            keys1[i],"");
                       },
                       color: Colors.redAccent,
                     ),
@@ -437,7 +472,6 @@ class _AppointmentsState extends State<Appointments> {
       newContact.givenName = name;
       newContact.phones = [Item(label: "mobile", value: phone)];
       await ContactsService.addContact(newContact);
-
       checkmobile(name, phone);
       Navigator.of(context).pop();
     }
@@ -505,5 +539,11 @@ class _AppointmentsState extends State<Appointments> {
       AuthService().signOut(context);
     }
   }
+  timesplit(DateTime time){
+    var time1 = formatDate( time , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]);
+    var time2 = time1.split("/")[1];
+    return time2;
+  }
+
 
 }

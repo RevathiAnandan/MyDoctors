@@ -170,7 +170,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             },
             child: Text(
               "Add",
-              style: TextStyle(color: Colors.redAccent, fontSize: 20),
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
         ]).show();

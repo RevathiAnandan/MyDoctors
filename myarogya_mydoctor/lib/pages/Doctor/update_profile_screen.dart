@@ -17,6 +17,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:date_format/date_format.dart';
 
 //import '../PersonalDetails.dart';
 //import '../ProfessionalDetails.dart';
@@ -67,12 +68,13 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: new Container(
-        child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
+    return SafeArea(
+      child: Scaffold(
+        body: new Container(
+          child: ListView(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
 //                Container(
 //                  height: 130,
 //                  width: double.infinity,
@@ -115,102 +117,433 @@ class _ProfileScreenState extends State<ProfileScreen>
 //                    ],
 //                  ),
 //                ),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.white,
-                  child: new Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: new Stack(
-                          fit: StackFit.loose,
-                          children: <Widget>[
-                            new Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                InkWell(
-                                  child: new Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: new DecorationImage(
-                                        image: (_image != null)
-                                            ? FileImage(File(_image.path))
-                                            : new ExactAssetImage(
-                                            'assets/images/user_profile.png'),
-                                        fit: BoxFit.cover,
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    color: Colors.white,
+                    child: new Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                          child: new Stack(
+                            fit: StackFit.loose,
+                            children: <Widget>[
+                              new Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  InkWell(
+                                    child: new Container(
+                                      width: 100.0,
+                                      height: 100.0,
+                                      decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                          image: (_image != null)
+                                              ? FileImage(File(_image.path))
+                                              : new ExactAssetImage(
+                                              'assets/images/user_profile.png'),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
+                                    onTap: ()=> getImage(),
                                   ),
-                                  onTap: ()=> getImage(),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                //TODO: YET TO BE UPDATED TO THE FIREBASE (QRDATA)
-                                (qrData!= null)?
-                                Container(
-                                  width: 100.0,
-                                  height: 100.0,
-                                  child: QrImage(
-                                    data: widget.mobile, //place where the QR Image will be shown
+                                  SizedBox(
+                                    width: 20,
                                   ),
-                                ): Text('Qr code Yet to be generated')
-                              ],
-                            ),
-                            // Padding(
-                            //     padding: EdgeInsets.only(top: 70.0, left: 0.0),
-                            //     child: new Row(
-                            //       mainAxisAlignment: MainAxisAlignment.center,
-                            //       children: <Widget>[
-                            //         new CircleAvatar(
-                            //           backgroundColor: Colors.redAccent,
-                            //           radius: 20.0,
-                            //           child: new IconButton(
-                            //             icon: Icon(Icons.camera_alt),
-                            //             color: Colors.white,
-                            //             onPressed: () {
-                            //               getImage();
-                            //             },
-                            //           ),
-                            //         )
-                            //       ],
-                            //     ),
-                            // ),
-                          ],),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: new Column(
-                            children: <Widget>[
-                              new Container(
-                                height: MediaQuery.of(context).size.height *
-                                    80/
-                                    100,
-                                child: ListView(
-                                  children: <Widget>[
-                                    Text("Professional Details",
-                                        style: new TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Lato",
-                                            color: Colors.redAccent)),
-                                    SizedBox(
-                                      height: 10,
+                                  //TODO: YET TO BE UPDATED TO THE FIREBASE (QRDATA)
+                                  (qrData!= null)?
+                                  Container(
+                                    width: 100.0,
+                                    height: 100.0,
+                                    child: QrImage(
+                                      data: widget.mobile, //place where the QR Image will be shown
                                     ),
-                                    Text("Doctor Register Id",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
+                                  ): Text('')
+                                ],
+                              ),
+                              // Padding(
+                              //     padding: EdgeInsets.only(top: 70.0, left: 0.0),
+                              //     child: new Row(
+                              //       mainAxisAlignment: MainAxisAlignment.center,
+                              //       children: <Widget>[
+                              //         new CircleAvatar(
+                              //           backgroundColor: Colors.redAccent,
+                              //           radius: 20.0,
+                              //           child: new IconButton(
+                              //             icon: Icon(Icons.camera_alt),
+                              //             color: Colors.white,
+                              //             onPressed: () {
+                              //               getImage();
+                              //             },
+                              //           ),
+                              //         )
+                              //       ],
+                              //     ),
+                              // ),
+                            ],),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: new Column(
+                              children: <Widget>[
+                                new Container(
+                                  height: MediaQuery.of(context).size.height *
+                                      78/
+                                      100,
+                                  child: ListView(
+                                    children: <Widget>[
+                                      Text("Professional Details",
+                                          style: new TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato",
+                                              color: Colors.redAccent)),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Doctor Register Id",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(Icons.person,
+                                                color:  Colors.redAccent),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        controller: _doctorId,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Hospital Name",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            prefixIcon: new Icon(Icons.business,
+                                                color:  Colors.redAccent),
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        controller: _hospitalName,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Hospital Address",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(Icons.home,
+                                                color: Colors.redAccent),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        validator: (_address) => _address==null?"Invalid Address":null,
+                                        controller: _address,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Specialist",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(
+                                                Icons.business_center,
+                                                color:  Colors.redAccent),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        controller: _specialist,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Degree",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(
+                                                Icons.library_books,
+                                                color:  Colors.redAccent),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        controller: _degree,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Available Time",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'Start Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                    context: context,
+                                                    initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                    return DateTimeField.convert(time);
+                                                // await showCupertinoModalPopup(
+                                                //     context: context,
+                                                //     builder: (context) {
+                                                //       return CupertinoDatePicker(
+                                                //         onDateTimeChanged: (dt) {
+                                                //           starttym = dt;
+                                                //         },
+                                                //       );
+                                                //     });
+                                                // setState(() {});
+                                                // return starttym;
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => starttym = dt);
+                                                print('Selected date: $starttym');
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'End Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                                // await showCupertinoModalPopup(
+                                                //     context: context,
+                                                //     builder: (context) {
+                                                //       return CupertinoDatePicker(
+                                                //         onDateTimeChanged: (dt) {
+                                                //           starttym = dt;
+                                                //         },
+                                                //       );
+                                                //     });
+                                                // setState(() {});
+                                                // return starttym;
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => endtym = dt);
+                                                print('Selected date: $endtym');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // DateFormat("HH:mm"),
+                                      // TextFormField(
+                                      //   decoration: InputDecoration(
+                                      //       contentPadding: EdgeInsets.fromLTRB(
+                                      //           20.0, 5.0, 20.0, 5.0),
+                                      //       prefixIcon: new Icon(
+                                      //           Icons.timer,
+                                      //           color: new Color(0xffACCCF8)),
+                                      //       enabledBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       focusedBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       filled: true,
+                                      //       fillColor: Colors.grey[100],
+                                      //       hintText: ""),
+                                      //   controller: _hours,
+                                      // ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Consulting Interval",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(
+                                                Icons.timer,
+                                                color: Colors.redAccent),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                borderSide: BorderSide(
+                                                    color: Colors.redAccent)),
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            hintText: ""),
+                                        controller: _interval,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+
+                                      Text("Personal Details",
+                                          style: new TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato",
+                                              color: Colors.redAccent)),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Name",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+
+                                        decoration: InputDecoration(
+                                          prefixText: 'Dr.',
                                           contentPadding: EdgeInsets.fromLTRB(
                                               20.0, 5.0, 20.0, 5.0),
                                           prefixIcon: new Icon(Icons.person,
@@ -227,358 +560,59 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                   color: Colors.redAccent)),
                                           filled: true,
                                           fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _doctorId,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Hospital Name",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          prefixIcon: new Icon(Icons.business,
-                                              color:  Colors.redAccent),
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _hospitalName,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Hospital Address",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(Icons.home,
-                                              color: Colors.redAccent),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      validator: (_address) => _address==null?"Invalid Address":null,
-                                      controller: _address,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Specialist",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(
-                                              Icons.business_center,
-                                              color:  Colors.redAccent),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _specialist,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Degree",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(
-                                              Icons.library_books,
-                                              color:  Colors.redAccent),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _degree,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Available Time",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'Start Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                  context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                                  return DateTimeField.convert(time);
-                                              // await showCupertinoModalPopup(
-                                              //     context: context,
-                                              //     builder: (context) {
-                                              //       return CupertinoDatePicker(
-                                              //         onDateTimeChanged: (dt) {
-                                              //           starttym = dt;
-                                              //         },
-                                              //       );
-                                              //     });
-                                              // setState(() {});
-                                              // return starttym;
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => starttym = dt);
-                                              print('Selected date: $starttym');
-                                            },
-                                          ),
                                         ),
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'End Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                              // await showCupertinoModalPopup(
-                                              //     context: context,
-                                              //     builder: (context) {
-                                              //       return CupertinoDatePicker(
-                                              //         onDateTimeChanged: (dt) {
-                                              //           starttym = dt;
-                                              //         },
-                                              //       );
-                                              //     });
-                                              // setState(() {});
-                                              // return starttym;
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => endtym = dt);
-                                              print('Selected date: $endtym');
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // DateFormat("HH:mm"),
-                                    // TextFormField(
-                                    //   decoration: InputDecoration(
-                                    //       contentPadding: EdgeInsets.fromLTRB(
-                                    //           20.0, 5.0, 20.0, 5.0),
-                                    //       prefixIcon: new Icon(
-                                    //           Icons.timer,
-                                    //           color: new Color(0xffACCCF8)),
-                                    //       enabledBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       filled: true,
-                                    //       fillColor: Colors.grey[100],
-                                    //       hintText: ""),
-                                    //   controller: _hours,
-                                    // ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Consulting Interval",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(
-                                              Icons.timer,
-                                              color: Colors.redAccent),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _interval,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-
-                                    Text("Personal Details",
-                                        style: new TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Lato",
-                                            color: Colors.redAccent)),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Name",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-
-                                      decoration: InputDecoration(
-                                        prefixText: 'Dr.',
-                                        contentPadding: EdgeInsets.fromLTRB(
-                                            20.0, 5.0, 20.0, 5.0),
-                                        prefixIcon: new Icon(Icons.person,
-                                            color:  Colors.redAccent),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Colors.redAccent)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Colors.redAccent)),
-                                        filled: true,
-                                        fillColor: Colors.grey[100],
+                                        controller: _dName,
                                       ),
-                                      controller: _dName,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Mobile Number",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                        enabled: false,
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Mobile Number",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
+                                          enabled: false,
+                                          decoration: InputDecoration(
+                                              prefixIcon: new Icon(
+                                                  Icons.phone_android,
+                                                  color:  Colors.redAccent),
+                                              contentPadding: EdgeInsets.fromLTRB(
+                                                  20.0, 15.0, 20.0, 5.0),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(8)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.redAccent)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(8)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.redAccent)),
+                                              filled: true,
+                                              fillColor: Colors.grey[100],
+                                              hintText: ""),
+                                          autofocus: false,
+                                          initialValue: widget.mobile
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Email",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextFormField(
                                         decoration: InputDecoration(
-                                            prefixIcon: new Icon(
-                                                Icons.phone_android,
-                                                color:  Colors.redAccent),
                                             contentPadding: EdgeInsets.fromLTRB(
-                                                20.0, 15.0, 20.0, 5.0),
+                                                20.0, 5.0, 20.0, 5.0),
+                                            prefixIcon: new Icon(Icons.email,
+                                                color:  Colors.redAccent),
                                             enabledBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(8)),
@@ -592,429 +626,403 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             filled: true,
                                             fillColor: Colors.grey[100],
                                             hintText: ""),
-                                        autofocus: false,
-                                        initialValue: widget.mobile
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Email",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              20.0, 5.0, 20.0, 5.0),
-                                          prefixIcon: new Icon(Icons.email,
-                                              color:  Colors.redAccent),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.redAccent)),
-                                          filled: true,
-                                          fillColor: Colors.grey[100],
-                                          hintText: ""),
-                                      controller: _email,
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text("Consulting Hours",
-                                        style: new TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Lato",
-                                            color: Colors.redAccent)),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text("Morning",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'Start Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => m_starttym = dt);
-                                              print('Selected date: $m_starttym');
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'End Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => m_endtym = dt);
-                                              print('Selected date: $m_endtym');
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // DateFormat("HH:mm"),
-                                    // TextFormField(
-                                    //   decoration: InputDecoration(
-                                    //       contentPadding: EdgeInsets.fromLTRB(
-                                    //           20.0, 5.0, 20.0, 5.0),
-                                    //       prefixIcon: new Icon(
-                                    //           Icons.timer,
-                                    //           color: new Color(0xffACCCF8)),
-                                    //       enabledBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       filled: true,
-                                    //       fillColor: Colors.grey[100],
-                                    //       hintText: ""),
-                                    //   controller: _hours,
-                                    // ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Evening",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'Start Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => e_starttym = dt);
-                                              print('Selected date: $starttym');
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'End Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => e_endtym = dt);
-                                              print('Selected date: $e_endtym');
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // DateFormat("HH:mm"),
-                                    // TextFormField(
-                                    //   decoration: InputDecoration(
-                                    //       contentPadding: EdgeInsets.fromLTRB(
-                                    //           20.0, 5.0, 20.0, 5.0),
-                                    //       prefixIcon: new Icon(
-                                    //           Icons.timer,
-                                    //           color: new Color(0xffACCCF8)),
-                                    //       enabledBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       filled: true,
-                                    //       fillColor: Colors.grey[100],
-                                    //       hintText: ""),
-                                    //   controller: _hours,
-                                    // ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("Sunday",
-                                        style: new TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Lato")),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'Start Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => s_starttym = dt);
-                                              print('Selected date: $s_starttym');
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          width: 170,
-                                          child: DateTimeField(
-                                            readOnly: true,
-                                            //inputType: InputType.time,
-                                            format: DateFormat("HH:mm"),
-                                            //editable: false,
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                                labelText: 'End Time',
-                                                floatingLabelBehavior: FloatingLabelBehavior.never
-                                            ),
-                                            onShowPicker: (context, dt) async {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                builder: (context, child) => MediaQuery(
-                                                    data: MediaQuery.of(context)
-                                                        .copyWith(alwaysUse24HourFormat: true),
-                                                    child: child),
-                                              );
-                                              return DateTimeField.convert(time);
-                                            },
-                                            onChanged: (dt) {
-                                              setState(() => s_endtym = dt);
-                                              print('Selected date: $s_endtym');
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // DateFormat("HH:mm"),
-                                    // TextFormField(
-                                    //   decoration: InputDecoration(
-                                    //       contentPadding: EdgeInsets.fromLTRB(
-                                    //           20.0, 5.0, 20.0, 5.0),
-                                    //       prefixIcon: new Icon(
-                                    //           Icons.timer,
-                                    //           color: new Color(0xffACCCF8)),
-                                    //       enabledBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //           borderRadius: BorderRadius.all(
-                                    //               Radius.circular(8)),
-                                    //           borderSide: BorderSide(
-                                    //               color: Colors.redAccent)),
-                                    //       filled: true,
-                                    //       fillColor: Colors.grey[100],
-                                    //       hintText: ""),
-                                    //   controller: _hours,
-                                    // ),
-
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      child: FlatButton(
-                                        child: Text("SAVE",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: "Lato",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold)),
-                                        textColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(25.0),
-                                            side: BorderSide(
-                                                color: Colors.redAccent)),
-                                        padding: EdgeInsets.all(16),
-                                        onPressed: () async {
-
-                                          updatingProfile(
-                                            _image,
-                                            _doctorId.text,
-                                            _hospitalName.text,
-                                            _specialist.text,
-                                            _degree.text,
-                                            _dName.text,
-                                            _email.text,
-                                            qrData,
-                                            _address.text,
-                                            starttym.toString(),
-                                            endtym.toString(),
-                                            _interval.text,
-                                          );
-                                          setState(() {
-                                            qrData=widget.mobile;
-                                          });
-                                          //Navigator.pop(context);
-                                        },
-                                        //TODO: Take the mobile number and generate bar code
-                                        color: Colors.redAccent,
+                                        controller: _email,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text("Consulting Hours",
+                                          style: new TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato",
+                                              color: Colors.redAccent)),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text("Morning",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'Start Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => m_starttym = dt);
+                                                print('Selected date: $m_starttym');
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'End Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => m_endtym = dt);
+                                                print('Selected date: $m_endtym');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // DateFormat("HH:mm"),
+                                      // TextFormField(
+                                      //   decoration: InputDecoration(
+                                      //       contentPadding: EdgeInsets.fromLTRB(
+                                      //           20.0, 5.0, 20.0, 5.0),
+                                      //       prefixIcon: new Icon(
+                                      //           Icons.timer,
+                                      //           color: new Color(0xffACCCF8)),
+                                      //       enabledBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       focusedBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       filled: true,
+                                      //       fillColor: Colors.grey[100],
+                                      //       hintText: ""),
+                                      //   controller: _hours,
+                                      // ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Evening",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'Start Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => e_starttym = dt);
+                                                print('Selected date: $starttym');
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'End Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => e_endtym = dt);
+                                                print('Selected date: $e_endtym');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // DateFormat("HH:mm"),
+                                      // TextFormField(
+                                      //   decoration: InputDecoration(
+                                      //       contentPadding: EdgeInsets.fromLTRB(
+                                      //           20.0, 5.0, 20.0, 5.0),
+                                      //       prefixIcon: new Icon(
+                                      //           Icons.timer,
+                                      //           color: new Color(0xffACCCF8)),
+                                      //       enabledBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       focusedBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       filled: true,
+                                      //       fillColor: Colors.grey[100],
+                                      //       hintText: ""),
+                                      //   controller: _hours,
+                                      // ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("Sunday",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'Start Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => s_starttym = dt);
+                                                print('Selected date: $s_starttym');
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 170,
+                                            child: DateTimeField(
+                                              readOnly: true,
+                                              //inputType: InputType.time,
+                                              format: DateFormat("HH:mm"),
+                                              //editable: false,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),
+                                                  labelText: 'End Time',
+                                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                                              ),
+                                              onShowPicker: (context, dt) async {
+                                                final time = await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                                                  builder: (context, child) => MediaQuery(
+                                                      data: MediaQuery.of(context)
+                                                          .copyWith(alwaysUse24HourFormat: true),
+                                                      child: child),
+                                                );
+                                                return DateTimeField.convert(time);
+                                              },
+                                              onChanged: (dt) {
+                                                setState(() => s_endtym = dt);
+                                                print('Selected date: $s_endtym');
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // DateFormat("HH:mm"),
+                                      // TextFormField(
+                                      //   decoration: InputDecoration(
+                                      //       contentPadding: EdgeInsets.fromLTRB(
+                                      //           20.0, 5.0, 20.0, 5.0),
+                                      //       prefixIcon: new Icon(
+                                      //           Icons.timer,
+                                      //           color: new Color(0xffACCCF8)),
+                                      //       enabledBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       focusedBorder: OutlineInputBorder(
+                                      //           borderRadius: BorderRadius.all(
+                                      //               Radius.circular(8)),
+                                      //           borderSide: BorderSide(
+                                      //               color: Colors.redAccent)),
+                                      //       filled: true,
+                                      //       fillColor: Colors.grey[100],
+                                      //       hintText: ""),
+                                      //   controller: _hours,
+                                      // ),
+
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        child: FlatButton(
+                                          child: Text("SAVE",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: "Lato",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold)),
+                                          textColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(25.0),
+                                              side: BorderSide(
+                                                  color: Colors.redAccent)),
+                                          padding: EdgeInsets.all(16),
+                                          onPressed: () async {
+
+                                            updatingProfile(
+                                              _image,
+                                              _doctorId.text,
+                                              _hospitalName.text,
+                                              _specialist.text,
+                                              _degree.text,
+                                              _dName.text,
+                                              _email.text,
+                                              qrData,
+                                              _address.text,
+                                              starttym.toString(),
+                                              endtym.toString(),
+                                              _interval.text,
+                                              formatDate(m_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
+                                              formatDate(m_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
+                                              formatDate(e_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
+                                              formatDate(e_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
+                                              formatDate(s_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
+                                              formatDate(s_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),                                            );
+                                            setState(() {
+                                              qrData=widget.mobile;
+                                            });
+                                            //Navigator.pop(context);
+                                          },
+                                          //TODO: Take the mobile number and generate bar code
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -1028,7 +1036,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Future<void> updatingProfile(File image, String doctorId, String hospitalName,
-      String specialist, String degree, String dName, String email,String Qrdata,String address, String starttym,String endtym,String interval) async {
+      String specialist, String degree, String dName, String email,String Qrdata,String address, String starttym,String endtym,String interval, String mstarttym,String mendtym,String estarttym,String eendtymm,String sstarttym,String sendtym) async {
 
     if(image != null){
       String fileName = "image" + widget.userId;
@@ -1054,6 +1062,12 @@ class _ProfileScreenState extends State<ProfileScreen>
             starttym,
             endtym,
             interval,
+            mstarttym,
+            mendtym,
+            estarttym,
+            eendtymm,
+            sstarttym,
+            sendtym
           );
         }else {
           if (widget.userId != null && widget.mobile != null) {
@@ -1073,6 +1087,12 @@ class _ProfileScreenState extends State<ProfileScreen>
               starttym,
               endtym,
               interval,
+              mstarttym,
+              mendtym,
+              estarttym,
+              eendtymm,
+              sstarttym,
+              sendtym
             );
           }
         }
@@ -1102,6 +1122,12 @@ class _ProfileScreenState extends State<ProfileScreen>
           starttym,
           endtym,
           interval,
+          mstarttym,
+          mendtym,
+          estarttym,
+          eendtymm,
+          sstarttym,
+          sendtym
         );
       }
       Navigator.push(

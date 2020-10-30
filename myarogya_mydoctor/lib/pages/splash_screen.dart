@@ -38,20 +38,22 @@ class _SplashScreenState extends State<SplashScreen> {
                       stops: [0.0,0.5]
                   )
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('MY Arogya My Doctor',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w900, fontFamily: 'Lato'),),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                      width: 250,
-                      child: Text('Schedule your appointment with your doctor or patient in a better way.',style: TextStyle(fontSize: 15, fontFamily: 'Lato'),textAlign: TextAlign.center,)),
-                  new Center(
-                      child: Image.asset('assets/images/logo123.png',height: 300,width: 300)
-                  ),
-                ],
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('My Arogya My Doctor',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w900, fontFamily: 'Lato'),),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                        width: 250,
+                        child: Text('Schedule your appointment with your doctor or patient in a better way.',style: TextStyle(fontSize: 15, fontFamily: 'Lato'),textAlign: TextAlign.center,)),
+                    new Center(
+                        child: Image.asset('assets/images/logo123.png',height: 300,width: 300)
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

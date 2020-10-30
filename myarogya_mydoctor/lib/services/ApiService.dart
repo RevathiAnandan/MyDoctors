@@ -142,7 +142,13 @@ class ApiService{
       String address,
       String starttym,
       String endtym,
-      String interval) async{
+      String interval,
+      String mstarttym,
+      String mendtym,
+      String estarttym,
+      String eendtymm,
+      String sstarttym,
+      String sendtym) async{
     print(id);
     try {
       return fb.reference().child('User').child(mobile)
@@ -161,7 +167,13 @@ class ApiService{
         "Consulting Interval":interval,
         "Name": dName,
         "emailId": email,
-        "QrCode" : qrdata
+        "QrCode" : qrdata,
+        "Morning Start Time":mstarttym,
+        "Morning End Time":mendtym,
+        "Evening Start Time":estarttym,
+        "Evening End Time":eendtymm,
+        "Sunday Start Time":sstarttym,
+        "Sunday End Time":sendtym
       });
 
     } catch (e) {
@@ -189,7 +201,7 @@ class ApiService{
     }
   }
   
-  Future appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key) async{
+  Future appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key,String index) async{
     try{
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);// 28/03/2020
@@ -202,7 +214,8 @@ class ApiService{
           "status": status,
           "date": formatter,
           "Token": token,
-          "BookingTime":bookingTime
+          "BookingTime":bookingTime,
+          "Index": index
         });
         return status;
       }else{
@@ -214,7 +227,8 @@ class ApiService{
           "status": status,
           "date": formatter,
           "Token": token,
-          "BookingTime":bookingTime
+          "BookingTime":bookingTime,
+          "Index": index
         });
         return status;
       }
