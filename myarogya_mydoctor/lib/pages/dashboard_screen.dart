@@ -90,7 +90,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back,color: Colors.redAccent),
             onPressed: ()async{
               (widget.category=="MY DOCTOR")?
               Navigator.push(
@@ -104,12 +104,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               );
             },
           ),
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.white,
             // title: Text("My Arogya My Doctor"),
             // elevation: 0.7,
           bottom: TabBar(
             controller: _tabController,
-            indicatorColor: Colors.white,
+            indicatorColor: Colors.redAccent,
+          labelColor: Colors.redAccent,
           tabs: <Widget>[
               Tab(text: widget.category),
               Tab(
@@ -118,7 +119,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             ],
           ),
           actions: [
-            IconButton(icon: Icon(Icons.add,color: Colors.white),
+            IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
               onPressed: (){
                 _openPopup(context);
               },),
@@ -169,7 +170,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             },
             child: Text(
               "Add",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.redAccent, fontSize: 20),
             ),
           ),
         ]).show();

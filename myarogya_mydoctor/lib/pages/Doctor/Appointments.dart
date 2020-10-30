@@ -13,6 +13,7 @@ import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 import 'package:intl/intl.dart';
+import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -97,15 +98,26 @@ class _AppointmentsState extends State<Appointments> {
                     _openPopup(context);
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.people, color: Colors.white),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen(widget.id,widget.mobile)),
-                    );
-                  },
-                ),
+//                IconButton(
+//                  icon: Icon(Icons.people, color: Colors.white),
+//                  onPressed: () {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(builder: (context) => ProfileScreen(widget.id,widget.mobile)),
+//                    );
+//                  },
+//                ),
+                  PopupMenuButton<String>(
+                    onSelected: choiceAction,
+                    itemBuilder: (BuildContext context){
+                      return Constants.choices.map((String choice){
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    },
+                  )
               ],
             ),
             new SliverPadding(
@@ -480,5 +492,18 @@ class _AppointmentsState extends State<Appointments> {
     }
   }
 
-  var fiftyDaysFromNow;
+  void choiceAction(String choice){
+    if(choice == Constants.Profile){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ProfileScreen(widget.id,widget.mobile),
+        ),
+      );
+    }else if(choice == Constants.SignOut){
+      AuthService().signOut(context);
+    }
+  }
+
 }
