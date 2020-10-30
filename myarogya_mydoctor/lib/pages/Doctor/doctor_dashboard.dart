@@ -190,12 +190,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                 height: 60,
                                 child:  GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
-                                      ),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
+                                    //   ),
+                                    // );
 //                                checkmobile();
                                   },
                                   child: Card(

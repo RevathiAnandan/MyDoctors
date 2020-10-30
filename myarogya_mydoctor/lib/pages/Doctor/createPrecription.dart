@@ -8,12 +8,13 @@ import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import '../labtests.dart';
+import 'package:date_format/date_format.dart';
 import '../my_flutter_app_icons.dart';
 import 'addmedicine.dart';
 class CreatePrescription extends StatefulWidget {
-  String pmobile,dmobile,pname;
+  String pmobile,dmobile,pname,id;
 
-  CreatePrescription(this.pmobile,this.dmobile,this.pname);
+  CreatePrescription(this.pmobile,this.dmobile,this.pname,this.id);
   @override
   _CreatePrescriptionState createState() => _CreatePrescriptionState();
 }
@@ -36,6 +37,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
   List medicineDetails =[];
   List precriptionDetails =[];
   List labDetails =[];
+  final df = new DateFormat('dd-MM-yyyy hh:mm a');
   addmedicine() {
     medicine.add(new AddMedicine(mController.text,d1Controller.text,d2Controller.text,d3Controller.text,daysController.text,_chosenValue2));
     medicineDetails.add(
@@ -90,7 +92,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
   DateTime date2;
   DateTime date3;
   DateTime date4;
-  DateTime date5;
+  String date5;
   DateTime date6;
 
   @override
@@ -657,7 +659,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                     height: 55,
                                     width: 170,
                                     child: DateTimeField(
-                                      format: DateFormat.yMMMMd("en_US"),
+                                      format: DateFormat("dd-MM-yyyy"),
                                       //editable: false,
                                       decoration: InputDecoration(
                                           labelStyle: TextStyle(
@@ -671,13 +673,17 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                         return showDatePicker(
                                           context: context,
                                           initialDate: DateTime.now(),
-                                          firstDate: DateTime(1990,1,1),
-                                          lastDate: DateTime(2050,1,1),
+                                          firstDate: DateTime(1990),
+                                          lastDate: DateTime(2050),
                                         );
                                       },
                                       onChanged: (dt) {
-                                        setState(() => date5 = dt);
+                                        setState(() {
+                                          date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]);
+                                        });
+                                        //setState(() => date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]));
                                         print('Selected date: $date5');
+                                        print(date5);
                                       },
                                     ),
                                   ),
@@ -851,13 +857,13 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                       onPressed: (){
                         print("values"+medicineDetails.toString());
                         print("test"+labDetails.toString());
-                        ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labController.text,diaController.text,bpController.text,weightController.text,pulseController.text,date5.toString(),new DateTime.now().toString(),bpController1.text);
+                        ApiService().addPrecription(widget.pmobile,widget.dmobile,widget.pname,medicineDetails,labController.text,diaController.text,bpController.text,weightController.text,pulseController.text,date5, formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]),bpController1.text);
                         AuthService().toast("Prescription Created Successfully!!");
                         Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>DashBoardScreen(widget.dmobile,"MY PATIENT"),
+                            builder: (context) =>DashBoardScreen(widget.dmobile,"MY PATIENT",widget.id),
                           ),
                         );
                       },

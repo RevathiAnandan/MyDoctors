@@ -43,94 +43,102 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 230,
-                     padding: EdgeInsets.only(left: 20, top: 20, right: 20),
+                    height: MediaQuery.of(context).size.height*25/100,
+                     padding: EdgeInsets.only(left: 15, top: 10, right: 15),
                     child:  isLoading
                         ? Center(
                         child: CircularProgressIndicator() ): Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: 200,
+                              //width: 200,
                               child: Text(
                                 refreshValue['hospitalName']!=null?refreshValue['hospitalName']:"Yet to be updated",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 24,fontFamily: 'Lato'),
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: 50,
-                                width: 150,
-                                child: Text(refreshValue['mobile']!=null?refreshValue['mobile']:"Yet to be updated",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                              ),
-                            )
                           ],
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 2,
                         ),
                         Container(
-                          child: Text(
-                            'Door no. 5, Unique Home, Tirupathi& Virar[Weif], Palghar - 401 303',style: TextStyle(
+                          child: Text(refreshValue['Hospital Address']!=null?refreshValue['Hospital Address']:"Yet to be updated",style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
                         ),
-                        SizedBox(
+                        Divider(
                           height: 10,
+                          thickness: 2,
+                          color: Colors.black,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                                 children:[
-                                  Text(refreshValue['Name']!=null?refreshValue['Name']:"Yet to be updated",style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                                  Text(refreshValue['registerId']!=null?refreshValue['registerId']:"Yet to be updated",style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
-                                  Text(refreshValue['specialist']!=null?refreshValue['specialist']:"Yet to be updated",style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                  Text(refreshValue['registerId']!=null?"Doctor ID:"+refreshValue['registerId']:"Yet to be updated",style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
+                                  Text(refreshValue['Name']!=null?"Name: Dr."+refreshValue['Name']:"Yet to be updated",style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
+                                  Text(refreshValue['degree']!=null?refreshValue['degree']:"Yet to be updated",style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
+                                  Text(refreshValue['specialist']!=null?"Specialist:"+refreshValue['specialist']:"Yet to be updated",style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text(refreshValue['emailId']!=null?refreshValue['emailId']:"Yet to be updated",style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                 ]
+                            ),
+                            SizedBox(
+                              width: 5,
                             ),
                             Column(
                                 children:[
                                   Text('Consulting Hours',style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text('Morning:9:30am to 1:30pm',style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text('Evening:6:00pm to 10:00pm',style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text('Sunday:9:30am to 12:00pm',style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(refreshValue['mobile']!=null?"Doctor No:"+refreshValue['mobile']:"Yet to be updated",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                 ]
                             )
                           ],
-                        )
+                        ),
+                        Divider(
+                          height: 10,
+                          thickness: 2,
+                          color: Colors.black,
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 5,
                   ),
-                  // Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Container(
-                  //     padding: EdgeInsets.only(left: 20),
-                  //     child: Text(
-                  //       'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
-                  //       style: TextStyle(
-                  //           fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
-                  //     ),
-                  //   ),
-                  // ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                    height: 25,
+                    height: 10,
                   ),
                   Row(
                     children: [
@@ -234,7 +242,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       padding: EdgeInsets.only(left: 16.0),
-                      child: Text('Next Visit on '+datesplit(widget.prescripe.nextVisit),
+                      child: Text('  Next Visit on '+widget.prescripe.nextVisit,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                       ),
@@ -307,7 +315,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
 //                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
 //          ),
           DataColumn(
-              label: Text("Medicine/Tests",
+              label: Text("Medicine",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
@@ -353,7 +361,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
                   ),
                   DataCell(
-                      Text("${e.days }Days",style: TextStyle(
+                      Text("${e.days } Days",style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
                   )
                 ]
@@ -392,12 +400,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
 //  }
 
  String datesplit(String date1){
-    var date = date1.split(" ");
+    var date = date1.split("/");
     return date[0];
   }
   String timesplit(){
-    var time = widget.prescripe.date.split(" ");
-    var time1 = time[1].split(".");
-    return time1[0];
+    var time = widget.prescripe.date.split("/")[1];
+    return time;
   }
 }

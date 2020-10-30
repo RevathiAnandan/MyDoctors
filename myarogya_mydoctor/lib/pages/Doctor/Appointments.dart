@@ -179,7 +179,7 @@ class _AppointmentsState extends State<Appointments> {
                                                     builder: (context) =>
                                                         DashBoardScreen(
                                                             widget.mobile,
-                                                            "MY PATIENT")),
+                                                            "MY PATIENT",widget.id)),
                                               ),
                                           child: Text("My Patient",
                                               style: new TextStyle(

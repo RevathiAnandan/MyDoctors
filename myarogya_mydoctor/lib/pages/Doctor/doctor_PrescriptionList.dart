@@ -9,8 +9,8 @@ class DoctorPrescriptionList extends StatefulWidget {
   String pmobile;
   String dmobile;
   String pname;
-
-  DoctorPrescriptionList(this.dmobile,this.pmobile,this.pname);
+  String id;
+  DoctorPrescriptionList(this.dmobile,this.pmobile,this.pname,this.id);
 
   @override
   _DoctorPrescriptionListState createState() => _DoctorPrescriptionListState();
@@ -77,7 +77,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
           // Add your onPressed code here!
           Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreatePrescription(widget.pmobile,widget.dmobile,widget.pname)),
+                  MaterialPageRoute(builder: (context) => CreatePrescription(widget.pmobile,widget.dmobile,widget.pname,widget.id)),
                 );
         },
         child: Icon(Icons.send),

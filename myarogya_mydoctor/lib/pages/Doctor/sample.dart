@@ -162,13 +162,13 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                               child: IconButton(
                                 icon:Image.asset('assets/images/grid.png'),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
-                                    ),
-                                  );
-//                                checkmobile();
+//                                   Navigator.push(
+//                                     context,
+//                                     MaterialPageRoute(
+//                                       builder: (context) =>DashBoardScreen(widget.mobile,"MY PATIENT"),
+//                                     ),
+//                                   );
+// //                                checkmobile();
                                 },
                               ),
                             ),

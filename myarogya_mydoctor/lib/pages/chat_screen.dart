@@ -21,7 +21,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class MyScreen extends StatefulWidget {
   String mobile;
   String category;
-  MyScreen(this.mobile, this.category);
+  String id;
+  MyScreen(this.id,this.mobile, this.category);
   @override
   MyScreenState createState() {
     return new MyScreenState();
@@ -96,7 +97,7 @@ class MyScreenState extends State<MyScreen> {
                                 builder: (context) => DoctorPrescriptionList(
                                     widget.mobile,
                                     dummyData[i].phone,
-                                    dummyData[i].name)),
+                                    dummyData[i].name,widget.id)),
                           );
                         } else {
                           Navigator.push(

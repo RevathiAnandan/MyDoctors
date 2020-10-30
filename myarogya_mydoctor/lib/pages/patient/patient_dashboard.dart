@@ -159,13 +159,13 @@ class _PatientDashboardState extends State<PatientDashboard> {
                             child: IconButton(
                               icon:Image.asset('assets/images/grid.png'),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
-                                  ),
-                                );
-//                                checkmobile();
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                     builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
+//                                   ),
+//                                 );
+// //                                checkmobile();
                               },
                             ),
                           ),
@@ -312,13 +312,13 @@ class _PatientDashboardState extends State<PatientDashboard> {
                             child: IconButton(
                               icon:Image.asset('assets/images/grid.png'),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
-                                  ),
-                                );
-//                                checkmobile();
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                     builder: (context) =>DashBoardScreen(widget.mobile,"MY DOCTOR"),
+//                                   ),
+//                                 );
+// //                                checkmobile();
                               },
                             ),
                           ),

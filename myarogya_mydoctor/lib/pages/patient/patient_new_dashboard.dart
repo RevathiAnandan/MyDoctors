@@ -34,7 +34,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
   final _formKey = GlobalKey<FormState>();
 
   List<Widget> _widgetOptions() => [
-    MyScreen(widget.mobile,"MY DOCTOR"),
+    MyScreen(widget.id,widget.mobile,"MY DOCTOR"),
     Text('My Hospitals'),
 //    Text('My Labs'),
     Text('My Ads'),

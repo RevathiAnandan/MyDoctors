@@ -62,9 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child:Container(
-            child: Column(
+      body: new Container(
+        child: ListView(
+          children: <Widget>[
+            Column(
               children: <Widget>[
                 Container(
                   height: 130,
@@ -175,14 +176,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ],),
                       ),
                       Container(
-                        width: double.infinity,
+                        width: MediaQuery.of(context).size.width,
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: new Column(
                             children: <Widget>[
                               new Container(
-                                height: MediaQuery.of(context).size.height,
-                                child: Column(
+                                height: MediaQuery.of(context).size.height *
+                                    60 /
+                                    100,
+                                child: ListView(
                                   children: <Widget>[
                                     Text("Professional Details",
                                         style: new TextStyle(
@@ -674,7 +677,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             )
-      ),)
+          ],
+        ),
+      ),
     );
   }
 
@@ -735,12 +740,12 @@ class _ProfileScreenState extends State<ProfileScreen>
           }
         }
 
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+          ),
+        );
        }
     }else{
       if (widget.userId != null && widget.mobile != null) {
@@ -762,12 +767,12 @@ class _ProfileScreenState extends State<ProfileScreen>
           interval,
         );
       }
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+        ),
+      );
     }
   }
 }

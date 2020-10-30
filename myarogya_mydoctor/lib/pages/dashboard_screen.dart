@@ -20,7 +20,8 @@ class DashBoardScreen extends StatefulWidget {
 //  final List<CameraDescription> cameras;
   final String  mobile;
   final String  category;
-  DashBoardScreen(this.mobile,this.category);
+  final String id;
+  DashBoardScreen(this.mobile,this.category,this.id);
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -84,50 +85,52 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: ()async{
-            uid = AuthService().getCurrentUser();
-            (widget.category=="MY PATIENT")?
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,widget.mobile)),
-            )
-            :
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,widget.mobile)),
-            );
-          },
-        ),
-        backgroundColor: Colors.redAccent,
-          // title: Text("My Arogya My Doctor"),
-          // elevation: 0.7,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.white,
-        tabs: <Widget>[
-            Tab(text: widget.category),
-            Tab(
-              text: "CONTACTS",
-            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: ()async{
+              (widget.category=="MY DOCTOR")?
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PatientNewDashboard(widget.id,widget.mobile)),
+              )
+              :
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorNewDashboard(widget.id,widget.mobile)),
+              );
+            },
+          ),
+          backgroundColor: Colors.redAccent,
+            // title: Text("My Arogya My Doctor"),
+            // elevation: 0.7,
+          bottom: TabBar(
+            controller: _tabController,
+            indicatorColor: Colors.white,
+          tabs: <Widget>[
+              Tab(text: widget.category),
+              Tab(
+                text: "CONTACTS",
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(icon: Icon(Icons.add,color: Colors.white),
+              onPressed: (){
+                _openPopup(context);
+              },),
           ],
         ),
-        actions: [
-          IconButton(icon: Icon(Icons.add,color: Colors.white),
-            onPressed: (){
-              _openPopup(context);
-            },),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          MyScreen(widget.mobile,widget.category),
-          ContactsPage(widget.mobile,widget.category),
-        ],
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            MyScreen(widget.id,widget.mobile,widget.category),
+            ContactsPage(widget.mobile,widget.category),
+          ],
+        ),
       ),
     );
   }
@@ -267,7 +270,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         duplicate = false;
         print("exist"+ duplicate.toString());
       }
-    }else if(category=="MY PATIENT"){
+    }else if(category=="MY DOCTOR"){
     if(duplicate == false){
         addPatient(name , phone);
         print("not"+ duplicate.toString());
