@@ -34,6 +34,7 @@ class _AppointmentsState extends State<Appointments> {
   List refresh = [];
   List keys1 = [];
   DateTime start1;
+  var range = 20;
   var interval1;
   String dname;
   bool duplicate = false;
@@ -175,7 +176,7 @@ class _AppointmentsState extends State<Appointments> {
                                                   fontFamily: "Lato")))),
                                 ),
                               ),
-                              Text("40",
+                              Text((dummyData.length == 0?"0":(range - dummyData.length).toString()),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -268,7 +269,7 @@ class _AppointmentsState extends State<Appointments> {
                                 ),
                               ),
                               SizedBox(height: 5.0),
-                              Text("40",
+                              Text("0",
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -289,7 +290,7 @@ class _AppointmentsState extends State<Appointments> {
           child: ListView.builder(
             shrinkWrap: true,
             itemCount:
-            dummyData.length < 20 ? dummyData.length : null,
+            dummyData.length < range ? dummyData.length : null,
             itemBuilder: (context, i) => new Column(
           children: <Widget>[
             new Divider(

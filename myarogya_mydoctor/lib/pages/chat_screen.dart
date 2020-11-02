@@ -204,18 +204,18 @@ class MyScreenState extends State<MyScreen> {
             });
 
 //
-//            for (int k = 0; k < appoint.length; k++)
-//            {
-//              for (int j = 0; j < dummyData.length; j++)
-//                if(appoint[k].doctorMobile == dummyData[j].phone)
-//                {
-//                  status.add(appoint[j].status);
-//
-//                }else{
-//                  status.add("Book Now");
-//                }
-//            }
-//            print("Status::"+status.toString());
+            for (int k = 0; k < appoint.length; k++)
+            {
+              for (int j = 0; j < dummyData.length; j++){
+                if(appoint[k].doctorMobile == dummyData[j].phone)
+                {
+                  status.add(appoint[k].status);
+
+                }
+              }
+
+            }
+            print("Status::"+status.toString());
 
 
 

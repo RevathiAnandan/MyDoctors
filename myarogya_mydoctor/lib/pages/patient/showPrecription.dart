@@ -243,7 +243,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       padding: EdgeInsets.only(left: 16.0),
-                      child: Text('  Next Visit on '+widget.prescripe.nextVisit,
+                      child: Text('  Next Visit on '+datesplit(widget.prescripe.nextVisit),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                       ),
@@ -401,12 +401,12 @@ class _PrescriptionPageState extends State<ShowPrecription> {
 //  }
 
  String datesplit(String date1){
-    var date = date1.split("/");
+    var date = date1.split(" ");
     return date[0];
   }
   String timesplit(){
-    var time = widget.prescripe.date.split("/")[1];
-    return time;
+    var time = widget.prescripe.date.split(" ")[1];
+    return time.split(".")[0];
   }
   timesplit1(String time){
     var time1 = time.split("/")[1];

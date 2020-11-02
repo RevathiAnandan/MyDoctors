@@ -46,11 +46,11 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     ),
   ];
   final widgetName = [
-    Text('My Doctors'),
-    Text('My Hospitals'),
+    Text('My Doctors',style: TextStyle(color: Colors.redAccent),),
+    Text('My Hospitals',style: TextStyle(color: Colors.redAccent),),
 //    Text('My Labs'),
-    Text('My Ads'),
-    Text('Settings'),
+    Text('My Ads',style: TextStyle(color: Colors.redAccent),),
+//    Text('Settings'),
   ];
   @override
   void initState() {
@@ -74,14 +74,14 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       child: Scaffold(
         appBar: GradientAppBar(
           title: widgetName.elementAt(selectedIndex),
-          backgroundColorStart: Colors.redAccent,
-          backgroundColorEnd: Colors.redAccent,
+          backgroundColorStart: Colors.white,
+          backgroundColorEnd: Colors.white,
           actions: [
-            IconButton(icon: Icon(Icons.add,color: Colors.white),
+            IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
               onPressed: (){
                 _openPopup(context);
               },),
-            IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
+            IconButton(icon: Icon(Icons.account_circle,color: Colors.redAccent),
               onPressed: (){
                 Navigator.push(
                   context,
@@ -95,17 +95,17 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         ),
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.grey), title: Text('MyDoctor',)),
+              BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.redAccent), title: Text('MyDoctor')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.hotel,color: Colors.grey), title: Text('My Hospital')),
+                  icon: Icon(Icons.hotel,color: Colors.redAccent), title: Text('My Hospital')),
 //              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.list,color: Colors.grey), title: Text('My Ads')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings,color: Colors.grey), title: Text('Settings'))
+                  icon: Icon(Icons.list,color: Colors.redAccent), title: Text('My Ads')),
+//              BottomNavigationBarItem(
+//                  icon: Icon(Icons.settings,color: Colors.redAccent), title: Text('Settings'))
             ],
             currentIndex: selectedIndex,
-            fixedColor: Colors.grey,
+            fixedColor: Colors.redAccent,
             onTap: onItemTapped
         ),
       ),
