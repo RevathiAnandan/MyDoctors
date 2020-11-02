@@ -977,7 +977,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                   color: Colors.redAccent)),
                                           padding: EdgeInsets.all(16),
                                           onPressed: () async {
-
                                             updatingProfile(
                                               _image,
                                               _doctorId.text,

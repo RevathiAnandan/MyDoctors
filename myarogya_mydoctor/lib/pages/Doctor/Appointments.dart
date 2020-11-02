@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/patient.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/doctorsettings.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
@@ -39,6 +40,7 @@ class _AppointmentsState extends State<Appointments> {
   String dname;
   bool duplicate = false;
   Timer timer;
+  int h;
   TextEditingController name = new TextEditingController();
   TextEditingController phone = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -343,6 +345,7 @@ class _AppointmentsState extends State<Appointments> {
                           setState(() {
                             start1 = start1.add(
                                 new Duration(minutes: interval1));
+                            h=2;
                           });
                         }
                         ApiService().appointment(
@@ -352,7 +355,7 @@ class _AppointmentsState extends State<Appointments> {
                             "View",
                             i + 1,
                             start1.toString(),
-                            keys1[i],"");
+                            keys1[i],h.toString());
                       },
                       color: Colors.redAccent,
                     ),
@@ -538,6 +541,14 @@ class _AppointmentsState extends State<Appointments> {
       );
     }else if(choice == Constants.SignOut){
       AuthService().signOut(context);
+    }else if(choice == Constants.Settings){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DoctorSettings(),
+        ),
+      );
     }
   }
   timesplit(DateTime time){

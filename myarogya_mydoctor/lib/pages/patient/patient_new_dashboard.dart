@@ -10,8 +10,10 @@ import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
 
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patientprofile.dart';
+import 'package:myarogya_mydoctor/pages/patient/patientsettings.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -46,10 +48,10 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     ),
   ];
   final widgetName = [
-    Text('My Doctors',style: TextStyle(color: Colors.redAccent),),
-    Text('My Hospitals',style: TextStyle(color: Colors.redAccent),),
+    Text('  My Doctors',style: TextStyle(color: Colors.white),),
+    Text('  My Hospitals',style: TextStyle(color: Colors.white),),
 //    Text('My Labs'),
-    Text('My Ads',style: TextStyle(color: Colors.redAccent),),
+    Text('  My Ads',style: TextStyle(color: Colors.white),),
 //    Text('Settings'),
   ];
   @override
@@ -72,26 +74,60 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: GradientAppBar(
-          title: widgetName.elementAt(selectedIndex),
-          backgroundColorStart: Colors.white,
-          backgroundColorEnd: Colors.white,
-          actions: [
-            IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
-              onPressed: (){
-                _openPopup(context);
-              },),
-            IconButton(icon: Icon(Icons.account_circle,color: Colors.redAccent),
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
-                );
-              },),
-          ],
-        ),
-        body: Center(
-          child: _widgetOptions()[selectedIndex],
+        // appBar: GradientAppBar(
+        //   title: widgetName.elementAt(selectedIndex),
+        //   backgroundColorStart: Colors.white,
+        //   backgroundColorEnd: Colors.white,
+        //
+        // ),
+        body: NestedScrollView(
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  expandedHeight: 250.0,
+                  floating: false,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: widgetName.elementAt(selectedIndex),
+                    ),
+                    background: Image.network(
+                      "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                    actions: [
+                      IconButton(icon: Icon(Icons.add,color: Colors.white),
+                        onPressed: (){
+                          _openPopup(context);
+                        },),
+                      IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PatientProfile(widget.id,widget.mobile)),
+                          );
+                        },),
+                      PopupMenuButton<String>(
+                        onSelected: choiceAction,
+                        itemBuilder: (BuildContext context){
+                          return Constants.choices.map((String choice){
+                            return PopupMenuItem<String>(
+                              value: choice,
+                              child: Text(choice),
+                            );
+                          }).toList();
+                        },
+                      )
+                    ],
+                )
+              ];
+            },
+          body: Center(
+            child: _widgetOptions()[selectedIndex],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
@@ -229,6 +265,27 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
       AuthService().toast("The Number Already Exist");
       duplicate = false;
       print("exist"+ duplicate.toString());
+    }
+  }
+  void choiceAction(String choice){
+    if(choice == Constants.Profile){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ProfileScreen(widget.id,widget.mobile),
+        ),
+      );
+    }else if(choice == Constants.SignOut){
+      AuthService().signOut(context);
+    }else if(choice == Constants.Settings){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              PatientSettings(),
+        ),
+      );
     }
   }
 
