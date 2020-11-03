@@ -546,7 +546,7 @@ class _AppointmentsState extends State<Appointments> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              DoctorSettings(),
+              DoctorSettings(widget.id,widget.mobile),
         ),
       );
     }

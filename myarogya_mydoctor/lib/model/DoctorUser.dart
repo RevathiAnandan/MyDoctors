@@ -13,9 +13,10 @@ class DoctorUser{
   String EndTime;
   String StartTime;
   String Intervals;
-  String Address;
+  String image;
+  String Hospital_Address;
 
-  DoctorUser._({this.Name, this.category,this.mobile,this.myPatient,this.degree,this.emailId,this.hospitalName,this.registerId,this.specialist,this.EndTime,this.Address,this.Intervals,this.StartTime});
+  DoctorUser._({this.Name, this.category,this.mobile,this.degree,this.emailId,this.hospitalName,this.registerId,this.specialist,this.EndTime,this.image,this.Intervals,this.StartTime,this.Hospital_Address,this.myPatient});
 
   factory DoctorUser.fromJson(dynamic json) {
     var tagObjsJson = json['myPatient'] as List;
@@ -33,7 +34,8 @@ class DoctorUser{
       EndTime: json['End Time'] as String,
       StartTime: json['Start Time'] as String,
       Intervals: json['Consulting Interval'] as String,
-      Address: json['Hospital Address'] as String,
+      Hospital_Address: json['Hospital Address'] as String,
+      image: json['image'] as String,
     );
   }
 }

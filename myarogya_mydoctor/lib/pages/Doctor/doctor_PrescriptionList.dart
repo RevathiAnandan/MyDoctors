@@ -31,7 +31,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Reports",style:TextStyle(color: Colors.redAccent) ,),
+          title: Text("Reports (${dummyData.length})",style:TextStyle(color: Colors.redAccent) ,),
           leading: IconButton(
             icon: Icon(Icons.arrow_back,color: Colors.redAccent),
             onPressed: ()async{

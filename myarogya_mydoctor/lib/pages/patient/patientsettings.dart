@@ -69,7 +69,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                       SizedBox(
                         width: 10,
                       ),
-                      Icon(Icons.monetization_on_outlined,size: 30,),
+//                      Icon(Icons.monetization_on_outlined,size: 30,),
                       SizedBox(
                         width: 20,
                       ),
@@ -125,7 +125,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                       SizedBox(
                         width: 10,
                       ),
-                      Icon(Icons.privacy_tip_outlined,size: 30,),
+//                      Icon(Icons.privacy_tip_outlined,size: 30,),
                       SizedBox(
                         width: 20,
                       ),
@@ -153,7 +153,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                       SizedBox(
                         width: 10,
                       ),
-                      Icon(Icons.note_rounded,size: 30,),
+//                      Icon(Icons.note_rounded,size: 30,),
                       SizedBox(
                         width: 20,
                       ),
@@ -210,7 +210,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                         SizedBox(
                           width: 10,
                         ),
-                        Icon(Icons.logout,size: 30,),
+//                        Icon(Icons.logout,size: 30,),
                         SizedBox(
                           width: 20,
                         ),
