@@ -50,7 +50,8 @@ dependencies:
   barcode_scan: ^2.0.1
   flappy_search_bar: 1.4.1
   gradient_app_bar: ^0.0.1
-  flutter_sms: ^2.0.1+2
+  share: ^0.6.2+3
+  firebase_dynamic_links:
 dev_dependencies:
   flutter_test:
     sdk: flutter
