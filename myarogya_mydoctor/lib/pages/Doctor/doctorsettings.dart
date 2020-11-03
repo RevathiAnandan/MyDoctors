@@ -16,11 +16,7 @@ class DoctorSettings extends StatefulWidget {
 class _DoctorSettingsState extends State<DoctorSettings> {
   String _linkMessage;
   bool _isCreatingLink = false;
-  String _testString =
-      "To test: long press link and then copy and click from a non-browser "
-      "app. Make sure this isn't being tested on iOS simulator and iOS xcode "
-      "is properly setup. Look at firebase_dynamic_links/README.md for more "
-      "details.";
+  String _testString = "Find our App in Play Store..Please find the Below Link";
   @override
   void initState() {
     // TODO: implement initState
@@ -55,36 +51,36 @@ class _DoctorSettingsState extends State<DoctorSettings> {
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EditProfileDoctor(widget.id,widget.mobile)
                       ),
-                      Icon(Icons.person,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      GestureDetector(
-                        child: Text(
+                    );
+                  },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.person,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
                           "Profile",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,
                             fontFamily: 'Lato',
                             fontWeight: FontWeight.bold,
-                          ),),
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                 EditProfileDoctor(widget.id,widget.mobile)
-                            ),
-                          );
-                        },
-                      )
-                    ],
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -358,7 +354,7 @@ class _DoctorSettingsState extends State<DoctorSettings> {
   shareLink(BuildContext context,String url,String message){
     final RenderBox Box = context.findRenderObject();
     Share.share(
-        url,
+        message+""+url,
         subject: message,
         sharePositionOrigin: Box.localToGlobal(Offset.zero)&Box.size
     );

@@ -200,7 +200,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     }
   }
   checkmobile(String pname, String pmobile) {
-    var db = fb.reference().child("User");
+    var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot) {
       ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
       ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);

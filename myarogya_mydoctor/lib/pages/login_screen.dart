@@ -21,60 +21,63 @@ class _LoginScreenState extends State<LoginScreen> {
   //Place A
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(left:30.0,right: 30.0,top: 10.0,bottom: 10.0),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/logo123.png',height: 180,width: 350),
-                SizedBox(height: 10,),
-                Text("Enter Mobile Number", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal,fontFamily: "Lacto"),),
-                SizedBox(height: 10,),
-                TextFormField(
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                  decoration: InputDecoration(
-                      prefixIcon: new Icon(Icons.phone_android,color: Colors.redAccent),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.redAccent)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.redAccent)
-                      ),
-                      filled: true,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          body: Container(
+            padding: EdgeInsets.only(left:30.0,right: 30.0,top: 10.0,bottom: 10.0),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/images/logo123.png',height: 180,width: 350),
+                  SizedBox(height: 10,),
+                  Text("Enter Mobile Number", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal,fontFamily: "Lacto"),),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                    decoration: InputDecoration(
+                        prefixIcon: new Icon(Icons.phone_android,color: Colors.redAccent),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.redAccent)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.redAccent)
+                        ),
+                        filled: true,
 
-                      fillColor: Colors.grey[100],
-                      hintText: "Enter the mobile number"
-                  ),
-                  controller: _phoneController,
-                ),
-                SizedBox(height: 16,),
-                Container(
-                  width: double.infinity,
-                  child: FlatButton(
-                    child: Text("Continue",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(color: Colors.redAccent)
+                        fillColor: Colors.grey[100],
+                        hintText: "Enter the mobile number"
                     ),
-                    padding: EdgeInsets.all(16),
-                    onPressed: (){
-                      registerUser("+91"+_phoneController.text, context);
-                    },
-                    color: Colors.redAccent,
+                    controller: _phoneController,
                   ),
-                )
-              ],
+                  SizedBox(height: 16,),
+                  Container(
+                    width: double.infinity,
+                    child: FlatButton(
+                      child: Text("Continue",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          side: BorderSide(color: Colors.redAccent)
+                      ),
+                      padding: EdgeInsets.all(16),
+                      onPressed: (){
+                        registerUser("+91"+_phoneController.text, context);
+                      },
+                      color: Colors.redAccent,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        )
+          )
+      ),
     );
   }
 

@@ -18,19 +18,20 @@ import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 //  }
 //}
 
-class EditProfileDoctor extends StatelessWidget {
+
+class EditProfilePatient extends StatelessWidget {
   String userId;
   String mobile;
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var refresh;
 
-  EditProfileDoctor(this.userId, this.mobile);
+  EditProfilePatient(this.userId, this.mobile);
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   final TextEditingController dgreeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController hosController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController specialController = TextEditingController();
   final TextEditingController idController = TextEditingController();
@@ -55,15 +56,16 @@ class EditProfileDoctor extends StatelessWidget {
   }
 
   applyChanges() {
-    fb.reference().child('User').child(mobile).update({
+    fb.reference().child('User').child(mobile)
+        .update({
       "Name": nameController.text,
       "mobile": bioController.text,
-      "degree": dgreeController.text,
+      //"degree": dgreeController.text,
       "emailId": emailController.text,
-      "hospitalName": hosController.text,
-      "Hospital Address": addressController.text,
-      "specialist": specialController.text,
-      "registerId": idController.text,
+      "Age": ageController.text,
+      //"Hospital Address": addressController.text,
+      //"specialist": specialController.text,
+      //"registerId": idController.text,
     });
   }
 
@@ -94,10 +96,7 @@ class EditProfileDoctor extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
+                icon: Icon(Icons.close,color: Colors.redAccent,),
                 onPressed: () {
                   Navigator.maybePop(context);
                 },
@@ -124,41 +123,37 @@ class EditProfileDoctor extends StatelessWidget {
                   child: FutureBuilder(
                       future: fb.reference().child('User').child(mobile).once(),
                       builder: (context, snapshot) {
+
                         if (!snapshot.hasData)
                           return Container(
                               alignment: FractionalOffset.center,
                               child: CircularProgressIndicator());
 
                         Map<dynamic, dynamic> values = snapshot.data.value;
-                        if (values == null) {
-                          nameController.text = "";
-                          bioController.text = "";
-                          dgreeController.text = "";
+                        if(values == null){
+                          nameController.text = " ";
+                          bioController.text =" ";
                           emailController.text = "";
-                          hosController.text = "";
-                          addressController.text = "";
-                          specialController.text = "";
-                          idController.text = "";
-                        } else {
+                          ageController.text = "";
+                        }else{
                           values.forEach((key, values) {
                             print(values);
                             refresh = values;
                           });
                           nameController.text = values['Name'];
                           bioController.text = values['mobile'];
-                          dgreeController.text = values['degree'];
                           emailController.text = values['emailId'];
-                          hosController.text = values['hospitalName'];
-                          addressController.text = values['Hospital Address'];
-                          specialController.text = values['specialist'];
-                          idController.text = values['registerId'];
+                          ageController.text = values['Age'];
                         }
+
+
+
+
 
                         return Column(
                           children: <Widget>[
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
                               child: CircleAvatar(
 //                  backgroundImage: NetworkImage(currentUserModel.photoUrl),
                                 radius: 50.0,
@@ -179,29 +174,10 @@ class EditProfileDoctor extends StatelessWidget {
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 children: <Widget>[
-                                  buildTextField(
-                                      name: "Name", controller: nameController),
-                                  buildTextField(
-                                      name: "Mobile",
-                                      controller: bioController),
-                                  buildTextField(
-                                      name: "Degree",
-                                      controller: dgreeController),
-                                  buildTextField(
-                                      name: "Email",
-                                      controller: emailController),
-                                  buildTextField(
-                                      name: "Hospital Name",
-                                      controller: hosController),
-                                  buildTextField(
-                                      name: "Hospital Address",
-                                      controller: addressController),
-                                  buildTextField(
-                                      name: "Specialist",
-                                      controller: specialController),
-                                  buildTextField(
-                                      name: "Register Id",
-                                      controller: idController),
+                                  buildTextField(name: "Name", controller: nameController),
+                                  buildTextField(name: "Mobile", controller: bioController),
+                                  buildTextField(name: "Email", controller: emailController),
+                                  buildTextField(name: "Age", controller: ageController),
                                 ],
                               ),
                             ),
@@ -210,6 +186,11 @@ class EditProfileDoctor extends StatelessWidget {
                       }),
                 ),
               ],
-            )));
+            )
+        )
+    );
+
+
+
   }
 }

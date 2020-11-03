@@ -283,7 +283,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              PatientSettings(),
+              PatientSettings(widget.id,widget.mobile),
         ),
       );
     }

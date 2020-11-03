@@ -99,8 +99,8 @@ class MyScreenState extends State<MyScreen> {
                         ],
                       ),
                       //trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[appoint[i].Index].status,i):(appoint[i].Index==i.toString()?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i):buttonstatus("Book Now",i)))),
-                      // trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
-//                       trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
+                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
+                      // trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
                       //trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ?(appoint.asMap().containsKey(int.parse(appoint[i].Index))?Text("11"): buttonstatus("Book Now",i)):(appoint.asMap().containsKey(i)?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i): buttonstatus("Book Now",i)),
                       //trailing: (widget.category == "MY PATIENT")?Text(" "):buttons(_widgetIndex,i),
                       onTap: () {
@@ -264,41 +264,41 @@ class MyScreenState extends State<MyScreen> {
     }
   }
 
-  // FlatButton buttonstatus(String status, int i) {
-  //   return FlatButton(
-  //       onPressed: () {
-  //         if (status == "Book Now") {
-  //           ApiService().appointment(widget.mobile, dummyData[i].phone,
-  //               dummyData[i].name, "Waiting!", 0, "", "", i.toString());
-  //           AuthService().toast("Requesting for Confirmation");
-  //           setState(() {
-  //             buttonStatus = "Waiting!";
-  //           });
-  //         }
-  //         if (status == "Waiting!") {
-  //           //todo: Button disable
-  //         } else if (status == "View") {
-  //           _openPopup(context, i);
-  //         }
-  //       },
-  //       textColor: Colors.white,
-  //       shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(25.0),
-  //           side: BorderSide(color: Colors.redAccent)),
-  //       padding: EdgeInsets.all(10),
-  //       color: Colors.redAccent,
-  //       child: (status == "Book Now")
-  //           ? Text(
-  //               "Book Now",
-  //               style: TextStyle(
-  //                   color: Colors.white, fontFamily: "Lato", fontSize: 14),
-  //             )
-  //           : Text(
-  //               status,
-  //               style: TextStyle(
-  //                   color: Colors.white, fontFamily: "Lato", fontSize: 14),
-  //             ));
-  // }
+  FlatButton buttonstatus(String status, int i) {
+    return FlatButton(
+        onPressed: () {
+          if (status == "Book Now") {
+            ApiService().appointment(widget.mobile, dummyData[i].phone,
+                dummyData[i].name, "Waiting!", 0, "", "", i.toString());
+            AuthService().toast("Requesting for Confirmation");
+            setState(() {
+              buttonStatus = "Waiting!";
+            });
+          }
+          if (status == "Waiting!") {
+            //todo: Button disable
+          } else if (status == "View") {
+            _openPopup(context, i);
+          }
+        },
+        textColor: Colors.white,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            side: BorderSide(color: Colors.redAccent)),
+        padding: EdgeInsets.all(10),
+        color: Colors.redAccent,
+        child: (status == "Book Now")
+            ? Text(
+                "Book Now",
+                style: TextStyle(
+                    color: Colors.white, fontFamily: "Lato", fontSize: 14),
+              )
+            : Text(
+                status,
+                style: TextStyle(
+                    color: Colors.white, fontFamily: "Lato", fontSize: 14),
+              ));
+  }
 
   _openPopup(context, index) {
     var booking_time = appoint[index].BookingTime;
@@ -314,120 +314,120 @@ class MyScreenState extends State<MyScreen> {
       ),
     ).show();
   }
-  buttonfunction(String status,int i){
-    if (status == "Book Now") {
-      // if(i != 0){
-      //   for (int l = 0; l <= i; l++) {
-      //     ApiService().appointment("widget.mobile", "dummyData[i].phone",
-      //         "dummyData[i].name", "", 0, "", "", "");
-      //   }
-      // }else{
-      //   _widgetIndex=0;
-      //   print("returing index 0");
-      //   return buttons(_widgetIndex, i);
-      // }
-      // ApiService().appointment(widget.mobile, dummyData[i].phone,
-      //     dummyData[i].name, "Waiting!", 0, "", "", i.toString());
-      // AuthService().toast("Requesting for Confirmation");
-      _widgetIndex=0;
-      print("returing index 0");
-      return buttons(_widgetIndex, i);
-    }
-    if (status == "Waiting!") {
-      //todo: Button disable
-      // if(i != 0){
-      //   // if(i!=appoint.length) {
-      //   //   for (int l = 0; l <= i; l++) {
-      //   //     ApiService().appointment(
-      //   //         "widget.mobile",
-      //   //         "dummyData[i].phone",
-      //   //         "dummyData[i].name",
-      //   //         "",
-      //   //         0,
-      //   //         "",
-      //   //         "",
-      //   //         "");
-      //   //   }
-      //   // }
-      //     print("returing index 1");
-      //     //_widgetIndex=1;
-      //     return buttons(_widgetIndex, i);
-      //   }else{
-          //_widgetIndex=1;
-          print("returing index 1");
-          return buttons(_widgetIndex, i);
-        // }
-
-    } else if (status == "View") {
-      _openPopup(context, i);
-      _widgetIndex=2;
-      print("returing index 1");
-      return buttons(_widgetIndex, i);
-    }
-  }
-  IndexedStack  buttons(int index,int i){
-    return IndexedStack(
-      index: index,
-      children: [
-        FlatButton(
-          child: Text(
-            "Book Now",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Lato", fontSize: 14),
-          ),
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(color: Colors.redAccent)),
-          padding: EdgeInsets.all(10),
-          color: Colors.redAccent,
-          onPressed: (){
-            ApiService().appointment(widget.mobile, dummyData[i].phone,
-                dummyData[i].name, "Waiting!",i, "", "", i.toString());
-            AuthService().toast("Requesting for Confirmation");
-            setState(() {
-              buttonStatus = "Waiting!";
-              _widgetIndex=1;
-            });
-          },
-        ),
-        FlatButton(
-          child: Text(
-            "Waiting",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Lato", fontSize: 14),
-          ),
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(color: Colors.redAccent)),
-          padding: EdgeInsets.all(10),
-          color: Colors.redAccent,
-          onPressed: (){
-           AuthService().toast("Your Appointment is on waiting");
-          },
-        )
-        ,
-        FlatButton(
-          child: Text(
-            "View",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Lato", fontSize: 14),
-          ),
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(color: Colors.redAccent)),
-          padding: EdgeInsets.all(10),
-          color: Colors.redAccent,
-          onPressed: (){
-            _openPopup(context, i);
-          },
-        )
-      ],
-
-    );
-  }
+  // buttonfunction(String status,int i){
+  //   if (status == "Book Now") {
+  //     // if(i != 0){
+  //     //   for (int l = 0; l <= i; l++) {
+  //     //     ApiService().appointment("widget.mobile", "dummyData[i].phone",
+  //     //         "dummyData[i].name", "", 0, "", "", "");
+  //     //   }
+  //     // }else{
+  //     //   _widgetIndex=0;
+  //     //   print("returing index 0");
+  //     //   return buttons(_widgetIndex, i);
+  //     // }
+  //     // ApiService().appointment(widget.mobile, dummyData[i].phone,
+  //     //     dummyData[i].name, "Waiting!", 0, "", "", i.toString());
+  //     // AuthService().toast("Requesting for Confirmation");
+  //     _widgetIndex=0;
+  //     print("returing index 0");
+  //     return buttons(_widgetIndex, i);
+  //   }
+  //   if (status == "Waiting!") {
+  //     //todo: Button disable
+  //     // if(i != 0){
+  //     //   // if(i!=appoint.length) {
+  //     //   //   for (int l = 0; l <= i; l++) {
+  //     //   //     ApiService().appointment(
+  //     //   //         "widget.mobile",
+  //     //   //         "dummyData[i].phone",
+  //     //   //         "dummyData[i].name",
+  //     //   //         "",
+  //     //   //         0,
+  //     //   //         "",
+  //     //   //         "",
+  //     //   //         "");
+  //     //   //   }
+  //     //   // }
+  //     //     print("returing index 1");
+  //     //     //_widgetIndex=1;
+  //     //     return buttons(_widgetIndex, i);
+  //     //   }else{
+  //         //_widgetIndex=1;
+  //         print("returing index 1");
+  //         return buttons(_widgetIndex, i);
+  //       // }
+  //
+  //   } else if (status == "View") {
+  //     _openPopup(context, i);
+  //     _widgetIndex=2;
+  //     print("returing index 1");
+  //     return buttons(_widgetIndex, i);
+  //   }
+  // }
+  // IndexedStack  buttons(int index,int i){
+  //   return IndexedStack(
+  //     index: index,
+  //     children: [
+  //       FlatButton(
+  //         child: Text(
+  //           "Book Now",
+  //           style: TextStyle(
+  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
+  //         ),
+  //         textColor: Colors.white,
+  //         shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(25.0),
+  //             side: BorderSide(color: Colors.redAccent)),
+  //         padding: EdgeInsets.all(10),
+  //         color: Colors.redAccent,
+  //         onPressed: (){
+  //           ApiService().appointment(widget.mobile, dummyData[i].phone,
+  //               dummyData[i].name, "Waiting!",i, "", "", i.toString());
+  //           AuthService().toast("Requesting for Confirmation");
+  //           setState(() {
+  //             buttonStatus = "Waiting!";
+  //             _widgetIndex=1;
+  //           });
+  //         },
+  //       ),
+  //       FlatButton(
+  //         child: Text(
+  //           "Waiting",
+  //           style: TextStyle(
+  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
+  //         ),
+  //         textColor: Colors.white,
+  //         shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(25.0),
+  //             side: BorderSide(color: Colors.redAccent)),
+  //         padding: EdgeInsets.all(10),
+  //         color: Colors.redAccent,
+  //         onPressed: (){
+  //          AuthService().toast("Your Appointment is on waiting");
+  //         },
+  //       )
+  //       ,
+  //       FlatButton(
+  //         child: Text(
+  //           "View",
+  //           style: TextStyle(
+  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
+  //         ),
+  //         textColor: Colors.white,
+  //         shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(25.0),
+  //             side: BorderSide(color: Colors.redAccent)),
+  //         padding: EdgeInsets.all(10),
+  //         color: Colors.redAccent,
+  //         onPressed: (){
+  //           _openPopup(context, i);
+  //         },
+  //       )
+  //     ],
+  //
+  //   );
+  // }
 
 
 }
