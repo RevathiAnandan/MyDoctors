@@ -1,5 +1,7 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:share/share.dart';
 
 import 'edit_profile_Patient.dart';
 
@@ -13,6 +15,15 @@ class PatientSettings extends StatefulWidget {
 }
 
 class _PatientSettingsState extends State<PatientSettings> {
+  String _linkMessage;
+  bool _isCreatingLink = false;
+  String _testString = "Find our App in Play Store..Please find the Below Link";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initDynamicLinks();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -217,25 +228,30 @@ class _PatientSettingsState extends State<PatientSettings> {
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.people,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Invite a Friend",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+                child: InkWell(
+                  onTap: (){
+                    _createDynamicLink(true);
+                  },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.people,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Invite a Friend",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -274,5 +290,72 @@ class _PatientSettingsState extends State<PatientSettings> {
         ),
       ),
     );
+  }
+
+  Future<void> _createDynamicLink(bool short) async {
+    setState(() {
+      _isCreatingLink = true;
+    });
+
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://myarogyamydoctor.page.link',
+      link: Uri.parse('https://myarogyamydoctor.page.link/invite'),
+      androidParameters: AndroidParameters(
+        packageName: 'com.example.myarogya_mydoctor',
+        minimumVersion: 16,
+      ),
+      dynamicLinkParametersOptions: DynamicLinkParametersOptions(
+        shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
+      ),
+//      iosParameters: IosParameters(
+//        bundleId: 'com.google.FirebaseCppDynamicLinksTestApp.dev',
+//        minimumVersion: '0',
+//      ),
+    );
+
+    Uri url;
+    if (short) {
+      final ShortDynamicLink shortLink = await parameters.buildShortLink();
+      url = shortLink.shortUrl;
+      print(url.toString());
+      shareLink(context,url.toString(),_testString);
+    } else {
+      url = await parameters.buildUrl();
+    }
+
+    setState(() {
+      _linkMessage = url.toString();
+      _isCreatingLink = false;
+    });
+  }
+
+  shareLink(BuildContext context,String url,String message){
+    final RenderBox Box = context.findRenderObject();
+    Share.share(
+        message+""+url,
+        subject: message,
+        sharePositionOrigin: Box.localToGlobal(Offset.zero)&Box.size
+    );
+  }
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+          final Uri deepLink = dynamicLink?.link;
+
+          if (deepLink != null) {
+            Navigator.pushNamed(context, deepLink.path);
+          }
+        }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
+
+    final PendingDynamicLinkData data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      Navigator.pushNamed(context, deepLink.path);
+    }
   }
 }
