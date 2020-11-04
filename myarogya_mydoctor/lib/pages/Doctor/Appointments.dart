@@ -110,13 +110,13 @@ class _AppointmentsState extends State<Appointments> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search, color: Colors.white),
+                  icon: Icon(Icons.search, color: Colors.white,),
                   onPressed: () {
                     showSearch(context: context, delegate: DataSearch());
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.add, color: Colors.white),
+                  icon: Icon(Icons.add, color: Colors.white,size: 50,),
                   onPressed: () {
                     _openPopup(context);
                   },
@@ -271,7 +271,7 @@ class _AppointmentsState extends State<Appointments> {
                                 ),
                               ),
                               SizedBox(height: 5.0),
-                              Text("0",
+                              Text(ApiService().addpres().toString()== null ?"0":ApiService().addpres().toString(),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -305,7 +305,7 @@ class _AppointmentsState extends State<Appointments> {
                       fontFamily: "Lato",
                       color: Colors.redAccent,
                       fontSize: 25)),
-              title: Text(dummyData[i].patientName),
+              title: Text(dummyData[i].doctorName),
               subtitle: Text(dummyData[i].patientMobile),
               trailing: (dummyData[i].status != "Waiting!")
                   ? FlatButton(
@@ -351,11 +351,12 @@ class _AppointmentsState extends State<Appointments> {
                         ApiService().appointment(
                             dummyData[i].patientMobile,
                             widget.mobile,
-                            dummyData[i].patientName,
+                            dummyData[i].doctorName,
                             "View",
                             i + 1,
                             start1.toString(),
                             keys1[i],h.toString());
+                        ApiService().trigger=false;
                       },
                       color: Colors.redAccent,
                     ),

@@ -680,10 +680,12 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                       onChanged: (dt) {
                                         setState(() {
                                           date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]);
+                                          ApiService().addpres();
                                         });
                                         //setState(() => date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]));
                                         print('Selected date: $date5');
                                         print(date5);
+                                        print(ApiService().no);
                                       },
                                     ),
                                   ),

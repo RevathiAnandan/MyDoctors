@@ -95,14 +95,28 @@ class MyScreenState extends State<MyScreen> {
                               ),
                             ],
                           ),
-                          //(widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonfunction("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonfunction(appoint[int.parse(appoint[i].Index)].status,i):buttonfunction(buttonStatus,i))),
+                          (widget.category == "MY PATIENT")?Text(""):FlatButton(
+                                  child: Text(
+                                    "Book Now",
+                                    style: TextStyle(
+                                        color: Colors.white, fontFamily: "Lato", fontSize: 14),
+                                  ),
+                                  textColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      side: BorderSide(color: Colors.redAccent)),
+                                  padding: EdgeInsets.all(10),
+                                  color: Colors.redAccent,
+                                  onPressed: (){
+                                    ApiService().appointment(widget.mobile, dummyData[i].phone,
+                                        dummyData[i].name, "Waiting!",i, "", "", i.toString());
+                                    AuthService().toast("Requesting for Confirmation");
+                                    ApiService().trigger=true;
+                                    //todo:Enhancement should be done
+                                  },
+                                ),
                         ],
                       ),
-                      //trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[appoint[i].Index].status,i):(appoint[i].Index==i.toString()?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i):buttonstatus("Book Now",i)))),
-                      trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
-                      // trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
-                      //trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ?(appoint.asMap().containsKey(int.parse(appoint[i].Index))?Text("11"): buttonstatus("Book Now",i)):(appoint.asMap().containsKey(i)?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i): buttonstatus("Book Now",i)),
-                      //trailing: (widget.category == "MY PATIENT")?Text(" "):buttons(_widgetIndex,i),
                       onTap: () {
                         if (widget.category == "MY PATIENT") {
                           Navigator.push(

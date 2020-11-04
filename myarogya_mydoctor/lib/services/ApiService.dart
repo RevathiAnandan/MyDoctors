@@ -4,6 +4,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 class ApiService{
 
+  bool trigger;
+  int no=0;
+
+  int addpres(){
+    no++;
+    return no;
+  }
   FirebaseDatabase fb = FirebaseDatabase.instance;
   Future createUser(String id,String mobile,String category) async{
     print(id);
@@ -210,7 +217,7 @@ class ApiService{
         db.update({
           "doctorMobile":dmobile,
           "patientMobile":pmobile,
-          "patientName":pname,
+          "doctorName":pname,
           "status": status,
           "date": formatter,
           "Token": token,
@@ -223,7 +230,7 @@ class ApiService{
         db.set({
           "doctorMobile":dmobile,
           "patientMobile":pmobile,
-          "patientName":pname,
+          "doctorName":pname,
           "status": status,
           "date": formatter,
           "Token": token,
@@ -238,6 +245,6 @@ class ApiService{
       print(e);
     }
   }
-  
+
   
 }

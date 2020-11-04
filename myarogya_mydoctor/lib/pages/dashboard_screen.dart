@@ -166,7 +166,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             onPressed: (){
               print("Button is pressed");
               print(widget.category);
-              checkDuplication("+91" + phone.text, name.text, widget.category);
+              checkDuplication("+91" + phone.text, name.text);
             },
             child: Text(
               "Add",
@@ -175,112 +175,92 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           ),
         ]).show();
   }
-  addPatient(String name, String phone) async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if (permission == PermissionStatus.granted) {
-      Contact newContact = new Contact();
-      newContact.givenName = name;
-      newContact.phones = [Item(label: "mobile", value: phone)];
-      await ContactsService.addContact(newContact);
-      checkmobile(name, phone);
-      Navigator.of(context).pop();
-    }
-  }
-  addDoctor(String name , String phone)async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if(permission == PermissionStatus.granted){
-      Contact newContact = new Contact();
-      newContact.givenName = name;
-      newContact.phones = [
-        Item(label: "mobile", value:phone)
-      ];
-      await ContactsService.addContact(newContact);
-      checkmobile(name,phone);
-      Navigator.of(context).pop();
-    }
-  }
-  checkmobile(String pname, String pmobile) {
-    var db = fb.reference().child("User").child(widget.mobile);
-    db.once().then((DataSnapshot snapshot) {
-      ApiService().addPatientToDoctor(pmobile, widget.mobile, pname);
-      ApiService().addDoctorToPatient(pmobile, widget.mobile, dname);
-      AuthService().toast("Added Successfully!!");
-      duplicate = false;
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
-        print(values);
-      });
-    });
-  }
-  checkDuplication(String phone,String name,String category){
-    if(category=="MY DOCTOR"){
-        var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
-        db.once().then((DataSnapshot snapshot){
-        Map<dynamic, dynamic > values = snapshot.value;
+
+  checkDuplication(String phone,String name){
+    if(widget.category == "MY PATIENT") {
+      var db = fb.reference().child("User").child(widget.mobile).child(
+          "myPatient");
+      db.once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
         print(snapshot.value);
-        if(values == null){
-            duplicate = false;
-        }else{
-            values.forEach((key,values) {
+        if (values == null) {
+          duplicate = false;
+        } else {
+          values.forEach((key, values) {
             var refreshToken = values["phone"].toString();
-            if(refreshToken == phone){
-                duplicate = true;
+            if (refreshToken == phone) {
+              duplicate = true;
             }
-            print("Values!!!"+values["phone"].toString());
+            print("Values!!!" + values["phone"].toString());
             print(refreshToken);
             print(duplicate);
-            });
+          });
         }
-        checkDuplicate(phone,name,category);
+        checkDuplicate(phone, name);
       }
-    );
-    }else if(category=="MY PATIENT"){
-    var db = fb.reference().child("User").child(widget.mobile).child("myPatient");
-    db.once().then((DataSnapshot snapshot){
-    Map<dynamic, dynamic > values = snapshot.value;
-    print(snapshot.value);
-    if(values == null){
-    duplicate = false;
-    }else{
-    values.forEach((key,values) {
-    var refreshToken = values["phone"].toString();
-    if(refreshToken == phone){
-    duplicate = true;
+      );
+    }else {
+      var db = fb.reference().child("User").child(widget.mobile).child(
+          "myDoctor");
+      db.once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        print(snapshot.value);
+        if (values == null) {
+          duplicate = false;
+        } else {
+          values.forEach((key, values) {
+            var refreshToken = values["phone"].toString();
+            if (refreshToken == phone) {
+              duplicate = true;
+            }
+            print("Values!!!" + values["phone"].toString());
+            print(refreshToken);
+            print(duplicate);
+          });
+        }
+        checkDuplicate(phone, name);
+      }
+      );
     }
-    print("Values!!!"+values["phone"].toString());
-    print(refreshToken);
-    print(duplicate);
-    });
-    }
-    checkDuplicate(phone,name,category);
-    }
-
-    );
-    }
-
-
   }
-  checkDuplicate(String phone,String name,String category){
-    if(category=="MY PATIENT"){
-      if(duplicate == false){
-          addDoctor(name , phone);
-          print("not"+ duplicate.toString());
-      }else if(duplicate == true){
-        Navigator.pop(context);
-        AuthService().toast("The Number Already Exist");
-        duplicate = false;
-        print("exist"+ duplicate.toString());
-      }
-    }else if(category=="MY DOCTOR"){
+  checkDuplicate(String mobile,String name) async{
     if(duplicate == false){
-        addPatient(name , phone);
-        print("not"+ duplicate.toString());
+      if(widget.category == "MY PATIENT") {
+        final PermissionStatus permission = await Permission.contacts.status;
+        if(permission == PermissionStatus.granted){
+          Contact newContact = new Contact();
+          newContact.givenName = name;
+          newContact.phones = [
+            Item(label: "mobile", value:mobile)
+          ];
+          await ContactsService.addContact(newContact);
+          ApiService().addPatientToDoctor(mobile, widget.mobile, name);
+          ApiService().addDoctorToPatient(mobile, widget.mobile, name);
+          AuthService().toast("Added Successfully");
+          Navigator.of(context).pop();
+        }
+
+      }else{
+        final PermissionStatus permission = await Permission.contacts.status;
+        if(permission == PermissionStatus.granted){
+          Contact newContact = new Contact();
+          newContact.givenName = name;
+          newContact.phones = [
+            Item(label: "mobile", value:mobile)
+          ];
+          await ContactsService.addContact(newContact);
+          ApiService().addPatientToDoctor(widget.mobile, mobile, name);
+          ApiService().addDoctorToPatient(widget.mobile,mobile, name);
+          AuthService().toast("Added Successfully");
+          Navigator.of(context).pop();
+        }
+      }
+      print("not"+ duplicate.toString());
     }else if(duplicate == true){
-        Navigator.pop(context);
-        AuthService().toast("The Number Already Exist");
-        duplicate = false;
-        print("exist"+ duplicate.toString());
-    }
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+      duplicate = false;
+      print("exist"+ duplicate.toString());
     }
   }
 

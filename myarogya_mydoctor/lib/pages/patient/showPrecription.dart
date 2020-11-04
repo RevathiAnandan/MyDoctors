@@ -98,6 +98,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                             ),
                             Column(
                                 children:[
+
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text("Morning: "+timesplit1(refreshValue['Morning Start Time']) +" to "+timesplit1(refreshValue['Morning End Time']) ,style: TextStyle(
@@ -109,7 +110,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  Text(refreshValue['mobile']!=null?"Doctor No:"+refreshValue['mobile']:"Yet to be updated",
+                                  Text(refreshValue['mobile']!=null?"Contact:"+refreshValue['mobile']:"Yet to be updated",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                 ]
@@ -125,7 +126,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 40,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -150,7 +151,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           child: Text(
                             'Date: '+datesplit(widget.prescripe.date),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                                fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                           ),
                         ),
                       ),
@@ -164,7 +165,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                           child: Text(
                             'Time: '+timesplit(),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                                fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                           ),
                         ),
                       ),
@@ -232,7 +233,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                       child: Text(
                         'Lab Test:   '+widget.prescripe.labTest,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                            fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                       ),
                     ),
                   ),
@@ -245,7 +246,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text('  Next Visit on '+datesplit(widget.prescripe.nextVisit),
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
+                            fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),
                       ),
                     ),
                   )

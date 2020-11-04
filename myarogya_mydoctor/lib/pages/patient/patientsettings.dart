@@ -73,7 +73,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                           width: 20,
                         ),
                         Text(
-                          "Profile",
+                          "Edit Profile",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,
