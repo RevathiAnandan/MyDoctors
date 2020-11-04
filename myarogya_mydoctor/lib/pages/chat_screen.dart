@@ -301,14 +301,15 @@ class MyScreenState extends State<MyScreen> {
   }
 
   _openPopup(context, index) {
-    var booking_time = appoint[index].BookingTime;
+    var booking_time = appoint[index].BookingTime.split(" ")[1];
+
     Alert(
       context: context,
       title: "Booking Information",
       buttons: [],
       content: Center(
         child: Text(
-          "Booking Time:${booking_time}  Token:${appoint[index].Token}",
+          "Booking Time:${booking_time.split(".")[0]}  Token:${appoint[index].Token}",
           textAlign: TextAlign.center,
         ),
       ),

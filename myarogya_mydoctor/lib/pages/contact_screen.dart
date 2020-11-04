@@ -1,7 +1,9 @@
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 
 class ContactsPage extends StatefulWidget {
@@ -13,7 +15,9 @@ class ContactsPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<ContactsPage> {
+  bool duplicate = false;
   Iterable<Contact> _contacts;
+  FirebaseDatabase fb = FirebaseDatabase.instance;
 
   @override
   void initState() {
@@ -79,15 +83,16 @@ class _ContactsPageState extends State<ContactsPage> {
     Widget continueButton = FlatButton(
       child: Text("Add"),
       onPressed:  () async{
-        if(widget.category == "MY PATIENT") {
-          ApiService().addPatientToDoctor(mobile, widget.mobile, name);
-          ApiService().addDoctorToPatient(mobile, widget.mobile, name);
-          Navigator.of(context).pop();
-        }else{
-          ApiService().addPatientToDoctor(widget.mobile, mobile, name);
-          ApiService().addDoctorToPatient(widget.mobile,mobile, name);
-          Navigator.of(context).pop();
-        }
+//        if(widget.category == "MY PATIENT") {
+//          ApiService().addPatientToDoctor(mobile, widget.mobile, name);
+//          ApiService().addDoctorToPatient(mobile, widget.mobile, name);
+//          Navigator.of(context).pop();
+//        }else{
+//          ApiService().addPatientToDoctor(widget.mobile, mobile, name);
+//          ApiService().addDoctorToPatient(widget.mobile,mobile, name);
+//          Navigator.of(context).pop();
+//        }
+        checkDuplication(mobile,name);
       },
     );
 
@@ -108,5 +113,74 @@ class _ContactsPageState extends State<ContactsPage> {
         return alert;
       },
     );
+  }
+
+  checkDuplication(String phone,String name){
+    if(widget.category == "MY PATIENT") {
+      var db = fb.reference().child("User").child(widget.mobile).child(
+          "myPatient");
+      db.once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        print(snapshot.value);
+        if (values == null) {
+          duplicate = false;
+        } else {
+          values.forEach((key, values) {
+            var refreshToken = values["phone"].toString();
+            if (refreshToken == phone) {
+              duplicate = true;
+            }
+            print("Values!!!" + values["phone"].toString());
+            print(refreshToken);
+            print(duplicate);
+          });
+        }
+        checkDuplicate(phone, name);
+      }
+      );
+    }else {
+      var db = fb.reference().child("User").child(widget.mobile).child(
+          "myDoctor");
+      db.once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        print(snapshot.value);
+        if (values == null) {
+          duplicate = false;
+        } else {
+          values.forEach((key, values) {
+            var refreshToken = values["phone"].toString();
+            if (refreshToken == phone) {
+              duplicate = true;
+            }
+            print("Values!!!" + values["phone"].toString());
+            print(refreshToken);
+            print(duplicate);
+          });
+        }
+        checkDuplicate(phone, name);
+      }
+      );
+    }
+  }
+  checkDuplicate(String mobile,String name){
+    if(duplicate == false){
+      if(widget.category == "MY PATIENT") {
+        ApiService().addPatientToDoctor(mobile, widget.mobile, name);
+        ApiService().addDoctorToPatient(mobile, widget.mobile, name);
+        Navigator.of(context).pop();
+        AuthService().toast("Added Successfully");
+      }else{
+        ApiService().addPatientToDoctor(widget.mobile, mobile, name);
+        ApiService().addDoctorToPatient(widget.mobile,mobile, name);
+        Navigator.of(context).pop();
+        AuthService().toast("Added Successfully");
+      }
+      print("not"+ duplicate.toString());
+    }else if(duplicate == true){
+      Navigator.pop(context);
+      AuthService().toast("The Number Already Exist");
+      duplicate = false;
+      print("exist"+ duplicate.toString());
+    }
   }
 }

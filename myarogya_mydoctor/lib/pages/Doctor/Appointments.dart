@@ -178,7 +178,7 @@ class _AppointmentsState extends State<Appointments> {
                                                   fontFamily: "Lato")))),
                                 ),
                               ),
-                              Text((dummyData.length == 0?"0":(range - dummyData.length).toString()),
+                              Text((dummyData.length == 0?"0":(dummyData.length).toString()),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
