@@ -19,21 +19,35 @@ import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 //}
 
 
-class EditProfilePatient extends StatelessWidget {
+class EditProfilePatient extends StatefulWidget {
   String userId;
   String mobile;
-  FirebaseDatabase fb = FirebaseDatabase.instance;
-  var refresh;
 
   EditProfilePatient(this.userId, this.mobile);
 
+  @override
+  _EditProfilePatientState createState() => _EditProfilePatientState();
+}
+
+class _EditProfilePatientState extends State<EditProfilePatient> {
+  FirebaseDatabase fb = FirebaseDatabase.instance;
+
+  var refresh;
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController bioController = TextEditingController();
+
   final TextEditingController dgreeController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
+
   final TextEditingController addressController = TextEditingController();
+
   final TextEditingController specialController = TextEditingController();
+
   final TextEditingController idController = TextEditingController();
 
   changeProfilePhoto(BuildContext parentContext) {
@@ -54,15 +68,17 @@ class EditProfilePatient extends StatelessWidget {
       },
     );
   }
+  String chosenvalue2 = "Male";
 
   applyChanges() {
-    fb.reference().child('User').child(mobile)
+    fb.reference().child('User').child(widget.mobile)
         .update({
       "Name": nameController.text,
       "mobile": bioController.text,
       //"degree": dgreeController.text,
       "emailId": emailController.text,
       "Age": ageController.text,
+      "Gender": chosenvalue2,
       //"Hospital Address": addressController.text,
       //"specialist": specialController.text,
       //"registerId": idController.text,
@@ -70,6 +86,8 @@ class EditProfilePatient extends StatelessWidget {
   }
 
   Widget buildTextField({String name, TextEditingController controller}) {
+
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -121,7 +139,7 @@ class EditProfilePatient extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: FutureBuilder(
-                      future: fb.reference().child('User').child(mobile).once(),
+                      future: fb.reference().child('User').child(widget.mobile).once(),
                       builder: (context, snapshot) {
 
                         if (!snapshot.hasData)
@@ -145,11 +163,6 @@ class EditProfilePatient extends StatelessWidget {
                           emailController.text = values['emailId'];
                           ageController.text = values['Age'];
                         }
-
-
-
-
-
                         return Column(
                           children: <Widget>[
                             Padding(
@@ -173,11 +186,41 @@ class EditProfilePatient extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   buildTextField(name: "Name", controller: nameController),
                                   buildTextField(name: "Mobile", controller: bioController),
                                   buildTextField(name: "Email", controller: emailController),
                                   buildTextField(name: "Age", controller: ageController),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text("Gender"),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 42,
+                                      value: chosenvalue2,
+                                      underline: SizedBox(),
+                                      items: <String>['Male', 'Female','Transgender']
+                                          .map<DropdownMenuItem<String>>((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String value) {
+                                        setState(() {
+                                          chosenvalue2 = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

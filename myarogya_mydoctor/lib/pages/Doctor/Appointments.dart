@@ -86,17 +86,19 @@ class _AppointmentsState extends State<Appointments> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              backgroundColor: Colors.white,
               expandedHeight: 250.0,
               floating: false,
               pinned: true,
+              leading: Container(),
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 title: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    "          Appointments",
+                    "    Appointments",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.redAccent,
                       fontSize: 25.0,
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.bold,
@@ -110,13 +112,13 @@ class _AppointmentsState extends State<Appointments> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search, color: Colors.white,),
-                  onPressed: () {
+                  icon: Icon(Icons.search, color: Colors.redAccent,size: 30,),
+            onPressed: () {
                     showSearch(context: context, delegate: DataSearch());
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.add, color: Colors.white,size: 50,),
+                  icon: Icon(Icons.add, color: Colors.redAccent,size: 35,),
                   onPressed: () {
                     _openPopup(context);
                   },

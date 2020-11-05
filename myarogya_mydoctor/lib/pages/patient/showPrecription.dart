@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/Precription.dart';
+import 'package:myarogya_mydoctor/model/patientUser.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:date_format/date_format.dart';
 
@@ -23,6 +24,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
   DoctorUser doctorProfileInfo;
   Prescription prescription1;
   var refreshValue;
+  var prefreshValue;
   var isLoading = false;
 
   @override
@@ -30,6 +32,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     // TODO: implement initState
     super.initState();
     getProfileDetails();
+
   }
 
   @override
@@ -98,7 +101,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                             ),
                             Column(
                                 children:[
-
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   Text("Morning: "+timesplit1(refreshValue['Morning Start Time']) +" to "+timesplit1(refreshValue['Morning End Time']) ,style: TextStyle(
@@ -133,7 +135,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile,
+                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile+" "+prefreshValue['Age']+" "+prefreshValue['Gender'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                       ),
@@ -281,6 +283,27 @@ class _PrescriptionPageState extends State<ShowPrecription> {
       print(e);
     }
   }
+  Future<PatientUser> getPatientUser(){
+    isLoading = true;
+    FirebaseDatabase fb = FirebaseDatabase.instance;
+    try {
+      var db = fb.reference().child("User").child(widget.pmobile);
+      db.once().then((DataSnapshot snapshot){
+        print (snapshot.value);
+        setState(() {
+//        doctorProfileInfo = DoctorUser.fromJson(snapshot.value);
+//        print (doctorProfileInfo.Name);
+          prefreshValue =  snapshot.value;
+          isLoading = false;
+        });
+
+      });
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
 
   Future<Prescription> getPrecriptionDetails(){

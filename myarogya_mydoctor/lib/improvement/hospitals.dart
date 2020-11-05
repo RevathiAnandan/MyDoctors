@@ -16,6 +16,7 @@ class _HospitalsState extends State<Hospitals> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
+                  backgroundColor: Colors.white,
                   expandedHeight: 250.0,
                   floating: false,
                   pinned: true,
@@ -26,7 +27,7 @@ class _HospitalsState extends State<Hospitals> {
                       child: Text(
                         "  Hospitals",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.redAccent,
                           fontSize: 25.0,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
@@ -39,11 +40,17 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                   ),
                   actions: [
+                    IconButton(
+                      icon: Icon(Icons.add, color: Colors.redAccent,size: 35,),
+                      onPressed: () {
+
+                      },
+                    ),
                     Center(
                       child: Text(
                         '400+     ',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.redAccent),
                       ),
                     ),
                   ],
@@ -63,7 +70,7 @@ class _HospitalsState extends State<Hospitals> {
                       height: 10,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -159,7 +166,7 @@ class _HospitalsState extends State<Hospitals> {
                       height: 10,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -253,8 +260,9 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -348,8 +356,9 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -443,8 +452,9 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -538,8 +548,9 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,
@@ -633,8 +644,9 @@ class _HospitalsState extends State<Hospitals> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),Container(
-                      height: MediaQuery.of(context).size.height * 25 / 100,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 35 / 100,
                       width: MediaQuery.of(context).size.width * 91 / 100,
                       child: Card(
                           margin: EdgeInsets.zero,

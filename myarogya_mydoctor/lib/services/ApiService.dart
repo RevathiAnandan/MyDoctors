@@ -2,6 +2,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:myarogya_mydoctor/model/Hospitals.dart';
 class ApiService{
 
   bool trigger;
@@ -21,7 +22,7 @@ class ApiService{
           'id': id,
           'mobile': mobile,
           'category': category,
-          'myPatient': "mypatient"
+          //'myPatient': "mypatient"
         });
       }else{
         return fb.reference().child('User').child(mobile)
@@ -29,12 +30,9 @@ class ApiService{
           'id': id,
           'mobile': mobile,
           'category': category,
-          'myDoctor': "mydoctor"
+          //'myDoctor': "mydoctor"
         });
       }
-
-
-
     } catch (e) {
       print(e);
     }
@@ -57,7 +55,6 @@ class ApiService{
 
   }
   Future addPrecription(String pmobile,String dmobile,String pname,List medicine,String lab,String diagnosis,String bp,String weight,String pulse,String nextVisit,String totaldate,String BPHigh) async{
-
     try {
       return fb.reference().child("Prescription").child(pmobile).push()
           .set({
@@ -75,27 +72,21 @@ class ApiService{
         "date":totaldate
       }
       );
-
     } catch (e) {
       print(e);
     }
-
   }
   Future addDoctorToPatient(String pmobile,dmobile,dname) async{
-
     try {
-
       var db = fb.reference().child('User').child(pmobile).child("myDoctor").push();
       db.set({
         "phone": dmobile,
         "name": dname
       }
       );
-
     } catch (e) {
       print(e);
     }
-
   }
 
   getUsers(String id,String mobile,String category) {
@@ -107,13 +98,10 @@ class ApiService{
         print (snapshot.value);
         return snapshot.value;
 //      print (db);
-
       });
-
     } catch (e) {
       print(e);
     }
-
   }
 
   getUserDetails(String mobile){
@@ -244,6 +232,31 @@ class ApiService{
     }catch(e){
       print(e);
     }
+  }
+
+
+  Future hospitals(Hospitals hospitals){
+    var db = fb.reference().child("Hospitals").push();
+    db.set({
+      'hospitalId': hospitals.hospitalId,
+      'hospitalName': hospitals.hospitalName,
+      'location': hospitals.location,
+      'rating': hospitals.rating,
+      'pricerange': hospitals.pricerange,
+      'prepayment': hospitals.prepayment,
+      'type': hospitals.type,
+      'accredition' : hospitals.accredition,
+      'speciality': hospitals.speciality,
+      'yearsofservice': hospitals.yearsofservice,
+      'freeBeds': hospitals.freebeds,
+      "concessionalratebeds": hospitals.concessionalratebeds,
+      "unreservedbeds": hospitals.unreservedbeds,
+      "rmoname": hospitals.rmoname,
+      "rmoemergencyNo" : hospitals.rmoemergencyNo,
+      'date': hospitals.date,
+      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
+      //todo: change parameters
+  });
   }
 
   

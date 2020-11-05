@@ -101,7 +101,6 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
         print (snapshot.value);
         Map<dynamic, dynamic > values = snapshot.value;
         values.forEach((key,values) {
-
           prescription1 = Prescription.fromJson(values);
           setState(() {
             if(widget.pmobile == prescription1.patientMobile) {
