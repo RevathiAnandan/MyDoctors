@@ -3,22 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
-//class EditProfileDoctor extends StatefulWidget {
-//  String userId;
-//  String mobile;
-//  EditProfileDoctor(this.userId, this.mobile);
-//  @override
-//  _EditProfileDoctorState createState() => _EditProfileDoctorState();
-//}
-//
-//class _EditProfileDoctorState extends State<EditProfileDoctor> {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//
-//    );
-//  }
-//}
 
 class EditProfileDoctor extends StatefulWidget {
   String userId;
@@ -33,33 +17,25 @@ class EditProfileDoctor extends StatefulWidget {
 
 class _EditProfileDoctorState extends State<EditProfileDoctor> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
-
   var refresh;
-
   final TextEditingController nameController = TextEditingController();
-
   final TextEditingController bioController = TextEditingController();
-
   final TextEditingController dgreeController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController hosController = TextEditingController();
-
   final TextEditingController addressController = TextEditingController();
-
   final TextEditingController specialController = TextEditingController();
-
   final TextEditingController idController = TextEditingController();
+//  final TextEditingController starttym = TextEditingController();
   TextEditingController _interval = new TextEditingController();
-  DateTime starttym;
-  DateTime m_starttym;
-  DateTime e_starttym;
-  DateTime s_starttym;
-  DateTime endtym;
-  DateTime m_endtym;
-  DateTime e_endtym;
-  DateTime s_endtym;
+  String starttym;
+  String m_starttym;
+  String e_starttym;
+  String s_starttym;
+  String endtym;
+  String m_endtym;
+  String e_endtym;
+  String s_endtym;
   changeProfilePhoto(BuildContext parentContext) {
     return showDialog(
       context: parentContext,
@@ -89,16 +65,18 @@ class _EditProfileDoctorState extends State<EditProfileDoctor> {
       "Hospital Address": addressController.text,
       "specialist": specialController.text,
       "registerId": idController.text,
-      'End Time': endtym,
-          'Start Time': starttym,
-          'Consulting Interval': _interval.text,
-      "Morning Start Time":m_starttym,
-      "Morning End Time":m_endtym,
-      "Evening Start Time":e_starttym,
-      "Evening End Time":e_endtym,
-      "Sunday Start Time":s_starttym,
-      "Sunday End Time":s_endtym
+//      'End Time': endtym,
+//      'Start Time': starttym,
+//      'Consulting Interval': _interval.text,
+//      "Morning Start Time":m_starttym,
+//      "Morning End Time":m_endtym,
+//      "Evening Start Time":e_starttym,
+//      "Evening End Time":e_endtym,
+//      "Sunday Start Time":s_starttym,
+//      "Sunday End Time":s_endtym
     });
+    print(starttym);
+    print("Assigned");
   }
 
   Widget buildTextField({String name, TextEditingController controller}) {
@@ -117,6 +95,103 @@ class _EditProfileDoctorState extends State<EditProfileDoctor> {
           decoration: InputDecoration(
             hintText: name,
           ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget TimePicker({String name, TextEditingController controller}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+//        Padding(
+//          padding: const EdgeInsets.only(top: 12.0),
+//          child: Text(
+//            name,
+//            style: TextStyle(color: Colors.grey),
+//          ),
+//        ),
+//        TextField(
+//          controller: controller,
+//          decoration: InputDecoration(
+//            hintText: name,
+//          ),
+//        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              height: 40,
+              width: 170,
+              child: DateTimeField(
+                readOnly: true,
+                //inputType: InputType.time,
+                format: DateFormat("HH:mm"),
+                //editable: false,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                    ),
+                    labelText: 'Start Time',
+                    floatingLabelBehavior: FloatingLabelBehavior.never
+                ),
+                onShowPicker: (context, dt) async {
+                  final time = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                    builder: (context, child) => MediaQuery(
+                        data: MediaQuery.of(context)
+                            .copyWith(alwaysUse24HourFormat: true),
+                        child: child),
+                  );
+                  return DateTimeField.convert(time);
+                },
+                onChanged: (dt) {
+                  setState(() => m_starttym = dt.toString());
+                  print('Selected date: $m_starttym');
+                },
+              ),
+            ),
+            Container(
+              height: 40,
+              width: 170,
+              child: DateTimeField(
+                readOnly: true,
+                //inputType: InputType.time,
+                format: DateFormat("HH:mm"),
+                //editable: false,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                    ),
+                    labelText: 'End Time',
+                    floatingLabelBehavior: FloatingLabelBehavior.never
+                ),
+                onShowPicker: (context, dt) async {
+                  final time = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+                    builder: (context, child) => MediaQuery(
+                        data: MediaQuery.of(context)
+                            .copyWith(alwaysUse24HourFormat: true),
+                        child: child),
+                  );
+                  return DateTimeField.convert(time);
+                },
+                onChanged: (dt) {
+                  setState(() =>{
+                    m_endtym = dt.toString()
+                  });
+                  print('Selected date: $m_endtym');
+                },
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -186,8 +261,8 @@ class _EditProfileDoctorState extends State<EditProfileDoctor> {
                           addressController.text = values['Hospital Address'];
                           specialController.text = values['specialist'];
                           idController.text = values['registerId'];
-                           endtym= values['End Time'];
-                         starttym= values['Start Time'];
+                          endtym= values['End Time'];
+                          starttym= values['Start Time'];
                          _interval.text= values['Consulting Interval'];
                           m_starttym= values["Morning Start Time"];
                           m_endtym= values["Morning End Time"];
@@ -245,450 +320,388 @@ class _EditProfileDoctorState extends State<EditProfileDoctor> {
                                   buildTextField(
                                       name: "Register Id",
                                       controller: idController),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text("Available Time",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Lato")),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'Start Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                            // await showCupertinoModalPopup(
-                                            //     context: context,
-                                            //     builder: (context) {
-                                            //       return CupertinoDatePicker(
-                                            //         onDateTimeChanged: (dt) {
-                                            //           starttym = dt;
-                                            //         },
-                                            //       );
-                                            //     });
-                                            // setState(() {});
-                                            // return starttym;
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => starttym = dt);
-                                            print('Selected date: $starttym');
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'End Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                            // await showCupertinoModalPopup(
-                                            //     context: context,
-                                            //     builder: (context) {
-                                            //       return CupertinoDatePicker(
-                                            //         onDateTimeChanged: (dt) {
-                                            //           starttym = dt;
-                                            //         },
-                                            //       );
-                                            //     });
-                                            // setState(() {});
-                                            // return starttym;
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => endtym = dt);
-                                            print('Selected date: $endtym');
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text("Consulting Hours",
-                                      style: new TextStyle(
-                                          fontSize: 20,
-                                          //fontWeight: FontWeight.bold,
-                                          fontFamily: "Lato",
-                                          color: Colors.black)),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text("Morning",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Lato")),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'Start Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => m_starttym = dt);
-                                            print('Selected date: $m_starttym');
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'End Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() =>{
-                                              m_endtym = dt
-                                            });
-                                            print('Selected date: $m_endtym');
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // DateFormat("HH:mm"),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(
-                                  //       contentPadding: EdgeInsets.fromLTRB(
-                                  //           20.0, 5.0, 20.0, 5.0),
-                                  //       prefixIcon: new Icon(
-                                  //           Icons.timer,
-                                  //           color: new Color(0xffACCCF8)),
-                                  //       enabledBorder: OutlineInputBorder(
-                                  //           borderRadius: BorderRadius.all(
-                                  //               Radius.circular(8)),
-                                  //           borderSide: BorderSide(
-                                  //               color: Colors.redAccent)),
-                                  //       focusedBorder: OutlineInputBorder(
-                                  //           borderRadius: BorderRadius.all(
-                                  //               Radius.circular(8)),
-                                  //           borderSide: BorderSide(
-                                  //               color: Colors.redAccent)),
-                                  //       filled: true,
-                                  //       fillColor: Colors.grey[100],
-                                  //       hintText: ""),
-                                  //   controller: _hours,
-                                  // ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text("Evening",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Lato")),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'Start Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => e_starttym = dt);
-                                            print('Selected date: $starttym');
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'End Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => e_endtym = dt);
-                                            print('Selected date: $e_endtym');
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // DateFormat("HH:mm"),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(
-                                  //       contentPadding: EdgeInsets.fromLTRB(
-                                  //           20.0, 5.0, 20.0, 5.0),
-                                  //       prefixIcon: new Icon(
-                                  //           Icons.timer,
-                                  //           color: new Color(0xffACCCF8)),
-                                  //       enabledBorder: OutlineInputBorder(
-                                  //           borderRadius: BorderRadius.all(
-                                  //               Radius.circular(8)),
-                                  //           borderSide: BorderSide(
-                                  //               color: Colors.redAccent)),
-                                  //       focusedBorder: OutlineInputBorder(
-                                  //           borderRadius: BorderRadius.all(
-                                  //               Radius.circular(8)),
-                                  //           borderSide: BorderSide(
-                                  //               color: Colors.redAccent)),
-                                  //       filled: true,
-                                  //       fillColor: Colors.grey[100],
-                                  //       hintText: ""),
-                                  //   controller: _hours,
-                                  // ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text("Sunday",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Lato")),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'Start Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => s_starttym = dt);
-                                            print('Selected date: $s_starttym');
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 170,
-                                        child: DateTimeField(
-                                          readOnly: true,
-                                          //inputType: InputType.time,
-                                          format: DateFormat("HH:mm"),
-                                          //editable: false,
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20
-                                              ),
-                                              labelText: 'End Time',
-                                              floatingLabelBehavior: FloatingLabelBehavior.never
-                                          ),
-                                          onShowPicker: (context, dt) async {
-                                            final time = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                              builder: (context, child) => MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child),
-                                            );
-                                            return DateTimeField.convert(time);
-                                          },
-                                          onChanged: (dt) {
-                                            setState(() => s_endtym = dt);
-                                            print('Selected date: $s_endtym');
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text("Consulting Interval",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Lato")),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.fromLTRB(
-                                            20.0, 5.0, 20.0, 5.0),
-                                        prefixIcon: new Icon(
-                                            Icons.timer,
-                                            color: Colors.redAccent),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Colors.redAccent)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Colors.redAccent)),
-                                        filled: true,
-                                        fillColor: Colors.grey[100],
-                                        hintText: ""),
-                                    controller: _interval,
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
+//                                  SizedBox(
+//                                    height: 15,
+//                                  ),
+//                                  Text("Available Time",
+//                                      style: new TextStyle(
+//                                          fontWeight: FontWeight.normal,
+//                                          fontFamily: "Lato")),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Row(
+//                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                    children: [
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: false,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //enabled: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: (starttym != null)?starttym.split(" ")[1].split(".")[0] :'Start Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+////                                          controller: starttym,
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() =>{
+//                                              starttym = dt.toString()
+//                                            }
+//                                            );
+//                                            print('Selected date: $starttym');
+//                                            print(dt);
+//                                          },
+//                                        ),
+//                                      ),
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'End Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => endtym = dt.toString());
+//                                            print('Selected date: $endtym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                    ],
+//                                  ),
+//                                  Text("Consulting Hours",
+//                                      style: new TextStyle(
+//                                          fontSize: 20,
+//                                          //fontWeight: FontWeight.bold,
+//                                          fontFamily: "Lato",
+//                                          color: Colors.black)),
+//                                  SizedBox(
+//                                    height: 15,
+//                                  ),
+//                                  Text("Morning",
+//                                      style: new TextStyle(
+//                                          fontWeight: FontWeight.normal,
+//                                          fontFamily: "Lato")),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Row(
+//                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                    children: [
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'Start Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => m_starttym = dt.toString());
+//                                            print('Selected date: $m_starttym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'End Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() =>{
+//                                              m_endtym = dt.toString()
+//                                            });
+//                                            print('Selected date: $m_endtym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                    ],
+//                                  ),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Text("Evening",
+//                                      style: new TextStyle(
+//                                          fontWeight: FontWeight.normal,
+//                                          fontFamily: "Lato")),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Row(
+//                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                    children: [
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'Start Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => e_starttym = dt.toString());
+//                                            print('Selected date: $starttym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'End Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => e_endtym = dt.toString());
+//                                            print('Selected date: $e_endtym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                    ],
+//                                  ),
+//
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Text("Sunday",
+//                                      style: new TextStyle(
+//                                          fontWeight: FontWeight.normal,
+//                                          fontFamily: "Lato")),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Row(
+//                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                    children: [
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'Start Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => s_starttym = dt.toString());
+//                                            print('Selected date: $s_starttym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                      Container(
+//                                        height: 40,
+//                                        width: 170,
+//                                        child: DateTimeField(
+//                                          readOnly: true,
+//                                          //inputType: InputType.time,
+//                                          format: DateFormat("HH:mm"),
+//                                          //editable: false,
+//                                          decoration: InputDecoration(
+//                                              border: OutlineInputBorder(),
+//                                              labelStyle: TextStyle(
+//                                                  fontWeight: FontWeight.bold,
+//                                                  fontSize: 20
+//                                              ),
+//                                              labelText: 'End Time',
+//                                              floatingLabelBehavior: FloatingLabelBehavior.never
+//                                          ),
+//                                          onShowPicker: (context, dt) async {
+//                                            final time = await showTimePicker(
+//                                              context: context,
+//                                              initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
+//                                              builder: (context, child) => MediaQuery(
+//                                                  data: MediaQuery.of(context)
+//                                                      .copyWith(alwaysUse24HourFormat: true),
+//                                                  child: child),
+//                                            );
+//                                            return DateTimeField.convert(time);
+//                                          },
+//                                          onChanged: (dt) {
+//                                            setState(() => s_endtym = dt.toString());
+//                                            print('Selected date: $s_endtym');
+//                                          },
+//                                        ),
+//                                      ),
+//                                    ],
+//                                  ),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  Text("Consulting Interval",
+//                                      style: new TextStyle(
+//                                          fontWeight: FontWeight.normal,
+//                                          fontFamily: "Lato")),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
+//                                  TextFormField(
+//                                    decoration: InputDecoration(
+//                                        contentPadding: EdgeInsets.fromLTRB(
+//                                            20.0, 5.0, 20.0, 5.0),
+//                                        prefixIcon: new Icon(
+//                                            Icons.timer,
+//                                            color: Colors.redAccent),
+//                                        enabledBorder: OutlineInputBorder(
+//                                            borderRadius: BorderRadius.all(
+//                                                Radius.circular(8)),
+//                                            borderSide: BorderSide(
+//                                                color: Colors.redAccent)),
+//                                        focusedBorder: OutlineInputBorder(
+//                                            borderRadius: BorderRadius.all(
+//                                                Radius.circular(8)),
+//                                            borderSide: BorderSide(
+//                                                color: Colors.redAccent)),
+//                                        filled: true,
+//                                        fillColor: Colors.grey[100],
+//                                        hintText: ""),
+//                                    controller: _interval,
+//                                  ),
+//                                  SizedBox(
+//                                    height: 5,
+//                                  ),
                                 ],
                               ),
                             ),

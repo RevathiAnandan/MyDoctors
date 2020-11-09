@@ -7,6 +7,7 @@ class ApiService{
 
   bool trigger;
   int no=0;
+  List <String> splValues=List();
 
   int addpres(){
     no++;

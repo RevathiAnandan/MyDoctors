@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 
 class Hospitals extends StatefulWidget {
   @override
@@ -43,7 +44,10 @@ class _HospitalsState extends State<Hospitals> {
                     IconButton(
                       icon: Icon(Icons.add, color: Colors.redAccent,size: 35,),
                       onPressed: () {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddHospital()),
+                        );
                       },
                     ),
                     Center(

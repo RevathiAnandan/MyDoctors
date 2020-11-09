@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/widget/filterChipWidget.dart';
 
 class AddHospital extends StatefulWidget {
   @override
@@ -8,9 +9,10 @@ class AddHospital extends StatefulWidget {
 class _AddHospitalState extends State<AddHospital> {
 
   final _formKey = GlobalKey<FormState>();
-  int pageindex=1;
+  int pageindex=0;
   String _chosenValue1 = "General";
   String _chosenValue2 = "General";
+  bool _selected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Hospital Register Number",
+                Text("Hospital Registration Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -147,7 +149,7 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Hospital Location",
+                Text("Hospital Address",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -268,10 +270,10 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("    Bed Type",
+                      child: Text("    Room Type",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -280,10 +282,10 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("        Count",
+                      child: Text("Number of Beds",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -292,10 +294,10 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Price Per Day",
+                      child: Text("Charges Per Day",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -500,27 +502,48 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  maxLines: 3,
-                  decoration: new InputDecoration(
-                    border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
-                  ),
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
+//                TextFormField(
+//                  maxLines: 3,
+//                  decoration: new InputDecoration(
+//                    border: OutlineInputBorder(),
+//                    // focusedBorder: InputBorder.none,
+//                    // enabledBorder: InputBorder.none,
+//                    errorBorder: OutlineInputBorder(),
+//                    disabledBorder: InputBorder.none,
+//                    // hintText: "Hospital Register Number"
+//                  ),
+//                  style: TextStyle(
+//                    fontSize: 18,
+//                    fontFamily: 'Lato',
+//                  ),
+//                  validator: (value) {
+//                    if (value.isEmpty) {
+//                      return 'Please enter some text';
+//                    }
+//                    return null;
+//                  },
+//                ),
+              Container(
+              child: Wrap(
+                spacing: 5.0,
+                runSpacing: 3.0,
+                children: <Widget>[
+                  filterChipWidget(chipName:"Cardio"),
+                  filterChipWidget(chipName:"Neuro"),
+                  filterChipWidget(chipName:"Ortho"),
+                  filterChipWidget(chipName:"Gastro"),
+                  filterChipWidget(chipName:"Uro"),
+                  filterChipWidget(chipName:"Skin"),
+                  filterChipWidget(chipName:"Blood"),
+                  filterChipWidget(chipName:"ENT"),
+                  filterChipWidget(chipName:"Gynac"),
+                  filterChipWidget(chipName:"Child"),
+                  filterChipWidget(chipName:"Lever & Kidney"),
+                  filterChipWidget(chipName:"Others"),
+                ],
+              ),
+              ),
+
                 SizedBox(
                   height: 35,
                 ),
@@ -764,5 +787,17 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
     }
+  }
+
+  Widget filterDetails(String chipName){
+    return FilterChip(
+        selected: _selected,
+        label: Text(chipName),
+        onSelected: (bool selected) {
+          setState(() {
+            _selected = !_selected;
+          });
+        }
+    );
   }
 }

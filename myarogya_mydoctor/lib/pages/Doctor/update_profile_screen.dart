@@ -990,12 +990,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               starttym.toString(),
                                               endtym.toString(),
                                               _interval.text,
-                                              formatDate(m_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
-                                              formatDate(m_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
-                                              formatDate(e_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
-                                              formatDate(e_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
-                                              formatDate(s_starttym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
-                                              formatDate(s_endtym, [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),                                            );
+                                              formatDate(m_starttym, [ HH , ':', nn]).toString(),
+                                              formatDate(m_endtym, [ HH , ':', nn]).toString(),
+                                              formatDate(e_starttym, [ HH , ':', nn]).toString(),
+                                              formatDate(e_endtym, [ HH , ':', nn]).toString(),
+                                              formatDate(s_starttym, [ HH , ':', nn]).toString(),
+                                              formatDate(s_endtym, [ HH , ':', nn]).toString(),                                            );
                                             setState(() {
                                               qrData=widget.mobile;
                                             });

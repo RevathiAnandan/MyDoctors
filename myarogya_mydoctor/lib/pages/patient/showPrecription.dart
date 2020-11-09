@@ -103,11 +103,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                 children:[
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Morning: "+timesplit1(refreshValue['Morning Start Time']) +" to "+timesplit1(refreshValue['Morning End Time']) ,style: TextStyle(
+                                  Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Evening: "+timesplit1(refreshValue['Evening Start Time']) +" to "+timesplit1(refreshValue['Evening End Time']) ,style: TextStyle(
+                                  Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Sunday: "+timesplit1(refreshValue['Sunday Start Time']) +" to "+timesplit1(refreshValue['Sunday End Time']) ,style: TextStyle(
+                                  Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   SizedBox(
                                     height: 2,
@@ -135,7 +135,8 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile+" "+prefreshValue['Age']+" "+prefreshValue['Gender'],
+                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile+" ",
+//                            prefreshValue['Age']+" "+prefreshValue['Gender'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),
                       ),
