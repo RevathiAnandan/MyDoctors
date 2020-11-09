@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/createPrecription.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
@@ -25,9 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         // home: SplashScreen()
-//      home: CreatePrescription()
+        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-        home: DoctorNewDashboard("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
+//         home: DoctorNewDashboard("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
 //      home: EditProfileDoctor("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
     );
   }
