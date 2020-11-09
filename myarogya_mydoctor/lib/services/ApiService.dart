@@ -237,24 +237,23 @@ class ApiService{
 
 
   Future hospitals(Hospitals hospitals){
+
+
     var db = fb.reference().child("Hospitals").push();
     db.set({
-      'hospitalId': hospitals.hospitalId,
+      'hospitalId': hospitals.hospitalregno,
       'hospitalName': hospitals.hospitalName,
-      'location': hospitals.location,
+      'location': hospitals.address,
       'rating': hospitals.rating,
       'pricerange': hospitals.pricerange,
       'prepayment': hospitals.prepayment,
       'type': hospitals.type,
       'accredition' : hospitals.accredition,
-      'speciality': hospitals.speciality,
       'yearsofservice': hospitals.yearsofservice,
-      'freeBeds': hospitals.freebeds,
-      "concessionalratebeds": hospitals.concessionalratebeds,
-      "unreservedbeds": hospitals.unreservedbeds,
+      'freeBeds': hospitals.bedcatogory,
       "rmoname": hospitals.rmoname,
       "rmoemergencyNo" : hospitals.rmoemergencyNo,
-      'date': hospitals.date,
+      'date': hospitals.incorporationdate,
       'MedicalSocialWorker':hospitals.MedicalSocialWorker,
       //todo: change parameters
   });

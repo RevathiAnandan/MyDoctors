@@ -2,101 +2,109 @@ import 'dart:core';
 
 class Hospitals{
 
-  String hospitalId;
+  String about;
+  String hospitalregno;
   String hospitalName;
-  String location;
+  String address;
+  String incorporationdate;
   String rating;
   String pricerange;
   String prepayment;
   String type;
   String accredition;
-  String speciality;
   String yearsofservice;
-  String freebeds;
-  String concessionalratebeds;
-  String unreservedbeds;
+  List<BedCatogory> bedcatogory;
   String rmoname;
   String rmoemergencyNo;
+  String area;
   List<MedicalSocialWorkers> MedicalSocialWorker;
-  String date;
+  List<Facilities> facilities;
+  List<Specialities> specialities;
+
 
 
   Hospitals._({
-      this.hospitalId,
+      this.hospitalregno,
       this.hospitalName,
-      this.location,
+      this.address,
       this.rating,
       this.pricerange,
       this.prepayment,
       this.type,
       this.accredition,
-      this.speciality,
       this.yearsofservice,
-      this.freebeds,
-      this.concessionalratebeds,
-      this.unreservedbeds,
+      this.bedcatogory,
       this.rmoname,
       this.rmoemergencyNo,
       this.MedicalSocialWorker,
-      this.date});
+      this.incorporationdate,
+    this.facilities,
+    this.specialities,
+    this.area,
+    this.about
+  });
 
   factory Hospitals.fromJson(dynamic json){
     var medicalsocialworkers = json["MedicalSocialWorkers"] as List;
     List<MedicalSocialWorkers> _MSW = medicalsocialworkers.map((tagJson) => MedicalSocialWorkers.fromJson(tagJson)).toList();
+    var speciality = json["Specialities"] as List;
+    List<Specialities> _SPL = speciality.map((tagJson) => Specialities.fromJson(tagJson)).toList();
+    var facility = json["Facilities"] as List;
+    List<Facilities> _FCL = facility.map((tagJson) => Facilities.fromJson(tagJson)).toList();
+
     return new Hospitals._(
-        hospitalId: json['hospitalId'] as String,
+        hospitalregno: json['hospitalregno'] as String,
         hospitalName: json['hospitalName'] as String,
-        location: json['location'] as String,
+        address: json['address'] as String,
+        incorporationdate: json['incorporationdate'] as String,
         rating: json['rating'] as String,
+        specialities: _SPL,
+        facilities: _FCL,
         pricerange: json['pricerange'] as String,
         prepayment: json['prepayment'] as String,
         type: json['type'] as String,
         accredition: json['accredition'] as String,
-        speciality: json['speciality'] as String,
         yearsofservice: json['yearsofservice'] as String,
-      freebeds: json["freeBeds"] as String,
-      concessionalratebeds: json["concessionalratebeds"] as String,
-      unreservedbeds: json["unreservedbeds"] as String,
-      rmoname: json["rmoname"] as String,
-      rmoemergencyNo: json["rmoemergencyNo"] as String,
+
+        rmoname: json["rmoname"] as String,
+        rmoemergencyNo: json["rmoemergencyNo"] as String,
         MedicalSocialWorker: _MSW,
-        date: json['date'] as String,
+
     );
   }
 
 
 }
 
-class ROMS {
-  String name;
-  String emergencyNo;
+class BedCatogory {
 
-  ROMS._({this.name, this.emergencyNo});
-  factory ROMS.fromJson(dynamic json){
-    return new ROMS._(
-      name: json["name"] as String,
-      emergencyNo: json["emergencyNo"] as String,
+}
+
+class Specialities {
+  String spl;
+
+  Specialities._({this.spl});
+
+  factory Specialities.fromJson(dynamic json){
+    return Specialities._(
+      spl: json['speciality'] as String,
     );
   }
 
 }
 
-class Beds {
-  String freebeds;
-  String concessionalratebeds;
-  String unreservedbeds;
+class Facilities {
+  String fcl;
 
-  Beds._({this.freebeds, this.concessionalratebeds, this.unreservedbeds});
+  Facilities._({this.fcl});
 
-  factory Beds.fromJson(dynamic json){
-    return new Beds._(
-      freebeds: json["free beds"] as String,
-      concessionalratebeds: json["concessionalratebeds"] as String,
-      unreservedbeds: json["unreservedbeds"] as String,
+  factory Facilities.fromJson(dynamic json){
+    return Facilities._(
+      fcl: json['facilitiy'] as String,
     );
   }
-
 }
+
 
 class MedicalSocialWorkers {
   String name;
