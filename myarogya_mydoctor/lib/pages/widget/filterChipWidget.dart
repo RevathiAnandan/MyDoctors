@@ -11,12 +11,14 @@ class filterChipWidget extends StatefulWidget {
 
 class _filterChipWidgetState extends State<filterChipWidget> {
   var _isSelected = false;
-  List <String> splValues=List();
+  List <String> splValues1=[];
+  List <String> splValues2=[];
 ApiService api = new ApiService();
 
   @override
   Widget build(BuildContext context) {
-    return FilterChip(
+    return ChoiceChip(
+      avatar: _isSelected? Icon(Icons.done):null,
       label: Text(widget.chipName),
       labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
       selected: _isSelected,
@@ -24,15 +26,21 @@ ApiService api = new ApiService();
         borderRadius: BorderRadius.circular(
             30.0),),
       backgroundColor: Color(0xffededed),
-      onSelected: (isSelected) {
-        setState(() {
-          _isSelected = isSelected;
-          splValues.add(widget.chipName);
-          print(splValues.toString());
-//          ApiService().splValues.add(widget.chipName);
-        });
 
+      onSelected: (bool selected) {
+        setState(() {
+          _isSelected = !_isSelected;
+          //splValues1.add(widget.chipName);
+          //print(splValues1);
+          splValues1.contains(widget.chipName)
+              ? splValues1.remove(widget.chipName)
+              : splValues1.add(widget.chipName);
+          print(splValues1.toString());
+        });
+        // splValues2.add(splValues1.toString());
+        // print(splValues2.toString());
         },
-      selectedColor: Color(0xffeadffd),);
+      selectedColor: Color(0xffededed),
+    );
   }
 }

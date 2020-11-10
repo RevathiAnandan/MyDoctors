@@ -13,6 +13,20 @@ class _AddHospitalState extends State<AddHospital> {
   String _chosenValue1 = "General";
   String _chosenValue2 = "General";
   bool _selected = false;
+  bool _selected1 = false;
+  bool _selected2 = false;
+  bool _selected3 = false;
+  bool _selected4 = false;
+  bool _selected5 = false;
+  bool _selected6 = false;
+  bool _selected7 = false;
+  bool _selected8 = false;
+  bool _selected9 = false;
+  bool _selected10 = false;
+  bool _selected11 = false;
+  bool _selected12 = false;
+  List <String> spl=[];
+  List <String> fcl=[];
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +43,7 @@ class _AddHospitalState extends State<AddHospital> {
             icon: Icon(Icons.arrow_back_ios),
             onPressed: (){
               setState(() {
+                spl.clear();
                 pageindex--;
               });
             },
@@ -165,6 +180,36 @@ class _AddHospitalState extends State<AddHospital> {
                     errorBorder: OutlineInputBorder(),
                     disabledBorder: InputBorder.none,
                     // hintText: "Hospital Location"
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),Text("Date of Incorporation",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextFormField(
+                  decoration: new InputDecoration(
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    errorBorder: OutlineInputBorder(),
+                    disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -523,23 +568,349 @@ class _AddHospitalState extends State<AddHospital> {
 //                    return null;
 //                  },
 //                ),
-              Container(
+                Container(
               child: Wrap(
                 spacing: 5.0,
                 runSpacing: 3.0,
                 children: <Widget>[
-                  filterChipWidget(chipName:"Cardio"),
-                  filterChipWidget(chipName:"Neuro"),
-                  filterChipWidget(chipName:"Ortho"),
-                  filterChipWidget(chipName:"Gastro"),
-                  filterChipWidget(chipName:"Uro"),
-                  filterChipWidget(chipName:"Skin"),
-                  filterChipWidget(chipName:"Blood"),
-                  filterChipWidget(chipName:"ENT"),
-                  filterChipWidget(chipName:"Gynac"),
-                  filterChipWidget(chipName:"Child"),
-                  filterChipWidget(chipName:"Lever & Kidney"),
-                  filterChipWidget(chipName:"Others"),
+                  ChoiceChip(
+              avatar: _selected? Icon(Icons.done):null,
+                label: Text("Gastro"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected = !_selected;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Gastro")
+                        ? spl.remove("Gastro")
+                        : spl.add("Gastro");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected1? Icon(Icons.done):null,
+                label: Text("Neuro"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected1,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected1 = !_selected1;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Neuro")
+                        ? spl.remove("Neuro")
+                        : spl.add("Neuro");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected2? Icon(Icons.done):null,
+                label: Text("Ortho"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected2,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected2 = !_selected2;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Ortho")
+                        ? spl.remove("Ortho")
+                        : spl.add("Ortho");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected3? Icon(Icons.done):null,
+                label: Text("Uro"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected3,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected3 = !_selected3;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Uro")
+                        ? spl.remove("Uro")
+                        : spl.add("Uro");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected4? Icon(Icons.done):null,
+                label: Text("Skin"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected4,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected4 = !_selected4;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Skin")
+                        ? spl.remove("Skin")
+                        : spl.add("Skin");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected5? Icon(Icons.done):null,
+                label: Text("Blood"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected5,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected5 = !_selected5;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Blood")
+                        ? spl.remove("Blood")
+                        : spl.add("Blood");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected12? Icon(Icons.done):null,
+                label: Text("Cardio"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected12,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected12 = !_selected12;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Cardio")
+                        ? spl.remove("Cardio")
+                        : spl.add("Cardio");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected6? Icon(Icons.done):null,
+                label: Text("ENT"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected1,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected6 = !_selected6;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("ENT")
+                        ? spl.remove("ENT")
+                        : spl.add("ENT");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected7? Icon(Icons.done):null,
+                label: Text("Gynac"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected1,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected7 = !_selected7;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Gynac")
+                        ? spl.remove("Gynac")
+                        : spl.add("Gynac");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected8? Icon(Icons.done):null,
+                label: Text("Child"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected1,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected8 = !_selected8;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Child")
+                        ? spl.remove("Child")
+                        : spl.add("Child");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected9? Icon(Icons.done):null,
+                label: Text("Lever & Kidney"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected9,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected9 = !_selected9;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Lever & Kidney")
+                        ? spl.remove("Lever & Kidney")
+                        : spl.add("Lever & Kidney");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected10? Icon(Icons.done):null,
+                label: Text("Diabetic"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected10,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected10 = !_selected10;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Diabetic")
+                        ? spl.remove("Diabetic")
+                        : spl.add("Diabetic");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
+                  ChoiceChip(
+              avatar: _selected11? Icon(Icons.done):null,
+                label: Text("Others"),
+                labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                selected: _selected11,
+                shape:RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      30.0),),
+                backgroundColor: Color(0xffededed),
+
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selected11 = !_selected11;
+                    //splValues1.add(widget.chipName);
+                    //print(splValues1);
+                    spl.contains("Others")
+                        ? spl.remove("Others")
+                        : spl.add("Others");
+                    print(spl.length);
+                    print(spl.toString());
+                  });
+                  // splValues2.add(splValues1.toString());
+                  // print(splValues2.toString());
+                },
+                selectedColor: Color(0xffededed),
+              ),
                 ],
               ),
               ),
@@ -558,27 +929,7 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  maxLines: 3,
-                  decoration: new InputDecoration(
-                    border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
-                  ),
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
+
               ],
             ),
           ),
@@ -595,37 +946,7 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height:10,
                 ),
-                Text("Date of Incorporation",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextFormField(
-                  decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 35,
-                ),
+
                 Text("Ambulance Number",
                   style: TextStyle(
                     color: Colors.redAccent,
@@ -789,15 +1110,4 @@ class _AddHospitalState extends State<AddHospital> {
     }
   }
 
-  Widget filterDetails(String chipName){
-    return FilterChip(
-        selected: _selected,
-        label: Text(chipName),
-        onSelected: (bool selected) {
-          setState(() {
-            _selected = !_selected;
-          });
-        }
-    );
-  }
 }
