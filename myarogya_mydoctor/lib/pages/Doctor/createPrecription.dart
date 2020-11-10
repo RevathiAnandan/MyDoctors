@@ -820,24 +820,6 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                         color: Colors.black),
                                   ),
                                 ),
-                                // Positioned(
-                                //   left:300,
-                                //   top: 23,
-                                //   child: MaterialButton(
-                                //     elevation: 8,
-                                //     onPressed: () {
-                                //       addLabtests();
-                                //     },
-                                //     child: Icon(
-                                //       Icons.add,
-                                //       color: Colors.white,
-                                //       size: 25,
-                                //     ),
-                                //     shape: CircleBorder(
-                                //     ),
-                                //     color: Colors.redAccent,
-                                //   ),
-                                // )
                               ],
                             ),
                           ),

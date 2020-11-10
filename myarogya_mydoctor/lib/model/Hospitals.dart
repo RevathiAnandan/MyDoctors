@@ -13,7 +13,7 @@ class Hospitals{
   String type;
   String accredition;
   String yearsofservice;
-  List<BedCatogory> bedcatogory;
+  List<SpecialWard> bedcatogory;
   String rmoname;
   String rmoemergencyNo;
   String area;
@@ -51,6 +51,8 @@ class Hospitals{
     List<Specialities> _SPL = speciality.map((tagJson) => Specialities.fromJson(tagJson)).toList();
     var facility = json["Facilities"] as List;
     List<Facilities> _FCL = facility.map((tagJson) => Facilities.fromJson(tagJson)).toList();
+    var bedcategory = json["bedCategory"] as List;
+    List<SpecialWard> _BED = bedcategory.map((tagJson) => SpecialWard.fromJson(tagJson)).toList();
 
     return new Hospitals._(
         hospitalregno: json['hospitalregno'] as String,
@@ -65,7 +67,7 @@ class Hospitals{
         type: json['type'] as String,
         accredition: json['accredition'] as String,
         yearsofservice: json['yearsofservice'] as String,
-
+        bedcatogory:_BED,
         rmoname: json["rmoname"] as String,
         rmoemergencyNo: json["rmoemergencyNo"] as String,
         MedicalSocialWorker: _MSW,
@@ -76,8 +78,33 @@ class Hospitals{
 
 }
 
-class BedCatogory {
+//class BedCatogory {
+//  List <SpecialWard> free;
+//  List<SpecialWard> Special;
+//  BedCatogory(this.free,this.Special);
+//}
 
+class SpecialWard {
+  String roomType;
+  String noOfBeds;
+  String charges;
+  String doctorCharges;
+  String nurseCharges;
+  String pathologyCharges;
+  String pharmacyCharges;
+  SpecialWard._({this.roomType,this.noOfBeds,this.charges,this.doctorCharges,this.nurseCharges,this.pathologyCharges,this.pharmacyCharges});
+
+  factory SpecialWard.fromJson(dynamic json){
+    return SpecialWard._(
+      roomType: json['roomType'] as String,
+      noOfBeds: json['noOfBeds'] as String,
+      charges: json['charges'] as String,
+      doctorCharges: json['doctorCharges'] as String,
+      nurseCharges: json['nurseCharges'] as String,
+      pathologyCharges: json['pathologyCharges'] as String,
+      pharmacyCharges: json['pharmacyCharges'] as String,
+    );
+  }
 }
 
 class Specialities {

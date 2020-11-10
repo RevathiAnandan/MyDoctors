@@ -237,8 +237,6 @@ class ApiService{
 
 
   Future hospitals(Hospitals hospitals){
-
-
     var db = fb.reference().child("Hospitals").push();
     db.set({
       'hospitalId': hospitals.hospitalregno,
