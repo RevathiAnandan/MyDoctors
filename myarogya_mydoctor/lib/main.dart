@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.redAccent,
           accentColor: Colors.redAccent,
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
-
         ),
         debugShowCheckedModeBanner: false,
 
