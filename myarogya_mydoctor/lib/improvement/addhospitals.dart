@@ -20,10 +20,16 @@ class _AddHospitalState extends State<AddHospital> {
   List diagnosis = [];
   List health = [];
   List TPA = [];
-  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facility","Staff Details","Insurance"];
+  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facilities","Staff Details","Insurance"];
   int pageindex=0;
   String _chosenValue1 = "Delux";
   String _chosenValue2 = "Free";
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController regController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController dateofController = TextEditingController();
+  final TextEditingController adminiController = TextEditingController();
+  final TextEditingController adminiphoneController = TextEditingController();
   final TextEditingController roomController = TextEditingController();
   final TextEditingController tpaController = TextEditingController();
   final TextEditingController bedsController = TextEditingController();
@@ -65,7 +71,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 8 ?Text("Save",
+                child: pageindex == 8 ? Text("Save",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 15.0,
@@ -311,7 +317,34 @@ class _AddHospitalState extends State<AddHospital> {
                     return null;
                   },
                 ),
-
+                SizedBox(
+                  height: 35,
+                ),
+                Text("Accredition",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextFormField(
+                  decoration: new InputDecoration(
+                    errorBorder: OutlineInputBorder(),
+                    disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
               ],
             ),
           ),
