@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myarogya_mydoctor/pages/widget/filterChipWidget.dart';
+import 'package:flutter/services.dart';
+import 'package:myarogya_mydoctor/improvement/AddDiagnosisCharged.dart';
 
 import 'addSpecialBed.dart';
 
@@ -12,18 +13,29 @@ class _AddHospitalState extends State<AddHospital> {
 
   final _formKey = GlobalKey<FormState>();
   List<Widget> specialBeds = [];
+  List<Widget> diagnosisCharge = [];
+  List<Widget> healthCharges = [];
+  List<Widget> TPAInsurance = [];
   List Beds = [];
-  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Check","Speciality","Facility","Staff Details","Insurance","Packages"];
+  List diagnosis = [];
+  List health = [];
+  List TPA = [];
+  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facility","Staff Details","Insurance"];
   int pageindex=0;
-  String _chosenValue1 = "ICU";
+  String _chosenValue1 = "Delux";
   String _chosenValue2 = "Free";
   final TextEditingController roomController = TextEditingController();
+  final TextEditingController tpaController = TextEditingController();
   final TextEditingController bedsController = TextEditingController();
   final TextEditingController chargesController = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
   final TextEditingController pchargesController = TextEditingController();
   final TextEditingController phchargesController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+  final TextEditingController opdController = TextEditingController();
+  final TextEditingController packController = TextEditingController();
+  final TextEditingController amtController = TextEditingController();
 
   List<bool> _selected =[false,false,false,false,false,false,false,false,false,false,false,false,false,false,];
   List<bool> facility = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false ];
@@ -53,7 +65,14 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: Text("Next",
+                child: pageindex == 8 ?Text("Save",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 15.0,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ):Text("Next",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 15.0,
@@ -62,7 +81,14 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
               ),
-              IconButton(
+              pageindex == 8 ? IconButton(
+                icon: Icon(Icons.save),
+                onPressed: (){
+
+                },
+                color: Colors.redAccent,
+                iconSize: 30,
+              ):IconButton(
                 icon: Icon(Icons.arrow_forward),
                 onPressed: (){
                   setState(() {
@@ -427,38 +453,6 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 10,
                 ),
-                // Text("TPA",
-                //   style: TextStyle(
-                //     color: Colors.redAccent,
-                //     fontSize: 18,
-                //     fontFamily: 'Lato',
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextFormField(
-                //   maxLines: 3,
-                //   decoration: new InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     // focusedBorder: InputBorder.none,
-                //     // enabledBorder: InputBorder.none,
-                //     errorBorder: OutlineInputBorder(),
-                //     disabledBorder: InputBorder.none,
-                //     // hintText: "Hospital Register Number"
-                //   ),
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontFamily: 'Lato',
-                //   ),
-                //   validator: (value) {
-                //     if (value.isEmpty) {
-                //       return 'Please enter some text';
-                //     }
-                //     return null;
-                //   },
-                // ),
               ],
             ),
           ),
@@ -497,34 +491,42 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 110,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        ),
-                      ),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        icon: Icon(Icons.arrow_drop_down),
-                        iconSize: 42,
-                        value: _chosenValue2,
-                        // underline: SizedBox(),
-                        items: <String>['Free','Concessional']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            _chosenValue1 = value;
-                          });
-                        },
+//                    Container(
+//                      padding: EdgeInsets.only(left: 10),
+//                      width: 110,
+//                      height: 40,
+//                      decoration: ShapeDecoration(
+//                        shape: RoundedRectangleBorder(
+//                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
+//                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                        ),
+//                      ),
+//                      child: DropdownButton<String>(
+//                        isExpanded: true,
+//                        icon: Icon(Icons.arrow_drop_down),
+//                        iconSize: 42,
+//                        value: _chosenValue2,
+//                        // underline: SizedBox(),
+//                        items: <String>['Free','Concessional']
+//                            .map<DropdownMenuItem<String>>((String value) {
+//                          return DropdownMenuItem<String>(
+//                            value: value,
+//                            child: Text(value),
+//                          );
+//                        }).toList(),
+//                        onChanged: (String value) {
+//                          setState(() {
+//                            _chosenValue1 = value;
+//                          });
+//                        },
+//                      ),
+//                    ),
+                    Text("    100% Free",
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 14,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
@@ -585,34 +587,42 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 110,
-                      height: 40,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        ),
-                      ),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        icon: Icon(Icons.arrow_drop_down),
-                        iconSize: 42,
-                        value: _chosenValue2,
-                        // underline: SizedBox(),
-                        items: <String>['Free','Concessional']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            _chosenValue1 = value;
-                          });
-                        },
+//                    Container(
+//                      padding: EdgeInsets.only(left: 10),
+//                      width: 110,
+//                      height: 40,
+//                      decoration: ShapeDecoration(
+//                        shape: RoundedRectangleBorder(
+//                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
+//                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                        ),
+//                      ),
+//                      child: DropdownButton<String>(
+//                        isExpanded: true,
+//                        icon: Icon(Icons.arrow_drop_down),
+//                        iconSize: 42,
+//                        value: _chosenValue2,
+//                        // underline: SizedBox(),
+//                        items: <String>['Free','Concessional']
+//                            .map<DropdownMenuItem<String>>((String value) {
+//                          return DropdownMenuItem<String>(
+//                            value: value,
+//                            child: Text(value),
+//                          );
+//                        }).toList(),
+//                        onChanged: (String value) {
+//                          setState(() {
+//                            _chosenValue1 = value;
+//                          });
+//                        },
+//                      ),
+//                    ),
+                    Text("Concessional",
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 14,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
@@ -686,7 +696,7 @@ class _AddHospitalState extends State<AddHospital> {
                   child: ListView.builder(
 
                       shrinkWrap: true,
-                      itemCount: specialBeds.length==null?0:specialBeds.length,
+                      itemCount: specialBeds.length,
                       itemBuilder: (_, index) => specialBeds[index]),
                 ),
 
@@ -750,7 +760,7 @@ class _AddHospitalState extends State<AddHospital> {
                         iconSize: 42,
                         value: _chosenValue1,
                         // underline: SizedBox(),
-                        items: <String>['ICU', 'Delux','Semi Delux','Special']
+                        items: <String>['Economy', 'Economy Plus','Twin Delux','Delux','Junior-Suite','Grand-Suite']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -842,181 +852,452 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
                   ),
                 ),
-                Text("Other Charges",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 20,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width:70,
-                      height: 40,
-                      child: Text("Doctor",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: Text("Nurse",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: Text("Pathology",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: Text("Pharmacy",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: dchargesController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: nchargesController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: pchargesController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: phchargesController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+//                Text("Other Charges",
+//                  style: TextStyle(
+//                    color: Colors.redAccent,
+//                    fontSize: 20,
+//                    fontFamily: 'Lato',
+//                    fontWeight: FontWeight.bold,
+//                  ),
+//                ),
+//                SizedBox(
+//                  height: 15,
+//                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                  children: [
+//                    Container(
+//                      width:70,
+//                      height: 40,
+//                      child: Text("Doctor",
+//                        style: TextStyle(
+//                          color: Colors.redAccent,
+//                          fontSize: 14,
+//                          fontFamily: 'Lato',
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: Text("Nurse",
+//                        style: TextStyle(
+//                          color: Colors.redAccent,
+//                          fontSize: 14,
+//                          fontFamily: 'Lato',
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: Text("Pathology",
+//                        style: TextStyle(
+//                          color: Colors.redAccent,
+//                          fontSize: 14,
+//                          fontFamily: 'Lato',
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: Text("Pharmacy",
+//                        style: TextStyle(
+//                          color: Colors.redAccent,
+//                          fontSize: 14,
+//                          fontFamily: 'Lato',
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                  children: [
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: TextFormField(
+//                        decoration: new InputDecoration(
+//                          border: OutlineInputBorder(),
+//                          // focusedBorder: InputBorder.none,
+//                          // enabledBorder: InputBorder.none,
+//                          errorBorder: OutlineInputBorder(),
+//                          disabledBorder: InputBorder.none,
+//                          // hintText: "Hospital Name"
+//                        ),
+//                        controller: dchargesController,
+//                        style: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'Lato',
+//                        ),
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: TextFormField(
+//                        decoration: new InputDecoration(
+//                          border: OutlineInputBorder(),
+//                          // focusedBorder: InputBorder.none,
+//                          // enabledBorder: InputBorder.none,
+//                          errorBorder: OutlineInputBorder(),
+//                          disabledBorder: InputBorder.none,
+//                          // hintText: "Hospital Name"
+//                        ),
+//                        controller: nchargesController,
+//                        style: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'Lato',
+//                        ),
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: TextFormField(
+//                        decoration: new InputDecoration(
+//                          border: OutlineInputBorder(),
+//                          // focusedBorder: InputBorder.none,
+//                          // enabledBorder: InputBorder.none,
+//                          errorBorder: OutlineInputBorder(),
+//                          disabledBorder: InputBorder.none,
+//                          // hintText: "Hospital Name"
+//                        ),
+//                        controller: pchargesController,
+//                        style: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'Lato',
+//                        ),
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
+//                      ),
+//                    ),
+//                    Container(
+//                      width: 70,
+//                      height: 40,
+//                      child: TextFormField(
+//                        decoration: new InputDecoration(
+//                          border: OutlineInputBorder(),
+//                          // focusedBorder: InputBorder.none,
+//                          // enabledBorder: InputBorder.none,
+//                          errorBorder: OutlineInputBorder(),
+//                          disabledBorder: InputBorder.none,
+//                          // hintText: "Hospital Name"
+//                        ),
+//                        controller: phchargesController,
+//                        style: TextStyle(
+//                          fontSize: 18,
+//                          fontFamily: 'Lato',
+//                        ),
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
+//                      ),
+//                    ),
+//                  ],
+//                ),
 
               ],
             ),
           ),
         );
       case 3:
+        return new Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text("Test Description",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text("Charges",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 40,
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          errorBorder: OutlineInputBorder(),
+                          disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: descController,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      height: 40,
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          errorBorder: OutlineInputBorder(),
+                          disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: opdController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child:Container(
+                    width: 500,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: MaterialButton(
+                        elevation: 8,
+                        onPressed: addDiagnosisCharged,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        shape: CircleBorder(),
+                        disabledColor: Colors.redAccent,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: diagnosisCharge.length,
+                      itemBuilder: (_, index) => diagnosisCharge[index]),
+                ),
+              ],
+            ),
+          ),
+        );
+      case 4:
+        return new Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text("Package Name",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text("Amount",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 40,
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          errorBorder: OutlineInputBorder(),
+                          disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: packController,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      height: 40,
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          errorBorder: OutlineInputBorder(),
+                          disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: amtController,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
+
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child:Container(
+                    width: 500,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: MaterialButton(
+                        elevation: 8,
+                        onPressed: addHeathCheckup,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        shape: CircleBorder(),
+                        disabledColor: Colors.redAccent,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: healthCharges.length,
+                      itemBuilder: (_, index) => healthCharges[index]),
+                ),
+              ],
+            ),
+          ),
+        );
+      case 5:
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1053,16 +1334,12 @@ class _AddHospitalState extends State<AddHospital> {
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[0] = !_selected[0];
-                            //splValues1.add(widget.chipName);
-                            //print(splValues1);
                             spl.contains("Blood")
                                 ? spl.remove("Blood")
                                 : spl.add("Blood");
                             print(spl.length);
                             print(spl.toString());
                           });
-                          // splValues2.add(splValues1.toString());
-                          // print(splValues2.toString());
                         },
                         selectedColor: Color(0xffededed),
                       ),
@@ -1388,7 +1665,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
           ),
         );
-      case 4:
+      case 6:
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1910,18 +2187,108 @@ class _AddHospitalState extends State<AddHospital> {
             ),
           ),
         );
-      case 5:
-        return new Container();
-      case 6:
-        return new Container();
       case 7:
-        return new Container();
+        return new Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Doctor Details",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 14,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      case 8:
+        return new Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("TPA",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextFormField(
+                  decoration: new InputDecoration(
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    errorBorder: OutlineInputBorder(),
+                    disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                  ),
+                  controller: tpaController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child:Container(
+                    width: 500,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: MaterialButton(
+                        elevation: 8,
+                        onPressed: addTPA,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        shape: CircleBorder(),
+                        disabledColor: Colors.redAccent,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: TPAInsurance.length,
+                      itemBuilder: (_, index) => TPAInsurance[index]),
+                ),
 
+              ],
+            ),
+          ),
+        );
     }
   }
-
-
-
 
   addSpecialBeds() {
     specialBeds.add(new AddSpecialBed(_chosenValue1,bedsController.text,chargesController.text));
@@ -1934,4 +2301,46 @@ class _AddHospitalState extends State<AddHospital> {
     );
     print(Beds.toString());
   }
+
+  addDiagnosisCharged() {
+    diagnosisCharge.add(new AddDiagnosisCharged(descController.text,opdController.text));
+    diagnosis.add(
+        {
+          "Test Description": descController.text,
+          "Charges": opdController.text
+        }
+    );
+    print(diagnosis.toString());
+    clearText();
+  }
+  clearText(){
+    descController.clear();
+    opdController.clear();
+    packController.clear();
+    amtController.clear();
+    tpaController.clear();
+  }
+  addHeathCheckup() {
+    healthCharges.add(new AddDiagnosisCharged(packController.text,amtController.text));
+    health.add(
+        {
+          "PackageName": packController.text,
+          "Amount": amtController.text
+        }
+    );
+    print(health.toString());
+    clearText();
+  }
+
+  addTPA() {
+    TPAInsurance.add(new AddInsurance(tpaController.text));
+    TPA.add(
+        {
+          "Insurance Name": tpaController.text,
+        }
+    );
+    print(TPA.toString());
+    clearText();
+  }
+
 }
