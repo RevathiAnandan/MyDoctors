@@ -34,7 +34,7 @@ class _EditProfilePatientState extends State<EditProfilePatient> {
 
   var refresh;
 
-  final TextEditingController nameController = TextEditingController();
+   TextEditingController nameController;
 
   final TextEditingController bioController = TextEditingController();
 
@@ -141,7 +141,6 @@ class _EditProfilePatientState extends State<EditProfilePatient> {
                   child: FutureBuilder(
                       future: fb.reference().child('User').child(widget.mobile).once(),
                       builder: (context, snapshot) {
-
                         if (!snapshot.hasData)
                           return Container(
                               alignment: FractionalOffset.center,

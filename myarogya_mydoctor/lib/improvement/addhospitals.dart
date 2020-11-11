@@ -10,6 +10,22 @@ class AddHospital extends StatefulWidget {
 }
 
 class _AddHospitalState extends State<AddHospital> {
+  TextEditingController _nameController;
+  static List<String> doctorsList = [null];
+  static List<String> nursesList = [null];
+  static List<String> staffsList = [null];
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
 
   final _formKey = GlobalKey<FormState>();
   List<Widget> specialBeds = [];
@@ -20,7 +36,7 @@ class _AddHospitalState extends State<AddHospital> {
   List diagnosis = [];
   List health = [];
   List TPA = [];
-  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facilities","Staff Details","Insurance"];
+  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facility","Staff Details","Insurance"];
   int pageindex=0;
   String _chosenValue1 = "Delux";
   String _chosenValue2 = "Free";
@@ -30,10 +46,19 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController dateofController = TextEditingController();
   final TextEditingController adminiController = TextEditingController();
   final TextEditingController adminiphoneController = TextEditingController();
+  final TextEditingController accredController = TextEditingController();
+  final TextEditingController ambuController = TextEditingController();
+  final TextEditingController emerController = TextEditingController();
+  final TextEditingController bookphController = TextEditingController();
+  final TextEditingController opdbkController = TextEditingController();
   final TextEditingController roomController = TextEditingController();
   final TextEditingController tpaController = TextEditingController();
   final TextEditingController bedsController = TextEditingController();
+  final TextEditingController bedsController1 = TextEditingController();
+  final TextEditingController bedsController2 = TextEditingController();
   final TextEditingController chargesController = TextEditingController();
+  final TextEditingController chargesController1 = TextEditingController();
+  final TextEditingController chargesController2 = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
   final TextEditingController pchargesController = TextEditingController();
@@ -71,7 +96,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 8 ? Text("Save",
+                child: pageindex == 8 ?Text("Save",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 15.0,
@@ -87,23 +112,27 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
               ),
-              pageindex == 8 ? IconButton(
-                icon: Icon(Icons.save),
-                onPressed: (){
-
-                },
-                color: Colors.redAccent,
-                iconSize: 30,
-              ):IconButton(
-                icon: Icon(Icons.arrow_forward),
-                onPressed: (){
-                  setState(() {
-                    pageindex++;
-                  });
-                },
-                color: Colors.redAccent,
-                iconSize: 30,
-              ),
+              pageindex == 8
+                  ? IconButton(
+                      icon: Icon(Icons.save),
+                      onPressed: () {
+                      },
+                      color: Colors.redAccent,
+                      iconSize: 30,
+                    )
+                  : IconButton(
+                      icon: Icon(Icons.arrow_forward),
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          setState(() {
+                            pageindex++;
+                          });
+                        }
+                      },
+                      color: Colors.redAccent,
+                      iconSize: 30,
+                    ),
             ],
             backgroundColor: Colors.white,
             title:
@@ -146,12 +175,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: nameController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -177,12 +207,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: regController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Register Number"
                   ),
                   style: TextStyle(
@@ -208,12 +239,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: addressController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Location"
                   ),
                   style: TextStyle(
@@ -239,12 +271,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: dateofController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -270,12 +303,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: adminiController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -301,9 +335,10 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: adminiphoneController,
                   decoration: new InputDecoration(
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -320,7 +355,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Accredition",
+                Text(
+                  "Accredition",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -329,6 +365,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: accredController,
                   decoration: new InputDecoration(
                     errorBorder: OutlineInputBorder(),
                     disabledBorder: InputBorder.none,
@@ -371,12 +408,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: ambuController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Register Number"
                   ),
                   style: TextStyle(
@@ -402,12 +440,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: emerController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Location"
                   ),
                   style: TextStyle(
@@ -433,12 +472,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: bookphController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -464,12 +504,13 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  controller: opdbkController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -570,8 +611,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: bedsController,
@@ -595,8 +636,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: chargesController,
@@ -666,8 +707,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: bedsController,
@@ -691,8 +732,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: chargesController,
@@ -815,8 +856,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: bedsController,
@@ -840,8 +881,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: chargesController,
@@ -960,8 +1001,8 @@ class _AddHospitalState extends State<AddHospital> {
 //                          border: OutlineInputBorder(),
 //                          // focusedBorder: InputBorder.none,
 //                          // enabledBorder: InputBorder.none,
-//                          errorBorder: OutlineInputBorder(),
-//                          disabledBorder: InputBorder.none,
+//                          //errorBorder: OutlineInputBorder(),
+//                          //disabledBorder: InputBorder.none,
 //                          // hintText: "Hospital Name"
 //                        ),
 //                        controller: dchargesController,
@@ -985,8 +1026,8 @@ class _AddHospitalState extends State<AddHospital> {
 //                          border: OutlineInputBorder(),
 //                          // focusedBorder: InputBorder.none,
 //                          // enabledBorder: InputBorder.none,
-//                          errorBorder: OutlineInputBorder(),
-//                          disabledBorder: InputBorder.none,
+//                          //errorBorder: OutlineInputBorder(),
+//                          //disabledBorder: InputBorder.none,
 //                          // hintText: "Hospital Name"
 //                        ),
 //                        controller: nchargesController,
@@ -1010,8 +1051,8 @@ class _AddHospitalState extends State<AddHospital> {
 //                          border: OutlineInputBorder(),
 //                          // focusedBorder: InputBorder.none,
 //                          // enabledBorder: InputBorder.none,
-//                          errorBorder: OutlineInputBorder(),
-//                          disabledBorder: InputBorder.none,
+//                          //errorBorder: OutlineInputBorder(),
+//                          //disabledBorder: InputBorder.none,
 //                          // hintText: "Hospital Name"
 //                        ),
 //                        controller: pchargesController,
@@ -1035,8 +1076,8 @@ class _AddHospitalState extends State<AddHospital> {
 //                          border: OutlineInputBorder(),
 //                          // focusedBorder: InputBorder.none,
 //                          // enabledBorder: InputBorder.none,
-//                          errorBorder: OutlineInputBorder(),
-//                          disabledBorder: InputBorder.none,
+//                          //errorBorder: OutlineInputBorder(),
+//                          //disabledBorder: InputBorder.none,
 //                          // hintText: "Hospital Name"
 //                        ),
 //                        controller: phchargesController,
@@ -1109,8 +1150,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: descController,
@@ -1134,8 +1175,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: opdController,
@@ -1244,8 +1285,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: packController,
@@ -1269,8 +1310,8 @@ class _AddHospitalState extends State<AddHospital> {
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
                           // enabledBorder: InputBorder.none,
-                          errorBorder: OutlineInputBorder(),
-                          disabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
                         controller: amtController,
@@ -2226,18 +2267,43 @@ class _AddHospitalState extends State<AddHospital> {
           width: MediaQuery.of(context).size.width,
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Doctor Details",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 14,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Add Doctors',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                   ),
-                ),
-              ],
+                  ..._getDoctors(),
+                  Text(
+                    'Add Nurses',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  ),
+                  ..._getNurses(),
+                  Text(
+                    'Add Staffs',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  ),
+                  ..._getStaffs(),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                      }
+                      print(doctorsList.toString());
+                      print(nursesList.toString());
+                      print(staffsList.toString());
+                    },
+                    child: Text('Submit'),
+                    color: Colors.green,
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -2253,7 +2319,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("TPA",
+                Text(
+                  "TPA",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -2266,8 +2333,8 @@ class _AddHospitalState extends State<AddHospital> {
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
                     // enabledBorder: InputBorder.none,
-                    errorBorder: OutlineInputBorder(),
-                    disabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
                     // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
@@ -2324,29 +2391,28 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   addSpecialBeds() {
-    specialBeds.add(new AddSpecialBed(_chosenValue1,bedsController.text,chargesController.text));
-    Beds.add(
-        {
-          "roomType": _chosenValue1,
-          "noOfBeds": bedsController.text,
-          "charges": chargesController.text
-        }
-    );
+    specialBeds.add(new AddSpecialBed(
+        _chosenValue1, bedsController.text, chargesController.text));
+    Beds.add({
+      "roomType": _chosenValue1,
+      "noOfBeds": bedsController.text,
+      "charges": chargesController.text
+    });
     print(Beds.toString());
   }
 
   addDiagnosisCharged() {
-    diagnosisCharge.add(new AddDiagnosisCharged(descController.text,opdController.text));
-    diagnosis.add(
-        {
-          "Test Description": descController.text,
-          "Charges": opdController.text
-        }
-    );
+    diagnosisCharge
+        .add(new AddDiagnosisCharged(descController.text, opdController.text));
+    diagnosis.add({
+      "Test Description": descController.text,
+      "Charges": opdController.text
+    });
     print(diagnosis.toString());
     clearText();
   }
-  clearText(){
+
+  clearText() {
     descController.clear();
     opdController.clear();
     packController.clear();
@@ -2354,26 +2420,275 @@ class _AddHospitalState extends State<AddHospital> {
     tpaController.clear();
   }
   addHeathCheckup() {
-    healthCharges.add(new AddDiagnosisCharged(packController.text,amtController.text));
+    healthCharges
+        .add(new AddDiagnosisCharged(packController.text, amtController.text));
     health.add(
-        {
-          "PackageName": packController.text,
-          "Amount": amtController.text
-        }
-    );
+        {"PackageName": packController.text, "Amount": amtController.text});
     print(health.toString());
     clearText();
   }
 
   addTPA() {
     TPAInsurance.add(new AddInsurance(tpaController.text));
-    TPA.add(
-        {
-          "Insurance Name": tpaController.text,
-        }
-    );
+    TPA.add({
+      "Insurance Name": tpaController.text,
+    });
     print(TPA.toString());
     clearText();
   }
 
+  List<Widget> _getDoctors() {
+    List<Widget> doctorsTextFields = [];
+    for (int i = 0; i < doctorsList.length; i++) {
+      doctorsTextFields.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: [
+            Expanded(child: DoctorsTextFields(i)),
+            SizedBox(
+              width: 16,
+            ),
+            // we need add button at last friends row
+            _addRemoveButtonD(i == doctorsList.length - 1, i),
+          ],
+        ),
+      ));
+    }
+    return doctorsTextFields;
+  }
+
+  List<Widget> _getNurses() {
+    List<Widget> nursesTextFields = [];
+    for (int i = 0; i < nursesList.length; i++) {
+      nursesTextFields.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: [
+            Expanded(child: NursesTextFields(i)),
+            SizedBox(
+              width: 16,
+            ),
+            // we need add button at last friends row
+            _addRemoveButtonN(i == nursesList.length - 1, i),
+          ],
+        ),
+      ));
+    }
+    return nursesTextFields;
+  }
+
+  List<Widget> _getStaffs() {
+    List<Widget> staffsTextFields = [];
+    for (int i = 0; i < staffsList.length; i++) {
+      staffsTextFields.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          children: [
+            Expanded(child: StaffsTextFields(i)),
+            SizedBox(
+              width: 16,
+            ),
+            // we need add button at last friends row
+            _addRemoveButtonS(i == staffsList.length - 1, i),
+          ],
+        ),
+      ));
+    }
+    return staffsTextFields;
+  }
+
+  /// add / remove button
+  Widget _addRemoveButtonD(bool add, int index) {
+    return InkWell(
+      onTap: () {
+        if (add) {
+          doctorsList.insert(0, null);
+        } else
+          doctorsList.removeAt(index);
+        setState(() {});
+      },
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: (add) ? Colors.green : Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(
+          (add) ? Icons.add : Icons.remove,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _addRemoveButtonN(bool add, int index) {
+    return InkWell(
+      onTap: () {
+        if (add) {
+          // add new text-fields at the top of all friends textfields
+          nursesList.insert(0, null);
+        } else
+          nursesList.removeAt(index);
+        setState(() {});
+      },
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: (add) ? Colors.green : Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(
+          (add) ? Icons.add : Icons.remove,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _addRemoveButtonS(bool add, int index) {
+    return InkWell(
+      onTap: () {
+        if (add) {
+          // add new text-fields at the top of all friends textfields
+          staffsList.insert(0, null);
+        } else
+          staffsList.removeAt(index);
+        setState(() {});
+      },
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: (add) ? Colors.green : Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(
+          (add) ? Icons.add : Icons.remove,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class DoctorsTextFields extends StatefulWidget {
+  final int index;
+  DoctorsTextFields(this.index);
+  @override
+  _DoctorsTextFieldsState createState() => _DoctorsTextFieldsState();
+}
+
+class _DoctorsTextFieldsState extends State<DoctorsTextFields> {
+  TextEditingController _nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _nameController.text = _AddHospitalState.doctorsList[widget.index] ?? '';
+    });
+
+    return TextFormField(
+      controller: _nameController,
+      onChanged: (v) => _AddHospitalState.doctorsList[widget.index] = v,
+      decoration: InputDecoration(hintText: 'Enter Doctor\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
+    );
+  }
+}
+
+class NursesTextFields extends StatefulWidget {
+  final int index;
+  NursesTextFields(this.index);
+  @override
+  _NursesTextFieldsState createState() => _NursesTextFieldsState();
+}
+
+class _NursesTextFieldsState extends State<NursesTextFields> {
+  TextEditingController _nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _nameController.text = _AddHospitalState.nursesList[widget.index] ?? '';
+    });
+
+    return TextFormField(
+      controller: _nameController,
+      onChanged: (v) => _AddHospitalState.nursesList[widget.index] = v,
+      decoration: InputDecoration(hintText: 'Enter Nurse\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
+    );
+  }
+}
+
+class StaffsTextFields extends StatefulWidget {
+  final int index;
+  StaffsTextFields(this.index);
+  @override
+  _StaffsTextFieldsState createState() => _StaffsTextFieldsState();
+}
+
+class _StaffsTextFieldsState extends State<StaffsTextFields> {
+  TextEditingController _nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _nameController.text = _AddHospitalState.staffsList[widget.index] ?? '';
+    });
+
+    return TextFormField(
+      controller: _nameController,
+      onChanged: (v) => _AddHospitalState.staffsList[widget.index] = v,
+      decoration: InputDecoration(hintText: 'Enter Staff\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
+    );
+  }
 }

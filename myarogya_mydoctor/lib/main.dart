@@ -9,6 +9,7 @@ import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
 import 'package:myarogya_mydoctor/pages/splash_screen.dart';
+import 'package:myarogya_mydoctor/test.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
         ),
         debugShowCheckedModeBanner: false,
-
+        // home: MyForm(),
         // home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
