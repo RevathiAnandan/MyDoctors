@@ -1039,10 +1039,11 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 10,
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: specialBeds.length,
-                      itemBuilder: (_, index) => specialBeds[index]),
+                  child: dataBody("Room Type", "No of Beds", "Charges per day", Beds)
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: specialBeds.length,
+//                      itemBuilder: (_, index) => specialBeds[index]),
                 ),
               ],
             ),
@@ -1169,10 +1170,11 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 15,
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: diagnosisCharge.length,
-                      itemBuilder: (_, index) => diagnosisCharge[index]),
+                  child:Center(child: dataBody1("Test Description", "Charges", diagnosis))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: diagnosisCharge.length,
+//                      itemBuilder: (_, index) => diagnosisCharge[index]),
                 ),
               ],
             ),
@@ -1293,10 +1295,11 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 15,
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: healthCharges.length,
-                      itemBuilder: (_, index) => healthCharges[index]),
+                  child:Center(child: dataBody1("PackageName", "Amount", health))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: healthCharges.length,
+//                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
               ],
             ),
@@ -2373,6 +2376,79 @@ class _AddHospitalState extends State<AddHospital> {
     }
   }
 
+  SingleChildScrollView dataBody(
+      String item1, String item2, String item3, List Values) {
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+              label: Text(item1,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+          DataColumn(
+              label: Text(item2,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+          DataColumn(
+              label: Text(item3,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+        ],
+        rows: List.generate(
+          Values.length,
+          (index) {
+            return DataRow(cells: [
+
+              DataCell(Center(child: Text(Values[index]['roomType']))),
+              DataCell(Center(child: Text(Values[index]['noOfBeds']))),
+              DataCell(Center(child: Text(Values[index]['charges']))),
+            ]);
+          },
+        ),
+        columnSpacing: 50.0,
+      ),
+    );
+  }
+
+  SingleChildScrollView dataBody1(
+      String item1, String item2, List Values) {
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+              label: Text(item1,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+          DataColumn(
+              label: Text(item2,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+        ],
+        rows: List.generate(
+          Values.length,
+              (index) {
+            return DataRow(cells: [
+              DataCell(Center(child: Text(Values[index][item1]))),
+              DataCell(Center(child: Text(Values[index][item2]))),
+            ]);
+          },
+        ),
+        columnSpacing: 100.0,
+      ),
+    );
+  }
+
+
   clearText() {
     descController.clear();
     opdController.clear();
@@ -2419,7 +2495,6 @@ class _AddHospitalState extends State<AddHospital> {
     print(diagnosis.toString());
     clearText();
   }
-
 
   addHeathCheckup() {
     healthCharges
