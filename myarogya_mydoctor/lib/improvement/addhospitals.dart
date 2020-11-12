@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/improvement/AddDiagnosisCharged.dart';
+import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 
 import 'addSpecialBed.dart';
 
@@ -33,11 +35,23 @@ class _AddHospitalState extends State<AddHospital> {
   List<Widget> healthCharges = [];
   List<Widget> TPAInsurance = [];
   List Beds = [];
+  List freebeds = [];
+  List conbeds = [];
   List diagnosis = [];
   List health = [];
   List TPA = [];
-  List topics = ["Hospital Details","Important Numbers","Room Tariff","Diagnosis Charges","Health Checkup Packages","Speciality","Facility","Staff Details","Insurance"];
-  int pageindex=0;
+  List topics = [
+    "Hospital Details",
+    "Important Numbers",
+    "Room Tariff",
+    "Diagnosis Charges",
+    "Health Checkup Packages",
+    "Speciality",
+    "Facility",
+    "Staff Details",
+    "Insurance"
+  ];
+  int pageindex = 0;
   String _chosenValue1 = "Delux";
   String _chosenValue2 = "Free";
   final TextEditingController nameController = TextEditingController();
@@ -68,54 +82,118 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController packController = TextEditingController();
   final TextEditingController amtController = TextEditingController();
 
-  List<bool> _selected =[false,false,false,false,false,false,false,false,false,false,false,false,false,false,];
-  List<bool> facility = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false ];
-  List <String> spl=[];
-  List <String> fcl=[];
+  List<bool> _selected = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  List<bool> facility = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
+  List<String> spl = [];
+  List<String> fcl = [];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            leading: (pageindex==0)?
-            IconButton(
-              icon: Icon(Icons.close),
-              onPressed: ()=>Navigator.pop(context),
-              color: Colors.redAccent,
-              iconSize: 30,
-            ):IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: (){
-                setState(() {
-                  pageindex--;
-                });
-              },
-              color: Colors.redAccent,
-              iconSize: 30,
-            ),
+            leading: (pageindex == 0)
+                ? IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                    color: Colors.redAccent,
+                    iconSize: 30,
+                  )
+                : IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      setState(() {
+                        pageindex--;
+                      });
+                    },
+                    color: Colors.redAccent,
+                    iconSize: 30,
+                  ),
             actions: [
               Center(
-                child: pageindex == 8 ?Text("Save",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 15.0,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ):Text("Next",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 15.0,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: pageindex == 8
+                    ? Text(
+                        "Save",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 15.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : Text(
+                        "Next",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 15.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
               pageindex == 8
                   ? IconButton(
                       icon: Icon(Icons.save),
                       onPressed: () {
+                        ApiService().hospitals(
+                            nameController.text,
+                            regController.text,
+                            addressController.text,
+                            dateofController.text,
+                            adminiController.text,
+                            adminiphoneController.text,
+                            accredController.text,
+                            ambuController.text,
+                            emerController.text,
+                            bookphController.text,
+                            opdbkController.text,
+                            Beds,
+                            diagnosis,
+                            health,
+                            spl,
+                            fcl,
+                            doctorsList,
+                            nursesList,
+                            staffsList,
+                            TPA);
+                        AuthService()
+                            .toast("Your Added Hospital Is Under Verification");
+                        Navigator.pop(context);
                       },
                       color: Colors.redAccent,
                       iconSize: 30,
@@ -135,8 +213,8 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
             ],
             backgroundColor: Colors.white,
-            title:
-            Text(topics[pageindex],
+            title: Text(
+              topics[pageindex],
               style: TextStyle(
                 color: Colors.redAccent,
                 fontSize: 22.0,
@@ -145,15 +223,13 @@ class _AddHospitalState extends State<AddHospital> {
               ),
             ),
           ),
-          body: SingleChildScrollView(
-              child:changingpages(pageindex)
-          )
-      ),
+          body: SingleChildScrollView(child: changingpages(pageindex))),
     );
   }
+
   // ignore: missing_return
-  Container changingpages(int pageindex){
-    switch(pageindex) {
+  Container changingpages(int pageindex) {
+    switch (pageindex) {
       case 0:
         return new Container(
           padding: EdgeInsets.all(20),
@@ -166,7 +242,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Name",
+                Text(
+                  "Name",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -177,13 +254,13 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: nameController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -198,7 +275,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Registration Number",
+                Text(
+                  "Registration Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -209,13 +287,13 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: regController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Register Number"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -230,7 +308,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Address",
+                Text(
+                  "Address",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -241,13 +320,13 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: addressController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Location"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Location"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -262,7 +341,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Date of Incorporation",
+                Text(
+                  "Date of Incorporation",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -273,13 +353,13 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: dateofController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -294,7 +374,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Administrator Name",
+                Text(
+                  "Administrator Name",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -305,13 +386,13 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: adminiController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -326,7 +407,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Administrator Phone Number",
+                Text(
+                  "Administrator Phone Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -337,10 +419,10 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: adminiphoneController,
                   decoration: new InputDecoration(
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -396,10 +478,10 @@ class _AddHospitalState extends State<AddHospital> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height:10,
+                  height: 10,
                 ),
-
-                Text("Ambulance Number",
+                Text(
+                  "Ambulance Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -409,14 +491,17 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: ambuController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Register Number"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -431,7 +516,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Emergency Number",
+                Text(
+                  "Emergency Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -441,14 +527,17 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: emerController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Location"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Location"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -463,7 +552,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("Booking Phone Number",
+                Text(
+                  "Booking Phone Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -473,14 +563,17 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: bookphController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -495,7 +588,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 35,
                 ),
-                Text("OPD Booking Number",
+                Text(
+                  "OPD Booking Number",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -505,14 +599,17 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: opdbkController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
@@ -540,7 +637,8 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Bed Details",
+                Text(
+                  "Bed Details",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 20,
@@ -551,7 +649,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 20,
                 ),
-                Text("Free Beds",
+                Text(
+                  "Free Beds",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -563,39 +662,44 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 20,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 40,
+                      child: Text(
+                        "Number of Beds",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text(
+                        "Charges Per Day",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-//                    Container(
-//                      padding: EdgeInsets.only(left: 10),
-//                      width: 110,
-//                      height: 40,
-//                      decoration: ShapeDecoration(
-//                        shape: RoundedRectangleBorder(
-//                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
-//                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                        ),
-//                      ),
-//                      child: DropdownButton<String>(
-//                        isExpanded: true,
-//                        icon: Icon(Icons.arrow_drop_down),
-//                        iconSize: 42,
-//                        value: _chosenValue2,
-//                        // underline: SizedBox(),
-//                        items: <String>['Free','Concessional']
-//                            .map<DropdownMenuItem<String>>((String value) {
-//                          return DropdownMenuItem<String>(
-//                            value: value,
-//                            child: Text(value),
-//                          );
-//                        }).toList(),
-//                        onChanged: (String value) {
-//                          setState(() {
-//                            _chosenValue1 = value;
-//                          });
-//                        },
-//                      ),
-//                    ),
-                    Text("    100% Free",
+                    Text(
+                      "    100% Free",
                       style: TextStyle(
                         color: Colors.redAccent,
                         fontSize: 14,
@@ -607,6 +711,10 @@ class _AddHospitalState extends State<AddHospital> {
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -632,6 +740,10 @@ class _AddHospitalState extends State<AddHospital> {
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -661,37 +773,8 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-//                    Container(
-//                      padding: EdgeInsets.only(left: 10),
-//                      width: 110,
-//                      height: 40,
-//                      decoration: ShapeDecoration(
-//                        shape: RoundedRectangleBorder(
-//                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
-//                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                        ),
-//                      ),
-//                      child: DropdownButton<String>(
-//                        isExpanded: true,
-//                        icon: Icon(Icons.arrow_drop_down),
-//                        iconSize: 42,
-//                        value: _chosenValue2,
-//                        // underline: SizedBox(),
-//                        items: <String>['Free','Concessional']
-//                            .map<DropdownMenuItem<String>>((String value) {
-//                          return DropdownMenuItem<String>(
-//                            value: value,
-//                            child: Text(value),
-//                          );
-//                        }).toList(),
-//                        onChanged: (String value) {
-//                          setState(() {
-//                            _chosenValue1 = value;
-//                          });
-//                        },
-//                      ),
-//                    ),
-                    Text("Concessional",
+                    Text(
+                      "Concessional",
                       style: TextStyle(
                         color: Colors.redAccent,
                         fontSize: 14,
@@ -703,6 +786,10 @@ class _AddHospitalState extends State<AddHospital> {
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -711,7 +798,7 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
-                        controller: bedsController,
+                        controller: bedsController1,
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Lato',
@@ -728,6 +815,10 @@ class _AddHospitalState extends State<AddHospital> {
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -736,7 +827,7 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
-                        controller: chargesController,
+                        controller: chargesController1,
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Lato',
@@ -754,7 +845,8 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 30,
                 ),
-                Text("Special Beds",
+                Text(
+                  "Special Beds",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 20,
@@ -765,14 +857,14 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 15,
                 ),
-
-                Container(
-                  child: ListView.builder(
-
-                      shrinkWrap: true,
-                      itemCount: specialBeds.length,
-                      itemBuilder: (_, index) => specialBeds[index]),
-                ),
+//
+//                Container(
+//                  child: ListView.builder(
+//
+//                      shrinkWrap: true,
+//                      itemCount: specialBeds.length,
+//                      itemBuilder: (_, index) => specialBeds[index]),
+//                ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -780,7 +872,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("    Room Type",
+                      child: Text(
+                        "    Room Type",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -792,7 +885,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Number of Beds",
+                      child: Text(
+                        "Number of Beds",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -804,7 +898,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Charges Per Day",
+                      child: Text(
+                        "Charges Per Day",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -824,7 +919,8 @@ class _AddHospitalState extends State<AddHospital> {
                       height: 40,
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                          side:
+                              BorderSide(width: 1.0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
@@ -834,8 +930,14 @@ class _AddHospitalState extends State<AddHospital> {
                         iconSize: 42,
                         value: _chosenValue1,
                         // underline: SizedBox(),
-                        items: <String>['Economy', 'Economy Plus','Twin Delux','Delux','Junior-Suite','Grand-Suite']
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: <String>[
+                          'Economy',
+                          'Economy Plus',
+                          'Twin Delux',
+                          'Delux',
+                          'Junior-Suite',
+                          'Grand-Suite'
+                        ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -852,6 +954,10 @@ class _AddHospitalState extends State<AddHospital> {
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -860,23 +966,27 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
-                        controller: bedsController,
+                        controller: bedsController2,
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
                       ),
                     ),
                     Container(
                       width: 110,
                       height: 40,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           // focusedBorder: InputBorder.none,
@@ -885,29 +995,28 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
-                        controller: chargesController,
+                        controller: chargesController2,
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
                       ),
                     ),
                   ],
                 ),
-
 
                 SizedBox(
                   height: 25,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child:Container(
+                  child: Container(
                     width: 500,
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -926,176 +1035,15 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
                   ),
                 ),
-//                Text("Other Charges",
-//                  style: TextStyle(
-//                    color: Colors.redAccent,
-//                    fontSize: 20,
-//                    fontFamily: 'Lato',
-//                    fontWeight: FontWeight.bold,
-//                  ),
-//                ),
-//                SizedBox(
-//                  height: 15,
-//                ),
-//                Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                  children: [
-//                    Container(
-//                      width:70,
-//                      height: 40,
-//                      child: Text("Doctor",
-//                        style: TextStyle(
-//                          color: Colors.redAccent,
-//                          fontSize: 14,
-//                          fontFamily: 'Lato',
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: Text("Nurse",
-//                        style: TextStyle(
-//                          color: Colors.redAccent,
-//                          fontSize: 14,
-//                          fontFamily: 'Lato',
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: Text("Pathology",
-//                        style: TextStyle(
-//                          color: Colors.redAccent,
-//                          fontSize: 14,
-//                          fontFamily: 'Lato',
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: Text("Pharmacy",
-//                        style: TextStyle(
-//                          color: Colors.redAccent,
-//                          fontSize: 14,
-//                          fontFamily: 'Lato',
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
-//                    ),
-//                  ],
-//                ),
-//                Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                  children: [
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: TextFormField(
-//                        decoration: new InputDecoration(
-//                          border: OutlineInputBorder(),
-//                          // focusedBorder: InputBorder.none,
-//                          // enabledBorder: InputBorder.none,
-//                          //errorBorder: OutlineInputBorder(),
-//                          //disabledBorder: InputBorder.none,
-//                          // hintText: "Hospital Name"
-//                        ),
-//                        controller: dchargesController,
-//                        style: TextStyle(
-//                          fontSize: 18,
-//                          fontFamily: 'Lato',
-//                        ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: TextFormField(
-//                        decoration: new InputDecoration(
-//                          border: OutlineInputBorder(),
-//                          // focusedBorder: InputBorder.none,
-//                          // enabledBorder: InputBorder.none,
-//                          //errorBorder: OutlineInputBorder(),
-//                          //disabledBorder: InputBorder.none,
-//                          // hintText: "Hospital Name"
-//                        ),
-//                        controller: nchargesController,
-//                        style: TextStyle(
-//                          fontSize: 18,
-//                          fontFamily: 'Lato',
-//                        ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: TextFormField(
-//                        decoration: new InputDecoration(
-//                          border: OutlineInputBorder(),
-//                          // focusedBorder: InputBorder.none,
-//                          // enabledBorder: InputBorder.none,
-//                          //errorBorder: OutlineInputBorder(),
-//                          //disabledBorder: InputBorder.none,
-//                          // hintText: "Hospital Name"
-//                        ),
-//                        controller: pchargesController,
-//                        style: TextStyle(
-//                          fontSize: 18,
-//                          fontFamily: 'Lato',
-//                        ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 70,
-//                      height: 40,
-//                      child: TextFormField(
-//                        decoration: new InputDecoration(
-//                          border: OutlineInputBorder(),
-//                          // focusedBorder: InputBorder.none,
-//                          // enabledBorder: InputBorder.none,
-//                          //errorBorder: OutlineInputBorder(),
-//                          //disabledBorder: InputBorder.none,
-//                          // hintText: "Hospital Name"
-//                        ),
-//                        controller: phchargesController,
-//                        style: TextStyle(
-//                          fontSize: 18,
-//                          fontFamily: 'Lato',
-//                        ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
-//                      ),
-//                    ),
-//                  ],
-//                ),
-
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: specialBeds.length,
+                      itemBuilder: (_, index) => specialBeds[index]),
+                ),
               ],
             ),
           ),
@@ -1115,7 +1063,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Test Description",
+                      child: Text(
+                        "Test Description",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -1127,7 +1076,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Charges",
+                      child: Text(
+                        "Charges",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -1136,7 +1086,6 @@ class _AddHospitalState extends State<AddHospital> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
                 Row(
@@ -1188,12 +1137,6 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                   ],
@@ -1203,7 +1146,7 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child:Container(
+                  child: Container(
                     width: 500,
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -1250,7 +1193,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Package Name",
+                      child: Text(
+                        "Package Name",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -1262,7 +1206,8 @@ class _AddHospitalState extends State<AddHospital> {
                     Container(
                       width: 110,
                       height: 40,
-                      child: Text("Amount",
+                      child: Text(
+                        "Amount",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 14,
@@ -1271,7 +1216,6 @@ class _AddHospitalState extends State<AddHospital> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
                 Row(
@@ -1294,12 +1238,6 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                     Container(
@@ -1319,17 +1257,10 @@ class _AddHospitalState extends State<AddHospital> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         keyboardType: TextInputType.number,
-
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                   ],
@@ -1339,7 +1270,7 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child:Container(
+                  child: Container(
                     width: 500,
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -1380,7 +1311,8 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Specialities",
+                Text(
+                  "Specialities",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -1397,13 +1329,16 @@ class _AddHospitalState extends State<AddHospital> {
                     runSpacing: 3.0,
                     children: <Widget>[
                       ChoiceChip(
-                        avatar: _selected[0]? Icon(Icons.done):null,
+                        avatar: _selected[0] ? Icon(Icons.done) : null,
                         label: Text("Blood"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[0],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -1418,15 +1353,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[1]? Icon(Icons.done):null,
+                        avatar: _selected[1] ? Icon(Icons.done) : null,
                         label: Text("Cardio"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[1],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[1] = !_selected[1];
@@ -1444,15 +1381,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[2]? Icon(Icons.done):null,
+                        avatar: _selected[2] ? Icon(Icons.done) : null,
                         label: Text("Child"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[2],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[2] = !_selected[2];
@@ -1470,15 +1409,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[3]? Icon(Icons.done):null,
+                        avatar: _selected[3] ? Icon(Icons.done) : null,
                         label: Text("Diabetic"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[3],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[3] = !_selected[3];
@@ -1496,15 +1437,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[4]? Icon(Icons.done):null,
+                        avatar: _selected[4] ? Icon(Icons.done) : null,
                         label: Text("ENT"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[4],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[4] = !_selected[4];
@@ -1522,15 +1465,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[5]? Icon(Icons.done):null,
+                        avatar: _selected[5] ? Icon(Icons.done) : null,
                         label: Text("Gastro"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[5],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[5] = !_selected[5];
@@ -1548,15 +1493,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[6]? Icon(Icons.done):null,
+                        avatar: _selected[6] ? Icon(Icons.done) : null,
                         label: Text("Gynac"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[6],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[6] = !_selected[6];
@@ -1574,15 +1521,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[7]? Icon(Icons.done):null,
+                        avatar: _selected[7] ? Icon(Icons.done) : null,
                         label: Text("Lever & Kidney"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[7],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[7] = !_selected[7];
@@ -1600,15 +1549,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[8]? Icon(Icons.done):null,
+                        avatar: _selected[8] ? Icon(Icons.done) : null,
                         label: Text("Ortho"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[8],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[8] = !_selected[8];
@@ -1626,15 +1577,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[9]? Icon(Icons.done):null,
+                        avatar: _selected[9] ? Icon(Icons.done) : null,
                         label: Text("Ortho"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[9],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[9] = !_selected[9];
@@ -1652,15 +1605,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[10]? Icon(Icons.done):null,
+                        avatar: _selected[10] ? Icon(Icons.done) : null,
                         label: Text("Skin"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[10],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[10] = !_selected[10];
@@ -1678,15 +1633,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[11]? Icon(Icons.done):null,
+                        avatar: _selected[11] ? Icon(Icons.done) : null,
                         label: Text("Uro"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[11],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[11] = !_selected[11];
@@ -1704,15 +1661,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[12]? Icon(Icons.done):null,
+                        avatar: _selected[12] ? Icon(Icons.done) : null,
                         label: Text("Others"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: _selected[12],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[12] = !_selected[12];
@@ -1748,7 +1707,8 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Facilities",
+                Text(
+                  "Facilities",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -1765,15 +1725,17 @@ class _AddHospitalState extends State<AddHospital> {
                     runSpacing: 3.0,
                     children: <Widget>[
                       ChoiceChip(
-                        avatar: facility[0]? Icon(Icons.done):null,
+                        avatar: facility[0] ? Icon(Icons.done) : null,
                         label: Text("Ambulance"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[0],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[0] = !facility[0];
@@ -1791,15 +1753,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[1]? Icon(Icons.done):null,
+                        avatar: facility[1] ? Icon(Icons.done) : null,
                         label: Text("ATM"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[1],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[1] = !facility[1];
@@ -1817,15 +1781,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[2]? Icon(Icons.done):null,
+                        avatar: facility[2] ? Icon(Icons.done) : null,
                         label: Text("Blood Bank"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[2],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[2] = !facility[2];
@@ -1843,15 +1809,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[3]? Icon(Icons.done):null,
+                        avatar: facility[3] ? Icon(Icons.done) : null,
                         label: Text("Cafeteria"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[3],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[3] = !facility[3];
@@ -1869,15 +1837,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[4]? Icon(Icons.done):null,
+                        avatar: facility[4] ? Icon(Icons.done) : null,
                         label: Text("Dental Clinic"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[4],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[4] = !facility[4];
@@ -1895,13 +1865,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[5]? Icon(Icons.done):null,
+                        avatar: facility[5] ? Icon(Icons.done) : null,
                         label: Text("Doctors availability 24/7"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[5],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -1920,15 +1893,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[6]? Icon(Icons.done):null,
+                        avatar: facility[6] ? Icon(Icons.done) : null,
                         label: Text("Gym"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[6],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[6] = !facility[6];
@@ -1946,13 +1921,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[7]? Icon(Icons.done):null,
+                        avatar: facility[7] ? Icon(Icons.done) : null,
                         label: Text("Laundry Service"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[7],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -1971,15 +1949,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[8]? Icon(Icons.done):null,
+                        avatar: facility[8] ? Icon(Icons.done) : null,
                         label: Text("Maternity & NICU"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[8],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[8] = !facility[8];
@@ -1997,15 +1977,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[9]? Icon(Icons.done):null,
+                        avatar: facility[9] ? Icon(Icons.done) : null,
                         label: Text("Mini Kitchen"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[9],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[9] = !facility[9];
@@ -2023,15 +2005,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[10]? Icon(Icons.done):null,
+                        avatar: facility[10] ? Icon(Icons.done) : null,
                         label: Text("Operation Theatre"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[10],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[10] = !facility[10];
@@ -2049,13 +2033,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[11]? Icon(Icons.done):null,
+                        avatar: facility[11] ? Icon(Icons.done) : null,
                         label: Text("Opthal Shop"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[11],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -2074,13 +2061,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar:facility[12]? Icon(Icons.done):null,
+                        avatar: facility[12] ? Icon(Icons.done) : null,
                         label: Text("Parking"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[12],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -2099,13 +2089,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[13]? Icon(Icons.done):null,
+                        avatar: facility[13] ? Icon(Icons.done) : null,
                         label: Text("Pharmacy"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[13],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -2124,13 +2117,16 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[14]? Icon(Icons.done):null,
+                        avatar: facility[14] ? Icon(Icons.done) : null,
                         label: Text("Sofa"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[14],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
                         onSelected: (bool selected) {
                           setState(() {
@@ -2149,15 +2145,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[15]? Icon(Icons.done):null,
+                        avatar: facility[15] ? Icon(Icons.done) : null,
                         label: Text("Spa"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[15],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[15] = !facility[15];
@@ -2175,15 +2173,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[16]? Icon(Icons.done):null,
+                        avatar: facility[16] ? Icon(Icons.done) : null,
                         label: Text("TV"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[16],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[16] = !facility[16];
@@ -2201,15 +2201,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[17]? Icon(Icons.done):null,
+                        avatar: facility[17] ? Icon(Icons.done) : null,
                         label: Text("Video consultation"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[17],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[17] = !facility[17];
@@ -2227,15 +2229,17 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: facility[18]? Icon(Icons.done):null,
+                        avatar: facility[18] ? Icon(Icons.done) : null,
                         label: Text("Wifi"),
-                        labelStyle: TextStyle(color: Colors.redAccent,fontSize: 16.0,fontWeight: FontWeight.bold),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                         selected: facility[18],
-                        shape:RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         backgroundColor: Color(0xffededed),
-
                         onSelected: (bool selected) {
                           setState(() {
                             facility[18] = !facility[18];
@@ -2252,11 +2256,9 @@ class _AddHospitalState extends State<AddHospital> {
                         },
                         selectedColor: Color(0xffededed),
                       ),
-
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
@@ -2290,18 +2292,6 @@ class _AddHospitalState extends State<AddHospital> {
                   SizedBox(
                     height: 40,
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                      }
-                      print(doctorsList.toString());
-                      print(nursesList.toString());
-                      print(staffsList.toString());
-                    },
-                    child: Text('Submit'),
-                    color: Colors.green,
-                  ),
                 ],
               ),
             ),
@@ -2330,31 +2320,25 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
-                  ),
+                      // border: OutlineInputBorder(),
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
+                      //errorBorder: OutlineInputBorder(),
+                      //disabledBorder: InputBorder.none,
+                      // hintText: "Hospital Name"
+                      ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
                   controller: tpaController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
                 ),
                 SizedBox(
                   height: 35,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child:Container(
+                  child: Container(
                     width: 500,
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -2382,7 +2366,6 @@ class _AddHospitalState extends State<AddHospital> {
                       itemCount: TPAInsurance.length,
                       itemBuilder: (_, index) => TPAInsurance[index]),
                 ),
-
               ],
             ),
           ),
@@ -2390,13 +2373,38 @@ class _AddHospitalState extends State<AddHospital> {
     }
   }
 
+  clearText() {
+    descController.clear();
+    opdController.clear();
+    packController.clear();
+    amtController.clear();
+    tpaController.clear();
+    bedsController2.clear();
+    chargesController2.clear();
+  }
+
   addSpecialBeds() {
     specialBeds.add(new AddSpecialBed(
-        _chosenValue1, bedsController.text, chargesController.text));
+        _chosenValue1, bedsController2.text, chargesController2.text));
     Beds.add({
       "roomType": _chosenValue1,
+      "noOfBeds": bedsController2.text,
+      "charges": chargesController2.text
+    });
+    print(Beds.toString());
+    clearText();
+  }
+
+  addfreeBeds() {
+    freebeds.add({
+      "roomType": "100% free",
       "noOfBeds": bedsController.text,
       "charges": chargesController.text
+    });
+    conbeds.add({
+      "roomType": "Concessional Beds",
+      "noOfBeds": bedsController1.text,
+      "charges": chargesController1.text
     });
     print(Beds.toString());
   }
@@ -2412,13 +2420,7 @@ class _AddHospitalState extends State<AddHospital> {
     clearText();
   }
 
-  clearText() {
-    descController.clear();
-    opdController.clear();
-    packController.clear();
-    amtController.clear();
-    tpaController.clear();
-  }
+
   addHeathCheckup() {
     healthCharges
         .add(new AddDiagnosisCharged(packController.text, amtController.text));

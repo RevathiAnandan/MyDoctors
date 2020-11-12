@@ -236,23 +236,42 @@ class ApiService{
   }
 
 
-  Future hospitals(Hospitals hospitals){
+  Future hospitals(String name,String regno,String address,String dateof,String adminname,
+      String adminph,
+      String accred, String ambulance, String emergency, String bookph, String Opdbk, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
     var db = fb.reference().child("Hospitals").push();
     db.set({
-      'hospitalId': hospitals.hospitalregno,
-      'hospitalName': hospitals.hospitalName,
-      'location': hospitals.address,
-      'rating': hospitals.rating,
-      'pricerange': hospitals.pricerange,
-      'prepayment': hospitals.prepayment,
-      'type': hospitals.type,
-      'accredition' : hospitals.accredition,
-      'yearsofservice': hospitals.yearsofservice,
-      'freeBeds': hospitals.bedcatogory,
-      "rmoname": hospitals.rmoname,
-      "rmoemergencyNo" : hospitals.rmoemergencyNo,
-      'date': hospitals.incorporationdate,
-      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
+      'hospitalId': regno,
+      'hospitalName': name,
+      'address': address,
+      'Date of Inncorporation': dateof,
+      'Administration Name':adminname,
+      'Administration Ph no':adminph,
+      'accredition' : accred,
+      'Ambulance': ambulance,
+      'Emergency':emergency,
+      'Booking Ph':bookph,
+      'OPD Booking':Opdbk,
+      'Bed Details':beds,
+      'Diagnosis Details':diagnosis,
+      'Health Package':health,
+      'Speciality':special,
+      'Facilities':facility,
+      'Doctors':docList,
+      'Nurses':nurseList,
+      'Staff':staffList,
+      'TPA':TPA
+//      'rating': hospitals.rating,
+//      'pricerange': hospitals.pricerange,
+//      'prepayment': hospitals.prepayment,
+//      'type': hospitals.type,
+
+//      'yearsofservice': hospitals.yearsofservice,
+//      'freeBeds': hospitals.bedcatogory,
+//      "rmoname": hospitals.rmoname,
+//      "rmoemergencyNo" : hospitals.rmoemergencyNo,
+//      'date': hospitals.incorporationdate,
+//      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
       //todo: change parameters
   });
   }

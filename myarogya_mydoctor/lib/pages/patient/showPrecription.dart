@@ -335,11 +335,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
     return SingleChildScrollView(
       child: DataTable(
         columns: [
-//          DataColumn(
-//              label: Text("Diagnosis",
-//                  style: TextStyle(
-//                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-//          ),
           DataColumn(
               label: Text("Medicine",
                   style: TextStyle(
@@ -360,20 +355,12 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
           ),
-          // DataColumn(
-          //     label: Text("Hello",
-          //         style: TextStyle(
-          //             fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-          // )
+
         ],
 
         rows: widget.prescripe.details.map((e) =>
             DataRow(
                 cells: [
-//                  DataCell(
-//                    Text(widget.prescripe.diagnosis, style: TextStyle(
-//                        fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
-//                  ),
                   DataCell(
                       Text(e.medicine,style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato'))
@@ -397,33 +384,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
       ),
     );
   }
-
-//  DataTable dataBodyTest() {
-//    return DataTable(
-//      columns: [
-//        DataColumn(
-//            label: Text("Lab Tests:",
-//                style: TextStyle(
-//                    fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'))
-//        ),
-//
-//      ],
-//
-//      rows: widget.prescripe.labTest.map((e) =>
-//          DataRow(
-//              cells: [
-//                DataCell(
-//                  Text(e.test, style: TextStyle(
-//                      fontWeight: FontWeight.bold, fontSize: 12,fontFamily: 'Lato')),
-//                ),
-//
-//              ]
-//          ),
-//      ).toList(),
-//      columnSpacing: 0.0,
-//      dividerThickness: 0.0,
-//    );
-//  }
 
  String datesplit(String date1){
     var date = date1.split("/");
