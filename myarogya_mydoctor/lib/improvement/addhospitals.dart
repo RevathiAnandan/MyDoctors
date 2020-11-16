@@ -1,14 +1,12 @@
-
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
+import 'package:myarogya_mydoctor/improvement/AddDiagnosisCharged.dart';
+import 'package:myarogya_mydoctor/model/ImageUploadModel.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'addSpecialBed.dart';
 
 class AddHospital extends StatefulWidget {
@@ -21,11 +19,16 @@ class _AddHospitalState extends State<AddHospital> {
   static List<String> doctorsList = [null];
   static List<String> nursesList = [null];
   static List<String> staffsList = [null];
-  List< String> downloadUrl;
+  List<Object> images = List<Object>();
+  Future<File> _imageFile;
+  var openbottomsheet = false;
 
   @override
   void initState() {
     super.initState();
+    images.add("Add Image");
+    images.add("Add Image");
+    images.add("Add Image");
     _nameController = TextEditingController();
   }
 
@@ -33,52 +36,6 @@ class _AddHospitalState extends State<AddHospital> {
   void dispose() {
     _nameController.dispose();
     super.dispose();
-  }
-
-  List<Asset> images = List<Asset>();
-  String _error = 'No Error Dectected';
-  bool isUploading = false;
-
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
-  }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = List<Asset>();
-    String error = 'No Error Dectected';
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Select Photos",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-      print(error);
-    }
-    if (!mounted) return;
-    setState(() {
-      images = resultList;
-      _error = error;
-    });
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -95,7 +52,7 @@ class _AddHospitalState extends State<AddHospital> {
   List topics = [
     "Hospital Details",
     "Important Numbers",
-    "Upload images",
+    "Upload Photos",
     "Room Tariff",
     "Diagnosis Charges",
     "Health Checkup Packages",
@@ -105,8 +62,8 @@ class _AddHospitalState extends State<AddHospital> {
     "Insurance"
   ];
   int pageindex = 0;
-  String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
-  String _chosenValue2 = "HFAP - The Healthcare Facilities Accreditation Program";
+  String _chosenValue1 = "Delux";
+  String _chosenValue2 = "Free";
   final TextEditingController nameController = TextEditingController();
   final TextEditingController regController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -114,7 +71,6 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController adminiController = TextEditingController();
   final TextEditingController adminiphoneController = TextEditingController();
   final TextEditingController accredController = TextEditingController();
-  final TextEditingController awardsController = TextEditingController();
   final TextEditingController ambuController = TextEditingController();
   final TextEditingController emerController = TextEditingController();
   final TextEditingController bookphController = TextEditingController();
@@ -135,7 +91,6 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController opdController = TextEditingController();
   final TextEditingController packController = TextEditingController();
   final TextEditingController amtController = TextEditingController();
-  final TextEditingController roomtype = TextEditingController();
 
   List<bool> _selected = [
     false,
@@ -172,9 +127,7 @@ class _AddHospitalState extends State<AddHospital> {
     false,
     false,
     false,
-    false,
-    false,
-    false,
+    false
   ];
   List<String> spl = [];
   List<String> fcl = [];
@@ -186,117 +139,88 @@ class _AddHospitalState extends State<AddHospital> {
           appBar: AppBar(
             leading: (pageindex == 0)
                 ? IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                    color: Colors.redAccent,
-                    iconSize: 30,
-                  )
+              icon: Icon(Icons.close),
+              onPressed: () => Navigator.pop(context),
+              color: Colors.redAccent,
+              iconSize: 30,
+            )
                 : IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      setState(() {
-                        pageindex--;
-                      });
-                    },
-                    color: Colors.redAccent,
-                    iconSize: 30,
-                  ),
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                setState(() {
+                  pageindex--;
+                });
+              },
+              color: Colors.redAccent,
+              iconSize: 30,
+            ),
             actions: [
               Center(
                 child: pageindex == 9
                     ? Text(
-                        "Save",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 15.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
+                  "Save",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 15.0,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
                     : Text(
-                        "Next",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 15.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  "Next",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 15.0,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               pageindex == 9
                   ? IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () {
-
-                        images.forEach((img) async {
-                          String imageName = img.toString();
-
-                          final Directory systemTempDir = Directory.systemTemp;
-                          final byteData = await rootBundle.load(img.toString());
-                          final file =
-                          File('${systemTempDir.path}/$imageName.jpeg');
-                          await file.writeAsBytes(byteData.buffer.asUint8List(
-                              byteData.offsetInBytes, byteData.lengthInBytes));
-                          StorageTaskSnapshot snapshot = await FirebaseStorage
-                              .instance.ref().child("hospitals/$imageName")
-                              .putFile(file)
-                              .onComplete;
-                          if (snapshot.error == null) {
-                            downloadUrl =
-                            await snapshot.ref.getDownloadURL();
-                            final snackBar =
-                            SnackBar(content: Text('Yay! Success'));
-                            Scaffold.of(context).showSnackBar(snackBar);
-                          } else {
-                            print(
-                                'Error from image repo ${snapshot.error.toString()}');
-                            throw ('This file is not an image');
-                          }
-                        });
-
-
-                        ApiService().hospitals(
-                            nameController.text,
-                            regController.text,
-                            addressController.text,
-                            dateofController.text,
-                            adminiController.text,
-                            adminiphoneController.text,
-                            _chosenValue2,
-                            ambuController.text,
-                            emerController.text,
-                            bookphController.text,
-                            opdbkController.text,
-                            downloadUrl,
-                            Beds,
-                            diagnosis,
-                            health,
-                            spl,
-                            fcl,
-                            doctorsList,
-                            nursesList,
-                            staffsList,
-                            _chosenValue1);
-                        AuthService()
-                            .toast("Your Added Hospital Is Under Verification");
-                        Navigator.pop(context);
-                      },
-                      color: Colors.redAccent,
-                      iconSize: 30,
-                    )
+                icon: Icon(Icons.save),
+                onPressed: () {
+                  ApiService().hospitals(
+                      nameController.text,
+                      regController.text,
+                      addressController.text,
+                      dateofController.text,
+                      adminiController.text,
+                      adminiphoneController.text,
+                      accredController.text,
+                      ambuController.text,
+                      emerController.text,
+                      bookphController.text,
+                      opdbkController.text,
+                      Beds,
+                      diagnosis,
+                      health,
+                      spl,
+                      fcl,
+                      doctorsList,
+                      nursesList,
+                      staffsList,
+                      TPA);
+                  AuthService()
+                      .toast("Your Added Hospital Is Under Verification");
+                  Navigator.pop(context);
+                },
+                color: Colors.redAccent,
+                iconSize: 30,
+              )
                   : IconButton(
-                      icon: Icon(Icons.arrow_forward),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          setState(() {
-                            pageindex++;
-                          });
-                        }
-                      },
-                      color: Colors.redAccent,
-                      iconSize: 30,
-                    ),
+                icon: Icon(Icons.arrow_forward),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    setState(() {
+                      pageindex++;
+                    });
+                  }
+                },
+                color: Colors.redAccent,
+                iconSize: 30,
+              ),
             ],
             backgroundColor: Colors.white,
             title: Text(
@@ -340,17 +264,23 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: nameController,
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -367,17 +297,23 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: regController,
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Register Number"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Register Number"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -394,17 +330,23 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: addressController,
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Location"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Location"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -421,18 +363,23 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: dateofController,
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
-
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -449,17 +396,23 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: adminiController,
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -476,14 +429,20 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: adminiphoneController,
                   decoration: new InputDecoration(
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -497,71 +456,24 @@ class _AddHospitalState extends State<AddHospital> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
-                Container(
-                  height: 60,
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 42,
-                    value: _chosenValue2,
-                    // underline: SizedBox(),
-                    items: Dropdownlists().accredlist.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String value) {
-                      setState(() {
-                        _chosenValue2 = value;
-                      });
-                    },
-                  ),
-                ),
-                // TextFormField(
-                //   controller: accredController,
-                //   decoration: new InputDecoration(
-                //       // errorBorder: OutlineInputBorder(),
-                //       // disabledBorder: InputBorder.none,
-                //       // hintText: "Hospital Name"
-                //       ),
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontFamily: 'Lato',
-                //   ),
-                //   validator: (value) {
-                //     if (value.isEmpty) {
-                //       return 'Please enter some text';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                SizedBox(
-                  height: 35,
-                ),
-                Text(
-                  "Awards",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 TextFormField(
-                  controller: awardsController,
+                  controller: accredController,
                   decoration: new InputDecoration(
-                      // errorBorder: OutlineInputBorder(),
-                      // disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    errorBorder: OutlineInputBorder(),
+                    disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
-
               ],
             ),
           ),
@@ -590,21 +502,26 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: ambuController,
                   inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(10),
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Register Number"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Register Number"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -621,22 +538,26 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: emerController,
                   inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(10),
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Location"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Location"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
-
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -653,21 +574,26 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: bookphController,
                   inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(10),
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -684,21 +610,26 @@ class _AddHospitalState extends State<AddHospital> {
                 TextFormField(
                   controller: opdbkController,
                   inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(10),
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                      // border: OutlineInputBorder(),
-                      // focusedBorder: InputBorder.none,
-                      // enabledBorder: InputBorder.none,
-                      //errorBorder: OutlineInputBorder(),
-                      //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
-                      ),
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -708,33 +639,16 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 2:
+//        buildGridView
         return new Container(
-          padding: EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height,
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: RaisedButton(
-                    color: Colors.white,
-                    child: Text(
-                      "Pick images",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                    onPressed: loadAssets,
-                  ),
-                ),
-                Expanded(
-                  child: buildGridView(),
-                )
-              ],
-            ),
-          ),
+            padding: EdgeInsets.all(20),
+            width: MediaQuery.of(context).size.width,
+            child: Form(
+              key: _formKey,
+              child: buildGridView(),
+            )
         );
+
       case 3:
         return new Container(
           padding: EdgeInsets.all(20),
@@ -744,20 +658,36 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
+                Text(
+                  "Bed Details",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 20,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 SizedBox(
-                  height: 5,
+                  height: 20,
+                ),
+                Text(
+                  "Free Beds",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      width: 110,
-                      height: 20,
-                    ),
-                    Container(
-                      width: 110,
-                      height: 20,
+                      width: 150,
+                      height: 40,
                       child: Text(
                         "Number of Beds",
                         style: TextStyle(
@@ -770,7 +700,7 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
                     Container(
                       width: 110,
-                      height: 20,
+                      height: 40,
                       child: Text(
                         "Charges Per Day",
                         style: TextStyle(
@@ -789,19 +719,13 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Center(
-                        child: Text(
-                          "100% Free",
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 14,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    Text(
+                      "    100% Free",
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 14,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
@@ -825,6 +749,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
@@ -848,6 +778,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
@@ -858,19 +794,13 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Center(
-                        child: Text(
-                          "Concessional",
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 14,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    Text(
+                      "Concessional",
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 14,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
@@ -894,6 +824,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
@@ -917,14 +853,84 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Special Beds",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 20,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
                   height: 15,
                 ),
+//
+//                Container(
+//                  child: ListView.builder(
+//
+//                      shrinkWrap: true,
+//                      itemCount: specialBeds.length,
+//                      itemBuilder: (_, index) => specialBeds[index]),
+//                ),
 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text(
+                        "    Room Type",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text(
+                        "Number of Beds",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Text(
+                        "Charges Per Day",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 14,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -935,58 +941,35 @@ class _AddHospitalState extends State<AddHospital> {
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
                           side:
-                              BorderSide(width: 1.0, style: BorderStyle.solid),
+                          BorderSide(width: 1.0, style: BorderStyle.solid),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
-                      child: TextFormField(
-                          decoration: new InputDecoration(
-                            //border: OutlineInputBorder(),
-                            // focusedBorder: InputBorder.none,
-                            // enabledBorder: InputBorder.none,
-                            //errorBorder: OutlineInputBorder(),
-                            //disabledBorder: InputBorder.none,
-                            hintText: "Room Type",
-                          ),
-                          controller: roomtype,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Lato',
-                          ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
-                        ),
-
-
-                      // DropdownButton<String>(
-                      //   isExpanded: true,
-                      //   icon: Icon(Icons.arrow_drop_down),
-                      //   iconSize: 42,
-                      //   value: _chosenValue1,
-                      //   // underline: SizedBox(),
-                      //   items: <String>[
-                      //     'Economy',
-                      //     'Economy Plus',
-                      //     'Twin Delux',
-                      //     'Delux',
-                      //     'Junior-Suite',
-                      //     'Grand-Suite'
-                      //   ].map<DropdownMenuItem<String>>((String value) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: value,
-                      //       child: Text(value),
-                      //     );
-                      //   }).toList(),
-                      //   onChanged: (String value) {
-                      //     setState(() {
-                      //       _chosenValue1 = value;
-                      //     });
-                      //   },
-                      // ),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconSize: 42,
+                        value: _chosenValue1,
+                        // underline: SizedBox(),
+                        items: <String>[
+                          'Economy',
+                          'Economy Plus',
+                          'Twin Delux',
+                          'Delux',
+                          'Junior-Suite',
+                          'Grand-Suite'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String value) {
+                          setState(() {
+                            _chosenValue1 = value;
+                          });
+                        },
+                      ),
                     ),
                     Container(
                       width: 110,
@@ -1048,8 +1031,9 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
                   ],
                 ),
+
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -1082,7 +1066,7 @@ class _AddHospitalState extends State<AddHospital> {
 //                      shrinkWrap: true,
 //                      itemCount: specialBeds.length,
 //                      itemBuilder: (_, index) => specialBeds[index]),
-                    ),
+                ),
               ],
             ),
           ),
@@ -1147,6 +1131,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
@@ -1204,12 +1194,12 @@ class _AddHospitalState extends State<AddHospital> {
                 Container(
                     child: Center(
                         child:
-                            dataBody1("Test Description", "Charges", diagnosis))
+                        dataBody1("Test Description", "Charges", diagnosis))
 //                  ListView.builder(
 //                      shrinkWrap: true,
 //                      itemCount: diagnosisCharge.length,
 //                      itemBuilder: (_, index) => diagnosisCharge[index]),
-                    ),
+                ),
               ],
             ),
           ),
@@ -1335,7 +1325,7 @@ class _AddHospitalState extends State<AddHospital> {
 //                      shrinkWrap: true,
 //                      itemCount: healthCharges.length,
 //                      itemBuilder: (_, index) => healthCharges[index]),
-                    ),
+                ),
               ],
             ),
           ),
@@ -1366,30 +1356,30 @@ class _AddHospitalState extends State<AddHospital> {
                     spacing: 5.0,
                     runSpacing: 3.0,
                     children: <Widget>[
-                      // ChoiceChip(
-                      //   avatar: _selected[0] ? Icon(Icons.done) : null,
-                      //   label: Text("Blood"),
-                      //   labelStyle: TextStyle(
-                      //       color: Colors.redAccent,
-                      //       fontSize: 16.0,
-                      //       fontWeight: FontWeight.bold),
-                      //   selected: _selected[0],
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(30.0),
-                      //   ),
-                      //   backgroundColor: Color(0xffededed),
-                      //   onSelected: (bool selected) {
-                      //     setState(() {
-                      //       _selected[0] = !_selected[0];
-                      //       spl.contains("Blood")
-                      //           ? spl.remove("Blood")
-                      //           : spl.add("Blood");
-                      //       print(spl.length);
-                      //       print(spl.toString());
-                      //     });
-                      //   },
-                      //   selectedColor: Color(0xffededed),
-                      // ),
+                      ChoiceChip(
+                        avatar: _selected[0] ? Icon(Icons.done) : null,
+                        label: Text("Blood"),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        selected: _selected[0],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Color(0xffededed),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selected[0] = !_selected[0];
+                            spl.contains("Blood")
+                                ? spl.remove("Blood")
+                                : spl.add("Blood");
+                            print(spl.length);
+                            print(spl.toString());
+                          });
+                        },
+                        selectedColor: Color(0xffededed),
+                      ),
                       ChoiceChip(
                         avatar: _selected[1] ? Icon(Icons.done) : null,
                         label: Text("Cardio"),
@@ -1559,36 +1549,8 @@ class _AddHospitalState extends State<AddHospital> {
                         selectedColor: Color(0xffededed),
                       ),
                       ChoiceChip(
-                        avatar: _selected[0] ? Icon(Icons.done) : null,
-                        label: Text("Liver"),
-                        labelStyle: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
-                        selected: _selected[0],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        backgroundColor: Color(0xffededed),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            _selected[0] = !_selected[0];
-                            //splValues1.add(widget.chipName);
-                            //print(splValues1);
-                            spl.contains("Liver")
-                                ? spl.remove("Liver")
-                                : spl.add("Liver");
-                            print(spl.length);
-                            print(spl.toString());
-                          });
-                          // splValues2.add(splValues1.toString());
-                          // print(splValues2.toString());
-                        },
-                        selectedColor: Color(0xffededed),
-                      ),
-                      ChoiceChip(
                         avatar: _selected[7] ? Icon(Icons.done) : null,
-                        label: Text("Kidney"),
+                        label: Text("Lever & Kidney"),
                         labelStyle: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 16.0,
@@ -1603,9 +1565,9 @@ class _AddHospitalState extends State<AddHospital> {
                             _selected[7] = !_selected[7];
                             //splValues1.add(widget.chipName);
                             //print(splValues1);
-                            spl.contains("Kidney")
-                                ? spl.remove("Kidney")
-                                : spl.add("Kidney");
+                            spl.contains("Lever & Kidney")
+                                ? spl.remove("Lever & Kidney")
+                                : spl.add("Lever & Kidney");
                             print(spl.length);
                             print(spl.toString());
                           });
@@ -1614,10 +1576,9 @@ class _AddHospitalState extends State<AddHospital> {
                         },
                         selectedColor: Color(0xffededed),
                       ),
-
                       ChoiceChip(
                         avatar: _selected[8] ? Icon(Icons.done) : null,
-                        label: Text("Neuro"),
+                        label: Text("Ortho"),
                         labelStyle: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 16.0,
@@ -1951,34 +1912,6 @@ class _AddHospitalState extends State<AddHospital> {
                             fcl.contains("Doctors availability 24/7")
                                 ? fcl.remove("Doctors availability 24/7")
                                 : fcl.add("Doctors availability 24/7");
-                            print(fcl.length);
-                            print(fcl.toString());
-                          });
-                          // splValues2.add(splValues1.toString());
-                          // print(splValues2.toString());
-                        },
-                        selectedColor: Color(0xffededed),
-                      ),
-                      ChoiceChip(
-                        avatar: facility[20] ? Icon(Icons.done) : null,
-                        label: Text("ECG"),
-                        labelStyle: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
-                        selected: facility[5],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        backgroundColor: Color(0xffededed),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            facility[20] = !facility[20];
-                            //splValues1.add(widget.chipName);
-                            //print(splValues1);
-                            fcl.contains("ECG")
-                                ? fcl.remove("ECG")
-                                : fcl.add("ECG");
                             print(fcl.length);
                             print(fcl.toString());
                           });
@@ -2351,34 +2284,6 @@ class _AddHospitalState extends State<AddHospital> {
                         },
                         selectedColor: Color(0xffededed),
                       ),
-                      ChoiceChip(
-                        avatar: facility[19] ? Icon(Icons.done) : null,
-                        label: Text("X-Ray"),
-                        labelStyle: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
-                        selected: facility[19],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        backgroundColor: Color(0xffededed),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            facility[19] = !facility[19];
-                            //splValues1.add(widget.chipName);
-                            //print(splValues1);
-                            fcl.contains("X-Ray")
-                                ? fcl.remove("X-Ray")
-                                : fcl.add("X-Ray");
-                            print(fcl.length);
-                            print(fcl.toString());
-                          });
-                          // splValues2.add(splValues1.toString());
-                          // print(splValues2.toString());
-                        },
-                        selectedColor: Color(0xffededed),
-                      ),
                     ],
                   ),
                 ),
@@ -2433,7 +2338,7 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 10,
                 ),
                 Text(
-                  "Insurance/TPA",
+                  "TPA",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -2441,39 +2346,21 @@ class _AddHospitalState extends State<AddHospital> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                DropdownButton<String>(
-                  isExpanded: true,
-                  icon: Icon(Icons.arrow_drop_down),
-                  iconSize: 42,
-                  value: _chosenValue1,
-                  // underline: SizedBox(),
-                  items: Dropdownlists().tpalist.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String value) {
-                    setState(() {
-                      _chosenValue1 = value;
-                    });
-                  },
+                TextFormField(
+                  decoration: new InputDecoration(
+                    // border: OutlineInputBorder(),
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    //errorBorder: OutlineInputBorder(),
+                    //disabledBorder: InputBorder.none,
+                    // hintText: "Hospital Name"
+                  ),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                  ),
+                  controller: tpaController,
                 ),
-                // TextFormField(
-                //   decoration: new InputDecoration(
-                //       // border: OutlineInputBorder(),
-                //       // focusedBorder: InputBorder.none,
-                //       // enabledBorder: InputBorder.none,
-                //       //errorBorder: OutlineInputBorder(),
-                //       //disabledBorder: InputBorder.none,
-                //       // hintText: "Hospital Name"
-                //       ),
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontFamily: 'Lato',
-                //   ),
-                //   controller: tpaController,
-                // ),
                 SizedBox(
                   height: 35,
                 ),
@@ -2518,7 +2405,6 @@ class _AddHospitalState extends State<AddHospital> {
       String item1, String item2, String item3, List Values) {
     return SingleChildScrollView(
       child: DataTable(
-        sortAscending: true,
         columns: [
           DataColumn(
               label: Text(item1,
@@ -2541,7 +2427,7 @@ class _AddHospitalState extends State<AddHospital> {
         ],
         rows: List.generate(
           Values.length,
-          (index) {
+              (index) {
             return DataRow(cells: [
               DataCell(Center(child: Text(Values[index]['roomType']))),
               DataCell(Center(child: Text(Values[index]['noOfBeds']))),
@@ -2573,7 +2459,7 @@ class _AddHospitalState extends State<AddHospital> {
         ],
         rows: List.generate(
           Values.length,
-          (index) {
+              (index) {
             return DataRow(cells: [
               DataCell(Center(child: Text(Values[index][item1]))),
               DataCell(Center(child: Text(Values[index][item2]))),
@@ -2583,6 +2469,153 @@ class _AddHospitalState extends State<AddHospital> {
         columnSpacing: 100.0,
       ),
     );
+  }
+
+  Widget buildGridView() {
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 3,
+      childAspectRatio: 1,
+      children: List.generate(images.length, (index) {
+        if (images[index] is ImageUploadModel) {
+          ImageUploadModel uploadModel = images[index];
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            child: Stack(
+              children: <Widget>[
+                Image.file(
+                  uploadModel.imageFile,
+                  width: 300,
+                  height: 300,
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: InkWell(
+                    child: Icon(
+                      Icons.remove_circle,
+                      size: 20,
+                      color: Colors.red,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        images.replaceRange(index, index + 1, ['Add Image']);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Card(
+            child: IconButton(
+              icon: Icon(Icons.add,color: Colors.redAccent,),
+              onPressed: () {
+//                _onAddImageClick(index);
+                bottomsheets(index);
+              },
+            ),
+          );
+        }
+      }),
+    );
+  }
+
+  void bottomsheets(int index) {
+    openbottomsheet = true;
+    setState(() {});
+    Future<void> future = showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return new Container(
+          decoration: BoxDecoration(color: Colors.white, boxShadow: [
+            BoxShadow(blurRadius: 10.9, color: Colors.grey[400])
+          ]),
+          height: 170,
+          child: new Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: new Text("Select  Options"),
+              ),
+              Divider(
+                height: 1,
+              ),
+              new Container(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.photo_library),
+                                  onPressed: () async {
+                                    _imageFile = ImagePicker.pickImage(source: ImageSource.gallery);
+                                    getFileImage(index);
+                                    Navigator.pop(context);
+                                  }),
+                              SizedBox(width: 10),
+                              Text("Open Gallery")
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            IconButton(
+                                icon: Icon(Icons.camera_alt),
+                                onPressed: () async {
+                                  _imageFile = ImagePicker.pickImage(source: ImageSource.camera);
+                                  getFileImage(index);
+                                  Navigator.pop(context);
+                                }),
+                            SizedBox(width: 10),
+                            Text("Open Camera")
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+    future.then((void value) => _closeModal(value));
+  }
+
+  void _closeModal(void value) {
+    openbottomsheet = false;
+    setState(() {});
+  }
+
+  void getFileImage(int index) async {
+//    var dir = await path_provider.getTemporaryDirectory();
+
+    _imageFile.then((file) async {
+      setState(() {
+        ImageUploadModel imageUpload = new ImageUploadModel();
+        imageUpload.isUploaded = false;
+        imageUpload.uploading = false;
+        imageUpload.imageFile = file;
+        imageUpload.imageUrl = '';
+        images.replaceRange(index, index + 1, [imageUpload]);
+      });
+    });
   }
 
   clearText() {
@@ -2596,8 +2629,10 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   addSpecialBeds() {
+    specialBeds.add(new AddSpecialBed(
+        _chosenValue1, bedsController2.text, chargesController2.text));
     Beds.add({
-      "roomType": roomtype.text,
+      "roomType": _chosenValue1,
       "noOfBeds": bedsController2.text,
       "charges": chargesController2.text
     });
@@ -2620,6 +2655,8 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   addDiagnosisCharged() {
+    diagnosisCharge
+        .add(new AddDiagnosisCharged(descController.text, opdController.text));
     diagnosis.add({
       "Test Description": descController.text,
       "Charges": opdController.text
@@ -2629,6 +2666,8 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   addHeathCheckup() {
+    healthCharges
+        .add(new AddDiagnosisCharged(packController.text, amtController.text));
     health.add(
         {"PackageName": packController.text, "Amount": amtController.text});
     print(health.toString());
@@ -2636,9 +2675,9 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   addTPA() {
-    TPAInsurance.add(new AddInsurance(_chosenValue1));
+    TPAInsurance.add(new AddInsurance(tpaController.text));
     TPA.add({
-      "Insurance Name": _chosenValue1,
+      "Insurance Name": tpaController.text,
     });
     print(TPA.toString());
     clearText();
@@ -2780,36 +2819,6 @@ class _AddHospitalState extends State<AddHospital> {
   }
 }
 
-class AddInsurance extends StatefulWidget {
-  String insuranceName;
-
-  AddInsurance(this.insuranceName);
-  @override
-  _AddInsuranceState createState() => _AddInsuranceState();
-}
-
-class _AddInsuranceState extends State<AddInsurance> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        //padding: EdgeInsets.only(left: 18, right: 18),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text("Insurance Name:",style: new TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "Lato",
-                fontSize: 14),),
-            Text("  "+widget.insuranceName,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Lato",
-                    fontSize: 14)),
-          ],
-        ));
-  }
-}
-
 class DoctorsTextFields extends StatefulWidget {
   final int index;
   DoctorsTextFields(this.index);
@@ -2842,6 +2851,10 @@ class _DoctorsTextFieldsState extends State<DoctorsTextFields> {
       controller: _nameController,
       onChanged: (v) => _AddHospitalState.doctorsList[widget.index] = v,
       decoration: InputDecoration(hintText: 'Enter Doctor\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
     );
   }
 }
@@ -2878,6 +2891,10 @@ class _NursesTextFieldsState extends State<NursesTextFields> {
       controller: _nameController,
       onChanged: (v) => _AddHospitalState.nursesList[widget.index] = v,
       decoration: InputDecoration(hintText: 'Enter Nurse\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
     );
   }
 }
@@ -2914,6 +2931,10 @@ class _StaffsTextFieldsState extends State<StaffsTextFields> {
       controller: _nameController,
       onChanged: (v) => _AddHospitalState.staffsList[widget.index] = v,
       decoration: InputDecoration(hintText: 'Enter Staff\'s name'),
+      validator: (v) {
+        if (v.trim().isEmpty) return 'Please enter something';
+        return null;
+      },
     );
   }
 }
