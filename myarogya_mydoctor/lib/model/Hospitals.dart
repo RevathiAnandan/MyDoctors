@@ -2,75 +2,105 @@ import 'dart:core';
 
 class Hospitals{
 
-  String about;
-  String hospitalregno;
   String hospitalName;
-  String address;
-  String incorporationdate;
-  String rating;
-  String pricerange;
-  String prepayment;
-  String type;
-  String accredition;
-  String yearsofservice;
-  List<SpecialWard> bedcatogory;
-  String rmoname;
-  String rmoemergencyNo;
-  String area;
-  List<MedicalSocialWorkers> MedicalSocialWorker;
-  List<Facilities> facilities;
-  List<Specialities> specialities;
-
+  String hospitalRegNo;
+  String hospitalAddress;
+  String dateofIncorporation;
+  String adminName;
+  String adminPh;
+  String accred;
+  String ambulanceNo;
+  String emergencyNo;
+  String bookingPhNo;
+  String opdBookingNo;
+  List image;
+  String status;
+  List<FreeBeds> freebeds;
+  List<ConBeds> conbeds;
+  List<OtherBeds> beds;
+  List<Diagnosis> diagnosis;
+  List<Health> health;
+  List<String> specialities;
+  List<String> facilities;
+  List<DoctorList> doctorslist;
+  List<NursesList> nurseslist;
+  List<StaffsList> staffslist;
+  List<TpaList> tpalist;
 
 
   Hospitals._({
-      this.hospitalregno,
       this.hospitalName,
-      this.address,
-      this.rating,
-      this.pricerange,
-      this.prepayment,
-      this.type,
-      this.accredition,
-      this.yearsofservice,
-      this.bedcatogory,
-      this.rmoname,
-      this.rmoemergencyNo,
-      this.MedicalSocialWorker,
-      this.incorporationdate,
-    this.facilities,
-    this.specialities,
-    this.area,
-    this.about
+      this.hospitalRegNo,
+      this.hospitalAddress,
+      this.dateofIncorporation,
+      this.adminName,
+      this.adminPh,
+      this.accred,
+      this.ambulanceNo,
+      this.emergencyNo,
+      this.bookingPhNo,
+      this.opdBookingNo,
+      this.image,
+      this.status,
+      this.freebeds,
+      this.conbeds,
+      this.beds,
+      this.diagnosis,
+      this.health,
+      this.specialities,
+      this.facilities,
+      this.doctorslist,
+      this.nurseslist,
+      this.staffslist,
+      this.tpalist
   });
 
   factory Hospitals.fromJson(dynamic json){
-    var medicalsocialworkers = json["MedicalSocialWorkers"] as List;
-    List<MedicalSocialWorkers> _MSW = medicalsocialworkers.map((tagJson) => MedicalSocialWorkers.fromJson(tagJson)).toList();
-    var speciality = json["Specialities"] as List;
-    List<Specialities> _SPL = speciality.map((tagJson) => Specialities.fromJson(tagJson)).toList();
-    var facility = json["Facilities"] as List;
-    List<Facilities> _FCL = facility.map((tagJson) => Facilities.fromJson(tagJson)).toList();
-    var bedcategory = json["bedCategory"] as List;
-    List<SpecialWard> _BED = bedcategory.map((tagJson) => SpecialWard.fromJson(tagJson)).toList();
+   var freebeddetails = json["Free Bed Details"] as List;
+    List<FreeBeds> _FREE = freebeddetails.map((tagJson) => FreeBeds.fromJson(tagJson)).toList();
+    var conbeddetails = json["Concessional Bed Details"] as List;
+    List<ConBeds> _CON = conbeddetails.map((tagJson) => ConBeds.fromJson(tagJson)).toList();
+    var splbeddetails = json["Special Bed Details"] as List;
+    List<OtherBeds> _BED = splbeddetails.map((tagJson) => OtherBeds.fromJson(tagJson)).toList();
+    var diagnosis = json["Diagnosis Details"] as List;
+    List<Diagnosis> _DIAGNOSIS = diagnosis.map((tagJson) => Diagnosis.fromJson(tagJson)).toList();
+    var health = json["Health Package"] as List;
+    List<Health> _HEALTH = health.map((tagJson) => Health.fromJson(tagJson)).toList();
+    var doctors = json["Doctors"] as List;
+    List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
+    var nurses = json["Nurses"] as List;
+    List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
+    var staff = json["Staff"] as List;
+    List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
+    var tpa = json["TPA"] as List;
+    List<TpaList> _TPA = tpa.map((tagJson) => TpaList.fromJson(tagJson)).toList();
+
 
     return new Hospitals._(
-        hospitalregno: json['hospitalregno'] as String,
+        hospitalRegNo: json['hospitalId'] as String,
         hospitalName: json['hospitalName'] as String,
-        address: json['address'] as String,
-        incorporationdate: json['incorporationdate'] as String,
-        rating: json['rating'] as String,
-        specialities: _SPL,
-        facilities: _FCL,
-        pricerange: json['pricerange'] as String,
-        prepayment: json['prepayment'] as String,
-        type: json['type'] as String,
-        accredition: json['accredition'] as String,
-        yearsofservice: json['yearsofservice'] as String,
-        bedcatogory:_BED,
-        rmoname: json["rmoname"] as String,
-        rmoemergencyNo: json["rmoemergencyNo"] as String,
-        MedicalSocialWorker: _MSW,
+        hospitalAddress: json['address'] as String,
+        dateofIncorporation: json['Date of Incorporation'] as String,
+        adminName: json['Administration Name'] as String,
+        adminPh: json['Administration Ph no'] as String,
+        accred: json['accredition'] as String,
+        ambulanceNo: json['Ambulance'] as String,
+        emergencyNo: json['Emergency'] as String,
+        bookingPhNo: json['Booking Ph'] as String,
+        opdBookingNo: json['OPD Booking'] as String,
+        image: json['Images'] as List,
+        status: json['Status'] as String,
+        freebeds: _FREE,
+        conbeds: _CON,
+        beds: _BED,
+        diagnosis: _DIAGNOSIS,
+        health: _HEALTH,
+        specialities: json['Specialities'] as List,
+        facilities: json['Facilities'] as List,
+        doctorslist: _DOCTOR,
+        nurseslist: _NURSE,
+        staffslist: _STAFF,
+        tpalist: _TPA
 
     );
   }
@@ -78,72 +108,141 @@ class Hospitals{
 
 }
 
-//class BedCatogory {
-//  List <SpecialWard> free;
-//  List<SpecialWard> Special;
-//  BedCatogory(this.free,this.Special);
-//}
+class TpaList {
+  String insurName;
 
-class SpecialWard {
+  TpaList._({this.insurName});
+
+  factory TpaList.fromJson(dynamic json){
+    return TpaList._(
+      insurName: json['Insurance Name'] as String,
+    );
+  }
+
+}
+
+class StaffsList {
+  String name;
+  String phno;
+
+  StaffsList._({this.name, this.phno});
+
+  factory StaffsList.fromJson(dynamic json){
+    return StaffsList._(
+      name: json['Name'] as String,
+      phno: json['PhNumber'] as String,
+    );
+  }
+
+
+}
+
+class NursesList {
+  String name;
+  String phno;
+
+  NursesList._({this.name, this.phno});
+
+  factory NursesList.fromJson(dynamic json){
+    return NursesList._(
+      name: json['Name'] as String,
+      phno: json['PhNumber'] as String,
+    );
+  }
+}
+
+class DoctorList {
+  String name;
+  String phno;
+  DoctorList._({this.name, this.phno});
+
+
+  factory DoctorList.fromJson(dynamic json){
+    return DoctorList._(
+      name: json['Name'] as String,
+      phno: json['PhNumber'] as String,
+    );
+  }
+
+}
+
+class Health {
+  String packagename;
+  String amount;
+
+  Health._({this.packagename, this.amount});
+
+  factory Health.fromJson(dynamic json){
+    return Health._(
+      packagename: json['PackageName'] as String,
+      amount: json['Amount'] as String,
+    );
+  }
+}
+
+class Diagnosis {
+  String test;
+  String charge;
+
+  Diagnosis._({this.test, this.charge});
+
+  factory Diagnosis.fromJson(dynamic json){
+    return Diagnosis._(
+      test: json['Test Description'] as String,
+      charge: json['Charges'] as String,
+    );
+  }
+}
+
+class ConBeds {
   String roomType;
   String noOfBeds;
   String charges;
-  String doctorCharges;
-  String nurseCharges;
-  String pathologyCharges;
-  String pharmacyCharges;
-  SpecialWard._({this.roomType,this.noOfBeds,this.charges,this.doctorCharges,this.nurseCharges,this.pathologyCharges,this.pharmacyCharges});
 
-  factory SpecialWard.fromJson(dynamic json){
-    return SpecialWard._(
+  ConBeds._({this.roomType,this.noOfBeds,this.charges});
+
+  factory ConBeds.fromJson(dynamic json){
+    return ConBeds._(
       roomType: json['roomType'] as String,
       noOfBeds: json['noOfBeds'] as String,
       charges: json['charges'] as String,
-      doctorCharges: json['doctorCharges'] as String,
-      nurseCharges: json['nurseCharges'] as String,
-      pathologyCharges: json['pathologyCharges'] as String,
-      pharmacyCharges: json['pharmacyCharges'] as String,
+
     );
   }
 }
 
-class Specialities {
-  String spl;
+class FreeBeds {
+  String roomType;
+  String noOfBeds;
+  String charges;
 
-  Specialities._({this.spl});
+  FreeBeds._({this.roomType,this.noOfBeds,this.charges});
 
-  factory Specialities.fromJson(dynamic json){
-    return Specialities._(
-      spl: json['speciality'] as String,
-    );
-  }
+  factory FreeBeds.fromJson(dynamic json){
+    return FreeBeds._(
+      roomType: json['roomType'] as String,
+      noOfBeds: json['noOfBeds'] as String,
+      charges: json['charges'] as String,
 
-}
-
-class Facilities {
-  String fcl;
-
-  Facilities._({this.fcl});
-
-  factory Facilities.fromJson(dynamic json){
-    return Facilities._(
-      fcl: json['facilitiy'] as String,
     );
   }
 }
 
 
-class MedicalSocialWorkers {
-  String name;
-  String number;
-  MedicalSocialWorkers._({this.name, this.number});
 
-  factory MedicalSocialWorkers.fromJson(dynamic json){
-    return MedicalSocialWorkers._(
-      name: json["name"] as String,
-      number: json["number"] as String,
+class OtherBeds {
+  String roomType;
+  String noOfBeds;
+  String charges;
+
+  OtherBeds._({this.roomType,this.noOfBeds,this.charges});
+
+  factory OtherBeds.fromJson(dynamic json){
+    return OtherBeds._(
+      roomType: json['roomType'] as String,
+      noOfBeds: json['noOfBeds'] as String,
+      charges: json['charges'] as String,
+
     );
   }
-
-
 }
