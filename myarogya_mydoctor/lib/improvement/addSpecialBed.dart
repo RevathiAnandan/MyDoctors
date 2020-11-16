@@ -8,7 +8,6 @@ class AddSpecialBed extends StatefulWidget {
   @override
   _AddSpecialBedState createState() => _AddSpecialBedState();
 }
-
 class _AddSpecialBedState extends State<AddSpecialBed> {
   @override
   Widget build(BuildContext context) {
@@ -17,6 +16,7 @@ class _AddSpecialBedState extends State<AddSpecialBed> {
         child:Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+
             Text("Room: ${widget.roomType}",style: new TextStyle(fontWeight: FontWeight.bold,fontFamily: "Lato",fontSize: 14)),
 
             Text("No of beds: ${widget.beds}",style: new TextStyle(fontWeight: FontWeight.bold,fontFamily: "Lato",fontSize: 14)),

@@ -33,12 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Image.asset('assets/images/logo123.png',height: 180,width: 350),
                   SizedBox(height: 10,),
-                  Text("Enter Mobile Number", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal,fontFamily: "Lacto"),),
+                  // Text("Enter Mobile Number", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal,fontFamily: "Lacto"),),
                   SizedBox(height: 10,),
                   TextFormField(
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(10),
                       ],
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         prefixIcon: new Icon(Icons.phone_android,color: Colors.redAccent),
                         enabledBorder: OutlineInputBorder(
@@ -50,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderSide: BorderSide(color: Colors.redAccent)
                         ),
                         filled: true,
-
                         fillColor: Colors.grey[100],
                         hintText: "Enter the mobile number"
                     ),

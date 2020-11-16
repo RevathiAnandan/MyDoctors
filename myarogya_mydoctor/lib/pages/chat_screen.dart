@@ -76,8 +76,15 @@ class MyScreenState extends State<MyScreen> {
 // //                  backgroundImage: Image.asset('assets/images/grid.png'),
 //                       ),
                       title: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.redAccent,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
                           Column(
                             crossAxisAlignment:CrossAxisAlignment.start,
                             children: [
