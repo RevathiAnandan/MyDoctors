@@ -135,7 +135,7 @@ class _AppointmentsState extends State<Appointments> {
                   PopupMenuButton<String>(
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context){
-                      return Constants.choices.map((String choice){
+                      return ConstantsD.choices.map((String choice){
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice),
@@ -534,7 +534,7 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   void choiceAction(String choice){
-    if(choice == Constants.Profile){
+    if(choice == ConstantsD.Profile){
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -542,9 +542,9 @@ class _AppointmentsState extends State<Appointments> {
               ProfileScreen(widget.id,widget.mobile),
         ),
       );
-    }else if(choice == Constants.SignOut){
+    }else if(choice == ConstantsD.SignOut){
       AuthService().signOut(context);
-    }else if(choice == Constants.Settings){
+    }else if(choice == ConstantsD.Settings){
       Navigator.push(
         context,
         MaterialPageRoute(

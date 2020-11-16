@@ -19,9 +19,9 @@ class AddHospital extends StatefulWidget {
 class _AddHospitalState extends State<AddHospital> {
   TextEditingController _nameController;
   static List<String> doctorsList = [null];
-  static List<String> nursesList = [null];
+  static List nursesList = [null];
   static List<String> staffsList = [null];
-  List< String> downloadUrl;
+  List<String> downloadUrl;
 
   @override
   void initState() {
@@ -227,10 +227,8 @@ class _AddHospitalState extends State<AddHospital> {
                   ? IconButton(
                       icon: Icon(Icons.save),
                       onPressed: () {
-
                         images.forEach((img) async {
                           String imageName = img.toString();
-
                           final Directory systemTempDir = Directory.systemTemp;
                           final byteData = await rootBundle.load(img.toString());
                           final file =
@@ -253,8 +251,6 @@ class _AddHospitalState extends State<AddHospital> {
                             throw ('This file is not an image');
                           }
                         });
-
-
                         ApiService().hospitals(
                             nameController.text,
                             regController.text,
@@ -268,6 +264,9 @@ class _AddHospitalState extends State<AddHospital> {
                             bookphController.text,
                             opdbkController.text,
                             downloadUrl,
+                            "Completed",
+                            freebeds,
+                            conbeds,
                             Beds,
                             diagnosis,
                             health,
@@ -276,7 +275,7 @@ class _AddHospitalState extends State<AddHospital> {
                             doctorsList,
                             nursesList,
                             staffsList,
-                            _chosenValue1);
+                            TPA.toString());
                         AuthService()
                             .toast("Your Added Hospital Is Under Verification");
                         Navigator.pop(context);
@@ -284,15 +283,26 @@ class _AddHospitalState extends State<AddHospital> {
                       color: Colors.redAccent,
                       iconSize: 30,
                     )
-                  : IconButton(
+                  :IconButton(
                       icon: Icon(Icons.arrow_forward),
                       onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          setState(() {
-                            pageindex++;
-                          });
+                        if(pageindex==3){
+                          addfreeBeds();
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            setState(() {
+                              pageindex++;
+                            });
+                          }
+                        }else{
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            setState(() {
+                              pageindex++;
+                            });
+                          }
                         }
+
                       },
                       color: Colors.redAccent,
                       iconSize: 30,
@@ -2735,6 +2745,7 @@ class _AddHospitalState extends State<AddHospital> {
         if (add) {
           // add new text-fields at the top of all friends textfields
           nursesList.insert(0, null);
+          print(nursesList.toString());
         } else
           nursesList.removeAt(index);
         setState(() {});
@@ -2855,29 +2866,54 @@ class NursesTextFields extends StatefulWidget {
 
 class _NursesTextFieldsState extends State<NursesTextFields> {
   TextEditingController _nameController;
+  TextEditingController _phoneController;
 
   @override
+  var nurse;
   void initState() {
     super.initState();
     _nameController = TextEditingController();
+    _phoneController = TextEditingController();
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _nameController.text = _AddHospitalState.nursesList[widget.index] ?? '';
+      _nameController.text = _AddHospitalState.nursesList[widget.index]['Name'] ?? '';
+      _phoneController.text = _AddHospitalState.nursesList[widget.index]['Phone'] ?? '';
     });
 
-    return TextFormField(
-      controller: _nameController,
-      onChanged: (v) => _AddHospitalState.nursesList[widget.index] = v,
-      decoration: InputDecoration(hintText: 'Enter Nurse\'s name'),
+    return Column(
+      children: [
+        TextFormField(
+          controller: _nameController,
+          onChanged: (v) {
+            nurse = {
+              'Name':v,
+            };
+            _AddHospitalState.nursesList[widget.index].add(nurse);
+          },
+          decoration: InputDecoration(hintText: 'Enter Nurse\'s name'),
+        ),
+        TextFormField(
+          controller: _phoneController,
+          onChanged: (v) {
+            nurse = {
+              'Phone':v,
+            };
+            _AddHospitalState.nursesList[widget.index].add(nurse);
+          },
+          decoration: InputDecoration(hintText: 'Enter Phone\'s name'),
+        ),
+
+      ],
     );
   }
 }

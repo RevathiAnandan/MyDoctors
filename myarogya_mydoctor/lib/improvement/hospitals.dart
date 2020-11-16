@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:myarogya_mydoctor/services/datasearch.dart';
+import 'package:myarogya_mydoctor/utils/const.dart';
 
 class Hospitals extends StatefulWidget {
   @override
@@ -50,13 +53,23 @@ class _HospitalsState extends State<Hospitals> {
                         );
                       },
                     ),
-                    Center(
-                      child: Text(
-                        '400+     ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.redAccent),
-                      ),
+                    IconButton(
+                      icon: Icon(Icons.search, color: Colors.redAccent,size: 35,),
+                      onPressed: () {
+                        showSearch(context: context, delegate: DataSearch());
+                      },
                     ),
+                    PopupMenuButton<String>(
+                      onSelected: choiceAction,
+                      itemBuilder: (BuildContext context){
+                        return ConstantsH.choices.map((String choice){
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    )
                   ],
                 ),
               ];
@@ -751,5 +764,12 @@ class _HospitalsState extends State<Hospitals> {
             ])),
       ),
     );
+  }
+  void choiceAction(String choice){
+    if(choice == ConstantsH.SignOut){
+      AuthService().signOut(context);
+    }else if(choice == ConstantsH.Settings){
+      //todo:hospital settings to be done
+    }
   }
 }
