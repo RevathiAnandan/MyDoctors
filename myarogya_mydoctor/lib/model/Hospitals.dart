@@ -1,6 +1,6 @@
 import 'dart:core';
 
-class Hospitals{
+class Hospital{
 
   String hospitalName;
   String hospitalRegNo;
@@ -9,6 +9,7 @@ class Hospitals{
   String adminName;
   String adminPh;
   String accred;
+  String pricerange;
   String ambulanceNo;
   String emergencyNo;
   String bookingPhNo;
@@ -20,15 +21,15 @@ class Hospitals{
   List<OtherBeds> beds;
   List<Diagnosis> diagnosis;
   List<Health> health;
-  List<String> specialities;
-  List<String> facilities;
-  List<DoctorList> doctorslist;
-  List<NursesList> nurseslist;
-  List<StaffsList> staffslist;
+  List specialities;
+  List facilities;
+  List doctorslist;
+  List nurseslist;
+  List staffslist;
   List<TpaList> tpalist;
 
 
-  Hospitals._({
+  Hospital._({
       this.hospitalName,
       this.hospitalRegNo,
       this.hospitalAddress,
@@ -36,6 +37,7 @@ class Hospitals{
       this.adminName,
       this.adminPh,
       this.accred,
+      this.pricerange,
       this.ambulanceNo,
       this.emergencyNo,
       this.bookingPhNo,
@@ -55,8 +57,8 @@ class Hospitals{
       this.tpalist
   });
 
-  factory Hospitals.fromJson(dynamic json){
-   var freebeddetails = json["Free Bed Details"] as List;
+  factory Hospital.fromJson(dynamic json){
+    var freebeddetails = json["Free Bed Details"] as List;
     List<FreeBeds> _FREE = freebeddetails.map((tagJson) => FreeBeds.fromJson(tagJson)).toList();
     var conbeddetails = json["Concessional Bed Details"] as List;
     List<ConBeds> _CON = conbeddetails.map((tagJson) => ConBeds.fromJson(tagJson)).toList();
@@ -66,17 +68,17 @@ class Hospitals{
     List<Diagnosis> _DIAGNOSIS = diagnosis.map((tagJson) => Diagnosis.fromJson(tagJson)).toList();
     var health = json["Health Package"] as List;
     List<Health> _HEALTH = health.map((tagJson) => Health.fromJson(tagJson)).toList();
-    var doctors = json["Doctors"] as List;
-    List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
-    var nurses = json["Nurses"] as List;
-    List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
-    var staff = json["Staff"] as List;
-    List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
+    // var doctors = json["Doctors"] as List;
+    // List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
+    // var nurses = json["Nurses"] as List;
+    // List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
+    // var staff = json["Staff"] as List;
+    // List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
     var tpa = json["TPA"] as List;
     List<TpaList> _TPA = tpa.map((tagJson) => TpaList.fromJson(tagJson)).toList();
 
 
-    return new Hospitals._(
+    return new Hospital._(
         hospitalRegNo: json['hospitalId'] as String,
         hospitalName: json['hospitalName'] as String,
         hospitalAddress: json['address'] as String,
@@ -84,6 +86,7 @@ class Hospitals{
         adminName: json['Administration Name'] as String,
         adminPh: json['Administration Ph no'] as String,
         accred: json['accredition'] as String,
+        pricerange: json['Price Range'] as String,
         ambulanceNo: json['Ambulance'] as String,
         emergencyNo: json['Emergency'] as String,
         bookingPhNo: json['Booking Ph'] as String,
@@ -95,11 +98,11 @@ class Hospitals{
         beds: _BED,
         diagnosis: _DIAGNOSIS,
         health: _HEALTH,
-        specialities: json['Specialities'] as List,
+        specialities: json['Speciality'] as List,
         facilities: json['Facilities'] as List,
-        doctorslist: _DOCTOR,
-        nurseslist: _NURSE,
-        staffslist: _STAFF,
+        doctorslist: json['Doctors'] as List,
+        // nurseslist: _NURSE,
+        staffslist: json['Staff'] as List,
         tpalist: _TPA
 
     );
@@ -130,7 +133,7 @@ class StaffsList {
   factory StaffsList.fromJson(dynamic json){
     return StaffsList._(
       name: json['Name'] as String,
-      phno: json['PhNumber'] as String,
+      // phno: json['PhNumber'] as String,
     );
   }
 
@@ -160,7 +163,7 @@ class DoctorList {
   factory DoctorList.fromJson(dynamic json){
     return DoctorList._(
       name: json['Name'] as String,
-      phno: json['PhNumber'] as String,
+      // phno: json['PhNumber'] as String,
     );
   }
 
