@@ -233,45 +233,6 @@ class MyScreenState extends State<MyScreen> {
                 }
               });
             });
-            // for(int k=0;k<=appoint.length;k++) {
-            //   if (appoint[k].status == "Waiting!" ||
-            //       appoint[k].status == "View") {
-            //     if (appoint[k].doctorMobile == dummyData[k].phone) {
-            //       localappoint.add(appoint[k].status);
-            //     }
-            //   } else {
-            //     localappoint.add("Book now");
-            //   }
-            // }
-            // print(localappoint);
-// //
-//            for (int k = 0; k < dummyData.length; k++) //2 [0,1]
-//            {
-//              for (int j = 0; j < appoint.length; j++) //4  [0,1,2,3]
-//                {
-//                  if(appoint[j].doctorMobile == dummyData[k].phone)
-//                  {
-//                    status.add(appoint[j].status);
-//                  }else {
-//                    status.add("BookNow");
-//                  }
-//                }
-//              // status.clear();
-//            }
-//            print("Status::"+status.toString());
-//             for(int index = 0 ;index <= appoint.length; index++){
-//               print (index);
-// //                    if(appoint.asMap().containsKey(index)){
-//               if(dummyData[index].phone == appoint[index].doctorMobile){
-//                 status.add(appoint[index].status);
-//               }else {
-//                 status.add("Book Now");
-//               }
-// //                    }else{
-// //                        status.add("Book Now");
-// //                    }
-//               print ("Status"+status.toString());
-//             }
           }
         });
       } else {

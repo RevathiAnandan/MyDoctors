@@ -331,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
+  mock_data:
+    dependency: "direct main"
+    description:
+      name: mock_data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.8"
   multi_image_picker:
     dependency: "direct main"
     description:

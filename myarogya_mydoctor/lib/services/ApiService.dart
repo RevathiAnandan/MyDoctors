@@ -2,6 +2,7 @@
 
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 class ApiService{
 
@@ -233,9 +234,9 @@ class ApiService{
     }
   }
 
-  Future hospitals(String name,String regno,String address,String dateof,String adminname,
+  Future hospitals(String name,String regno,String address,String dateof,String adminname, String pricerange,
       String adminph,
-      String accred, String ambulance, String emergency, String bookph, String Opdbk,List images,String status, List freebeds,List conbeds, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, String TPA){
+      String accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status, List freebeds,List conbeds, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
     try {
       var db = fb.reference().child("Hospitals").push();
       db.set({
@@ -246,6 +247,7 @@ class ApiService{
             'Administration Name':adminname,
             'Administration Ph no':adminph,
             'accredition' : accred,
+            'Price Range': pricerange,
             'Ambulance': ambulance,
             'Emergency':emergency,
             'Booking Ph':bookph,
