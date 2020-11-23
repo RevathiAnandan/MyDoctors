@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
-import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
@@ -129,15 +127,15 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       padding: EdgeInsets.all(16),
                       onPressed: () async{
                         SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Hospital);
-//                        final FirebaseUser user = await _auth.currentUser();
-//                        final uid = user.uid.toString();
-//                        final usermobile = user.phoneNumber.toString();
+                        final FirebaseUser user = await _auth.currentUser();
+                        final uid = user.uid.toString();
+                        final usermobile = user.phoneNumber.toString();
 //                        final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 //                        _firebaseMessaging.getToken().then((token) =>fcmToken = token);
-//                        ApiService().createUser(uid,usermobile,ConstantUtils().Patient);
+                        ApiService().createUser(uid,usermobile,ConstantUtils().Hospital);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HospitalDashboard()),
+                          MaterialPageRoute(builder: (context) => HospitalDashboard(uid,usermobile)),
                         );
                       },
                       color: Colors.redAccent,
