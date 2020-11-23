@@ -8,6 +8,7 @@ import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
+import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 import 'package:myarogya_mydoctor/pages/splash_screen.dart';
 import 'package:myarogya_mydoctor/test.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         // home: MyForm(),
+//       home: SelectionScreen(),
         // home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")

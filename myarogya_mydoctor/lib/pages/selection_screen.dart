@@ -9,6 +9,7 @@ import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 
 import 'Doctor/doctor_new_dashboard.dart';
+import 'Hospital/HospitalDashboard.dart';
 
 class SelectionScreen extends StatefulWidget {
   @override
@@ -105,6 +106,38 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,usermobile)),
+                        );
+                      },
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  constraints: const BoxConstraints(
+                      maxWidth: 500
+                  ),
+                  child:Container(
+                    width: double.infinity,
+                    child: FlatButton(
+                      child: Text("MY HOSPITALS",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          side: BorderSide(color: Colors.redAccent)
+                      ),
+                      padding: EdgeInsets.all(16),
+                      onPressed: () async{
+                        SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Hospital);
+//                        final FirebaseUser user = await _auth.currentUser();
+//                        final uid = user.uid.toString();
+//                        final usermobile = user.phoneNumber.toString();
+//                        final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+//                        _firebaseMessaging.getToken().then((token) =>fcmToken = token);
+//                        ApiService().createUser(uid,usermobile,ConstantUtils().Patient);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HospitalDashboard()),
                         );
                       },
                       color: Colors.redAccent,
