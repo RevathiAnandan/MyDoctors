@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/EditAddHospital.dart';
 class PendingPage extends StatefulWidget {
   @override
   _PendingPageState createState() => _PendingPageState();
@@ -8,13 +10,15 @@ class PendingPage extends StatefulWidget {
 
 class _PendingPageState extends State<PendingPage> {
   List<Hospital>dummyData=[];
+  Hospital hospitalDetails;
   bool isLoading = false;
+  List keys1 = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getHospitals();
+    getHospitals("");
   }
   @override
   Widget build(BuildContext context) {
@@ -59,35 +63,52 @@ class _PendingPageState extends State<PendingPage> {
                 ),
               ],
             ),
-            onTap: () {
-
-            },
+//            onTap: () {
+//              getHospitals(keys1[i]);
+//              Navigator.push(
+//                context,
+//                MaterialPageRoute(builder: (context) => EditAddHospital(hospitalDetails)),
+//              );
+//            },
           )
         ],
       ),
     ));
   }
-  Future<Hospital> getHospitals() async {
+  Future<Hospital> getHospitals(String Key) async {
     isLoading = true;
     try {
-      var db = await fb
-          .reference()
-          .child("Hospitals");
-      db.once().then((DataSnapshot snapshot) {
-        print(snapshot.value);
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((key, values) {
-          var refreshToken = Hospital.fromJson(values);
-          print(refreshToken);
-          if(refreshToken.status == "Pending"){
-            dummyData.add(refreshToken);
-            print(dummyData.length);
-          }
+      if (Key == "") {
+        var db = await fb
+                  .reference()
+                  .child("Hospitals");
+        db.once().then((DataSnapshot snapshot) {
+                print(snapshot.value);
+                Map<dynamic, dynamic> values = snapshot.value;
+                values.forEach((key, values) {
+                  var refreshToken = Hospital.fromJson(values);
+                  print(refreshToken);
+                  if(refreshToken.status == "Pending"){
+                    dummyData.add(refreshToken);
+                    keys1.add(key);
+                    print(dummyData.length);
+                  }
 
-        }
+                }
 
-        );
-      });
+                );
+              });
+      } else {
+        var db = await fb
+            .reference()
+            .child("Hospitals").child(Key);
+        db.once().then((DataSnapshot snapshot) {
+          print(snapshot.value);
+            var refreshToken = Hospital.fromJson(snapshot.value);
+          hospitalDetails = refreshToken;
+            print(refreshToken);
+        });
+      }
     } catch (e) {
       print(e);
     }
