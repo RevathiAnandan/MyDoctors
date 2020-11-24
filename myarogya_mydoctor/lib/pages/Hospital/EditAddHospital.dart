@@ -187,7 +187,6 @@ class _EditAddHospitalState extends State<EditAddHospital> {
   final TextEditingController pricerange = TextEditingController();
 
   getController(){
-
   }
 
 
