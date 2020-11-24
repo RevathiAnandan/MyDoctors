@@ -234,9 +234,31 @@ class ApiService{
     }
   }
 
+  Future bookhospital(String bookingno, String userno,String status,String key){
+    try {
+      if (status=="Confirm") {
+        var db = fb.reference().child("HospitalBookings").child(key);
+        db.update({
+                'BookingNumber':bookingno,
+                'UserNumber':userno,
+                'Status':status
+              });
+      } else {
+        var db = fb.reference().child("HospitalBookings").push();
+        db.set({
+          'BookingNumber':bookingno,
+          'UserNumber':userno,
+          'Status':status
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future hospitals(String name,String regno,String address,String dateof,String adminname, String pricerange,
       String adminph,
-      String accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status, List freebeds,List conbeds, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
+      List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status, List freebeds,List conbeds, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
     try {
       var db = fb.reference().child("Hospitals").push();
       db.set({

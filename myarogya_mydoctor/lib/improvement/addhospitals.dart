@@ -233,6 +233,7 @@ class _AddHospitalState extends State<AddHospital> {
   List<Widget> diagnosisCharge = [];
   List<Widget> healthCharges = [];
   List<Widget> TPAInsurance = [];
+  List<Widget> Accred = [];
   List Beds = [];
   List freebeds = [];
   List conbeds = [];
@@ -242,6 +243,8 @@ class _AddHospitalState extends State<AddHospital> {
   List nursenamenum = [];
   List staffnamenum = [];
   List TPA = [];
+  List ACCRED = [];
+
   List topics = [
     "Hospital Details",
     "Important Numbers",
@@ -334,9 +337,11 @@ class _AddHospitalState extends State<AddHospital> {
   List dynamicListD = [];
   List dynamicListN = [];
   List dynamicListS = [];
-  List doclist;
-  List nurlist;
-  List stafflist;
+  List doclist=[];
+  List nurlist=[];
+  List stafflist=[];
+  bool _checked = false;
+  bool buttonstatus = true;
 
   List<String> NumberD = [];
 
@@ -404,10 +409,10 @@ class _AddHospitalState extends State<AddHospital> {
                             adminiController.text,
                             pricerange.text,
                             adminiphoneController.text,
-                            _chosenValue2,
+                            ACCRED,
                             ambuController.text,
                             emerController.text,
-                            bookphController.text,
+                            "+91${bookphController.text}",
                             opdbkController.text,
                             imagesUrl,
                             "Completed",
@@ -439,6 +444,15 @@ class _AddHospitalState extends State<AddHospital> {
                             setState(() {
                               pageindex++;
                             });
+                          }
+                        }else if(pageindex == 8){
+                          if (_formKey.currentState.validate()&&_checked) {
+                            _formKey.currentState.save();
+                            setState(() {
+                              pageindex++;
+                            });
+                          }else{
+                            AuthService().toast("Please Complete filling data and Submit down below");
                           }
                         } else {
                           if (_formKey.currentState.validate()) {
@@ -473,6 +487,7 @@ class _AddHospitalState extends State<AddHospital> {
   Container changingpages(int pageindex, BuildContext context) {
     switch (pageindex) {
       case 0:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -582,7 +597,7 @@ class _AddHospitalState extends State<AddHospital> {
                       // enabledBorder: InputBorder.none,
                       //errorBorder: OutlineInputBorder(),
                       //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
+                       hintText: "DD/MM/YYYY"
                       ),
                   style: TextStyle(
                     fontSize: 18,
@@ -675,6 +690,33 @@ class _AddHospitalState extends State<AddHospital> {
                     },
                   ),
                 ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 500,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: MaterialButton(
+                        elevation: 8,
+                        onPressed: addaccred,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        shape: CircleBorder(),
+                        disabledColor: Colors.redAccent,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: Accred.length,
+                      itemBuilder: (_, index) => Accred[index]),
+                ),
                 SizedBox(
                   height: 35,
                 ),
@@ -695,7 +737,7 @@ class _AddHospitalState extends State<AddHospital> {
                       // enabledBorder: InputBorder.none,
                       //errorBorder: OutlineInputBorder(),
                       //disabledBorder: InputBorder.none,
-                      // hintText: "Hospital Name"
+                       hintText: "Low - High"
                       ),
                   style: TextStyle(
                     fontSize: 18,
@@ -731,6 +773,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 1:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -871,6 +914,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 2:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           height: MediaQuery.of(context).size.height,
@@ -920,6 +964,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 3:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1269,6 +1314,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 4:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1396,6 +1442,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 5:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1522,6 +1569,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 6:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -1945,6 +1993,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 7:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -2566,6 +2615,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 8:
+        setState(() {});
         return new Container(
           //padding: EdgeInsets.all(20),
           // height: 1000,
@@ -2591,11 +2641,29 @@ class _AddHospitalState extends State<AddHospital> {
                       onPressed: addDynamicS,
                     ),
                     Staff.length == 0 ? dynamicS() : resultS(),
-                    MaterialButton(
-                      color: Colors.redAccent,
-                      minWidth: 100,
-                      child: Text("Submit Staff details"),
-                      onPressed: submitData(),
+                    Row(
+                      children: [
+                        Container(
+                          height:50,
+                          width: 200,
+                          child: CheckboxListTile(
+                            title: Text('Finished adding data'),
+                            value: _checked,
+                            onChanged: (v){
+                              setState(() {
+                                _checked = !_checked;
+                                buttonstatus = !buttonstatus;
+                              });
+                            },
+                          ),
+                        ),
+                        MaterialButton(
+                          disabledColor: Colors.grey,
+                          color: Colors.redAccent,
+                          child: Text("Submit Staff details"),
+                          onPressed: buttonstatus?null:submitData
+                        ),
+                      ],
                     ),
                   ]
               ),
@@ -2603,6 +2671,7 @@ class _AddHospitalState extends State<AddHospital> {
           ),
         );
       case 9:
+        setState(() {});
         return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -2837,6 +2906,7 @@ class _AddHospitalState extends State<AddHospital> {
       "noOfBeds": bedsController2.text,
       "charges": chargesController2.text
     });
+    setState(() {});
     print(Beds.toString());
     clearText();
   }
@@ -2860,6 +2930,7 @@ class _AddHospitalState extends State<AddHospital> {
       "Test Description": descController.text,
       "Charges": opdController.text
     });
+    setState(() {});
     print(diagnosis.toString());
     clearText();
   }
@@ -2867,44 +2938,54 @@ class _AddHospitalState extends State<AddHospital> {
   addHeathCheckup() {
     health.add(
         {"PackageName": packController.text, "Amount": amtController.text});
+    setState(() {});
     print(health.toString());
     clearText();
   }
-  adddocnamenumber(){
-    print("Hey u clicked me");
-    if( dynamicWidgetD().Doctor.text==""&&dynamicWidgetD().Number.text==""){
-      docnamenum.add(
-          {
-            "Name": dynamicWidgetD().Doctor.text, "Number":dynamicWidgetD().Number.text,
-          }
-      );
-    }
-
-    print(docnamenum);
-  }
-  addnursenamenumber(){
-    nursenamenum.add(
-      {
-        "Name": dynamicWidgetN().Nurse.text, "Number":dynamicWidgetN().Number.text,
-      }
-    );
-    print(nursenamenum.toString());
-  }
-  addstaffnamenumber(){
-    staffnamenum.add(
-      {
-        "Name": dynamicWidgetS().Staff.text, "Number":dynamicWidgetS().Number.text,
-      }
-    );
-  }
+  // adddocnamenumber(){
+  //   print("Hey u clicked me");
+  //   if( dynamicWidgetD().Doctor.text==""&&dynamicWidgetD().NumberD.text==""){
+  //     docnamenum.add(
+  //         {
+  //           "Name": dynamicWidgetD().Doctor.text, "Number":dynamicWidgetD().NumberD.text,
+  //         }
+  //     );
+  //   }
+  //
+  //   print(docnamenum);
+  // }
+  // addnursenamenumber(){
+  //   nursenamenum.add(
+  //     {
+  //       "Name": dynamicWidgetN().Nurse.text, "Number":dynamicWidgetN().NumberN.text,
+  //     }
+  //   );
+  //   print(nursenamenum.toString());
+  // }
+  // addstaffnamenumber(){
+  //   staffnamenum.add(
+  //     {
+  //       "Name": dynamicWidgetS().Staff.text, "Number":dynamicWidgetS().NumberS.text,
+  //     }
+  //   );
+  // }
 
   addTPA() {
     TPAInsurance.add(new AddInsurance(_chosenValue1));
     TPA.add({
       "Insurance Name": _chosenValue1,
     });
+    setState(() {});
     print(TPA.toString());
     clearText();
+  }
+  addaccred(){
+    Accred.add(new AddAccred(_chosenValue2));
+    ACCRED.add({
+      "Acredition": _chosenValue2,
+    });
+    setState(() {});
+    print(ACCRED.toString());
   }
 
  Widget dynamicD(){
@@ -3218,8 +3299,8 @@ Widget dynamicS(){
           {
             "Name":widget.Doctor.text,"Number":widget.NumberD.text,
           }
-
       );
+      print(doclist);
     });
     setState(() {});
     print(doclist.length);
@@ -3228,10 +3309,11 @@ Widget dynamicS(){
     dynamicListN.forEach((widget){
       nurlist.add(
           {
-            "Name":widget.Doctor.text,"Number":widget.NumberD.text,
+            "Name":widget.Nurse.text,"Number":widget.NumberN.text,
           }
 
       );
+      print(nurlist);
     });
     setState(() {});
     print(nurlist.length);
@@ -3240,15 +3322,15 @@ Widget dynamicS(){
 dynamicListS.forEach((widget){
       stafflist.add(
           {
-            "Name":widget.Doctor.text,"Number":widget.NumberD.text,
+            "Name":widget.Staff.text,"Number":widget.NumberS.text,
           }
 
       );
+      print(stafflist);
     });
     setState(() {});
     print(stafflist.length);
-
-
+    AuthService().toast("Data Added Sucessfully");
   }
 
 }
@@ -3275,6 +3357,34 @@ class _AddInsuranceState extends State<AddInsurance> {
               fontWeight: FontWeight.bold, fontFamily: "Lato", fontSize: 14),
         ),
         Text("  " + widget.insuranceName,
+            style: new TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "Lato", fontSize: 14)),
+      ],
+    ));
+  }
+}
+class AddAccred extends StatefulWidget {
+  String accred;
+
+  AddAccred(this.accred);
+  @override
+  _AddAccredState createState() => _AddAccredState();
+}
+
+class _AddAccredState extends State<AddAccred> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        //padding: EdgeInsets.only(left: 18, right: 18),
+        child: Column(
+      // mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        // Text(
+        //   "Accredition:",
+        //   style: new TextStyle(
+        //       fontWeight: FontWeight.bold, fontFamily: "Lato", fontSize: 14),
+        // ),
+        Text(widget.accred,
             style: new TextStyle(
                 fontWeight: FontWeight.bold, fontFamily: "Lato", fontSize: 14)),
       ],
@@ -3428,7 +3538,7 @@ class _AddInsuranceState extends State<AddInsurance> {
 
 class dynamicWidgetD extends StatelessWidget {
   TextEditingController Doctor = new TextEditingController();
-  TextEditingController Number = new TextEditingController();
+  TextEditingController NumberD = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -3455,7 +3565,7 @@ class dynamicWidgetD extends StatelessWidget {
             width: 150,
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new TextFormField(
-              controller: Number,
+              controller: NumberD,
               decoration: const InputDecoration(
                   labelText: 'Number',
                   border: OutlineInputBorder()
@@ -3470,7 +3580,7 @@ class dynamicWidgetD extends StatelessWidget {
 }
 class dynamicWidgetN extends StatelessWidget {
   TextEditingController Nurse = new TextEditingController();
-  TextEditingController Number  = new TextEditingController();
+  TextEditingController NumberN  = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -3497,27 +3607,13 @@ class dynamicWidgetN extends StatelessWidget {
             width: 150,
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new TextFormField(
-              controller: Number,
+              controller: NumberN,
               decoration: const InputDecoration(
                   labelText: 'Number',
                   border: OutlineInputBorder()
               ),
               keyboardType: TextInputType.number,
             ),
-          ),
-          MaterialButton(
-            elevation: 8,
-            onPressed: (){
-
-            },
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 25,
-            ),
-            shape: CircleBorder(),
-            disabledColor: Colors.redAccent,
-            color: Colors.redAccent,
           ),
         ],
       ),
@@ -3526,7 +3622,7 @@ class dynamicWidgetN extends StatelessWidget {
 }
 class dynamicWidgetS extends StatelessWidget {
   TextEditingController Staff = new TextEditingController();
-  TextEditingController Number = new TextEditingController();
+  TextEditingController NumberS = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -3553,7 +3649,7 @@ class dynamicWidgetS extends StatelessWidget {
             width: 150,
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new TextFormField(
-              controller: Number,
+              controller: NumberS,
               decoration: const InputDecoration(
                   labelText: 'Number',
                   border: OutlineInputBorder()

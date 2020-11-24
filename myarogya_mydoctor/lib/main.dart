@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
+import 'package:myarogya_mydoctor/improvement/bookdetailed.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/createPrecription.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/edit_profile_doctor.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/HospitalDashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
@@ -29,12 +31,12 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         // home: MyForm(),
-//       home: SelectionScreen(),
-        // home: SplashScreen()
+      // home: Bookdetailed("Revathi Hospitals"),
+      //   home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
          home: DoctorNewDashboard("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
-//      home: EditProfileDoctor("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
+//      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
     );
   }
 }

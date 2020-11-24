@@ -8,7 +8,7 @@ class Hospital{
   String dateofIncorporation;
   String adminName;
   String adminPh;
-  String accred;
+  List<AccredList> accred;
   String pricerange;
   String ambulanceNo;
   String emergencyNo;
@@ -23,9 +23,9 @@ class Hospital{
   List<Health> health;
   List specialities;
   List facilities;
-  List doctorslist;
-  List nurseslist;
-  List staffslist;
+  List<DoctorList> doctorslist;
+  List<NursesList> nurseslist;
+  List<StaffsList> staffslist;
   List<TpaList> tpalist;
 
 
@@ -68,14 +68,16 @@ class Hospital{
     List<Diagnosis> _DIAGNOSIS = diagnosis.map((tagJson) => Diagnosis.fromJson(tagJson)).toList();
     var health = json["Health Package"] as List;
     List<Health> _HEALTH = health.map((tagJson) => Health.fromJson(tagJson)).toList();
-    // var doctors = json["Doctors"] as List;
-    // List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
-    // var nurses = json["Nurses"] as List;
-    // List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
-    // var staff = json["Staff"] as List;
-    // List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
+    var doctors = json["Doctors"] as List;
+    List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
+    var nurses = json["Nurses"] as List;
+    List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
+    var staff = json["Staff"] as List;
+    List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
     var tpa = json["TPA"] as List;
     List<TpaList> _TPA = tpa.map((tagJson) => TpaList.fromJson(tagJson)).toList();
+    var acred = json["accredition"] as List;
+    List<AccredList> _ACCRED = acred.map((tagJson) => AccredList.fromJson(tagJson)).toList();
 
 
     return new Hospital._(
@@ -85,7 +87,7 @@ class Hospital{
         dateofIncorporation: json['Date of Incorporation'] as String,
         adminName: json['Administration Name'] as String,
         adminPh: json['Administration Ph no'] as String,
-        accred: json['accredition'] as String,
+        accred: _ACCRED,
         pricerange: json['Price Range'] as String,
         ambulanceNo: json['Ambulance'] as String,
         emergencyNo: json['Emergency'] as String,
@@ -100,9 +102,9 @@ class Hospital{
         health: _HEALTH,
         specialities: json['Speciality'] as List,
         facilities: json['Facilities'] as List,
-        doctorslist: json['Doctors'] as List,
-        // nurseslist: _NURSE,
-        staffslist: json['Staff'] as List,
+        doctorslist: _DOCTOR,
+        nurseslist: _NURSE,
+        staffslist: _STAFF,
         tpalist: _TPA
 
     );
@@ -121,9 +123,20 @@ class TpaList {
       insurName: json['Insurance Name'] as String,
     );
   }
+}
+class AccredList {
+  String accredName;
 
+  AccredList._({this.accredName});
+
+  factory AccredList.fromJson(dynamic json){
+    return AccredList._(
+      accredName: json['Acredition'] as String,
+    );
+  }
 }
 
+//TODO:Accredition Model Class should be written
 class StaffsList {
   String name;
   String phno;
@@ -133,7 +146,7 @@ class StaffsList {
   factory StaffsList.fromJson(dynamic json){
     return StaffsList._(
       name: json['Name'] as String,
-      // phno: json['PhNumber'] as String,
+      phno: json['PhNumber'] as String,
     );
   }
 
@@ -163,7 +176,7 @@ class DoctorList {
   factory DoctorList.fromJson(dynamic json){
     return DoctorList._(
       name: json['Name'] as String,
-      // phno: json['PhNumber'] as String,
+      phno: json['PhNumber'] as String,
     );
   }
 

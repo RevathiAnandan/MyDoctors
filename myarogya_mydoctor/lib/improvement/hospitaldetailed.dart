@@ -250,15 +250,17 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        hospitalvalues[0].accred,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // Text(
+                      //   hospitalvalues[0].accred,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+
+                      getaccred(hospitalvalues[0].accred),
                       SizedBox(
                         height: 15,
                       ),
@@ -464,6 +466,27 @@ class _HospitalDetailsState extends State<HospitalDetails> {
           //fontWeight: FontWeight.bold,
         ),
       )
+      );
+    }
+    return new  Wrap(
+        spacing: 5.0,
+        runSpacing: 3.0,
+        children: list);
+
+  }
+  Widget getaccred(List accred){
+    List<Widget> list = new List<Widget>();
+    for(int i=0;i<accred.length;i++){
+      list.add(
+          new Text(
+            accred[i].accredName,
+            style: TextStyle(
+              color: Colors.redAccent,
+              fontSize: 16.0,
+              fontFamily: 'Lato',
+              //fontWeight: FontWeight.bold,
+            ),
+          )
       );
     }
     return new  Wrap(

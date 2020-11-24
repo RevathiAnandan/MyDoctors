@@ -34,7 +34,6 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     var db = fb.reference().child("User").child(widget.mobile);
     db.once().then((DataSnapshot snapshot){
       print (snapshot.value['Name']);
@@ -55,7 +54,8 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
           child: ListView(
             children: <Widget>[
               Column(
-                children: <Widget>[
+                children:
+                <Widget>[
                   Container(
                       padding: EdgeInsets.only(left:20.0,right: 20.0,top: 10.0,bottom: 0.0),
                       height: MediaQuery.of(context).size.height/4,

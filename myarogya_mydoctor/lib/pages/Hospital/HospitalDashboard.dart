@@ -16,7 +16,7 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
     Text('My Ads'),
   ];
   final widgetName = [
-    Text('My Appointments'),
+    Text('My Booking'),
     Text('My Ads'),
   ];
   void onItemTapped(int index) {
@@ -43,8 +43,6 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
 
 BottomNavigationBarItem(
                     icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
-//              BottomNavigationBarItem(
-//                  icon: Icon(Icons.settings,color: Colors.redAccent,size: 25,), title: Text('Settings'))
               ],
               currentIndex: selectedIndex,
               fixedColor: Colors.redAccent,

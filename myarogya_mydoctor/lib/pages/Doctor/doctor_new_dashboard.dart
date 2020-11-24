@@ -23,7 +23,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
 
   List<Widget> _widgetOptions() => [
     Appointments(widget.mobile,widget.id),
-    Hospitals(),
+    Hospitals(widget.mobile),
     Text('My Ads'),
     GestureDetector(
       onTap:() {
