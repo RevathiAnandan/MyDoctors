@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/HospitalTabPage.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:share/share.dart';
 
@@ -73,6 +74,45 @@ class _DoctorSettingsState extends State<DoctorSettings> {
                         ),
                         Text(
                           "Edit Profile",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                             HospitalTabPage(widget.mobile,widget.id)
+                      ),
+                    );
+                  },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.person,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "My Hospital",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,
