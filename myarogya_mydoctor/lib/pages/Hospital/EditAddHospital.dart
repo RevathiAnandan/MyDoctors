@@ -131,6 +131,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
   List Beds = [];
   List freebeds = [];
   List conbeds = [];
+  List covidbeds = [];
   List diagnosis = [];
   List health = [];
   List docnamenum = [];
@@ -172,9 +173,11 @@ class _EditAddHospitalState extends State<EditAddHospital> {
   final TextEditingController bedsController = TextEditingController();
   final TextEditingController bedsController1 = TextEditingController();
   final TextEditingController bedsController2 = TextEditingController();
+  final TextEditingController bedsController3 = TextEditingController();
   final TextEditingController chargesController = TextEditingController();
   final TextEditingController chargesController1 = TextEditingController();
   final TextEditingController chargesController2 = TextEditingController();
+  final TextEditingController chargesController3 = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
   final TextEditingController pchargesController = TextEditingController();
@@ -205,6 +208,9 @@ class _EditAddHospitalState extends State<EditAddHospital> {
     false,
     false,
     false,
+    false,
+    false,
+    false
   ];
   List<bool> facility = [
     false,
@@ -316,6 +322,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       "Completed",
                       freebeds,
                       conbeds,
+                      covidbeds,
                       Beds,
                       diagnosis,
                       health,
@@ -1530,6 +1537,62 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[1] = !_selected[1];
+                            //splValues1.add(widget.chipName);
+                            //print(splValues1);
+                            spl.contains("Cardio")
+                                ? spl.remove("Cardio")
+                                : spl.add("Cardio");
+                            print(spl.length);
+                            print(spl.toString());
+                          });
+                          // splValues2.add(splValues1.toString());
+                          // print(splValues2.toString());
+                        },
+                        selectedColor: Color(0xffededed),
+                      ),
+                      ChoiceChip(
+                        avatar: _selected[13] ? Icon(Icons.done) : null,
+                        label: Text("Cardio"),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        selected: _selected[13],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Color(0xffededed),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selected[13] = !_selected[13];
+                            //splValues1.add(widget.chipName);
+                            //print(splValues1);
+                            spl.contains("Cardio")
+                                ? spl.remove("Cardio")
+                                : spl.add("Cardio");
+                            print(spl.length);
+                            print(spl.toString());
+                          });
+                          // splValues2.add(splValues1.toString());
+                          // print(splValues2.toString());
+                        },
+                        selectedColor: Color(0xffededed),
+                      ),
+                      ChoiceChip(
+                        avatar: _selected[14] ? Icon(Icons.done) : null,
+                        label: Text("Cardio"),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        selected: _selected[1],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Color(0xffededed),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selected[14] = !_selected[14];
                             //splValues1.add(widget.chipName);
                             //print(splValues1);
                             spl.contains("Cardio")
@@ -2819,6 +2882,11 @@ class _EditAddHospitalState extends State<EditAddHospital> {
       "roomType": "Concessional Beds",
       "noOfBeds": bedsController1.text,
       "charges": chargesController1.text
+    });
+    covidbeds.add({
+      "roomType": "Covid Beds",
+      "noOfBeds": bedsController3.text,
+      "charges": chargesController3.text
     });
     print(Beds.toString());
   }

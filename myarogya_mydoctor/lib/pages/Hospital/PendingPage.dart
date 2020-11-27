@@ -22,10 +22,10 @@ class _PendingPageState extends State<PendingPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Center(child: CircularProgressIndicator())
-        : (dummyData.isEmpty
+    return (dummyData==null)
         ? Center(child: Text("No Data Found!!"))
+        : isLoading
+        ? Center(child: CircularProgressIndicator())
         : new ListView.builder(
       itemCount: dummyData.length,
       itemBuilder: (context, i) => new Column(
@@ -73,7 +73,7 @@ class _PendingPageState extends State<PendingPage> {
           )
         ],
       ),
-    ));
+    );
   }
   Future<Hospital> getHospitals(String Key) async {
     isLoading = true;

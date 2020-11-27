@@ -221,6 +221,28 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                           ).toList()
                         ),
                       ),
+                      // Container(
+                      //   width: 400,
+                      //   child: DataTable(
+                      //       columnSpacing: 0,
+                      //     headingRowHeight: 0,
+                      //     columns: [
+                      //       DataColumn(label: Text("")),
+                      //       DataColumn(label: Text("")),
+                      //       DataColumn(label: Text("")),
+                      //     ],
+                      //     rows: hospitalvalues[0].covidbeds.map((e) =>
+                      //         DataRow(
+                      //           cells: [
+                      //             DataCell(Container(width:90,child: Text(e.roomType))),
+                      //             DataCell(Text(e.noOfBeds)),
+                      //             DataCell(Text(e.charges)),
+                      //           ]
+                      //         ),
+                      //     ).toList()
+                      //   ),
+                      // ),
+
                       SizedBox(
                         height: 15,
                       ),

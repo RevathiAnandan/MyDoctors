@@ -258,7 +258,7 @@ class ApiService{
 
   Future hospitals(String name,String regno,String address,String dateof,String adminname, String pricerange,
       String adminph,
-      List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status, List freebeds,List conbeds, List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
+      List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status, List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health, List special, List facility, List docList, List nurseList, List staffList, List TPA){
     try {
       var db = fb.reference().child("Hospitals").push();
       db.set({
@@ -277,6 +277,7 @@ class ApiService{
             'Images':images,
             'Status':status,
             'Free Bed Details':freebeds,
+            'Covid Bed Details':coivdbeds,
             'Concessional Bed Details':conbeds,
             'Special Bed Details':beds,
             'Diagnosis Details':diagnosis,

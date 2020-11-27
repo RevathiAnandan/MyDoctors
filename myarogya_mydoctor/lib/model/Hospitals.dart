@@ -18,6 +18,7 @@ class Hospital{
   String status;
   List<FreeBeds> freebeds;
   List<ConBeds> conbeds;
+  List<CovidBeds> covidbeds;
   List<OtherBeds> beds;
   List<Diagnosis> diagnosis;
   List<Health> health;
@@ -47,6 +48,7 @@ class Hospital{
       this.freebeds,
       this.conbeds,
       this.beds,
+      this.covidbeds,
       this.diagnosis,
       this.health,
       this.specialities,
@@ -62,6 +64,8 @@ class Hospital{
     List<FreeBeds> _FREE = freebeddetails.map((tagJson) => FreeBeds.fromJson(tagJson)).toList();
     var conbeddetails = json["Concessional Bed Details"] as List;
     List<ConBeds> _CON = conbeddetails.map((tagJson) => ConBeds.fromJson(tagJson)).toList();
+    // var coviddetails = json["Covid Bed Details"] as List;
+    // List<CovidBeds> _COVID = coviddetails.map((tagJson) => CovidBeds.fromJson(tagJson)).toList();
     var splbeddetails = json["Special Bed Details"] as List;
     List<OtherBeds> _BED = splbeddetails.map((tagJson) => OtherBeds.fromJson(tagJson)).toList();
     var diagnosis = json["Diagnosis Details"] as List;
@@ -98,6 +102,7 @@ class Hospital{
         freebeds: _FREE,
         conbeds: _CON,
         beds: _BED,
+        // covidbeds: _COVID,
         diagnosis: _DIAGNOSIS,
         health: _HEALTH,
         specialities: json['Speciality'] as List,
@@ -105,8 +110,7 @@ class Hospital{
         doctorslist: _DOCTOR,
         nurseslist: _NURSE,
         staffslist: _STAFF,
-        tpalist: _TPA
-
+        tpalist: _TPA,
     );
   }
 
@@ -244,6 +248,22 @@ class FreeBeds {
   }
 }
 
+class CovidBeds{
+  String roomType;
+  String noOfBeds;
+  String charges;
+
+  CovidBeds._({this.roomType,this.noOfBeds,this.charges});
+
+  factory CovidBeds.fromJson(dynamic json){
+    return CovidBeds._(
+      roomType: json['roomType'] as String,
+      noOfBeds: json['noOfBeds'] as String,
+      charges: json['charges'] as String,
+
+    );
+  }
+}
 
 
 class OtherBeds {

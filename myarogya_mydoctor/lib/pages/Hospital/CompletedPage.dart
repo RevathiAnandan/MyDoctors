@@ -82,12 +82,15 @@ class _CompletedPageState extends State<CompletedPage> {
          if(refreshToken.status == "Completed"){
            dummyData.add(refreshToken);
            print(dummyData.length);
+           setState(() {
+             isLoading = false;
+           });
          }
-
-        }
+        },
 
         );
-      });
+      }
+      );
     } catch (e) {
       print(e);
     }

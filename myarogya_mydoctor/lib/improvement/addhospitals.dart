@@ -237,6 +237,7 @@ class _AddHospitalState extends State<AddHospital> {
   List Beds = [];
   List freebeds = [];
   List conbeds = [];
+  List covidbeds = [];
   List diagnosis = [];
   List health = [];
   List docnamenum = [];
@@ -278,9 +279,11 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController bedsController = TextEditingController();
   final TextEditingController bedsController1 = TextEditingController();
   final TextEditingController bedsController2 = TextEditingController();
+  final TextEditingController bedsController3 = TextEditingController();
   final TextEditingController chargesController = TextEditingController();
   final TextEditingController chargesController1 = TextEditingController();
   final TextEditingController chargesController2 = TextEditingController();
+  final TextEditingController chargesController3 = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
   final TextEditingController pchargesController = TextEditingController();
@@ -293,6 +296,10 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController pricerange = TextEditingController();
 
   List<bool> _selected = [
+    false,
+    false,
+    false,
+    false,
     false,
     false,
     false,
@@ -418,6 +425,7 @@ class _AddHospitalState extends State<AddHospital> {
                             "Completed",
                             freebeds,
                             conbeds,
+                            covidbeds,
                             Beds,
                             diagnosis,
                             health,
@@ -1149,6 +1157,75 @@ class _AddHospitalState extends State<AddHospital> {
                     ),
                   ],
                 ),
+                 SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: Center(
+                        child: Text(
+                          "COVID Beds",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: bedsController3,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 40,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: chargesController3,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -1619,7 +1696,7 @@ class _AddHospitalState extends State<AddHospital> {
                       // ),
                       ChoiceChip(
                         avatar: _selected[1] ? Icon(Icons.done) : null,
-                        label: Text("Cardio"),
+                        label: Text("COVID"),
                         labelStyle: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 16.0,
@@ -1632,6 +1709,62 @@ class _AddHospitalState extends State<AddHospital> {
                         onSelected: (bool selected) {
                           setState(() {
                             _selected[1] = !_selected[1];
+                            //splValues1.add(widget.chipName);
+                            //print(splValues1);
+                            spl.contains("COVID")
+                                ? spl.remove("COVID")
+                                : spl.add("COVID");
+                            print(spl.length);
+                            print(spl.toString());
+                          });
+                          // splValues2.add(splValues1.toString());
+                          // print(splValues2.toString());
+                        },
+                        selectedColor: Color(0xffededed),
+                      ),
+                      ChoiceChip(
+                        avatar: _selected[13] ? Icon(Icons.done) : null,
+                        label: Text("Cancer"),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        selected: _selected[13],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Color(0xffededed),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selected[13] = !_selected[13];
+                            //splValues1.add(widget.chipName);
+                            //print(splValues1);
+                            spl.contains("Cancer")
+                                ? spl.remove("Cancer")
+                                : spl.add("Cancer");
+                            print(spl.length);
+                            print(spl.toString());
+                          });
+                          // splValues2.add(splValues1.toString());
+                          // print(splValues2.toString());
+                        },
+                        selectedColor: Color(0xffededed),
+                      ),
+                      ChoiceChip(
+                        avatar: _selected[14] ? Icon(Icons.done) : null,
+                        label: Text("Cardio"),
+                        labelStyle: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                        selected: _selected[1],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Color(0xffededed),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selected[14] = !_selected[14];
                             //splValues1.add(widget.chipName);
                             //print(splValues1);
                             spl.contains("Cardio")
@@ -2767,8 +2900,7 @@ class _AddHospitalState extends State<AddHospital> {
     }
   }
 
-  SingleChildScrollView dataBody(
-      String item1, String item2, String item3, List Values) {
+  SingleChildScrollView dataBody(String item1, String item2, String item3, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         sortAscending: true,
@@ -2921,6 +3053,11 @@ class _AddHospitalState extends State<AddHospital> {
       "roomType": "Concessional Beds",
       "noOfBeds": bedsController1.text,
       "charges": chargesController1.text
+    });
+    covidbeds.add({
+      "roomType": "Covid Beds",
+      "noOfBeds": bedsController3.text,
+      "charges": chargesController3.text
     });
     print(Beds.toString());
   }
@@ -3138,8 +3275,6 @@ class _AddHospitalState extends State<AddHospital> {
   //     ),
   //   );
   // }
-
-
   addDynamicD(){
     if(Doctor.length != 0){
 
@@ -3153,7 +3288,6 @@ class _AddHospitalState extends State<AddHospital> {
     }
     dynamicListD.add(new dynamicWidgetD());
   }
-
   Widget resultD(){
     Widget resultD = Container(
       height: 200,
@@ -3208,7 +3342,6 @@ class _AddHospitalState extends State<AddHospital> {
     }
     dynamicListN.add(new dynamicWidgetN());
   }
-
   Widget resultN(){
     Widget resultN = new Flexible(
         flex: 1,
@@ -3234,7 +3367,8 @@ class _AddHospitalState extends State<AddHospital> {
         ));
     return resultN;
   }
-Widget dynamicS(){
+
+  Widget dynamicS(){
     Widget dynamicTextField = Container(
       height: 200,
       decoration: BoxDecoration(
@@ -3262,7 +3396,6 @@ Widget dynamicS(){
     }
     dynamicListS.add(new dynamicWidgetS());
   }
-
   Widget resultS(){
     Widget resultS = new Flexible(
         flex: 1,
@@ -3288,8 +3421,6 @@ Widget dynamicS(){
         ));
     return resultS;
   }
-
-
 
   submitData() {
     Doctor = [];
@@ -3332,7 +3463,6 @@ dynamicListS.forEach((widget){
     print(stafflist.length);
     AuthService().toast("Data Added Sucessfully");
   }
-
 }
 
 class AddInsurance extends StatefulWidget {

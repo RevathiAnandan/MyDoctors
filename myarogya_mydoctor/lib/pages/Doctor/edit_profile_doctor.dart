@@ -237,7 +237,6 @@ class _EditProfileDoctorState extends State<EditProfileDoctor> {
                           return Container(
                               alignment: FractionalOffset.center,
                               child: CircularProgressIndicator());
-
                         Map<dynamic, dynamic> values = snapshot.data.value;
                         if (values == null) {
                           nameController.text = "";
