@@ -139,6 +139,8 @@ class _EditAddHospitalState extends State<EditAddHospital> {
   List staffnamenum = [];
   List TPA = [];
   List ACCRED = [];
+  bool is24 = false;
+  bool isCovid = false;
 
   List topics = [
     "Hospital Details",
@@ -331,7 +333,8 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       doclist,
                       nurlist,
                       stafflist,
-                      TPA);
+                      TPA,is24.toString(),isCovid.toString(),
+                  "false");
                   AuthService()
                       .toast("Your Added Hospital Is Under Verification");
                   Navigator.pop(context);
@@ -703,7 +706,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                   controller: ambuController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    FilteringTextInputFormatter.digitsOnly
+                    //FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -734,7 +737,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                   controller: emerController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    FilteringTextInputFormatter.digitsOnly
+                    //FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -765,7 +768,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                   controller: bookphController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    FilteringTextInputFormatter.digitsOnly
+                    //FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -796,7 +799,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                   controller: opdbkController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    FilteringTextInputFormatter.digitsOnly
+                    //FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -943,7 +946,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -966,7 +969,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -1012,7 +1015,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -1035,7 +1038,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -1125,7 +1128,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -1154,7 +1157,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
@@ -1296,7 +1299,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                         controller: opdController,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         style: TextStyle(
                           fontSize: 18,
@@ -1423,7 +1426,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                         ),
                         controller: amtController,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          //FilteringTextInputFormatter.digitsOnly
                         ],
                         keyboardType: TextInputType.number,
                         style: TextStyle(

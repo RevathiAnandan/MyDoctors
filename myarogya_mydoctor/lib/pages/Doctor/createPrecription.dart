@@ -262,7 +262,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                       maxLength: 1,
                                                       keyboardType: TextInputType.number,
                                                       inputFormatters: <TextInputFormatter>[
-                                                        FilteringTextInputFormatter.digitsOnly
+                                                        // //FilteringTextInputFormatter.digitsOnly
                                                       ],
                                                       // textAlign: TextAlign.center,
                                                       decoration: InputDecoration(
@@ -288,7 +288,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                       maxLength: 1,
                                                       keyboardType: TextInputType.number,
                                                       inputFormatters: <TextInputFormatter>[
-                                                        FilteringTextInputFormatter.digitsOnly
+                                                        //FilteringTextInputFormatter.digitsOnly
                                                       ],
                                                       // textAlign: TextAlign.center,
                                                       decoration: InputDecoration(
@@ -314,7 +314,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                       maxLength: 1,
                                                       keyboardType: TextInputType.number,
                                                       inputFormatters: <TextInputFormatter>[
-                                                        FilteringTextInputFormatter.digitsOnly
+                                                        //FilteringTextInputFormatter.digitsOnly
                                                       ],
                                                       // textAlign: TextAlign.center,
                                                       decoration: InputDecoration(
@@ -368,7 +368,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                           maxLength: 2,
                                           keyboardType: TextInputType.number,
                                           inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter.digitsOnly
+                                            //FilteringTextInputFormatter.digitsOnly
                                           ],
                                           // textAlign: TextAlign.center,
                                           decoration: InputDecoration(
@@ -517,7 +517,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                       maxLength: 3,
                                                       keyboardType: TextInputType.number,
                                                       inputFormatters: <TextInputFormatter>[
-                                                        FilteringTextInputFormatter.digitsOnly
+                                                        //FilteringTextInputFormatter.digitsOnly
                                                       ],
                                                       // textAlign: TextAlign.center,
                                                       decoration: InputDecoration(
@@ -547,7 +547,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                         maxLength: 3,
                                                         keyboardType: TextInputType.number,
                                                         inputFormatters: <TextInputFormatter>[
-                                                          FilteringTextInputFormatter.digitsOnly
+                                                          //FilteringTextInputFormatter.digitsOnly
                                                         ],
                                                         // textAlign: TextAlign.center,
                                                         decoration: InputDecoration(
@@ -609,8 +609,7 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                                 maxLength: 3,
                                                 keyboardType: TextInputType.number,
                                                 inputFormatters: <TextInputFormatter>[
-                                                  FilteringTextInputFormatter
-                                                      .digitsOnly
+                                                  //FilteringTextInputFormatter.digitsOnly
                                                 ],
                                                 // textAlign: TextAlign.center,
                                                 decoration: InputDecoration(

@@ -16,6 +16,9 @@ class Hospital{
   String opdBookingNo;
   List image;
   String status;
+  String is24;
+  String isCovid;
+  String isNabh;
   List<FreeBeds> freebeds;
   List<ConBeds> conbeds;
   List<CovidBeds> covidbeds;
@@ -56,7 +59,10 @@ class Hospital{
       this.doctorslist,
       this.nurseslist,
       this.staffslist,
-      this.tpalist
+      this.tpalist,
+      this.is24,
+      this.isCovid,
+      this.isNabh
   });
 
   factory Hospital.fromJson(dynamic json){
@@ -111,6 +117,9 @@ class Hospital{
         nurseslist: _NURSE,
         staffslist: _STAFF,
         tpalist: _TPA,
+        is24: json['Availabilty'] as String,
+        isCovid: json['Covid'] as String,
+        isNabh: json['NABH'] as String,
     );
   }
 

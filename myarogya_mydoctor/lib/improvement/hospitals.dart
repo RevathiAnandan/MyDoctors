@@ -153,11 +153,11 @@ class _HospitalsState extends State<Hospitals> {
                                       children: [
                                         Row(
                                           children: [
-                                            Image(
+                                            hospitalvalues[i].isNabh=="true"?Image(
                                               height: 20,
                                               image: AssetImage("assets/images/NABH LOGO.png"),
                                               width: 20,
-                                            ),
+                                            ):Container(),
                                             Text(yearsofexperience(hospitalvalues[i].dateofIncorporation).toString()+" Years in service"),
 
                                           ],
@@ -170,7 +170,7 @@ class _HospitalsState extends State<Hospitals> {
                                                     image: NetworkImage(
                                                       "https://previews.agefotostock.com/previewimage/medibigoff/f755e0d1e3ecce9569f57604ac0fd9a8/esy-001476475.jpg",
                                                     ),
-                                                    width: 150,
+                                                    width: 50,
                                                     alignment:
                                                         Alignment.centerLeft,
                                                   )
@@ -195,7 +195,7 @@ class _HospitalsState extends State<Hospitals> {
                                       width: 10,
                                     ),
                                     Container(
-                                      width: 220,
+                                      width:180,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -210,12 +210,13 @@ class _HospitalsState extends State<Hospitals> {
                                               Container(),
                                               Row(
                                                 children: [
-                                                  Text(
+                                                  hospitalvalues[i].is24=="true"?Text(
                                                     '24/7',
                                                     style: TextStyle(
                                                         color: Colors.black,fontSize: 13),
-                                                  ),
+                                                  ):Container(),
                                                   SizedBox(width: 5,),
+                                                  hospitalvalues[i].isCovid=="true"?
                                                   Container(
                                                     height: 30,
                                                     width: 60,
@@ -230,7 +231,7 @@ class _HospitalsState extends State<Hospitals> {
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
+                                                  ):Container(),
                                                 ],
                                               ),
                                             ],
@@ -338,7 +339,7 @@ class _HospitalsState extends State<Hospitals> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  minbed+"- Rs."+ minValues.toString(),
+                                                  minbed.toString()+"- Rs."+ minValues.toString(),
                                                   style: TextStyle(
                                                       fontFamily: 'Lato',
                                                       fontSize: 14,
