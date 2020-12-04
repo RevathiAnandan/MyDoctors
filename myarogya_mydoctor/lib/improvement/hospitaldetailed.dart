@@ -221,30 +221,26 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                           ).toList()
                         ),
                       ),
-                      // Container(
-                      //   width: 400,
-                      //   child: DataTable(
-                      //       columnSpacing: 0,
-                      //     headingRowHeight: 0,
-                      //     columns: [
-                      //       DataColumn(label: Text("")),
-                      //       DataColumn(label: Text("")),
-                      //       DataColumn(label: Text("")),
-                      //     ],
-                      //     rows: hospitalvalues[0].covidbeds.map((e) =>
-                      //         DataRow(
-                      //           cells: [
-                      //             DataCell(Container(width:90,child: Text(e.roomType))),
-                      //             DataCell(Text(e.noOfBeds)),
-                      //             DataCell(Text(e.charges)),
-                      //           ]
-                      //         ),
-                      //     ).toList()
-                      //   ),
-                      // ),
-
-                      SizedBox(
-                        height: 15,
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                          headingRowHeight: 0,
+                          columns: [
+                            DataColumn(label: Text("")),
+                            DataColumn(label: Text("")),
+                            DataColumn(label: Text("")),
+                          ],
+                          rows: hospitalvalues[0].covidbeds.map((e) =>
+                              DataRow(
+                                cells: [
+                                  DataCell(Container(width:90,child: Text(e.roomType))),
+                                  DataCell(Text(e.noOfBeds)),
+                                  DataCell(Text(e.charges)),
+                                ]
+                              ),
+                          ).toList()
+                        ),
                       ),
                       getdatatable(hospitalvalues[0].beds),
                       SizedBox(
@@ -390,6 +386,38 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         height: 15,
                       ),
                       Text(
+                        "Surgery Packages:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Surgery Name")),
+                              DataColumn(label: Text("Amount")),
+
+                            ],
+                            rows: hospitalvalues[0].surgery.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:130,child: Text(e.surgeryname))),
+                                      DataCell(Container(width:50,child: Text(e.suramount))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      Text(
                         "Diagnosis Details:",
                         style: TextStyle(
                           color: Colors.redAccent,
@@ -520,7 +548,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
 
   getdatatable(List<OtherBeds> beds) {
     List<Widget> list = new List<Widget>();
-    for(int i=0;i<beds.length;i++){
+    // for(int i=0;i<beds.length;i++){
       list.add(new Container(
         width: 400,
         child: DataTable(
@@ -542,7 +570,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
             ).toList()
         ),
       ));
-    }
+    // }
     return Column(
       children: list,
     );

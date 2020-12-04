@@ -25,6 +25,7 @@ class Hospital{
   List<OtherBeds> beds;
   List<Diagnosis> diagnosis;
   List<Health> health;
+  List<Surgery> surgery;
   List specialities;
   List facilities;
   List<DoctorList> doctorslist;
@@ -54,6 +55,7 @@ class Hospital{
       this.covidbeds,
       this.diagnosis,
       this.health,
+      this.surgery,
       this.specialities,
       this.facilities,
       this.doctorslist,
@@ -70,14 +72,16 @@ class Hospital{
     List<FreeBeds> _FREE = freebeddetails.map((tagJson) => FreeBeds.fromJson(tagJson)).toList();
     var conbeddetails = json["Concessional Bed Details"] as List;
     List<ConBeds> _CON = conbeddetails.map((tagJson) => ConBeds.fromJson(tagJson)).toList();
-    // var coviddetails = json["Covid Bed Details"] as List;
-    // List<CovidBeds> _COVID = coviddetails.map((tagJson) => CovidBeds.fromJson(tagJson)).toList();
+    var coviddetails = json["Covid Bed Details"] as List;
+    List<CovidBeds> _COVID = coviddetails.map((tagJson) => CovidBeds.fromJson(tagJson)).toList();
     var splbeddetails = json["Special Bed Details"] as List;
     List<OtherBeds> _BED = splbeddetails.map((tagJson) => OtherBeds.fromJson(tagJson)).toList();
     var diagnosis = json["Diagnosis Details"] as List;
     List<Diagnosis> _DIAGNOSIS = diagnosis.map((tagJson) => Diagnosis.fromJson(tagJson)).toList();
     var health = json["Health Package"] as List;
     List<Health> _HEALTH = health.map((tagJson) => Health.fromJson(tagJson)).toList();
+    var surgery = json["Surgery Packages"] as List;
+    List<Surgery> _SUR = surgery.map((tagJson) => Surgery.fromJson(tagJson)).toList();
     var doctors = json["Doctors"] as List;
     List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
     var nurses = json["Nurses"] as List;
@@ -108,9 +112,10 @@ class Hospital{
         freebeds: _FREE,
         conbeds: _CON,
         beds: _BED,
-        // covidbeds: _COVID,
+        covidbeds: _COVID,
         diagnosis: _DIAGNOSIS,
         health: _HEALTH,
+        surgery: _SUR,
         specialities: json['Speciality'] as List,
         facilities: json['Facilities'] as List,
         doctorslist: _DOCTOR,
@@ -203,11 +208,25 @@ class Health {
 
   factory Health.fromJson(dynamic json){
     return Health._(
-      packagename: json['PackageName'] as String,
-      amount: json['Amount'] as String,
+      packagename: json['Type'] as String,
+      amount: json['charges'] as String,
     );
   }
 }
+class Surgery {
+  String surgeryname;
+  String suramount;
+
+  Surgery._({this.surgeryname, this.suramount});
+
+  factory Surgery.fromJson(dynamic json){
+    return Surgery._(
+      surgeryname: json['Type'] as String,
+      suramount: json['charges'] as String,
+    );
+  }
+}
+
 
 class Diagnosis {
   String test;
@@ -217,8 +236,8 @@ class Diagnosis {
 
   factory Diagnosis.fromJson(dynamic json){
     return Diagnosis._(
-      test: json['Test Description'] as String,
-      charge: json['Charges'] as String,
+      test: json['Type'] as String,
+      charge: json['charges'] as String,
     );
   }
 }

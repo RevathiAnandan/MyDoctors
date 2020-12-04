@@ -6,6 +6,9 @@ class ConstantUtils{
   final String Category = "Category";
   final String UserID = "uid";
   final String Usermobile = "userPhone";
+  final String BOOK = "book";
+  final String CONFIRM = "Confirm";
+  final String DISCHARGE = "discharge";
 }
 
 class ConstantsD{

@@ -234,21 +234,30 @@ class ApiService{
     }
   }
 
-  Future bookhospital(String bookingno, String userno,String status,String key){
+  Future bookhospital(String bookingno, String userno,String status,List bookdetails,String key,String bkdate,String disdate){
     try {
-      if (status=="Confirm") {
+      if (status=="Booking Confirm") {
         var db = fb.reference().child("HospitalBookings").child(key);
         db.update({
-                'BookingNumber':bookingno,
-                'UserNumber':userno,
-                'Status':status
+                'Status':status,
+          "BookingDate":bkdate,
               });
-      } else {
+      }else if(status=="discharge"){
+        var db = fb.reference().child("HospitalBookings").child(key);
+        db.update({
+            'DischargeDate':disdate,
+            "Status":status,
+        });
+      }
+      else {
         var db = fb.reference().child("HospitalBookings").push();
         db.set({
+          "Booking details": bookdetails,
           'BookingNumber':bookingno,
           'UserNumber':userno,
-          'Status':status
+          'Status':status,
+          'BookingDate':bkdate,
+          'DischargeDate':disdate,
         });
       }
     } catch (e) {
@@ -259,7 +268,7 @@ class ApiService{
   Future hospitals(String name,String regno,String address,String dateof,String adminname, String pricerange,
       String adminph,
       List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status,
-      List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health,
+      List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health,List surgery,
       List special, List facility, List docList, List nurseList, List staffList, List TPA
       ,String is24,String isCovid,String isnabh){
     try {
@@ -285,6 +294,7 @@ class ApiService{
             'Special Bed Details':beds,
             'Diagnosis Details':diagnosis,
             'Health Package':health,
+            'Surgery Packages':surgery,
             'Speciality':special,
             'Facilities':facility,
             'Doctors':docList,

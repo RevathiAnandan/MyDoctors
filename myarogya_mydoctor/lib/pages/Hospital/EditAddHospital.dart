@@ -245,6 +245,7 @@ class _EditAddHospitalState extends State<EditAddHospital> {
   List dynamicListS = [];
   List doclist=[];
   List nurlist=[];
+  List surgery=[];
   List stafflist=[];
   bool _checked = false;
   bool buttonstatus = true;
@@ -328,12 +329,15 @@ class _EditAddHospitalState extends State<EditAddHospital> {
                       Beds,
                       diagnosis,
                       health,
+                      surgery,
                       spl,
                       fcl,
                       doclist,
                       nurlist,
                       stafflist,
-                      TPA,is24.toString(),isCovid.toString(),
+                      TPA,
+                      is24.toString(),
+                      isCovid.toString(),
                   "false");
                   AuthService()
                       .toast("Your Added Hospital Is Under Verification");

@@ -28,6 +28,7 @@ class _HospitalsState extends State<Hospitals> {
   List<Hospital> hospitalvalues = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   bool isLoading = true;
+  final _random = new Random();
   @override
   void initState() {
     // TODO: implement initState
@@ -113,11 +114,18 @@ class _HospitalsState extends State<Hospitals> {
                   child: Text("Yet to be Updated"),
                 ))
               : isLoading
-                  ? LinearProgressIndicator(
+                  ? Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 5,
+                        child: LinearProgressIndicator(
             backgroundColor: Colors.redAccent,
-            valueColor:
-            new AlwaysStoppedAnimation<Color>(Colors.green),
-          )
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
+                      ),
+                    ],
+                  )
                   : ListView.builder(
                       shrinkWrap: true,
                       itemCount: hospitalvalues.length == null
@@ -125,17 +133,16 @@ class _HospitalsState extends State<Hospitals> {
                           : hospitalvalues.length,
                       itemBuilder: (context, i) {
                         // Image resizeimage = imgresize.copyResize(src);
-                        Future.delayed(Duration.zero, () async {
-                          specialBedscharge(i);
-                        });
+                        // Future.delayed(Duration.zero, () async {
+                        //   specialBedscharge(i);
+                        // });
                         return new Column(
                         children: <Widget>[
                           Divider(
                             height: 10,
                           ),
                           Container(
-                            height:
-                                MediaQuery.of(context).size.height * 45 / 100,
+                            height: MediaQuery.of(context).size.height * 45 / 100,
                             width: MediaQuery.of(context).size.width * 94 / 100,
                             child: InkWell(
                               onTap: () => Navigator.push(
@@ -195,7 +202,7 @@ class _HospitalsState extends State<Hospitals> {
                                       width: 10,
                                     ),
                                     Container(
-                                      width:180,
+                                      width:220,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -308,6 +315,31 @@ class _HospitalsState extends State<Hospitals> {
                                                     ],
                                                   ),
                                                 ),
+                                                (hospitalvalues[i]
+                                                    .covidbeds !=null)?Container(
+                                                  width: 150,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Covid Beds:"
+                                                            ,
+                                                        style: TextStyle(
+                                                            fontFamily: 'Lato',
+                                                            fontSize: 15),
+                                                      ),
+                                                      Text(
+                                                        (hospitalvalues[i]
+                                                            .covidbeds[0]
+                                                            .noOfBeds),
+                                                        style: TextStyle(
+                                                            fontFamily: 'Lato',
+                                                            fontSize: 15),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ):Container(),
                                                 Container(
                                                   width: 150,
                                                   child: Row(
@@ -339,7 +371,7 @@ class _HospitalsState extends State<Hospitals> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  minbed.toString()+"- Rs."+ minValues.toString(),
+                                            hospitalvalues[i].beds[_random.nextInt(hospitalvalues[i].beds.length)].roomType+"- Rs."+hospitalvalues[i].pricerange.split("-")[0]+"/Day per bed",
                                                   style: TextStyle(
                                                       fontFamily: 'Lato',
                                                       fontSize: 14,
@@ -352,7 +384,7 @@ class _HospitalsState extends State<Hospitals> {
                                             alignment: Alignment.centerRight,
                                             child: FlatButton(
                                               onPressed: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Bookdetailed(hospitalvalues[i].hospitalName)));
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Bookdetailed(hospitalvalues[i],key1[i],widget.mobile)));
                                                 // ApiService().bookhospital(hospitalvalues[i].bookingPhNo, widget.mobile,"Booked","");
                                                 // AuthService().toast("Waiting for Confirmation");
                                               },
@@ -421,20 +453,22 @@ class _HospitalsState extends State<Hospitals> {
           print("Hospitals");
           // print(snapshot.value);
           print(snapshot.value);
-          print(snapshot.value["Special Bed Details"]);
+          // print(snapshot.value["Special Bed Details"]);
           // print(snapshot.value);
           Map<dynamic, dynamic> values = snapshot.value;
           values.forEach((key, value) {
             print("VAlues:: $value");
-            print(value["hospitalName"]);
+            // print(value["hospitalName"]);
             var refreshToken = Hospital.fromJson(value);
             hospitalvalues.add(refreshToken);
+            key1.add(key);
             print("Hops::::${hospitalvalues.toString()}");
             setState(() {
               isLoading = false;
             });
           });
         });
+
       } else {
         print('Something is Null');
       }
@@ -442,16 +476,25 @@ class _HospitalsState extends State<Hospitals> {
       print(e);
     }
   }
+  List key1=[];
   Widget getspeciality(List speciality){
     List<Widget> list = new List<Widget>();
     for(var name in speciality){
-      list.add(new Text(
-        name+" ",
-        style: TextStyle(
-          fontSize: 14.0,
-          color: Colors.redAccent,
-          fontFamily: 'Lato',
-          //fontWeight: FontWeight.bold,
+      list.add(Container(
+        width: 65,
+        child: Row(
+          children: [
+            Icon(Icons.done,size: 13,),
+            new Text(
+              name,
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 14.0,
+                fontFamily: 'Lato',
+                //fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       )
       );
@@ -460,6 +503,7 @@ class _HospitalsState extends State<Hospitals> {
         spacing: 5.0,
         runSpacing: 3.0,
         children: list);
+
   }
   specialBeds(int index) {
     int totalSpecialbeds = 0;

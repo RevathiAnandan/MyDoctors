@@ -12,6 +12,8 @@ class MyBooking extends StatefulWidget {
 }
 
 class _MyBookingState extends State<MyBooking> {
+  var text1 = "Confirm";
+  bool something = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -64,10 +66,12 @@ class _MyBookingState extends State<MyBooking> {
       child: ListView.builder(
           itemCount: dummyData.length,
           itemBuilder:(context,index){
+            print(dummyData[index].bookdetails.toString());
             return ListTile(
               title: Text(dummyData[index].userNumber),
+              subtitle: Text("RoomType:"+dummyData[index].bookdetails[0].roomType +"Charges:"+dummyData[index].bookdetails[0].charges ),
               trailing: FlatButton(
-                child: Text("Confirm",
+                child: Text(dummyData[index].status,
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "Lato",
@@ -82,8 +86,12 @@ class _MyBookingState extends State<MyBooking> {
                 color: Colors.redAccent,
                 onPressed: () {
                   AuthService().toast("Booking Confirmed");
-                  ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Confirm" , keys1[index].toString());
-                },
+                  if(dummyData[index].status == "Booking Confirm"){
+                    ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
+                  }else{
+                    ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Booking Confirm",dummyData[index].bookdetails , keys1[index].toString(),DateTime.now().toString(),"");
+                  }
+                  },
               ),
             );
           },

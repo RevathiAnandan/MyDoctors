@@ -14,6 +14,8 @@ import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 import 'package:myarogya_mydoctor/pages/splash_screen.dart';
 import 'package:myarogya_mydoctor/test.dart';
 
+import 'improvement/new.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -30,13 +32,13 @@ class MyApp extends StatelessWidget {
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
         ),
         debugShowCheckedModeBanner: false,
-        // home: MyForm(),
+        // home: HomePage(),
       // home: Bookdetailed("Revathi"),
       //   home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-         home: DoctorNewDashboard("L6s4EaUaUShw1jHstOuljH3GCMY2","+918610905528")
-     // home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+         home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93","+918610905528")
+//      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
     );
   }
 }
