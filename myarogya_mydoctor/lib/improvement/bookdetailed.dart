@@ -33,6 +33,7 @@ class _BookdetailedState extends State<Bookdetailed> {
   List<String> pathology = [];
   List<String> health = [];
   List<String> surgery = [];
+  int bal;
   String values;
   String valuesP;
   String valuesH;
@@ -162,7 +163,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                             ),
                           ),
                           // controlAffinity: ListTileControlAffinity.leading,
-                          tileColor: Colors.white,
+                          //tileColor: Colors.white,
                         ),
                       ),
                       Divider(
@@ -379,7 +380,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check,
                         //         onChanged: (v) {
                         //           setState(() {
@@ -444,7 +445,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check1,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -540,7 +541,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check2,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -625,7 +626,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //                 ),
                         //               ),
                         //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               tileColor: Colors.white,
+                        //               //tileColor: Colors.white,
                         //               value: check[i],
                         //               onChanged: (bool v) {
                         //                 setState(() {
@@ -799,7 +800,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check,
                         //         onChanged: (v) {
                         //           setState(() {
@@ -864,7 +865,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check1,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -960,7 +961,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check2,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -1045,7 +1046,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //                 ),
                         //               ),
                         //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               tileColor: Colors.white,
+                        //               //tileColor: Colors.white,
                         //               value: check[i],
                         //               onChanged: (bool v) {
                         //                 setState(() {
@@ -1153,7 +1154,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                       //                   ),
                       //                 ),
                       //                 // controlAffinity: ListTileControlAffinity.leading,
-                      //                 tileColor: Colors.white,
+                      //                 //tileColor: Colors.white,
                       //                 value: check2[i],
                       //                 onChanged: (bool v) {
                       //                   setState(() {
@@ -1324,7 +1325,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check,
                         //         onChanged: (v) {
                         //           setState(() {
@@ -1389,7 +1390,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check1,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -1485,7 +1486,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check2,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -1570,7 +1571,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //                 ),
                         //               ),
                         //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               tileColor: Colors.white,
+                        //               //tileColor: Colors.white,
                         //               value: check[i],
                         //               onChanged: (bool v) {
                         //                 setState(() {
@@ -1745,7 +1746,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check,
                         //         onChanged: (v) {
                         //           setState(() {
@@ -1810,7 +1811,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check1,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -1906,7 +1907,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //           ),
                         //         ),
                         //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         tileColor: Colors.white,
+                        //         //tileColor: Colors.white,
                         //         value: _check2,
                         //         onChanged: (v) {
                         //           if (v) {
@@ -1991,7 +1992,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                         //                 ),
                         //               ),
                         //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               tileColor: Colors.white,
+                        //               //tileColor: Colors.white,
                         //               value: check[i],
                         //               onChanged: (bool v) {
                         //                 setState(() {
@@ -2106,6 +2107,7 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type":label,
             "charges":name.charge,
+            "packName":title
           });
           setState(() {});
         }
@@ -2120,6 +2122,7 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type":label,
             "charges":name.amount,
+            "packName":title
           });
         }
       }
@@ -2132,6 +2135,7 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type": label,
             "charges": name.suramount,
+            "packName":title
           });
         }
       }
@@ -2182,31 +2186,49 @@ class _BookdetailedState extends State<Bookdetailed> {
         buttons: [
           DialogButton(
             onPressed: () {
-              var bal = int.parse(list[0]['noOfBeds'])-1;
-              list3.add({
-                "roomType":label,
-                "noOfBeds":bal.toString(),
-                'charges':list[0]['charges'],
-              });
-              list4.add({
-                "roomType":label,
-                "noOfBeds": "1",
-                'charges':list[0]['charges'],
-              });
-              print("added");
-              try {
-                ApiService().bookhospital(widget.hospitalvalues.bookingPhNo, widget.mobile, ConstantUtils().CONFIRM, list4, "","","");
-                print("Added!!");
-                fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
-                list3.clear();
-                print("Added!!");
-                // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
-              } catch (e) {
-                print(e);
+              if (list[0]['noOfBeds'] != null) {
+                 bal = int.parse(list[0]['noOfBeds'])-1;
+                 list3.add({
+                   "roomType":label,
+                   "noOfBeds":bal.toString(),
+                   'charges':list[0]['charges'],
+                 });
+                 list4.add({
+                   "roomType":label,
+                   "noOfBeds": "1",
+                   'charges':list[0]['charges'],
+                 });
+                 print("added");
+                 try {
+                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo, widget.mobile, ConstantUtils().CONFIRM, list4, "","","");
+                   print("Added!!");
+                   fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
+                   list3.clear();
+                   print("Added!!");
+                   Navigator.pop(context);
+                   Navigator.pop(context);
+                   AuthService().toast("Added Successfully!!");
+                   // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
+                 } catch (e) {
+                   print(e);
+                 }
+              }else{
+                print("added");
+                try {
+                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo, widget.mobile, ConstantUtils().CONFIRM, list, "","","");
+                  print("Added!!");
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  AuthService().toast("Added Successfully!!");
+                  // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
+                } catch (e) {
+                  print(e);
+                }
               }
+
             },
             child: Text(
-              "Book",
+              "Confirm",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),

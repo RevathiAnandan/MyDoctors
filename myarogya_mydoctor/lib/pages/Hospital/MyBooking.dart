@@ -69,7 +69,9 @@ class _MyBookingState extends State<MyBooking> {
             print(dummyData[index].bookdetails.toString());
             return ListTile(
               title: Text(dummyData[index].userNumber),
-              subtitle: Text("RoomType:"+dummyData[index].bookdetails[0].roomType +"Charges:"+dummyData[index].bookdetails[0].charges ),
+              subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text("Package Name:"+dummyData[index].bookdetails[0].packName+"RoomType:"+dummyData[index].bookdetails[0].roomType
+                  +"Charges:"+dummyData[index].bookdetails[0].charges ):(Text("RoomType:"+dummyData[index].bookdetails[0].roomType
+                  +"  "+"Charges:"+dummyData[index].bookdetails[0].charges )),
               trailing: FlatButton(
                 child: Text(dummyData[index].status,
                     style: TextStyle(
@@ -85,11 +87,26 @@ class _MyBookingState extends State<MyBooking> {
                 padding: EdgeInsets.all(10),
                 color: Colors.redAccent,
                 onPressed: () {
-                  AuthService().toast("Booking Confirmed");
-                  if(dummyData[index].status == "Booking Confirm"){
-                    ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
-                  }else{
-                    ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Booking Confirm",dummyData[index].bookdetails , keys1[index].toString(),DateTime.now().toString(),"");
+
+                  if(dummyData[index].status == "Booking Confirmed"){
+                    var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
+                    db.update({
+                      'Status':"Discharge",
+                      "DischargeDate":DateTime.now().toString(),
+                    });
+                    // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
+                  }else if(dummyData[index].status ==  "Confirm"){
+                    AuthService().toast("Booking Confirmed");
+                    var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
+                    db.update({
+                      'Status':"Booking Confirmed",
+                      "BookingDate":DateTime.now().toString(),
+                    });
+                    // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Booking Confirmed",dummyData[index].bookdetails , keys1[index].toString(),DateTime.now().toString(),"");
+                  }else if(dummyData[index].status ==  "Discharge"){
+                    if(dummyData[index].DischargeDate != null){
+                      AuthService().toast("Discharged At"+" "+ dummyData[index].DischargeDate.split(".")[0]);
+                    }
                   }
                   },
               ),

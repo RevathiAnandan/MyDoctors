@@ -63,13 +63,7 @@ class _PendingPageState extends State<PendingPage> {
                 ),
               ],
             ),
-//            onTap: () {
-//              getHospitals(keys1[i]);
-//              Navigator.push(
-//                context,
-//                MaterialPageRoute(builder: (context) => EditAddHospital(hospitalDetails)),
-//              );
-//            },
+
           )
         ],
       ),

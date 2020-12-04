@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:myarogya_mydoctor/improvement/hospitals.dart';
+import 'package:myarogya_mydoctor/pages/Ads/home_page.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/Appointments.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 
@@ -24,7 +25,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
   List<Widget> _widgetOptions() => [
     Appointments(widget.mobile,widget.id),
     Hospitals(widget.mobile,widget.id),
-    Text('My Ads'),
+    HomeScreen(),
     GestureDetector(
       onTap:() {
         AuthService().signOut(context);

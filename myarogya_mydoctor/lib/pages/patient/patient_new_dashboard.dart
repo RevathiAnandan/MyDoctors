@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:myarogya_mydoctor/improvement/hospitals.dart';
+import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/Appointments.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 
@@ -38,7 +40,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
 
   List<Widget> _widgetOptions() => [
     MyPendings(widget.id,widget.mobile,"MY DOCTOR"),
-    Text('My Hospitals'),
+    Hospitals(widget.mobile,widget.id),
 //    Text('My Labs'),
     Text('My Ads'),
     GestureDetector(

@@ -18,6 +18,12 @@ class HospitalSettings extends StatefulWidget {
 
 class _HospitalSettingsState extends State<HospitalSettings> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -96,6 +102,17 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                       ),
                       Text(
                         "My Income",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),),
+                      SizedBox(
+                        width:140,
+                      ),
+                      Text(
+                        "Rs."+(4*100).toString(),
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 20.0,

@@ -481,6 +481,7 @@ class _AddHospitalState extends State<AddHospital> {
                   } else {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
+                      print("_formkeyValue::"+_formKey.toString());
                       setState(() {
                         pageindex++;
                       });
@@ -1741,7 +1742,7 @@ class _AddHospitalState extends State<AddHospital> {
                         ),
                         controller: suramtController,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                        //  FilteringTextInputFormatter.digitsOnly
                         ],
                         keyboardType: TextInputType.number,
                         style: TextStyle(

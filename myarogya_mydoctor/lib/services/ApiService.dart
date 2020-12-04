@@ -240,9 +240,9 @@ class ApiService{
         var db = fb.reference().child("HospitalBookings").child(key);
         db.update({
                 'Status':status,
-          "BookingDate":bkdate,
+                "BookingDate":bkdate,
               });
-      }else if(status=="discharge"){
+      }else if(status=="Discharge"){
         var db = fb.reference().child("HospitalBookings").child(key);
         db.update({
             'DischargeDate':disdate,
