@@ -462,6 +462,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             columns: [
                               DataColumn(label: Text("Doctor Name")),
                               DataColumn(label: Text("Phone Number")),
+                              DataColumn(label: Text("Specialist")),
 
                             ],
                             rows: hospitalvalues[0].doctorslist.map((e) =>
@@ -469,6 +470,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                                     cells: [
                                       DataCell(Container(width:150,child: Text(e.name))),
                                       DataCell(Container(width:100,child: Text(e.phno))),
+                                      DataCell(Container(width:100,child: Text(e.Specialist))),
                                     ]
                                 ),
                             ).toList()
@@ -520,7 +522,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               DataColumn(label: Text("Phone Number")),
 
                             ],
-                            rows: hospitalvalues[0].doctorslist.map((e) =>
+                            rows: hospitalvalues[0].staffslist.map((e) =>
                                 DataRow(
                                     cells: [
                                       DataCell(Container(width:150,child: Text(e.name))),

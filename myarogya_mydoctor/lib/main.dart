@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
       // home: Bookdetailed("Revathi"),
       //   home: SplashScreen()
 //        home: AddHospital(),
-     home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-         // home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93","+918610905528")
-     // home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+//      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
+         home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93","+918610905528")
+//      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
     );
   }
 }

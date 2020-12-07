@@ -360,6 +360,7 @@ class _AddHospitalState extends State<AddHospital> {
   List<String> NumberD = [];
 
   List<String>Doctor = [];
+  List<String>Specialist = [];
   List<String> NumberN = [];
 
   List<String>Nurse = [];
@@ -1754,6 +1755,10 @@ class _AddHospitalState extends State<AddHospital> {
                   ],
                 ),
                 SizedBox(
+                  height: 10,
+                ),
+                Text("Deposit of 10% is needed"),
+                SizedBox(
                   height: 25,
                 ),
                 Align(
@@ -1802,20 +1807,22 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Specialities",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   "Specialities",
+                //   style: TextStyle(
+                //     color: Colors.redAccent,
+                //     fontSize: 18,
+                //     fontFamily: 'Lato',
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 SizedBox(
                   height: 10,
                 ),
                 Container(
-                  child: Column(
+                  child: Wrap(
+                    spacing: 5.0,
+                    runSpacing: 3.0,
                     children: <Widget>[
                       // ChoiceChip(
                       //   avatar: _selected[0] ? Icon(Icons.done) : null,
@@ -2283,15 +2290,15 @@ class _AddHospitalState extends State<AddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Facilities",
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   "Facilities",
+                //   style: TextStyle(
+                //     color: Colors.redAccent,
+                //     fontSize: 18,
+                //     fontFamily: 'Lato',
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -2907,6 +2914,7 @@ class _AddHospitalState extends State<AddHospital> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     RaisedButton(
                       child: Text("Add Doctors"),
@@ -3493,6 +3501,7 @@ class _AddHospitalState extends State<AddHospital> {
 
       Doctor = [];
       NumberD = [];
+      Specialist = [];
       dynamicListD = [];
     }
     setState(() {});
@@ -3515,7 +3524,7 @@ class _AddHospitalState extends State<AddHospital> {
                 children: <Widget>[
                   new Container(
                     margin: new EdgeInsets.only(left: 10.0),
-                    child: new Text("${index + 1} : ${Doctor[index]}${NumberD[index]}"),
+                    child: new Text("${index + 1} : ${Doctor[index]}${NumberD[index]}${Specialist[index]}"),
                   ),
                   new Divider()
                 ],
@@ -3638,10 +3647,11 @@ class _AddHospitalState extends State<AddHospital> {
   submitData() {
     Doctor = [];
     NumberD = [];
+    Specialist = [];
     dynamicListD.forEach((widget){
       doclist.add(
           {
-            "Name":widget.Doctor.text,"Number":widget.NumberD.text,
+            "Name":widget.Doctor.text,"Number":widget.NumberD.text,"Specialist":widget.Specialist.text,
           }
       );
       print(doclist);
@@ -3882,6 +3892,7 @@ class _AddAccredState extends State<AddAccred> {
 class dynamicWidgetD extends StatelessWidget {
   TextEditingController Doctor = new TextEditingController();
   TextEditingController NumberD = new TextEditingController();
+  TextEditingController Specialist = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -3893,7 +3904,7 @@ class dynamicWidgetD extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 40,
-            width: 200,
+            width: 140,
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new TextFormField(
               controller: Doctor,
@@ -3905,7 +3916,7 @@ class dynamicWidgetD extends StatelessWidget {
           ),
           Container(
             height: 40,
-            width: 150,
+            width: 130,
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new TextFormField(
               inputFormatters: <TextInputFormatter>[
@@ -3918,6 +3929,23 @@ class dynamicWidgetD extends StatelessWidget {
                   border: OutlineInputBorder()
               ),
               keyboardType: TextInputType.number,
+            ),
+          ),
+          Container(
+            height: 40,
+            width: 110,
+            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+            child: new TextFormField(
+              // inputFormatters: <TextInputFormatter>[
+              //   LengthLimitingTextInputFormatter(10),
+              //   // FilteringTextInputFormatter.digitsOnly
+              // ],
+              controller: Specialist,
+              decoration: const InputDecoration(
+                  labelText: 'Specialist',
+                  border: OutlineInputBorder()
+              ),
+              // keyboardType: TextInputType.number,
             ),
           ),
         ],

@@ -27,6 +27,7 @@ class _BookdetailedState extends State<Bookdetailed> {
     getpathologytype();
     gethealthtype();
     getsurgerytype();
+    getnames();
   }
   List<String> roomnames = [];
   List<String> roomnames1 = [];
@@ -45,14 +46,28 @@ class _BookdetailedState extends State<Bookdetailed> {
   int key2;
   String selectedR;
   Radio rb1;
-  String _chosenValue2;
-  TextEditingController _nameController;
+  List details = ["","",""];
+  int some=3;
+  getnames(){
+    widget.hospitalvalues.beds.forEach((e) {
+      print(e.roomType);
+      print(e.noOfBeds);
+      print(e.charges);
+      details.insert(some,{
+              "count": e.noOfBeds,
+              "charges": e.charges,
+      });
+      some++;
+    });
+    print(details.toString());
+    print("5");
+  }
   getroomtype(){
       roomnames.add("100% free");
       roomnames.add("Concessional Beds");
       roomnames.add("Covid Beds");
     for(var name in widget.hospitalvalues.beds){
-      roomnames1.add(name.roomType);
+      roomnames.add(name.roomType);
     }
     print("1");
   }
@@ -218,51 +233,99 @@ class _BookdetailedState extends State<Bookdetailed> {
                                 values = selectedR;
                               }),
                               labels: roomnames,
+                              labelStyle: TextStyle(
+                                fontSize: 15,
+                              ),
                               itemBuilder: (rb1, Text txt, int i){
                                 print(i);
                                 return Row(
                                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    rb1,
+                                    Transform.scale(scale:1.25,child: rb1),
                                     txt,
-                                    (i==0)?Text(" Rs. "):Container(),
-                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].charges):Container(),
-                                    (i==0)?Text("/Day Charges: "):Container(),
-                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].noOfBeds):Container(),
-                                    (i==1)?Text(" Rs. "):Container(),
-                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].charges):Container(),
-                                    (i==1)?Text("/Day Charges: "):Container(),
-                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].noOfBeds):Container(),
-                                    (i==2)?Text(" Rs. "):Container(),
-                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].noOfBeds):Container(),
-                                    (i==2)?Text("/Day Charges: "):Container(),
-                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].charges):Container(),
+                                    (i==0)?Text("  Count:  ",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].noOfBeds,style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==0)?Text(" Rs.",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].charges+" /Day",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==1)?Text("  Count: ",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].noOfBeds,style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==1)?Text(" Rs.",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].charges+" /Day",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==2)?Text("  Count:",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].noOfBeds,style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==2)?Text(" Rs.",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].charges+" /Day",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container(),
+                                    // setstate(i),
+                                    (i!=0)?(i!=1)?(i!=2)?Text(details[i]['count'],style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container():Container():Container(),
+                                    (i!=0)?(i!=1)?(i!=2)?Text(" Rs.",style: TextStyle(
+                                      fontSize: 17,
+                                    ),):Container():Container():Container(),
+                                    (i!=0)?(i!=1)?(i!=2)?Text(details[i]['charges']+" /Day",style: TextStyle(
+                                      fontSize: 15,
+                                    ),):Container():Container():Container(),
                                   ],
                                 );
                               },
                             ),
-                            RadioButtonGroup(
-                          orientation: GroupedButtonsOrientation.VERTICAL,
-                          onChange: (String label, int index) => print("label: $label index: $index"),
-                          margin: const EdgeInsets.only(left: 12.0),
-                          onSelected: (selectedR) => setState((){
-                            values = selectedR;
-                          }),
-                          labels: roomnames1,
-                          itemBuilder: (rb1, Text txt, int i){
-                            return Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                rb1,
-                                txt,
-                                Text("Rs."),
-                                Text(widget.hospitalvalues.beds[i].noOfBeds),
-                                Text("/Day Charges:"),
-                                Text(widget.hospitalvalues.beds[i].charges),
-                              ],
-                            );
-                          },
-                        ),
+                        //     RadioButtonGroup(
+                        //   orientation: GroupedButtonsOrientation.VERTICAL,
+                        //   onChange: (String label, int index) => print("label: $label index: $index"),
+                        //   margin: const EdgeInsets.only(left: 12.0),
+                        //   onSelected: (selectedR) => setState((){
+                        //     values = selectedR;
+                        //   }),
+                        //   labels: roomnames1,
+                        //   labelStyle: TextStyle(
+                        //     fontSize: 15,
+                        //   ),
+                        //   itemBuilder: (rb1, Text txt, int i){
+                        //     return Row(
+                        //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: <Widget>[
+                        //         Transform.scale(scale:1.25,child: rb1),
+                        //         txt,
+                        //         Text("  Count:",style: TextStyle(
+                        //           fontSize: 15,
+                        //         ),),
+                        //         Text(widget.hospitalvalues.beds[i].noOfBeds,style: TextStyle(
+                        //           fontSize: 15,
+                        //         ),),
+                        //         Text(" Rs.",style: TextStyle(
+                        //           fontSize: 17,
+                        //         ),),
+                        //         Text(widget.hospitalvalues.beds[i].charges+" /Day",style: TextStyle(
+                        //           fontSize: 15,
+                        //         ),),
+                        //       ],
+                        //     );
+                        //   },
+                        // ),
                         //     RadioButtonGroup(
                         //   orientation: GroupedButtonsOrientation.VERTICAL,
                         //    onChange: (String label, int index) => print("label: $label index: $index"),
@@ -693,16 +756,23 @@ class _BookdetailedState extends State<Bookdetailed> {
                                 valuesP = selected;
                               }),
                               labels: pathology,
+                              labelStyle: TextStyle(
+                                fontSize: 15,
+                              ),
                               itemBuilder: (Radio rb, Text txt, int i){
                                 return Row(
                                   children: <Widget>[
-                                    rb,
+                                    Transform.scale(scale:1.5,child: rb),
                                     txt,
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Charges: "),
-                                    Text(widget.hospitalvalues.diagnosis[i].charge),
+                                    Text("Charges: ",style: TextStyle(
+                                      fontSize: 15,
+                                    ),),
+                                    Text(widget.hospitalvalues.diagnosis[i].charge,style: TextStyle(
+                                      fontSize: 15,
+                                    ),),
                                   ],
                                 );
                               },
@@ -1218,16 +1288,23 @@ class _BookdetailedState extends State<Bookdetailed> {
                                 valuesH = selected;
                               }),
                               labels: health,
+                              labelStyle: TextStyle(
+                                fontSize: 15,
+                              ),
                               itemBuilder: (Radio rb, Text txt, int i){
                                 return Row(
                                   children: <Widget>[
-                                    rb,
+                                    Transform.scale(scale:1.5,child: rb),
                                     txt,
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Charges: "),
-                                    Text(widget.hospitalvalues.health[i].amount),
+                                    Text("Charges: ",style: TextStyle(
+                                      fontSize: 15,
+                                    ),),
+                                    Text(widget.hospitalvalues.health[i].amount,style: TextStyle(
+                                fontSize: 15,
+                                ),),
                                   ],
                                 );
                               },
@@ -1638,16 +1715,23 @@ class _BookdetailedState extends State<Bookdetailed> {
                                 valuesS = selected;
                               }),
                               labels: surgery,
+                              labelStyle: TextStyle(
+                                fontSize: 15,
+                              ),
                               itemBuilder: (Radio rb, Text txt, int i){
                                 return Row(
                                   children: <Widget>[
-                                    rb,
+                                    Transform.scale(scale:1.5,child: rb),
                                     txt,
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Charges: "),
-                                    Text(widget.hospitalvalues.surgery[i].suramount),
+                                    Text("Charges: ",style: TextStyle(
+                                      fontSize: 15,
+                                    ),),
+                                    Text(widget.hospitalvalues.surgery[i].suramount,style: TextStyle(
+                                      fontSize: 15,
+                                    ),),
                                   ],
                                 );
                               },
@@ -2234,5 +2318,11 @@ class _BookdetailedState extends State<Bookdetailed> {
           ),
         ]).show();
   }
-  var list = Iterable<int>.generate(10).toList();
+  int i = 0;
+  setstate(){
+    var list = new List<int>.generate(widget.hospitalvalues.beds.length, (i) => i+1);
+    for(;i<widget.hospitalvalues.beds.length;i++){
+      return list[i];
+    }
+  }
 }

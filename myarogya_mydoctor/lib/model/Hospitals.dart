@@ -188,13 +188,15 @@ class NursesList {
 class DoctorList {
   String name;
   String phno;
-  DoctorList._({this.name, this.phno});
+  String Specialist;
+  DoctorList._({this.name, this.phno,this.Specialist});
 
 
   factory DoctorList.fromJson(dynamic json){
     return DoctorList._(
       name: json['Name'] as String,
       phno: json['Number'] as String,
+      Specialist: json['Specialist'] as String,
     );
   }
 
