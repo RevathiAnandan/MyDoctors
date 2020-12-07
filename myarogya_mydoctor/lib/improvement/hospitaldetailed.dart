@@ -445,6 +445,91 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ).toList()
                         ),
                       ),
+
+                      Text(
+                        "Doctor Details:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Doctor Name")),
+                              DataColumn(label: Text("Phone Number")),
+
+                            ],
+                            rows: hospitalvalues[0].doctorslist.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:150,child: Text(e.name))),
+                                      DataCell(Container(width:100,child: Text(e.phno))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
+                      Text(
+                        "Nurse Details:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Nurse Name")),
+                              DataColumn(label: Text("Phone Number")),
+
+                            ],
+                            rows: hospitalvalues[0].nurseslist.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:150,child: Text(e.name))),
+                                      DataCell(Container(width:100,child: Text(e.phno))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
+                      Text(
+                        "Staff Details:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Staff Name")),
+                              DataColumn(label: Text("Phone Number")),
+
+                            ],
+                            rows: hospitalvalues[0].doctorslist.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:150,child: Text(e.name))),
+                                      DataCell(Container(width:100,child: Text(e.phno))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
                     ],
                   ),
                 ),

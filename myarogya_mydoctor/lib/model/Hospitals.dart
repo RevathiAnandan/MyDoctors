@@ -164,7 +164,7 @@ class StaffsList {
   factory StaffsList.fromJson(dynamic json){
     return StaffsList._(
       name: json['Name'] as String,
-      phno: json['PhNumber'] as String,
+      phno: json['Number'] as String,
     );
   }
 
@@ -180,7 +180,7 @@ class NursesList {
   factory NursesList.fromJson(dynamic json){
     return NursesList._(
       name: json['Name'] as String,
-      phno: json['PhNumber'] as String,
+      phno: json['Number'] as String,
     );
   }
 }
@@ -194,7 +194,7 @@ class DoctorList {
   factory DoctorList.fromJson(dynamic json){
     return DoctorList._(
       name: json['Name'] as String,
-      phno: json['PhNumber'] as String,
+      phno: json['Number'] as String,
     );
   }
 
