@@ -25,9 +25,11 @@ class ConstantsD{
 class ConstantsH{
   static const String SignOut = 'Sign out';
   static const String Settings = 'Settings';
+  static const String MyBooking = 'My Booking';
 
   static const List<String> choices = <String>[
-    SignOut,
-    Settings
+    MyBooking,
+    Settings,
+    SignOut
   ];
 }

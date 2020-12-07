@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 import 'package:myarogya_mydoctor/improvement/bookdetailed.dart';
 import 'package:myarogya_mydoctor/improvement/hospitaldetailed.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/MyBooking.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/hospitalsettings.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
@@ -13,6 +14,8 @@ import 'package:myarogya_mydoctor/services/datasearch.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:image/image.dart' as imgresize;
+
+import 'MyBookingSettings.dart';
 
 class Hospitals extends StatefulWidget {
   String mobile;
@@ -433,7 +436,18 @@ class _HospitalsState extends State<Hospitals> {
   void choiceAction(String choice) {
     if (choice == ConstantsH.SignOut) {
       AuthService().signOut(context);
-    } else if (choice == ConstantsH.Settings) {
+    }
+    else if (choice == ConstantsH.MyBooking) {
+      //todo:hospital settings to be done
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              MyBookingSettings(widget.id,widget.mobile),
+        ),
+      );
+    }
+    else if (choice == ConstantsH.Settings) {
       //todo:hospital settings to be done
       Navigator.push(
         context,

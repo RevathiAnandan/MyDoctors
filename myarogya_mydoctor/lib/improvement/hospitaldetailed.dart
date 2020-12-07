@@ -112,18 +112,18 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Admin Registration Number: " +hospitalvalues[0].hospitalRegNo,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Admin Registration Number: " +hospitalvalues[0].hospitalRegNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 15,
                       ),
@@ -279,78 +279,78 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       // ),
 
                       getaccred(hospitalvalues[0].accred),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Important Numbers",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Administration Ph: "+hospitalvalues[0].adminPh,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Ambulance: "+hospitalvalues[0].ambulanceNo,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Booking Ph: "+hospitalvalues[0].bookingPhNo,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Emergency Number: "+hospitalvalues[0].emergencyNo,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "OPD Booking: "+hospitalvalues[0].opdBookingNo,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Important Numbers",
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 20.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Administration Ph: "+hospitalvalues[0].adminPh,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Ambulance: "+hospitalvalues[0].ambulanceNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Booking Ph: "+hospitalvalues[0].bookingPhNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Emergency Number: "+hospitalvalues[0].emergencyNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "OPD Booking: "+hospitalvalues[0].opdBookingNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 15,
                       ),
