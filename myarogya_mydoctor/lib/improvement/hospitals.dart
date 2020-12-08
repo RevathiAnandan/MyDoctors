@@ -97,6 +97,7 @@ class _HospitalsState extends State<Hospitals> {
                     },
                   ),
                   PopupMenuButton<String>(
+                    color: Colors.redAccent,
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context) {
                       return ConstantsH.choices.map((String choice) {

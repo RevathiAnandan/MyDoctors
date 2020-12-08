@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/Booking.dart';
@@ -92,7 +93,7 @@ class _MyBookingState extends State<MyBooking> {
                     var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
                     db.update({
                       'Status':"Discharge",
-                      "DischargeDate":DateTime.now().toString(),
+                      "DischargeDate": formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
                     });
                     // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
                   }else if(dummyData[index].status ==  "Confirm"){
@@ -100,7 +101,7 @@ class _MyBookingState extends State<MyBooking> {
                     var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
                     db.update({
                       'Status':"Booking Confirmed",
-                      "BookingDate":DateTime.now().toString(),
+                      "BookingDate": formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy]).toString(),
                     });
                     // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Booking Confirmed",dummyData[index].bookdetails , keys1[index].toString(),DateTime.now().toString(),"");
                   }else if(dummyData[index].status ==  "Discharge"){

@@ -70,13 +70,33 @@ class MyScreenState extends State<MyScreen> {
                       height: 10.0,
                     ),
                     new ListTile(
+                      trailing: (widget.category == "MY PATIENT")?Text(""):FlatButton(
+                        child: Text(
+                          "Book Now",
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: "Lato", fontSize: 14),
+                        ),
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.redAccent)),
+                        padding: EdgeInsets.all(10),
+                        color: Colors.redAccent,
+                        onPressed: (){
+                          ApiService().appointment(widget.mobile, dummyData[i].phone,
+                              dummyData[i].name, "Waiting!",i, "", "", i.toString());
+                          AuthService().toast("Requesting for Confirmation");
+                          ApiService().trigger=true;
+                          //todo:Enhancement should be done
+                        },
+                      ),
 //                       leading: new CircleAvatar(
 //                         foregroundColor: Theme.of(context).primaryColor,
 //                         backgroundColor: Colors.grey,
 // //                  backgroundImage: Image.asset('assets/images/grid.png'),
 //                       ),
                       title: new Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           CircleAvatar(
                             radius: 25,
@@ -102,26 +122,7 @@ class MyScreenState extends State<MyScreen> {
                               ),
                             ],
                           ),
-                          (widget.category == "MY PATIENT")?Text(""):FlatButton(
-                                  child: Text(
-                                    "Book Now",
-                                    style: TextStyle(
-                                        color: Colors.white, fontFamily: "Lato", fontSize: 14),
-                                  ),
-                                  textColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      side: BorderSide(color: Colors.redAccent)),
-                                  padding: EdgeInsets.all(10),
-                                  color: Colors.redAccent,
-                                  onPressed: (){
-                                    ApiService().appointment(widget.mobile, dummyData[i].phone,
-                                        dummyData[i].name, "Waiting!",i, "", "", i.toString());
-                                    AuthService().toast("Requesting for Confirmation");
-                                    ApiService().trigger=true;
-                                    //todo:Enhancement should be done
-                                  },
-                                ),
+
                         ],
                       ),
                       onTap: () {

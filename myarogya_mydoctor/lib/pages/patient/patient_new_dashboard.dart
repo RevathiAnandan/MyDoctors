@@ -86,198 +86,199 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         body: NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                // SliverAppBar(
-                //   expandedHeight: 250.0,
-                //   floating: false,
-                //   pinned: true,
-                //   flexibleSpace: FlexibleSpaceBar(
-                //     centerTitle: true,
-                //     title: Align(
-                //       alignment: Alignment.bottomLeft,
-                //       child: widgetName.elementAt(selectedIndex),
-                //     ),
-                //     background: Image.network(
-                //       "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
-                //       fit: BoxFit.cover,
-                //     ),
-                //   ),
-                //     actions: [
-                //       IconButton(icon: Icon(Icons.add,color: Colors.white),
-                //         onPressed: (){
-                //           _openPopup(context);
-                //         },),
-                //       IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
-                //         onPressed: (){
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(builder: (context) =>  DashBoardScreen(
-                //                                                 widget.mobile,
-                //                                                 "MY DOCTOR",widget.id))
-                //           );
-                //         },),
-                //       PopupMenuButton<String>(
-                //         onSelected: choiceAction,
-                //         itemBuilder: (BuildContext context){
-                //           return ConstantsD.choices.map((String choice){
-                //             return PopupMenuItem<String>(
-                //               value: choice,
-                //               child: Text(choice),
-                //             );
-                //           }).toList();
-                //         },
-                //       )
-                //     ],
-                // ),
-//                 new SliverPadding(
-//                   padding: new EdgeInsets.all(1.0),
-//                   sliver: new SliverList(
-//                       delegate: SliverChildListDelegate([
-//                         Row(
-//                           mainAxisSize: MainAxisSize.max,
-//                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                           children: [
-//                             // Container(
-//                             //   padding: EdgeInsets.only(top: 16),
-//                             //   child: Row(
-//                             //     mainAxisSize: MainAxisSize.max,
-//                             //     children: <Widget>[
-//                             //       Column(
-//                             //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                             //         children: <Widget>[
-//                             //           Container(
-//                             //             width: 130,
-//                             //             height: 40,
-//                             //             child: Card(
-//                             //               color: new Color(0xffFFFFFF),
-//                             //               elevation: 6,
-//                             //               shape: RoundedRectangleBorder(
-//                             //                   borderRadius:
-//                             //                   BorderRadius.circular(20)),
-//                             //               child: Center(
-//                             //                   child: GestureDetector(
-//                             //                       onTap: () => Navigator.push(
-//                             //                         context,
-//                             //                         MaterialPageRoute(
-//                             //                             builder: (context) =>
-//                             //                                 MyPendings(widget.id,widget.mobile,"MY DOCTOR")
-//                             //                         ),
-//                             //                       ),
-//                             //                       child: Text("My Pendings",
-//                             //                           style: new TextStyle(
-//                             //                               color: Colors.redAccent,
-//                             //                               fontSize: 14,
-//                             //                               fontWeight: FontWeight.bold,
-//                             //                               fontFamily: "Lato")))),
-//                             //             ),
-//                             //           ),
-//                             //           Text("",
-//                             //               style: new TextStyle(
-//                             //                   color: Colors.black,
-//                             //                   fontSize: 16,
-//                             //                   fontWeight: FontWeight.bold,
-//                             //                   fontFamily: "Lato")),
-//                             //         ],
-//                             //       ),
-//                             //     ],
-//                             //   ),
-//                             // ),
-//                             Container(
-//                               padding: EdgeInsets.only(top: 16),
-//                               child: Row(
-//                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                 children: <Widget>[
-//                                   Column(
-//                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                     children: <Widget>[
-//                                       Container(
-//                                         width: 160,
-//                                         height: 40,
-//                                         child: Card(
-//                                           color: new Color(0xffFFFFFF),
-//                                           elevation: 6,
-//                                           shape: RoundedRectangleBorder(
-//                                               borderRadius:
-//                                               BorderRadius.circular(20)),
-//                                           child: Center(
-//                                               child: GestureDetector(
-//                                                   onTap: () => Navigator.push(
-//                                                     context,
-//                                                     MaterialPageRoute(
-//                                                         builder: (context) =>
-//                                                             DashBoardScreen(
-//                                                                 widget.mobile,
-//                                                                 "MY DOCTOR",widget.id)),
-//                                                   ),
-//                                                   child: Text("My Doctors",
-//                                                       style: new TextStyle(
-//                                                           color: Colors.redAccent,
-//                                                           fontSize: 14,
-//                                                           fontWeight: FontWeight.bold,
-//                                                           fontFamily: "Lato")))),
-//                                         ),
-//                                       ),
-//                                       SizedBox(height: 5.0),
-//                                       Text("",
-//                                           style: new TextStyle(
-//                                               color: Colors.black,
-//                                               fontSize: 16,
-//                                               fontWeight: FontWeight.bold,
-//                                               fontFamily: "Lato")),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                             Container(
-//                               padding: EdgeInsets.only(top: 16),
-//                               child: Row(
-// //                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   children: <Widget>[]),
-//                             ),
-//                             Container(
-//                               padding: EdgeInsets.only(top: 16),
-//                               child: Row(
-// //                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                 children: <Widget>[
-//                                   Column(
-// //                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                     children: <Widget>[
-//                                       Container(
-//                                         width: 160,
-//                                         height: 40,
-//                                         child: Card(
-//                                           color: new Color(0xffFFFFFF),
-//                                           elevation: 6,
-//                                           shape: RoundedRectangleBorder(
-//                                               borderRadius:
-//                                               BorderRadius.circular(20)),
-//                                           child: Center(
-//                                               child: GestureDetector(
-//                                                   onTap: () => Navigator.pop(context),
-//                                                   child: Text("My Appointments",
-//                                                       style: new TextStyle(
-//                                                           color: Colors.redAccent,
-//                                                           fontSize: 14,
-//                                                           fontWeight: FontWeight.bold,
-//                                                           fontFamily: "Lato")))),
-//                                         ),
-//                                       ),
-//                                       SizedBox(height: 5.0),
-//                                       Text("",
-//                                           style: new TextStyle(
-//                                               color: Colors.black,
-//                                               fontSize: 16,
-//                                               fontWeight: FontWeight.bold,
-//                                               fontFamily: "Lato")),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ])),
-//                 ),
+                SliverAppBar(
+                  expandedHeight: 250.0,
+                  floating: false,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: widgetName.elementAt(selectedIndex),
+                    ),
+                    background: Image.network(
+                      "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                    actions: [
+                      IconButton(icon: Icon(Icons.add,color: Colors.white),
+                        onPressed: (){
+                          _openPopup(context);
+                        },),
+                      IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  DashBoardScreen(
+                                                                widget.mobile,
+                                                                "MY DOCTOR",widget.id))
+                          );
+                        },),
+                      PopupMenuButton<String>(
+                        color: Colors.redAccent,
+                        onSelected: choiceAction,
+                        itemBuilder: (BuildContext context){
+                          return ConstantsD.choices.map((String choice){
+                            return PopupMenuItem<String>(
+                              value: choice,
+                              child: Text(choice),
+                            );
+                          }).toList();
+                        },
+                      )
+                    ],
+                ),
+                new SliverPadding(
+                  padding: new EdgeInsets.all(1.0),
+                  sliver: new SliverList(
+                      delegate: SliverChildListDelegate([
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            // Container(
+                            //   padding: EdgeInsets.only(top: 16),
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.max,
+                            //     children: <Widget>[
+                            //       Column(
+                            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //         children: <Widget>[
+                            //           Container(
+                            //             width: 130,
+                            //             height: 40,
+                            //             child: Card(
+                            //               color: new Color(0xffFFFFFF),
+                            //               elevation: 6,
+                            //               shape: RoundedRectangleBorder(
+                            //                   borderRadius:
+                            //                   BorderRadius.circular(20)),
+                            //               child: Center(
+                            //                   child: GestureDetector(
+                            //                       onTap: () => Navigator.push(
+                            //                         context,
+                            //                         MaterialPageRoute(
+                            //                             builder: (context) =>
+                            //                                 MyPendings(widget.id,widget.mobile,"MY DOCTOR")
+                            //                         ),
+                            //                       ),
+                            //                       child: Text("My Pendings",
+                            //                           style: new TextStyle(
+                            //                               color: Colors.redAccent,
+                            //                               fontSize: 14,
+                            //                               fontWeight: FontWeight.bold,
+                            //                               fontFamily: "Lato")))),
+                            //             ),
+                            //           ),
+                            //           Text("",
+                            //               style: new TextStyle(
+                            //                   color: Colors.black,
+                            //                   fontSize: 16,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   fontFamily: "Lato")),
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            Container(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 160,
+                                        height: 40,
+                                        child: Card(
+                                          color: new Color(0xffFFFFFF),
+                                          elevation: 6,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(20)),
+                                          child: Center(
+                                              child: GestureDetector(
+                                                  onTap: () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DashBoardScreen(
+                                                                widget.mobile,
+                                                                "MY DOCTOR",widget.id)),
+                                                  ),
+                                                  child: Text("My Doctors",
+                                                      style: new TextStyle(
+                                                          color: Colors.redAccent,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Lato")))),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Text("",
+                                          style: new TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato")),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[]),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Column(
+//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 160,
+                                        height: 40,
+                                        child: Card(
+                                          color: new Color(0xffFFFFFF),
+                                          elevation: 6,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(20)),
+                                          child: Center(
+                                              child: GestureDetector(
+                                                  onTap: () => Navigator.pop(context),
+                                                  child: Text("My Appointments",
+                                                      style: new TextStyle(
+                                                          color: Colors.redAccent,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Lato")))),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Text("",
+                                          style: new TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato")),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ])),
+                ),
               ];
 
             },

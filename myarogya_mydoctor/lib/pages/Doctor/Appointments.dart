@@ -133,6 +133,7 @@ class _AppointmentsState extends State<Appointments> {
 //                  },
 //                ),
                   PopupMenuButton<String>(
+                    color: Colors.redAccent,
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context){
                       return ConstantsD.choices.map((String choice){

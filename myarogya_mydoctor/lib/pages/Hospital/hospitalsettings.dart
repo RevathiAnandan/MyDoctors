@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myarogya_mydoctor/pages/termsandconditions/disclaimer.dart';
-import 'package:myarogya_mydoctor/pages/termsandconditions/privacy.dart';
-import 'package:myarogya_mydoctor/pages/termsandconditions/termsandconditions.dart';
+import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
+import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
+import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 
 class HospitalSettings extends StatefulWidget {
@@ -87,39 +87,46 @@ class _HospitalSettingsState extends State<HospitalSettings> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.memory,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "My Income",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),),
-                      SizedBox(
-                        width:140,
-                      ),
-                      Text(
-                        "Rs."+(4*100).toString(),
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Privacy()),
+                ),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.memory,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "My Income",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),),
+                        SizedBox(
+                          width:140,
+                        ),
+                        Text(
+                          "Rs."+(4*100).toString(),
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),

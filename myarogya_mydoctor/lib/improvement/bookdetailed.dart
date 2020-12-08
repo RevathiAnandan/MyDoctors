@@ -2127,7 +2127,9 @@ class _BookdetailedState extends State<Bookdetailed> {
               "roomType":label,
               "noOfBeds":widget.hospitalvalues.freebeds[0].noOfBeds,
               'charges':widget.hospitalvalues.freebeds[0].charges,
+              "typeofbooking": "Rooms",
             });
+            print("100 free added");
           }
           else if(widget.hospitalvalues.conbeds[0].roomType==label){
         setState(() {
@@ -2138,6 +2140,7 @@ class _BookdetailedState extends State<Bookdetailed> {
               "roomType":label,
               "noOfBeds":widget.hospitalvalues.conbeds[0].noOfBeds,
               'charges':widget.hospitalvalues.conbeds[0].charges,
+              "typeofbooking": "Rooms",
             });
           }
           else if(widget.hospitalvalues.covidbeds[0].roomType==label){
@@ -2149,6 +2152,7 @@ class _BookdetailedState extends State<Bookdetailed> {
               "roomType":label,
               "noOfBeds":widget.hospitalvalues.covidbeds[0].noOfBeds,
               'charges':widget.hospitalvalues.covidbeds[0].charges,
+              "typeofbooking": "Rooms",
             });
           }
           else{
@@ -2165,6 +2169,7 @@ class _BookdetailedState extends State<Bookdetailed> {
               "roomType":label,
               "noOfBeds":value.noOfBeds,
               'charges':value.charges,
+              "typeofbooking": "Rooms",
             });
           }
         });
@@ -2191,7 +2196,8 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type":label,
             "charges":name.charge,
-            "packName":title
+            "packName":title,
+            "typeofbooking": "Pathology",
           });
           setState(() {});
         }
@@ -2206,7 +2212,8 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type":label,
             "charges":name.amount,
-            "packName":title
+            "packName":title,
+            "typeofbooking": "Packages",
           });
         }
       }
@@ -2219,7 +2226,8 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type": label,
             "charges": name.suramount,
-            "packName":title
+            "packName":title,
+            "typeofbooking": "Surgery",
           });
         }
       }
@@ -2281,10 +2289,11 @@ class _BookdetailedState extends State<Bookdetailed> {
                    "roomType":label,
                    "noOfBeds": "1",
                    'charges':list[0]['charges'],
+                   "typeofbooking": "Rooms",
                  });
                  print("added");
                  try {
-                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo, widget.mobile, ConstantUtils().CONFIRM, list4, "","","");
+                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName, widget.mobile, ConstantUtils().CONFIRM, list4, "","","");
                    print("Added!!");
                    fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
                    list3.clear();
@@ -2299,7 +2308,7 @@ class _BookdetailedState extends State<Bookdetailed> {
               }else{
                 print("added");
                 try {
-                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo, widget.mobile, ConstantUtils().CONFIRM, list, "","","");
+                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName , widget.mobile, ConstantUtils().CONFIRM, list, "","","");
                   print("Added!!");
                   Navigator.pop(context);
                   Navigator.pop(context);

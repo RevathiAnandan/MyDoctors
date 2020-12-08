@@ -234,7 +234,7 @@ class ApiService{
     }
   }
 
-  Future bookhospital(String bookingno, String userno,String status,List bookdetails,String key,String bkdate,String disdate){
+  Future bookhospital(String bookingno, String hospitalName,String userno,String status,List bookdetails,String key,String bkdate,String disdate){
     try {
       if (status=="Booking Confirm") {
         var db = fb.reference().child("HospitalBookings").child(key);
@@ -258,6 +258,7 @@ class ApiService{
           'Status':status,
           'BookingDate':bkdate,
           'DischargeDate':disdate,
+          "Hospital Name": hospitalName,
         });
       }
     } catch (e) {

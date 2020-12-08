@@ -4,10 +4,11 @@ class Booking{
   String status;
   String BookingDate;
   String DischargeDate;
+  String hospitalName;
   List<Bookdetails> bookdetails;
 
 
-  Booking._({this.bookingNumber,this.BookingDate, this.userNumber,this.status,this.bookdetails,this.DischargeDate});
+  Booking._({this.bookingNumber,this.BookingDate, this.userNumber,this.status,this.bookdetails,this.DischargeDate,this.hospitalName});
 
   factory Booking.fromJson(dynamic json) {
     var bking = json["Booking details"] as List;
@@ -19,6 +20,7 @@ class Booking{
       status: json['Status'] as String,
       BookingDate: json['BookingDate'] as String,
       DischargeDate: json['DischargeDate'] as String,
+      hospitalName: json['Hospital Name'] as String,
     );
   }
 }
@@ -28,8 +30,9 @@ class Bookdetails {
   String noOfBeds;
   String charges;
   String packName;
+  String type;
 
-  Bookdetails._({this.roomType,this.noOfBeds,this.charges,this.packName});
+  Bookdetails._({this.roomType,this.noOfBeds,this.charges,this.packName,this.type});
 
   factory Bookdetails.fromJson(dynamic json){
 
@@ -38,6 +41,7 @@ class Bookdetails {
             roomType: json['roomType'] as String,
             noOfBeds: json['noOfBeds'] as String,
             charges: json['charges'] as String,
+            type: json['typeofbooking'] as String,
 
           );
     } else {
@@ -45,6 +49,7 @@ class Bookdetails {
         roomType: json['Type'] as String,
         charges: json['charges'] as String,
         packName: json['packName'] as String,
+        type: json['typeofbooking'] as String,
       );
     }
   }
