@@ -91,45 +91,6 @@ class _DoctorSettingsState extends State<DoctorSettings> {
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                             HospitalTabPage(widget.mobile,widget.id)
-                      ),
-                    );
-                  },
-                  child: Card(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.person,size: 30,color: Colors.redAccent,),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "My Hospital",
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 20.0,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),)
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
                 child: Card(
                   child: Row(
                     children: [

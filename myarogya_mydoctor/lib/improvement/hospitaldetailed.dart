@@ -103,14 +103,28 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        "Administration Name: " +hospitalvalues[0].adminName,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+
+                          Text(
+                            "Administration Name: ",
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 20,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            hospitalvalues[0].adminName,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                       // SizedBox(
                       //   height: 15,
@@ -127,14 +141,28 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        "Hospital Address: " +hospitalvalues[0].hospitalAddress,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 16.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            "Hospital Address: " ,
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 20,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            hospitalvalues[0].hospitalAddress,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                        ],
                       ),
                       SizedBox(
                         height: 15,
@@ -143,7 +171,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         "Facilities: ",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 16.0,
+                          fontSize: 20,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -159,7 +187,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         "Speciality: ",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 16.0,
+                          fontSize: 20,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -175,7 +203,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         "Bed Details: ",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 16.0,
+                          fontSize: 20,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -185,9 +213,22 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         child: DataTable(
                           columnSpacing: 0,
                           columns: [
-                            DataColumn(label: Text("Type")),
-                            DataColumn(label: Text(" Number")),
-                            DataColumn(label: Text("Charges/day")),
+                            DataColumn(label: Text("Type",style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),)),
+                            DataColumn(label: Text(" Number",style: TextStyle(
+
+                              fontSize: 16,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),)),
+                            DataColumn(label: Text("Charges/day",style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),)),
                           ],
                           rows: hospitalvalues[0].freebeds.map((e) =>
                               DataRow(
@@ -250,10 +291,13 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         "TPA Details: ",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 16.0,
+                          fontSize: 20.0,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      SizedBox(
+                        height: 5,
                       ),
                       getTPAlist(hospitalvalues[0].tpalist),
                       SizedBox(
@@ -263,7 +307,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         "Accrediation: ",
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 16.0,
+                          fontSize: 20.0,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),
@@ -277,7 +321,9 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       //     fontWeight: FontWeight.bold,
                       //   ),
                       // ),
-
+                      SizedBox(
+                        height: 5,
+                      ),
                       getaccred(hospitalvalues[0].accred),
                       // SizedBox(
                       //   height: 15,
@@ -418,7 +464,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       ),
 
                       Text(
-                        "Diagnosis Details:",
+                        "Pathology Charges:",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 20.0,
@@ -577,7 +623,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
       list.add(new Text(
           name+" ",
         style: TextStyle(
-          color: Colors.redAccent,
+          color: Colors.black,
           fontSize: 16.0,
           fontFamily: 'Lato',
           //fontWeight: FontWeight.bold,
@@ -597,7 +643,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
       list.add(new Text(
           name+" ",
         style: TextStyle(
-          color: Colors.redAccent,
+          color: Colors.black,
           fontSize: 16.0,
           fontFamily: 'Lato',
           //fontWeight: FontWeight.bold,
@@ -618,7 +664,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
           new Text(
             accred[i].accredName,
             style: TextStyle(
-              color: Colors.redAccent,
+              color: Colors.black,
               fontSize: 16.0,
               fontFamily: 'Lato',
               //fontWeight: FontWeight.bold,
@@ -670,7 +716,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
           new Text(
             tpalist[i].insurName,
             style: TextStyle(
-              color: Colors.redAccent,
+              color: Colors.black,
               fontSize: 16.0,
               fontFamily: 'Lato',
               //fontWeight: FontWeight.bold,

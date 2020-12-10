@@ -1,9 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/Booking.dart';
 import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
+import 'package:myarogya_mydoctor/pages/settings/myincome.dart';
 import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
 import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+
+import 'HospitalTabPage.dart';
 
 class HospitalSettings extends StatefulWidget {
   String id;
@@ -21,8 +26,12 @@ class _HospitalSettingsState extends State<HospitalSettings> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    getBooking();
   }
+  List<Booking> dummyData = [];
+  List refresh = [];
+  List keys1 = [];
+  FirebaseDatabase fb = FirebaseDatabase.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,7 +100,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                 onTap: ()=>Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Privacy()),
+                      builder: (context) => MyIncomePage("My Income",widget.mobile)),
                 ),
                 child: Container(
                   height: 60,
@@ -118,7 +127,46 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                           width:140,
                         ),
                         Text(
-                          "Rs."+(4*100).toString(),
+                          "Rs."+(dummyData.length*100).toString(),
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HospitalTabPage(widget.mobile,widget.id)
+                      ),
+                    );
+                  },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.person,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "My Hospital",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,
@@ -325,5 +373,27 @@ class _HospitalSettingsState extends State<HospitalSettings> {
         ),
       ),
     );
+  }
+  Future<Booking> getBooking() async {
+    try {
+      var db = await fb.reference().child("HospitalBookings");
+      db.once().then((DataSnapshot snapshot) {
+        print(snapshot.value);
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((key, values) {
+          var refreshToken = Booking.fromJson(values);
+          print(refreshToken);
+          setState(() {
+            if (refreshToken.bookingNumber == widget.mobile) {
+              dummyData.add(refreshToken);
+              keys1.add(key);
+            }
+          });
+        });
+        print(dummyData);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -33,12 +33,12 @@ class MyApp extends StatelessWidget {
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
         ),
         debugShowCheckedModeBanner: false,
-        home: MyIncomePage("Income Settings","+919444773937"),
+        // home: MyIncomePage("Income Settings","+919444773937"),
       // home: Bookdetailed("Revathi"),
       //   home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-//          home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93","+918610905528")
+         home: DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
 //      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
     );
   }

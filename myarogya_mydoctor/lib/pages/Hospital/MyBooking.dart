@@ -69,8 +69,9 @@ class _MyBookingState extends State<MyBooking> {
           itemBuilder:(context,index){
             print(dummyData[index].bookdetails.toString());
             return ListTile(
+              leading: Text((index+1).toString()),
               title: Text(dummyData[index].userNumber),
-              subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text("Package Name:"+dummyData[index].bookdetails[0].packName+"RoomType:"+dummyData[index].bookdetails[0].roomType
+              subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text("Package Name:"+dummyData[index].bookdetails[0].packName
                   +"Charges:"+dummyData[index].bookdetails[0].charges ):(Text("RoomType:"+dummyData[index].bookdetails[0].roomType
                   +"  "+"Charges:"+dummyData[index].bookdetails[0].charges )),
               trailing: FlatButton(
@@ -88,15 +89,15 @@ class _MyBookingState extends State<MyBooking> {
                 padding: EdgeInsets.all(10),
                 color: Colors.redAccent,
                 onPressed: () {
-
                   if(dummyData[index].status == "Booking Confirmed"){
                     var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
                     db.update({
                       'Status':"Discharge",
                       "DischargeDate": formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
                     });
+
                     // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
-                  }else if(dummyData[index].status ==  "Confirm"){
+                  }else if(dummyData[index].status ==  "Pending Confirmation"){
                     AuthService().toast("Booking Confirmed");
                     var db = fb.reference().child("HospitalBookings").child( keys1[index].toString());
                     db.update({

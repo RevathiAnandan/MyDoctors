@@ -543,8 +543,6 @@ class _AppointmentsState extends State<Appointments> {
               ProfileScreen(widget.id,widget.mobile),
         ),
       );
-    }else if(choice == ConstantsD.SignOut){
-      AuthService().signOut(context);
     }else if(choice == ConstantsD.Settings){
       Navigator.push(
         context,

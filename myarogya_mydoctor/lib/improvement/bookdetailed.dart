@@ -106,10 +106,10 @@ class _BookdetailedState extends State<Bookdetailed> {
           title: Center(
             child: Column(
               children: [
-                Text("Choose room type"),
+                Text("Choose Services"),
                 Text(
                   widget.hospitalvalues.hospitalName,
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),
@@ -140,11 +140,11 @@ class _BookdetailedState extends State<Bookdetailed> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.redAccent,
-                              blurRadius: 5.0,
+                              blurRadius: 1.0,
                             ),
                           ],
                         ),
-                        height: 50,
+                        height: 60,
                         child: ListTile(
                           title: Container(
                             //width: 400,
@@ -165,7 +165,9 @@ class _BookdetailedState extends State<Bookdetailed> {
                                           BorderRadius.circular(25.0),
                                       side: BorderSide(
                                           color: Colors.redAccent)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                        ApiService().appointment(widget.mobile, widget.hospitalvalues.opdBookingNo, "pname", "Confirm", 1, DateTime.now().toString(), "", "");
+                                  },
                                   color: Colors.redAccent,
                                   child: Text(
                                     "Book OPD",
@@ -202,7 +204,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                  Text("Rooms",style: TextStyle(
+                                  Text("Beds",style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.redAccent),),
                                   MaterialButton(
@@ -217,7 +219,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                                     },
                                     color: Colors.redAccent,
                                     child: Text(
-                                      "Book Rooms",
+                                      "Book Bed",
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.white),
@@ -280,7 +282,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                                       fontSize: 15,
                                     ),):Container(),
                                     // setstate(i),
-                                    (i!=0)?(i!=1)?(i!=2)?Text(details[i]['count'],style: TextStyle(
+                                    (i!=0)?(i!=1)?(i!=2)?Text(" Count:"+details[i]['count'],style: TextStyle(
                                       fontSize: 15,
                                     ),):Container():Container():Container(),
                                     (i!=0)?(i!=1)?(i!=2)?Text(" Rs.",style: TextStyle(
@@ -293,6 +295,11 @@ class _BookdetailedState extends State<Bookdetailed> {
                                 );
                               },
                             ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text("*Deposit may needed",style: TextStyle(
+                            fontSize: 14,color: Colors.redAccent)),
+                        ),
                         //     RadioButtonGroup(
                         //   orientation: GroupedButtonsOrientation.VERTICAL,
                         //   onChange: (String label, int index) => print("label: $label index: $index"),

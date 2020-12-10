@@ -21,7 +21,7 @@ class Hospitals extends StatefulWidget {
   String mobile;
   String id;
 
-  Hospitals(this.mobile,this.id);
+  Hospitals(this.mobile, this.id);
 
   @override
   _HospitalsState createState() => _HospitalsState();
@@ -47,6 +47,7 @@ class _HospitalsState extends State<Hospitals> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
+                leading: Container(),
                 backgroundColor: Colors.white,
                 expandedHeight: 250.0,
                 floating: false,
@@ -56,7 +57,7 @@ class _HospitalsState extends State<Hospitals> {
                   title: Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      "  Hospitals",
+                      " My Hospital",
                       style: TextStyle(
                         color: Colors.redAccent,
                         fontSize: 25.0,
@@ -97,7 +98,11 @@ class _HospitalsState extends State<Hospitals> {
                     },
                   ),
                   PopupMenuButton<String>(
-                    color: Colors.redAccent,
+                    icon: new Icon(
+                      Icons.more_vert_rounded,
+                      color: Colors.redAccent,
+                      size: 35,
+                    ),
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context) {
                       return ConstantsH.choices.map((String choice) {
@@ -112,24 +117,25 @@ class _HospitalsState extends State<Hospitals> {
               ),
             ];
           },
-          body: (hospitalvalues==null)
+          body: (hospitalvalues == null)
               ? Center(
                   child: Container(
                   child: Text("Yet to be Updated"),
                 ))
               : isLoading
                   ? Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 5,
-                        child: LinearProgressIndicator(
-            backgroundColor: Colors.redAccent,
-            valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
-          ),
-                      ),
-                    ],
-                  )
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 5,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.redAccent,
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(Colors.green),
+                          ),
+                        ),
+                      ],
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       itemCount: hospitalvalues.length == null
@@ -141,324 +147,410 @@ class _HospitalsState extends State<Hospitals> {
                         //   specialBedscharge(i);
                         // });
                         return new Column(
-                        children: <Widget>[
-                          Divider(
-                            height: 10,
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 45 / 100,
-                            width: MediaQuery.of(context).size.width * 94 / 100,
-                            child: InkWell(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HospitalDetails(
-                                        i, hospitalvalues[i].hospitalName)),
-                              ),
-                              child: Card(
-                                margin: EdgeInsets.zero,
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            hospitalvalues[i].isNabh=="true"?Image(
-                                              height: 20,
-                                              image: AssetImage("assets/images/NABH LOGO.png"),
-                                              width: 20,
-                                            ):Container(),
-                                            Text(yearsofexperience(hospitalvalues[i].dateofIncorporation).toString()+" Years in service"),
-
-                                          ],
-                                        ),
-                                        Hero(
-                                            tag: 'tagImage$i',
-                                            child: (hospitalvalues[i].image[0] ==
-                                                    null)
-                                                ? Image(
-                                                    image: NetworkImage(
-                                                      "https://previews.agefotostock.com/previewimage/medibigoff/f755e0d1e3ecce9569f57604ac0fd9a8/esy-001476475.jpg",
-                                                    ),
-                                                    width: 50,
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                  )
-                                                : Container(
-                                              width: 150,
-                                                  height: 280,
-                                                  child: Image(
-                                                      // height: 250,
-                                                    fit: BoxFit.fitHeight,
-                                                      image: NetworkImage(
-                                                        hospitalvalues[i].image[0],
-                                                      ),
-                                                      // width: 150,
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                    ),
-                                                )),
-
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width:220,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Divider(
+                              height: 10,
+                            ),
+                            Container(
+                              height:
+                                  MediaQuery.of(context).size.height * 45 / 100,
+                              width:
+                                  MediaQuery.of(context).size.width * 94 / 100,
+                              child: InkWell(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HospitalDetails(
+                                          i, hospitalvalues[i].hospitalName)),
+                                ),
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(),
-                                              Row(
-                                                children: [
-                                                  hospitalvalues[i].is24=="true"?Text(
-                                                    '24/7',
-                                                    style: TextStyle(
-                                                        color: Colors.black,fontSize: 13),
-                                                  ):Container(),
-                                                  SizedBox(width: 5,),
-                                                  hospitalvalues[i].isCovid=="true"?
-                                                  Container(
-                                                    height: 30,
-                                                    width: 60,
-                                                    child: Card(
-                                                      color: Colors.redAccent,
-                                                      child: Center(
-                                                        child: Text(
-                                                          "COVID",
-                                                          style: TextStyle(
-                                                              fontFamily: 'Lato',
-                                                              fontSize: 13,color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ):Container(),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
                                           Row(
                                             children: [
                                               Text(
-                                                hospitalvalues[i].hospitalName,
+                                                yearsofexperience(hospitalvalues[
+                                                                i]
+                                                            .dateofIncorporation)
+                                                        .toString() +
+                                                    " Years in service",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize: 18,
-                                                    fontFamily: 'Lato'),
+                                                    color: Colors.black,
+                                                    fontSize: 15),
                                               ),
-                                              SizedBox(width:40),
                                             ],
                                           ),
-                                          Text(
-                                            hospitalvalues[i].hospitalAddress,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18,
-                                                fontFamily: 'Lato'),
-                                          ),
-                                          getspeciality(hospitalvalues[i].specialities),
+                                          Hero(
+                                              tag: 'tagImage$i',
+                                              child: (hospitalvalues[i]
+                                                          .image[0] ==
+                                                      null)
+                                                  ? Image(
+                                                      image: NetworkImage(
+                                                        "https://previews.agefotostock.com/previewimage/medibigoff/f755e0d1e3ecce9569f57604ac0fd9a8/esy-001476475.jpg",
+                                                      ),
+                                                      width: 50,
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                    )
+                                                  : Container(
+                                                      width: 150,
+                                                      height: 250,
+                                                      child: Image(
+                                                        // height: 250,
+                                                        fit: BoxFit.fitHeight,
+                                                        image: NetworkImage(
+                                                          hospitalvalues[i]
+                                                              .image[0],
+                                                        ),
+                                                        // width: 150,
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                      ),
+                                                    )),
                                           Container(
-                                            width: 300,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  width: 150,
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "Free Beds:",
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                            hospitalvalues[i]
-                                                                .freebeds[0]
-                                                                .noOfBeds,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 150,
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "Con Beds:"
-                                                            ,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        hospitalvalues[i]
-                                                            .conbeds[0]
-                                                            .noOfBeds,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-
-                                                    ],
-                                                  ),
-                                                ),
-                                                (hospitalvalues[i]
-                                                    .covidbeds !=null)?Container(
-                                                  width: 150,
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "Covid Beds:"
-                                                            ,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        (hospitalvalues[i]
-                                                            .covidbeds[0]
-                                                            .noOfBeds),
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-
-                                                    ],
-                                                  ),
-                                                ):Container(),
-                                                Container(
-                                                  width: 150,
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "Special Beds:",
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                            specialBeds(i).toString(),
-                                                        style: TextStyle(
-                                                            fontFamily: 'Lato',
-                                                            fontSize: 15),
-                                                      ),
-
-
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 300,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                            hospitalvalues[i].beds[_random.nextInt(hospitalvalues[i].beds.length)].roomType+"- Rs."+hospitalvalues[i].pricerange.split("-")[0]+"/Day per bed",
-                                                  style: TextStyle(
-                                                      fontFamily: 'Lato',
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w900),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: FlatButton(
-                                              onPressed: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Bookdetailed(hospitalvalues[i],key1[i],widget.mobile)));
-                                                // ApiService().bookhospital(hospitalvalues[i].bookingPhNo, widget.mobile,"Booked","");
-                                                // AuthService().toast("Waiting for Confirmation");
-                                              },
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        25.0),
-                                                    side: BorderSide(
-                                                        color:
-                                                        Colors.redAccent)),
-                                                padding: EdgeInsets.all(10),
-                                                color: Colors.redAccent,
-                                                child:hospitalvalues[i].status=="Confirm"?Text(
-                                                  "Confirm",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily: "Lato",
-                                                      fontSize: 14),
-                                                ): Text(
-                                                  "Book Now",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily: "Lato",
-                                                      fontSize: 14),
-                                                )),
+                                            height: 10,
                                           )
                                         ],
                                       ),
-                                    )
-                                  ],
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: 220,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(),
+                                                Row(
+                                                  children: [
+                                                    hospitalvalues[i].isNabh ==
+                                                            "true"
+                                                        ? Image(
+                                                            height: 25,
+                                                            image: AssetImage(
+                                                                "assets/images/NABH LOGO.png"),
+                                                            width: 25,
+                                                          )
+                                                        : Container(),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    hospitalvalues[i].is24 ==
+                                                            "true"
+                                                        ? Text(
+                                                            '24/7',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 13),
+                                                          )
+                                                        : Container(),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    hospitalvalues[i].isCovid ==
+                                                            "true"
+                                                        ? Container(
+                                                            height: 30,
+                                                            width: 60,
+                                                            child: Card(
+                                                              color: Colors
+                                                                  .redAccent,
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "COVID",
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Lato',
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : Container(),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  hospitalvalues[i]
+                                                      .hospitalName,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      fontSize: 18,
+                                                      fontFamily: 'Lato'),
+                                                ),
+                                                SizedBox(width: 40),
+                                              ],
+                                            ),
+                                            Text(
+                                              hospitalvalues[i].hospitalAddress,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  fontFamily: 'Lato'),
+                                            ),
+                                            getspeciality(
+                                                hospitalvalues[i].specialities),
+                                            Container(
+                                              width: 300,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    width: 160,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Free Beds:",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          hospitalvalues[i]
+                                                              .freebeds[0]
+                                                              .noOfBeds,
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    width: 160,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Concessional Beds:",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          hospitalvalues[i]
+                                                              .conbeds[0]
+                                                              .noOfBeds,
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  (hospitalvalues[i]
+                                                              .covidbeds !=
+                                                          null)
+                                                      ? Container(
+                                                          width: 160,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Covid Beds:",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Lato',
+                                                                    fontSize:
+                                                                        15),
+                                                              ),
+                                                              Text(
+                                                                (hospitalvalues[
+                                                                        i]
+                                                                    .covidbeds[
+                                                                        0]
+                                                                    .noOfBeds),
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Lato',
+                                                                    fontSize:
+                                                                        15),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container(),
+                                                  Container(
+                                                    width: 160,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Special Beds:",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          specialBeds(i)
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Lato',
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 300,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    hospitalvalues[i]
+                                                            .beds[_random.nextInt(
+                                                                hospitalvalues[
+                                                                        i]
+                                                                    .beds
+                                                                    .length)]
+                                                            .roomType +
+                                                        "- Rs." +
+                                                        hospitalvalues[i]
+                                                            .pricerange
+                                                            .split("-")[0] +
+                                                        "/-per day per bed ",
+                                                    style: TextStyle(
+                                                        fontFamily: 'Lato',
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w900),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: FlatButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Bookdetailed(
+                                                                    hospitalvalues[
+                                                                        i],
+                                                                    key1[i],
+                                                                    widget
+                                                                        .mobile)));
+                                                    // ApiService().bookhospital(hospitalvalues[i].bookingPhNo, widget.mobile,"Booked","");
+                                                    // AuthService().toast("Waiting for Confirmation");
+                                                  },
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25.0),
+                                                      side: BorderSide(
+                                                          color: Colors
+                                                              .redAccent)),
+                                                  padding: EdgeInsets.all(10),
+                                                  color: Colors.redAccent,
+                                                  child: hospitalvalues[i]
+                                                              .status ==
+                                                          "Confirm"
+                                                      ? Text(
+                                                          "Confirm",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontFamily:
+                                                                  "Lato",
+                                                              fontSize: 14),
+                                                        )
+                                                      : Text(
+                                                          "Book Now",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontFamily:
+                                                                  "Lato",
+                                                              fontSize: 14),
+                                                        )),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      );
-                        },
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        );
+                      },
                     ),
         ),
       ),
     );
   }
+
   void choiceAction(String choice) {
-    if (choice == ConstantsH.SignOut) {
-      AuthService().signOut(context);
-    }
-    else if (choice == ConstantsH.MyBooking) {
+    if (choice == ConstantsH.MyBooking) {
       //todo:hospital settings to be done
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              MyBookingSettings(widget.id,widget.mobile),
+          builder: (context) => MyBookingSettings(widget.id, widget.mobile),
         ),
       );
-    }
-    else if (choice == ConstantsH.Settings) {
+    } else if (choice == ConstantsH.Settings) {
       //todo:hospital settings to be done
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              HospitalSettings(widget.id,widget.mobile),
+          builder: (context) => HospitalSettings(widget.id, widget.mobile),
         ),
       );
     }
   }
+
   Future<Hospital> getHospitals() async {
     var db = await fb.reference().child("Hospitals");
     print(db);
@@ -483,7 +575,6 @@ class _HospitalsState extends State<Hospitals> {
             });
           });
         });
-
       } else {
         print('Something is Null');
       }
@@ -491,15 +582,19 @@ class _HospitalsState extends State<Hospitals> {
       print(e);
     }
   }
-  List key1=[];
-  Widget getspeciality(List speciality){
+
+  List key1 = [];
+  Widget getspeciality(List speciality) {
     List<Widget> list = new List<Widget>();
-    for(var name in speciality){
+    for (var name in speciality) {
       list.add(Container(
         width: 65,
         child: Row(
           children: [
-            Icon(Icons.done,size: 13,),
+            Icon(
+              Icons.done,
+              size: 13,
+            ),
             new Text(
               name,
               style: TextStyle(
@@ -511,15 +606,11 @@ class _HospitalsState extends State<Hospitals> {
             ),
           ],
         ),
-      )
-      );
+      ));
     }
-    return new  Wrap(
-        spacing: 5.0,
-        runSpacing: 3.0,
-        children: list);
-
+    return new Wrap(spacing: 5.0, runSpacing: 3.0, children: list);
   }
+
   specialBeds(int index) {
     int totalSpecialbeds = 0;
     int toint;
@@ -533,23 +624,23 @@ class _HospitalsState extends State<Hospitals> {
     });
     return totalSpecialbeds;
   }
+
   var minValues;
   var minbed;
   specialBedscharge(int index) {
     var values = hospitalvalues[index].beds;
-     minValues=int.parse(values[0].charges);
-    for(int i=0;i<values.length;i++){
-    if(int.parse(values[i].charges) < minValues){
-      setState(() {
-        minValues = int.parse(values[i].charges);
-      });
-
-    }
-    }
-    for(int i = 0;i<values.length;i++){
-      if(minValues == int.parse(values[i].charges)){
+    minValues = int.parse(values[0].charges);
+    for (int i = 0; i < values.length; i++) {
+      if (int.parse(values[i].charges) < minValues) {
         setState(() {
-          minbed= values[i].roomType;
+          minValues = int.parse(values[i].charges);
+        });
+      }
+    }
+    for (int i = 0; i < values.length; i++) {
+      if (minValues == int.parse(values[i].charges)) {
+        setState(() {
+          minbed = values[i].roomType;
         });
       }
       break;
@@ -557,22 +648,22 @@ class _HospitalsState extends State<Hospitals> {
     // return minValues;
   }
 
-
-  yearsofexperience(String date){
+  yearsofexperience(String date) {
     int now;
     int year;
     year = int.parse(date.split('/')[2]);
     now = DateTime.now().year - year;
     return now;
   }
-  List inputArray=[];
-  int getMin(inputArray){
-  int minValue = inputArray[0];
-  for(int i=1;i<inputArray.length;i++){
-  if(inputArray[i] < minValue){
-  minValue = inputArray[i];
-  }
-  }
-  return minValue;
+
+  List inputArray = [];
+  int getMin(inputArray) {
+    int minValue = inputArray[0];
+    for (int i = 1; i < inputArray.length; i++) {
+      if (inputArray[i] < minValue) {
+        minValue = inputArray[i];
+      }
+    }
+    return minValue;
   }
 }
