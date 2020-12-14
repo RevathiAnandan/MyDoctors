@@ -9,6 +9,10 @@ class ConstantUtils{
   final String BOOK = "book";
   final String CONFIRM = "Pending Confirmation";
   final String DISCHARGE = "discharge";
+  static const String Cancel = 'Cancel';
+  static const List<String> choices = <String>[
+    Cancel,
+  ];
 }
 
 class ConstantsD{

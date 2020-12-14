@@ -445,10 +445,12 @@ class _AddHospitalState extends State<AddHospital> {
                                           nurlist,
                                           stafflist,
                                           TPA,
-                                        is24.toString(),
-                                        isCovid.toString(),
-                                        isnabh.toString()
-                                          );
+                                          is24.toString(),
+                                          isCovid.toString(),
+                                          isnabh.toString(),
+                        awardsController.text,
+                                            ""
+                    );
                   } catch (e) {
                     print(e);
                   }

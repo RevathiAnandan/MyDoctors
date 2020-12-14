@@ -10,13 +10,15 @@ import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'push_notification_service1.dart';
 
 class AuthService{
-
+  final PushNotificationService _pns = PushNotificationService();
   AuthCredential creds;
 
   //Handle Auth
-  handleAuth(){
+  handleAuth() async {
+    await _pns.initialise();
     return StreamBuilder(
       stream:FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context,snapshot){

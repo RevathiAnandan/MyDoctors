@@ -22,7 +22,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       //   home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-         home: DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+         home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93","+918610905528")
 //      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
     );
   }

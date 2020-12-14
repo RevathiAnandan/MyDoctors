@@ -199,6 +199,7 @@ class ApiService{
   }
   
   Future appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key,String index) async{
+
     try{
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);// 28/03/2020
@@ -234,7 +235,7 @@ class ApiService{
     }
   }
 
-  Future bookhospital(String bookingno, String hospitalName,String userno,String status,List bookdetails,String key,String bkdate,String disdate){
+  Future bookhospital(String bookingno, String hospitalName,String userno,String status,List bookdetails,String key,String bkdate,String disdate,String canceldate){
     try {
       if (status=="Booking Confirm") {
         var db = fb.reference().child("HospitalBookings").child(key);
@@ -247,6 +248,12 @@ class ApiService{
         db.update({
             'DischargeDate':disdate,
             "Status":status,
+        });
+      }else if(status=="Cancel"){
+        var db = fb.reference().child("HospitalBookings").child(key);
+        db.update({
+          'CancelDate':canceldate,
+          "Status":status,
         });
       }
       else {
@@ -271,53 +278,103 @@ class ApiService{
       List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status,
       List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health,List surgery,
       List special, List facility, List docList, List nurseList, List staffList, List TPA
-      ,String is24,String isCovid,String isnabh){
+      ,String is24,String isCovid,String isnabh,String award,String key){
     try {
-      var db = fb.reference().child("Hospitals").push();
-      db.set({
-            'hospitalId': regno,
-            'hospitalName': name,
-            'address': address,
-            'Date of Incorporation': dateof,
-            'Administration Name':adminname,
-            'Administration Ph no':adminph,
-            'accredition' : accred,
-            'Price Range': pricerange,
-            'Ambulance': ambulance,
-            'Emergency':emergency,
-            'Booking Ph':bookph,
-            'OPD Booking':Opdbk,
-            'Images':images,
-            'Status':status,
-            'Free Bed Details':freebeds,
-            'Covid Bed Details':coivdbeds,
-            'Concessional Bed Details':conbeds,
-            'Special Bed Details':beds,
-            'Diagnosis Details':diagnosis,
-            'Health Package':health,
-            'Surgery Packages':surgery,
-            'Speciality':special,
-            'Facilities':facility,
-            'Doctors':docList,
-            'Nurses':nurseList,
-            'Staff':staffList,
-            'TPA':TPA,
-            'Availabilty':is24,
-            'Covid':isCovid,
-            'NABH':isnabh,
-      //      'rating': hospitals.rating,
-      //      'pricerange': hospitals.pricerange,
-      //      'prepayment': hospitals.prepayment,
-      //      'type': hospitals.type,
+      if (key == "") {
+        var db = fb.reference().child("Hospitals").push();
+        db.set({
+          'hospitalId': regno,
+          'hospitalName': name,
+          'address': address,
+          'Date of Incorporation': dateof,
+          'Administration Name':adminname,
+          'Administration Ph no':adminph,
+          'accredition' : accred,
+          'Price Range': pricerange,
+          'Ambulance': ambulance,
+          'Emergency':emergency,
+          'Booking Ph':bookph,
+          'OPD Booking':Opdbk,
+          'Images':images,
+          'Status':status,
+          'Free Bed Details':freebeds,
+          'Covid Bed Details':coivdbeds,
+          'Concessional Bed Details':conbeds,
+          'Special Bed Details':beds,
+          'Diagnosis Details':diagnosis,
+          'Health Package':health,
+          'Surgery Packages':surgery,
+          'Speciality':special,
+          'Facilities':facility,
+          'Doctors':docList,
+          'Nurses':nurseList,
+          'Staff':staffList,
+          'TPA':TPA,
+          'Availabilty':is24,
+          'Covid':isCovid,
+          'NABH':isnabh,
+          'Award':award
+          //      'rating': hospitals.rating,
+          //      'pricerange': hospitals.pricerange,
+          //      'prepayment': hospitals.prepayment,
+          //      'type': hospitals.type,
 
-      //      'yearsofservice': hospitals.yearsofservice,
-      //      'freeBeds': hospitals.bedcatogory,
-      //      "rmoname": hospitals.rmoname,
-      //      "rmoemergencyNo" : hospitals.rmoemergencyNo,
-      //      'date': hospitals.incorporationdate,
-      //      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
-            //todo: change parameters
+          //      'yearsofservice': hospitals.yearsofservice,
+          //      'freeBeds': hospitals.bedcatogory,
+          //      "rmoname": hospitals.rmoname,
+          //      "rmoemergencyNo" : hospitals.rmoemergencyNo,
+          //      'date': hospitals.incorporationdate,
+          //      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
+          //todo: change parameters
         });
+      } else {
+        var db = fb.reference().child("Hospitals").child(key);
+        db.update({
+          'hospitalId': regno,
+          'hospitalName': name,
+          'address': address,
+          'Date of Incorporation': dateof,
+          'Administration Name':adminname,
+          'Administration Ph no':adminph,
+          'accredition' : accred,
+          'Price Range': pricerange,
+          'Ambulance': ambulance,
+          'Emergency':emergency,
+          'Booking Ph':bookph,
+          'OPD Booking':Opdbk,
+          'Images':images,
+          'Status':status,
+          'Free Bed Details':freebeds,
+          'Covid Bed Details':coivdbeds,
+          'Concessional Bed Details':conbeds,
+          'Special Bed Details':beds,
+          'Diagnosis Details':diagnosis,
+          'Health Package':health,
+          'Surgery Packages':surgery,
+          'Speciality':special,
+          'Facilities':facility,
+          'Doctors':docList,
+          'Nurses':nurseList,
+          'Staff':staffList,
+          'TPA':TPA,
+          'Availabilty':is24,
+          'Covid':isCovid,
+          'NABH':isnabh,
+          'Award':award
+          //      'rating': hospitals.rating,
+          //      'pricerange': hospitals.pricerange,
+          //      'prepayment': hospitals.prepayment,
+          //      'type': hospitals.type,
+
+          //      'yearsofservice': hospitals.yearsofservice,
+          //      'freeBeds': hospitals.bedcatogory,
+          //      "rmoname": hospitals.rmoname,
+          //      "rmoemergencyNo" : hospitals.rmoemergencyNo,
+          //      'date': hospitals.incorporationdate,
+          //      'MedicalSocialWorker':hospitals.MedicalSocialWorker,
+          //todo: change parameters
+        });
+      }
     } catch (e) {
       print(e);
     }

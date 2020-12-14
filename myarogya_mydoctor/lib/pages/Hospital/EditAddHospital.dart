@@ -14,7 +14,8 @@ import 'package:file_picker/file_picker.dart';
 
 class EditAddHospital extends StatefulWidget {
   Hospital hospitalValues;
-  EditAddHospital(this.hospitalValues);
+  String key1;
+  EditAddHospital(this.hospitalValues,this.key1);
 
   @override
   _EditAddHospital createState() => _EditAddHospital();
@@ -27,19 +28,37 @@ class _EditAddHospital extends State<EditAddHospital> {
   static List<String> staffsList = [null];
   StorageTaskSnapshot downloadUrl;
   List<String> imagesUrl = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
+  final _formKey = GlobalKey<FormState>();
+  List<Widget> specialBeds = [];
+  List<Widget> diagnosisCharge = [];
+  List<Widget> healthCharges = [];
+  List<Widget> TPAInsurance = [];
+  List<Widget> Accred = [];
+  List Beds = [];
+  List freebeds = [];
+  List conbeds = [];
+  List covidbeds = [];
+  List diagnosis = [];
+  List health = [];
+  List surgery = [];
+  List docnamenum = [];
+  List nursenamenum = [];
+  List staffnamenum = [];
+  List TPA = [];
+  List ACCRED = [];
+  List topics = [
+    "Hospital Details",
+    "Important Numbers",
+    "Upload images",
+    "Room Tariff",
+    "Diagnosis Charges",
+    "Health Checkup Packages",
+    "Surgery Details",
+    "Speciality",
+    "Facility",
+    "Staff Details",
+    "Insurance"
+  ];
   List<String> path = [];
   String _path;
   Map<String, String> _paths;
@@ -55,6 +74,110 @@ class _EditAddHospital extends State<EditAddHospital> {
   bool isCovid = false;
   bool isnabh = false;
   String popop = mockString(50);
+  int pageindex = 0;
+  String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
+  String _chosenValue2 = "HFAP - The Healthcare Facilities Accreditation Program";
+  List<String> spl = [];
+  List<String> fcl = [];
+  List dynamicListD = [];
+  List dynamicListN = [];
+  List dynamicListS = [];
+  List doclist=[];
+  List nurlist=[];
+  List stafflist=[];
+  bool _checked = false;
+  bool buttonstatus = true;
+  List<String> NumberD = [];
+  List<String>Doctor = [];
+  List<String>Specialist = [];
+  List<String> NumberN = [];
+  List<String>Nurse = [];
+  List<String> NumberS = [];
+  List<String>Staff = [];
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController regController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController dateofController = TextEditingController();
+  final TextEditingController adminiController = TextEditingController();
+  final TextEditingController adminiphoneController = TextEditingController();
+  final TextEditingController accredController = TextEditingController();
+  final TextEditingController awardsController = TextEditingController();
+  final TextEditingController ambuController = TextEditingController();
+  final TextEditingController emerController = TextEditingController();
+  final TextEditingController bookphController = TextEditingController();
+  final TextEditingController opdbkController = TextEditingController();
+  final TextEditingController roomController = TextEditingController();
+  final TextEditingController tpaController = TextEditingController();
+  final TextEditingController bedsController = TextEditingController();
+  final TextEditingController bedsController1 = TextEditingController();
+  final TextEditingController bedsController2 = TextEditingController();
+  final TextEditingController bedsController3 = TextEditingController();
+  final TextEditingController chargesController = TextEditingController();
+  final TextEditingController chargesController1 = TextEditingController();
+  final TextEditingController chargesController2 = TextEditingController();
+  final TextEditingController chargesController3 = TextEditingController();
+  final TextEditingController dchargesController = TextEditingController();
+  final TextEditingController nchargesController = TextEditingController();
+  final TextEditingController pchargesController = TextEditingController();
+  final TextEditingController phchargesController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+  final TextEditingController opdController = TextEditingController();
+  final TextEditingController packController = TextEditingController();
+  final TextEditingController surController = TextEditingController();
+  final TextEditingController suramtController = TextEditingController();
+  final TextEditingController amtController = TextEditingController();
+  final TextEditingController roomtype = TextEditingController();
+  final TextEditingController pricerange = TextEditingController();
+
+  List<bool> _selected = [false, false, false, false, false, false, false, false, false, false, false, false,
+    false, false, false, false, false, false];
+  List<bool> facility = [false, false, false, false, false, false, false, false, false, false,false, false,
+    false, false,false, false, false, false, false, false, false
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    nameController.text = widget.hospitalValues.hospitalName;
+    regController.text = widget.hospitalValues.hospitalRegNo;
+    addressController.text = widget.hospitalValues.hospitalAddress;
+    dateofController.text = widget.hospitalValues.dateofIncorporation;
+    adminiController.text = widget.hospitalValues.adminName;
+    adminiphoneController.text = widget.hospitalValues.adminPh;
+    // accredController.text = widget.hospitalValues.accred[0];
+    // Accred.add(widget.hospitalValues.accred);
+    awardsController.text = widget.hospitalValues.award;
+    ambuController.text = widget.hospitalValues.ambulanceNo;
+    emerController.text = widget.hospitalValues.emergencyNo;
+    opdbkController.text = widget.hospitalValues.opdBookingNo;
+    pricerange.text = widget.hospitalValues.pricerange;
+    bedsController.text =  widget.hospitalValues.freebeds[0].noOfBeds;
+    bedsController1.text =  widget.hospitalValues.conbeds[0].noOfBeds;
+    bedsController3.text =  widget.hospitalValues.covidbeds[0].noOfBeds;
+    chargesController.text =  widget.hospitalValues.freebeds[0].charges;
+    chargesController1.text =  widget.hospitalValues.conbeds[0].charges;
+    chargesController3.text =  widget.hospitalValues.covidbeds[0].charges;
+    for(int i=0;i<widget.hospitalValues.beds.length;i++){
+      Beds.add({
+        "roomType": widget.hospitalValues.beds[i].roomType,
+        "noOfBeds": widget.hospitalValues.beds[i].noOfBeds,
+        "charges": widget.hospitalValues.beds[i].charges,
+      });
+    }
+
+    doclist.add(widget.hospitalValues.doctorslist);
+    nurlist.add(widget.hospitalValues.nurseslist);
+    stafflist.add(widget.hospitalValues.staffslist);
+    TPA.add(widget.hospitalValues.tpalist);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
   Widget buildGridView() {
     return GridView.count(
       crossAxisCount: 3,
@@ -95,31 +218,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     });
   }
 
-  // download()async{
-  //   List<Widget> list = new List<Widget>();
-  //   _paths.forEach((key, value) { })
-  // }
-  // showimages(){
-  //   List<Widget> list = new List<Widget>();
-  //   for(int i=0;i<_tasks.length;i++){
-  //     if(bytes[i]!=null) {
-  //       list.add(
-  //         Image.memory(
-  //           bytes[i],
-  //           fit: BoxFit.fill,
-  //         ),
-  //       );
-  //     }else{
-  //       list.add(
-  //         Container(),
-  //       );
-  //     }
-  //   }
-  //   return new  Wrap(
-  //       spacing: 5.0,
-  //       runSpacing: 3.0,
-  //       children: _tasks.length==null?Container():list);
-  // }
   upload(filename, filepath) async {
     await FirebaseAuth.instance.signInAnonymously();
     _extension = filename.toString().split('.').last;
@@ -149,227 +247,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     print(imagesUrl.length);
     return imagesUrl;
   }
-  // Future saveImage(List<Asset> asset) async {
-  //   await FirebaseAuth.instance.signInAnonymously();
-  //   String fileName = popop;
-  //
-  //   await Future.wait(asset.map((e) async {
-  //     ByteData byteData = await e.getByteData();
-  //     List<int> imageData = byteData.buffer.asUint8List();
-  //     StorageReference ref = FirebaseStorage.instance.ref().child("hospitals").child("${nameController.text}/$fileName");
-  //     StorageUploadTask uploadTask = ref.putData(imageData);
-  //     StorageTaskSnapshot storageTaskSnapshot;
-  //     StorageTaskSnapshot snapshot = await uploadTask.onComplete;
-  //     if (snapshot.error == null) {
-  //       storageTaskSnapshot = snapshot;
-  //       final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-  //       imagesUrl.add(downloadUrl);
-  //       print('Upload success');
-  //     } else {
-  //       print('Error from image repo ${snapshot.error.toString()}');
-  //       throw ('This file is not an image');
-  //     }
-  //   }), eagerError: true, cleanUp: (_) {
-  //     print('eager cleaned up');
-  //   });
-  //   return imagesUrl;
-  //   for(int i=0;i<asset.length;i++){
-  //     ByteData byteData = await asset[i].getByteData();
-  //     List<int> imageData = byteData.buffer.asUint8List();
-  //     StorageReference ref = FirebaseStorage.instance.ref().child("hospitals").child("${nameController.text}/$fileName");
-  //     StorageUploadTask uploadTask = ref.putData(imageData);
-  //     // downloadUrl = await uploadTask.onComplete;
-  //     // String _urls = await downloadUrl.ref.getDownloadURL();
-  //     // print("urls"+_urls);
-  //     // imagesUrl.add(_urls);
-  //     // print(imagesUrl.toString());
-  //     // return await uploadTask.onComplete..ref.getDownloadURL();
-  //   }
-  //   // StorageTaskSnapshot storageTaskSnapshot;
-  //   // StorageTaskSnapshot snapshot = await uploadTask.onComplete;
-  //   // if (snapshot.error == null) {
-  //   //   storageTaskSnapshot = snapshot;
-  //   //   final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-  //   //   imagesUrl.add(downloadUrl);
-  //   //   print('Upload success');
-  //   // } else {
-  //   //   print('Error from image repo ${snapshot.error.toString()}');
-  //   //   throw ('This file is not an image');
-  //   // }
-  //   // return imagesUrl;
-  //   // ByteData byteData = await asset.getByteData();
-  //   // List<int> imageData = byteData.buffer.asUint8List();
-  //   // StorageReference ref = FirebaseStorage.instance.ref().child("hospitals/${nameController.text}/$fileName");
-  //   // StorageUploadTask uploadTask = ref.putData(imageData);
-  //   // downloadUrl = await uploadTask.onComplete..ref.getDownloadURL();
-  //   // print(downloadUrl);
-  //   // return await uploadTask.onComplete..ref.getDownloadURL();
-  // }
-  // Future<void> loadAssets() async {
-  //   List<Asset> resultList = List<Asset>();
-  //   String error = 'No Error Dectected';
-  //   try {
-  //     resultList = await
-  //     MultiImagePicker.pickImages(
-  //       maxImages: 300,
-  //       enableCamera: true,
-  //       selectedAssets: images,
-  //       cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-  //       materialOptions: MaterialOptions(
-  //         actionBarColor: "#abcdef",
-  //         actionBarTitle: "Select Photos",
-  //         allViewTitle: "All Photos",
-  //         useDetailsView: false,
-  //         selectCircleStrokeColor: "#000000",
-  //       ),
-  //     );
-  //   } on Exception catch (e) {
-  //     error = e.toString();
-  //     print(error);
-  //   }
-  //   if (!mounted) return;
-  //   setState(() {
-  //     images = resultList;
-  //     _error = error;
-  //   });
-  // }
-
-  final _formKey = GlobalKey<FormState>();
-  List<Widget> specialBeds = [];
-  List<Widget> diagnosisCharge = [];
-  List<Widget> healthCharges = [];
-  List<Widget> TPAInsurance = [];
-  List<Widget> Accred = [];
-  List Beds = [];
-  List freebeds = [];
-  List conbeds = [];
-  List covidbeds = [];
-  List diagnosis = [];
-  List health = [];
-  List surgery = [];
-  List docnamenum = [];
-  List nursenamenum = [];
-  List staffnamenum = [];
-  List TPA = [];
-  List ACCRED = [];
-
-  List topics = [
-    "Hospital Details",
-    "Important Numbers",
-    "Upload images",
-    "Room Tariff",
-    "Diagnosis Charges",
-    "Health Checkup Packages",
-    "Surgery Details",
-    "Speciality",
-    "Facility",
-    "Staff Details",
-    "Insurance"
-  ];
-  int pageindex = 0;
-  String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
-  String _chosenValue2 =
-      "HFAP - The Healthcare Facilities Accreditation Program";
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController regController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController dateofController = TextEditingController();
-  final TextEditingController adminiController = TextEditingController();
-  final TextEditingController adminiphoneController = TextEditingController();
-  final TextEditingController accredController = TextEditingController();
-  final TextEditingController awardsController = TextEditingController();
-  final TextEditingController ambuController = TextEditingController();
-  final TextEditingController emerController = TextEditingController();
-  final TextEditingController bookphController = TextEditingController();
-  final TextEditingController opdbkController = TextEditingController();
-  final TextEditingController roomController = TextEditingController();
-  final TextEditingController tpaController = TextEditingController();
-  final TextEditingController bedsController = TextEditingController();
-  final TextEditingController bedsController1 = TextEditingController();
-  final TextEditingController bedsController2 = TextEditingController();
-  final TextEditingController bedsController3 = TextEditingController();
-  final TextEditingController chargesController = TextEditingController();
-  final TextEditingController chargesController1 = TextEditingController();
-  final TextEditingController chargesController2 = TextEditingController();
-  final TextEditingController chargesController3 = TextEditingController();
-  final TextEditingController dchargesController = TextEditingController();
-  final TextEditingController nchargesController = TextEditingController();
-  final TextEditingController pchargesController = TextEditingController();
-  final TextEditingController phchargesController = TextEditingController();
-  final TextEditingController descController = TextEditingController();
-  final TextEditingController opdController = TextEditingController();
-  final TextEditingController packController = TextEditingController();
-  final TextEditingController surController = TextEditingController();
-  final TextEditingController suramtController = TextEditingController();
-  final TextEditingController amtController = TextEditingController();
-  final TextEditingController roomtype = TextEditingController();
-  final TextEditingController pricerange = TextEditingController();
-
-  List<bool> _selected = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  List<bool> facility = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  List<String> spl = [];
-  List<String> fcl = [];
-
-  List dynamicListD = [];
-  List dynamicListN = [];
-  List dynamicListS = [];
-  List doclist=[];
-  List nurlist=[];
-  List stafflist=[];
-  bool _checked = false;
-  bool buttonstatus = true;
-
-  List<String> NumberD = [];
-
-  List<String>Doctor = [];
-  List<String>Specialist = [];
-  List<String> NumberN = [];
-
-  List<String>Nurse = [];
-  List<String> NumberS = [];
-
-  List<String>Staff = [];
 
   @override
   Widget build(BuildContext context) {
@@ -450,7 +327,9 @@ class _EditAddHospital extends State<EditAddHospital> {
                         TPA,
                         is24.toString(),
                         isCovid.toString(),
-                        isnabh.toString()
+                        isnabh.toString(),
+                        awardsController.text,
+                        widget.key1
                     );
                   } catch (e) {
                     print(e);
@@ -467,6 +346,14 @@ class _EditAddHospital extends State<EditAddHospital> {
                 onPressed: () {
                   if (pageindex == 3) {
                     addfreeBeds();
+                    print("page4");
+                    diagnosis.clear();
+                    for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
+                      diagnosis.add({
+                        "Type": widget.hospitalValues.diagnosis[i].test,
+                        "charges": widget.hospitalValues.diagnosis[i].charge,
+                      });
+                    }
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       setState(() {
@@ -482,7 +369,34 @@ class _EditAddHospital extends State<EditAddHospital> {
                     }else{
                       AuthService().toast("Please Complete filling data and Submit down below");
                     }
-                  } else {
+                  }else if(pageindex == 4){
+                    print("page5");
+                    health.clear();
+                    diagnosis.clear();
+                    for(int i=0;i<widget.hospitalValues.health.length;i++) {
+                      health.add(
+                          {
+                            "Type": widget.hospitalValues.health[i].packagename,
+                            "charges": widget.hospitalValues.health[i].amount
+                          });
+                    }
+                    setState(() {
+                      pageindex++;
+                    });
+                  }  else if(pageindex == 5){
+                    print("page6");
+                    surgery.clear();
+                    health.clear();
+                    for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
+                      surgery.add({
+                        "Type": widget.hospitalValues.surgery[i].surgeryname,
+                        "charges": widget.hospitalValues.surgery[i].suramount,
+                      });
+                    }
+                    setState(() {
+                      pageindex++;
+                    });
+                  }  else {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       print("_formkeyValue::"+_formKey.toString());
@@ -540,12 +454,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: nameController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -567,12 +475,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: regController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -594,12 +496,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: addressController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Location"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -621,11 +517,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: dateofController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
                       hintText: "DD/MM/YYYY"
                   ),
                   style: TextStyle(
@@ -648,12 +539,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: adminiController,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
+
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -675,9 +561,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: adminiphoneController,
                   decoration: new InputDecoration(
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
+
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -764,11 +648,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: pricerange,
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
                       hintText: "Low - High"
                   ),
                   style: TextStyle(
@@ -791,9 +670,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 TextFormField(
                   controller: awardsController,
                   decoration: new InputDecoration(
-                    // errorBorder: OutlineInputBorder(),
-                    // disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
+
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -833,12 +710,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                     // FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Register Number"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -864,12 +735,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                     // FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Location"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -895,12 +760,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                     // FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -926,12 +785,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                     // FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
-                    // border: OutlineInputBorder(),
-                    // focusedBorder: InputBorder.none,
-                    // enabledBorder: InputBorder.none,
-                    //errorBorder: OutlineInputBorder(),
-                    //disabledBorder: InputBorder.none,
-                    // hintText: "Hospital Name"
+
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -1074,11 +928,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                         ],
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
+
                         ),
                         controller: bedsController,
                         style: TextStyle(
@@ -3202,11 +3052,11 @@ class _EditAddHospital extends State<EditAddHospital> {
         rows: List.generate(
           Values.length,
               (index) {
+
             return DataRow(cells: [
               DataCell(
                   Center(
                       child: TextFormField(
-
                           initialValue: Values[index][item1],
                           onChanged: (v) {
                             setState(() {
@@ -3247,7 +3097,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     chargesController2.clear();
     roomtype.clear();
   }
-
   addSpecialBeds() {
     Beds.add({
       "roomType": roomtype.text,
@@ -3258,7 +3107,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     print(Beds.toString());
     clearText();
   }
-
   addfreeBeds() {
     freebeds.add({
       "roomType": "100% free",
@@ -3277,7 +3125,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     });
     print(Beds.toString());
   }
-
   addDiagnosisCharged() {
     diagnosis.add({
       "Type": descController.text,
@@ -3287,7 +3134,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     print(diagnosis.toString());
     clearText();
   }
-
   addHeathCheckup() {
     health.add(
         {"Type": packController.text, "charges": amtController.text});
@@ -3302,35 +3148,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     print(surgery.toString());
     clearText();
   }
-
-  // adddocnamenumber(){
-  //   print("Hey u clicked me");
-  //   if( dynamicWidgetD().Doctor.text==""&&dynamicWidgetD().NumberD.text==""){
-  //     docnamenum.add(
-  //         {
-  //           "Name": dynamicWidgetD().Doctor.text, "Number":dynamicWidgetD().NumberD.text,
-  //         }
-  //     );
-  //   }
-  //
-  //   print(docnamenum);
-  // }
-  // addnursenamenumber(){
-  //   nursenamenum.add(
-  //     {
-  //       "Name": dynamicWidgetN().Nurse.text, "Number":dynamicWidgetN().NumberN.text,
-  //     }
-  //   );
-  //   print(nursenamenum.toString());
-  // }
-  // addstaffnamenumber(){
-  //   staffnamenum.add(
-  //     {
-  //       "Name": dynamicWidgetS().Staff.text, "Number":dynamicWidgetS().NumberS.text,
-  //     }
-  //   );
-  // }
-
   addTPA() {
     TPAInsurance.add(new AddInsurance(_chosenValue1));
     TPA.add({
@@ -3363,142 +3180,6 @@ class _EditAddHospital extends State<EditAddHospital> {
     );
     return dynamicTextField;
   }
-  // List<Widget> _getDoctors() {
-  //   List<Widget> doctorsTextFields = [];
-  //   for (int i = 0; i < doctorsList.length; i++) {
-  //     doctorsTextFields.add(Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 16.0),
-  //       child: Row(
-  //         children: [
-  //           Expanded(child: DoctorsTextFields(i)),
-  //           SizedBox(
-  //             width: 16,
-  //           ),
-  //           // we need add button at last friends row
-  //           _addRemoveButtonD(i == doctorsList.length - 1, i),
-  //         ],
-  //       ),
-  //     ));
-  //   }
-  //   return doctorsTextFields;
-  // }
-  //
-  // List<Widget> _getNurses() {
-  //   List<Widget> nursesTextFields = [];
-  //   for (int i = 0; i < nursesList.length; i++) {
-  //     nursesTextFields.add(Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 16.0),
-  //       child: Row(
-  //         children: [
-  //           Expanded(child: NursesTextFields(i)),
-  //           SizedBox(
-  //             width: 16,
-  //           ),
-  //           // we need add button at last friends row
-  //           _addRemoveButtonN(i == nursesList.length - 1, i),
-  //         ],
-  //       ),
-  //     ));
-  //   }
-  //   return nursesTextFields;
-  // }
-  //
-  // List<Widget> _getStaffs() {
-  //   List<Widget> staffsTextFields = [];
-  //   for (int i = 0; i < staffsList.length; i++) {
-  //     staffsTextFields.add(Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 16.0),
-  //       child: Row(
-  //         children: [
-  //           Expanded(child: StaffsTextFields(i)),
-  //           SizedBox(
-  //             width: 16,
-  //           ),
-  //           // we need add button at last friends row
-  //           _addRemoveButtonS(i == staffsList.length - 1, i),
-  //         ],
-  //       ),
-  //     ));
-  //   }
-  //   return staffsTextFields;
-  // }
-  //
-  // /// add / remove button
-  // Widget _addRemoveButtonD(bool add, int index) {
-  //   return InkWell(
-  //     onTap: () {
-  //       if (add) {
-  //         doctorsList.insert(0, null);
-  //       } else
-  //         doctorsList.removeAt(index);
-  //       setState(() {});
-  //     },
-  //     child: Container(
-  //       width: 30,
-  //       height: 30,
-  //       decoration: BoxDecoration(
-  //         color: (add) ? Colors.green : Colors.red,
-  //         borderRadius: BorderRadius.circular(20),
-  //       ),
-  //       child: Icon(
-  //         (add) ? Icons.add : Icons.remove,
-  //         color: Colors.white,
-  //       ),
-  //     ),
-  //   );
-  // }
-  //
-  // Widget _addRemoveButtonN(bool add, int index) {
-  //   return InkWell(
-  //     onTap: () {
-  //       if (add) {
-  //         // add new text-fields at the top of all friends textfields
-  //         nursesList.insert(0, null);
-  //
-  //         print(nursesList.toString());
-  //       } else
-  //         nursesList.removeAt(index);
-  //       setState(() {});
-  //     },
-  //     child: Container(
-  //       width: 30,
-  //       height: 30,
-  //       decoration: BoxDecoration(
-  //         color: (add) ? Colors.green : Colors.red,
-  //         borderRadius: BorderRadius.circular(20),
-  //       ),
-  //       child: Icon(
-  //         (add) ? Icons.add : Icons.remove,
-  //         color: Colors.white,
-  //       ),
-  //     ),
-  //   );
-  // }
-  //
-  // Widget _addRemoveButtonS(bool add, int index) {
-  //   return InkWell(
-  //     onTap: () {
-  //       if (add) {
-  //         // add new text-fields at the top of all friends textfields
-  //         staffsList.insert(0, null);
-  //       } else
-  //         staffsList.removeAt(index);
-  //       setState(() {});
-  //     },
-  //     child: Container(
-  //       width: 30,
-  //       height: 30,
-  //       decoration: BoxDecoration(
-  //         color: (add) ? Colors.green : Colors.red,
-  //         borderRadius: BorderRadius.circular(20),
-  //       ),
-  //       child: Icon(
-  //         (add) ? Icons.add : Icons.remove,
-  //         color: Colors.white,
-  //       ),
-  //     ),
-  //   );
-  // }
   addDynamicD(){
     if(Doctor.length != 0){
 
@@ -3698,7 +3379,6 @@ class AddInsurance extends StatefulWidget {
   @override
   _AddInsuranceState createState() => _AddInsuranceState();
 }
-
 class _AddInsuranceState extends State<AddInsurance> {
   @override
   Widget build(BuildContext context) {
@@ -3726,7 +3406,6 @@ class AddAccred extends StatefulWidget {
   @override
   _AddAccredState createState() => _AddAccredState();
 }
-
 class _AddAccredState extends State<AddAccred> {
   @override
   Widget build(BuildContext context) {
@@ -3747,151 +3426,6 @@ class _AddAccredState extends State<AddAccred> {
         ));
   }
 }
-
-// class DoctorsTextFields extends StatefulWidget {
-//   final int index;
-//   DoctorsTextFields(this.index);
-//   @override
-//   _DoctorsTextFieldsState createState() => _DoctorsTextFieldsState();
-// }
-//
-// class _DoctorsTextFieldsState extends State<DoctorsTextFields> {
-//   TextEditingController _nameController;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _nameController = TextEditingController();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _nameController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _nameController.text = _AddHospitalState.doctorsList[widget.index] ?? '';
-//     });
-//
-//     return TextFormField(
-//       controller: _nameController,
-//       onChanged: (v) => _AddHospitalState.doctorsList[widget.index] = v,
-//       decoration: InputDecoration(hintText: 'Enter Doctor\'s name'),
-//     );
-//   }
-// }
-//
-// class NursesTextFields extends StatefulWidget {
-//   final int index;
-//   NursesTextFields(this.index);
-//   @override
-//   _NursesTextFieldsState createState() => _NursesTextFieldsState();
-// }
-//
-// class _NursesTextFieldsState extends State<NursesTextFields> {
-//   TextEditingController _nameController;
-//   TextEditingController _phoneController;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _nameController = TextEditingController();
-//     _phoneController = TextEditingController();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _nameController.dispose();
-//     _phoneController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _nameController.text = _AddHospitalState.nursesList[widget.index] ?? '';
-//     });
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _phoneController.text = _AddHospitalState.nursesList[widget.index] ?? '';
-//     });
-//
-//     return Row(
-//       children: [
-//         Container(
-//           width: 100,
-//           child: TextFormField(
-//             controller: _nameController,
-//             onChanged: (v) => {
-//               _AddHospitalState.nursesList[widget.index] = v,
-//               _AddHospitalState().nurlist["Name${widget.index}"] = v,
-//             },
-//             decoration: InputDecoration(hintText: 'Enter Nurse\'s name'),
-//             validator: (v) {
-//               if (v.trim().isEmpty) return 'Please enter something';
-//               return null;
-//             },
-//           ),
-//         ),
-//         Container(
-//           width: 150,
-//           child: TextFormField(
-//             controller: _phoneController,
-//             onChanged: (v) => {
-//               _AddHospitalState.nursesList[widget.index] = v,
-//               _AddHospitalState().nurlist["Number${widget.index}"] = v,
-//             },
-//             decoration: InputDecoration(hintText: 'Enter Nurse\'s Number'),
-//             validator: (v) {
-//               if (v.trim().isEmpty) return 'Please enter something';
-//               return null;
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-// class StaffsTextFields extends StatefulWidget {
-//   final int index;
-//   StaffsTextFields(this.index);
-//   @override
-//   _StaffsTextFieldsState createState() => _StaffsTextFieldsState();
-// }
-//
-// class _StaffsTextFieldsState extends State<StaffsTextFields> {
-//   TextEditingController _nameController;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _nameController = TextEditingController();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _nameController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _nameController.text = _AddHospitalState.staffsList[widget.index] ?? '';
-//     });
-//
-//     return TextFormField(
-//       controller: _nameController,
-//       onChanged: (v) => _AddHospitalState.staffsList[widget.index] = v,
-//       decoration: InputDecoration(hintText: 'Enter Staff\'s name'),
-//     );
-//   }
-// }
-
-
 class dynamicWidgetD extends StatelessWidget {
   TextEditingController Doctor = new TextEditingController();
   TextEditingController NumberD = new TextEditingController();

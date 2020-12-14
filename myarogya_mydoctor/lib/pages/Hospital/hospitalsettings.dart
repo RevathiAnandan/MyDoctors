@@ -32,6 +32,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
   List refresh = [];
   List keys1 = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
+  int myincome = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -127,7 +128,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                           width:140,
                         ),
                         Text(
-                          "Rs."+(dummyData.length*100).toString(),
+                          "Rs."+((myincome/100).toString().split(".")[0]),
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,
@@ -391,6 +392,9 @@ class _HospitalSettingsState extends State<HospitalSettings> {
           });
         });
         print(dummyData);
+        setState(() {
+          myincome = dummyData.length*4000;
+        });
       });
     } catch (e) {
       print(e);

@@ -95,7 +95,6 @@ class _MyBookingState extends State<MyBooking> {
                       'Status':"Discharge",
                       "DischargeDate": formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
                     });
-
                     // ApiService().bookhospital(dummyData[index].bookingNumber, dummyData[index].userNumber,"Discharge",dummyData[index].bookdetails , keys1[index].toString(),dummyData[index].BookingDate,DateTime.now().toString());
                   }else if(dummyData[index].status ==  "Pending Confirmation"){
                     AuthService().toast("Booking Confirmed");
@@ -138,7 +137,7 @@ class _MyBookingState extends State<MyBooking> {
           var refreshToken = Booking.fromJson(values);
           print(refreshToken);
           setState(() {
-            if (refreshToken.bookingNumber == widget.mobile) {
+            if (refreshToken.bookingNumber == widget.mobile&& refreshToken.status!="Cancel") {
               dummyData.add(refreshToken);
               keys1.add(key);
               print(dummyData[0].status);

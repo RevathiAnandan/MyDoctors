@@ -96,7 +96,7 @@ class _MyIncomePageState extends State<MyIncomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("My Total income"),
-                    Text("Rs."+(dummyData.length*100).toString()),
+                    Text("Rs."+(((dummyData.length*100)*40)/100).toString().split(".")[0]),
                   ],
                 ),
               ),
@@ -115,14 +115,14 @@ class _MyIncomePageState extends State<MyIncomePage> {
                     columnSpacing: 0,
                     columns: [
                       DataColumn(label: Text("Type")),
-                      DataColumn(label: Text("Beds Booked")),
-                      DataColumn(label: Text("My Income")),
+                      DataColumn(label: Text("Count")),
+                      DataColumn(label: Text("Gain")),
                     ],
                     rows: rooms.isNotEmpty?[getdatarow(rooms,"Beds")]:[DataRow(
                 cells: [
-                  DataCell(Container(child:Text("Beds"))),
-                  DataCell(Container(child:Text("0"))),
-                  DataCell(Container(child:Text("0"))),
+                  DataCell(Container(width:100,child:Text("Beds"))),
+                  DataCell(Container(child:Text("     0"))),
+                  DataCell(Container(child:Text(" 0"))),
                 ]
               )]
                 ),
@@ -140,8 +140,8 @@ class _MyIncomePageState extends State<MyIncomePage> {
                     ],
                     rows: packages.isNotEmpty?[getdatarow(packages,"Packages")]:[DataRow(
                     cells: [
-                    DataCell(Container(child:Text("Packages"))),
-              DataCell(Container(child:Text("0"))),
+                    DataCell(Container(width:75,child:Text("Packages"))),
+              DataCell(Container(child:Text("       0"))),
               DataCell(Container(child:Text("0"))),
             ]
           )]
@@ -160,7 +160,7 @@ class _MyIncomePageState extends State<MyIncomePage> {
                     ],
                     rows: pathology.isNotEmpty?[getdatarow(pathology,"Pathology")]:[DataRow(
                     cells: [
-                      DataCell(Container(child:Text("Pathology"))),
+                      DataCell(Container(width:100,child:Text("Pathology"))),
                       DataCell(Container(child:Text("0"))),
                       DataCell(Container(child:Text("0"))),
             ]
@@ -180,7 +180,7 @@ class _MyIncomePageState extends State<MyIncomePage> {
                     ],
                     rows: surgery.isNotEmpty?[getdatarow(surgery,"Surgery")]:[DataRow(
                     cells: [
-                      DataCell(Container(child:Text("Surgery"))),
+                      DataCell(Container(width:100,child:Text("Surgery"))),
                       DataCell(Container(child:Text("0"))),
                       DataCell(Container(child:Text("0"))),
             ]
@@ -193,7 +193,7 @@ class _MyIncomePageState extends State<MyIncomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("My Monthly income"),
-                    Text("Rs."+(charges*100).toString()),
+                    Text("Rs."+(((charges*100)*40)/100).toString().split(".")[0]),
                   ],
                 ),
               ),
@@ -269,7 +269,7 @@ class _MyIncomePageState extends State<MyIncomePage> {
      totalincome = totalcount * 100;
      return DataRow(
        cells: [
-         DataCell(Container(width:130,child: Text(catogory))),
+         DataCell(Container(width:80,child: Text(catogory))),
          DataCell(Container(width:50,child: Text(totalcount.toString()))),
          DataCell(Text(totalincome.toString())),
        ]

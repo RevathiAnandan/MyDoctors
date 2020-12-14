@@ -2300,7 +2300,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                  });
                  print("added");
                  try {
-                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName, widget.mobile, ConstantUtils().CONFIRM, list4, "","","");
+                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName, widget.mobile, ConstantUtils().CONFIRM, list4, "","","","");
                    print("Added!!");
                    fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
                    list3.clear();
@@ -2315,7 +2315,7 @@ class _BookdetailedState extends State<Bookdetailed> {
               }else{
                 print("added");
                 try {
-                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName , widget.mobile, ConstantUtils().CONFIRM, list, "","","");
+                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName , widget.mobile, ConstantUtils().CONFIRM, list, "","","","");
                   print("Added!!");
                   Navigator.pop(context);
                   Navigator.pop(context);

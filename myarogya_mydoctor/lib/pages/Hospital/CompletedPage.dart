@@ -9,6 +9,7 @@ class CompletedPage extends StatefulWidget {
 
 class _CompletedPageState extends State<CompletedPage> {
   List<Hospital>dummyData=[];
+  List<String >Key1=[];
   bool isLoading = false;
   FirebaseDatabase fb = FirebaseDatabase.instance;
   @override
@@ -62,7 +63,7 @@ class _CompletedPageState extends State<CompletedPage> {
             ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(
-                builder: (context)=>EditAddHospital(dummyData[i]),
+                builder: (context)=>EditAddHospital(dummyData[i],Key1[i]),
               ));
             },
           )
@@ -80,6 +81,7 @@ class _CompletedPageState extends State<CompletedPage> {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {
+            Key1.add(key);
           var refreshToken = Hospital.fromJson(values);
           print(refreshToken);
          if(refreshToken.status == "Completed"){
