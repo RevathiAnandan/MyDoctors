@@ -6,33 +6,18 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {
-//  final FirebaseMessaging _fcm = FirebaseMessaging();
-//  Future initialise() async {
-//
-//    _fcm.configure(
-//      onMessage: (Map<String, dynamic> message) async {
-//        print("onMessage: $message");
-//      },
-//      onLaunch: (Map<String, dynamic> message) async {
-//        print("onLaunch: $message");
-//      },
-//      onResume: (Map<String, dynamic> message) async {
-//        print("onResume: $message");
-//      },
-//    );
-//  }
 
 //   Replace with server token from firebase console settings.
-  final String serverToken = 'AAAA7eatpRE:APA91bH_jn9HzOOvWRjJ3bPR_rb9Bu_4FKyPbXZBSVKqUVtchzCCLygY_L3q85Pf2aZUK_4za2wO3oqFFgJ0TtNMLpHJ5UDRKAf2QB00U078AOz_kA0cyv3YoCQrsS9sVFP1pcqJvgl2';
+  final String serverToken = "FMdhwduAXmTweo_7sH5ACMtw:APA91bF_TtfpKNR3RRLfXlZF9CDC-cnxXn5k-dVTqQORGB3LbM80FxD9hPUYXGMBTYeu5GPQSDZdQoeXdPgUOiGfheyh9D_O4Jy-SFB--5nJ4fPOOvoRXSKmpfbDAVUu3EyTjPbRi7uW";
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
   Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
-//    await firebaseMessaging.requestNotificationPermissions(
-////      const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
-//    );
+    // await firebaseMessaging.requestNotificationPermissions(
+    //   const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
+    // );
     firebaseMessaging.requestNotificationPermissions(
     );
-  print("start send!!");
+    print("start send!!");
     await http.post(
       'https://fcm.googleapis.com/fcm/send',
       headers: <String, String>{
@@ -62,13 +47,15 @@ class PushNotificationService {
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         completer.complete(message);
-        print(message);
+        print("onMessage: $message");
         print(await firebaseMessaging.getToken());
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
       },
       onResume: (Map<String, dynamic> message) async {
+        completer.complete(message);
+        print(message);
         print("onResume: $message");
       },
 

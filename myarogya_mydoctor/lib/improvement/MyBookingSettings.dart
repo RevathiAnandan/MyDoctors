@@ -88,7 +88,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                       PopupMenuButton<String>(
                         padding: EdgeInsets.all(5),
                         icon: new Icon(
-                          Icons.more_vert_rounded,
+                          Icons.settings,
                           color: Colors.redAccent,
 
                         ),
