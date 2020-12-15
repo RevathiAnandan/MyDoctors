@@ -27,8 +27,10 @@ class ConstantsD{
 class ConstantsH{
   static const String Settings = 'Settings';
   static const String MyBooking = 'My Booking';
+  static const String MakePayment = 'Make Payment';
 
   static const List<String> choices = <String>[
+    MakePayment,
     MyBooking,
     Settings,
   ];
