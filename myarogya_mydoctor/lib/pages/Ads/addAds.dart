@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
 
 class Addads extends StatefulWidget {
   @override
@@ -134,6 +135,15 @@ class _AddadsState extends State<Addads> {
                 ),
                 Container(
                   height: 200,
+                  width: 200,
+                  child: (_video!=null)?Stack(
+                    children: <Widget>[
+                      ShowVideoPlayer(_video),
+                    ],
+                  ):Container(),
+                ),
+                Container(
+                  height: 200,
                 ),
                 Column(
                   children: [
@@ -155,13 +165,13 @@ class _AddadsState extends State<Addads> {
                   ],
                 ),
                 Container(
-                  height: 120,
+                  height: 200,
+                  width: 200,
                   child: (_image!=null)?Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Image.file(
                         _image,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
+                        fit: BoxFit.fill,
                       )
                   ):Container(),
                   ),
@@ -207,11 +217,12 @@ class _AddadsState extends State<Addads> {
   }
 
    openVideos() async {
-     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
+     final pickedFile = await picker.getVideo(source: ImageSource.camera);
 
      setState(() {
        if (pickedFile != null) {
          _video = File(pickedFile.path);
+         print(_video.path);
        } else {
          print('No video selected.');
        }

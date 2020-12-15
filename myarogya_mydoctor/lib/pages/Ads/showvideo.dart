@@ -1,20 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class AppVideoPlayer extends StatefulWidget {
+
+
+class ShowVideoPlayer extends StatefulWidget {
+  final File path;
+  ShowVideoPlayer(this.path);
 
   @override
-  _AppVideoPlayerState createState() => _AppVideoPlayerState();
+  _ShowVideoPlayerState createState() => _ShowVideoPlayerState();
 }
 
-class _AppVideoPlayerState extends State<AppVideoPlayer> {
+class _ShowVideoPlayerState extends State<ShowVideoPlayer> {
   VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-        'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_5mb.mp4')
+    _controller = VideoPlayerController.file(
+        widget.path)
       ..initialize().then((_) {
         _controller.play();
         setState(() {});
@@ -26,12 +32,12 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     return Center(
       child: _controller.value.initialized
           ? AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
+        aspectRatio: _controller.value.aspectRatio,
+        child: VideoPlayer(_controller),
+      )
           : Container(
-              color: Colors.black,
-            ),
+        color: Colors.black,
+      ),
     );
   }
 
