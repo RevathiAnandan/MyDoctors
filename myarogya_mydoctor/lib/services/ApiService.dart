@@ -1,7 +1,4 @@
 
-
-
-import 'package:cashfree_pg/cashfree_pg.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
@@ -386,60 +383,60 @@ class ApiService{
       print(e);
     }
   }
-  Future getPaymentToken(String id,String mobile) async {
-    var url = 'https://test.cashfree.com/api/v2/cftoken/order';
-    var client_id ="4563473c4c048d69173674df043654";
-    var secret ="9f06f0d1f2279947411cc853235f0b122f5def5c";
-    final http.Response response = await http.post(url,
-        headers: <String,String> {
-          'Content-Type':'application/json',
-          'x-client-id': client_id,
-          'x-client-secret':secret
-        },
-        body: jsonEncode({
-          "orderId": "Order0001",
-          "orderAmount":1,
-          "orderCurrency": "INR"
-        })
-    );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    if(200 == response.statusCode) {
-      rToken = Payment.fromJson(json.decode(response.body));
-      String stage = "TEST";
-      String orderId = "order123";
-      String orderAmount = "ORDER AMOUNT";
-      String tokenData = rToken.cftoken;
-      String customerName = "revathi";
-      String orderNote = "Order Note";
-      String orderCurrency = "INR";
-      String appId = id;
-      String customerPhone = mobile;
-      String customerEmail = "sample@gmail.com";
-      String notifyUrl = "https://test.gocashfree.com/notify";
-
-      Map<String, dynamic> inputParams = {
-        "stage":stage,
-        "orderId": orderId,
-        "orderAmount": orderAmount,
-        "customerName": customerName,
-        "orderCurrency": orderCurrency,
-        "appId": appId,
-        "customerPhone": customerPhone,
-        "customerEmail": customerEmail,
-        "tokenData":tokenData
-      };
-      try {
-        CashfreePGSDK.doPayment(inputParams)
-            .then((value) => value?.forEach((key, value) {
-          print("$key : $value");
-          //Do something with the result
-        }));
-      } catch (e) {
-        print(e);
-      }
-    }
-    return rToken.cftoken;
-
-  }
+  // Future getPaymentToken(String id,String mobile) async {
+  //   var url = 'https://test.cashfree.com/api/v2/cftoken/order';
+  //   var client_id ="4563473c4c048d69173674df043654";
+  //   var secret ="9f06f0d1f2279947411cc853235f0b122f5def5c";
+  //   final http.Response response = await http.post(url,
+  //       headers: <String,String> {
+  //         'Content-Type':'application/json',
+  //         'x-client-id': client_id,
+  //         'x-client-secret':secret
+  //       },
+  //       body: jsonEncode({
+  //         "orderId": "Order0001",
+  //         "orderAmount":1,
+  //         "orderCurrency": "INR"
+  //       })
+  //   );
+  //   print('Response status: ${response.statusCode}');
+  //   print('Response body: ${response.body}');
+  //   if(200 == response.statusCode) {
+  //     rToken = Payment.fromJson(json.decode(response.body));
+  //     String stage = "TEST";
+  //     String orderId = "order123";
+  //     String orderAmount = "ORDER AMOUNT";
+  //     String tokenData = rToken.cftoken;
+  //     String customerName = "revathi";
+  //     String orderNote = "Order Note";
+  //     String orderCurrency = "INR";
+  //     String appId = id;
+  //     String customerPhone = mobile;
+  //     String customerEmail = "sample@gmail.com";
+  //     String notifyUrl = "https://test.gocashfree.com/notify";
+  //
+  //     Map<String, dynamic> inputParams = {
+  //       "stage":stage,
+  //       "orderId": orderId,
+  //       "orderAmount": orderAmount,
+  //       "customerName": customerName,
+  //       "orderCurrency": orderCurrency,
+  //       "appId": appId,
+  //       "customerPhone": customerPhone,
+  //       "customerEmail": customerEmail,
+  //       "tokenData":tokenData
+  //     };
+  //     try {
+  //       CashfreePGSDK.doPayment(inputParams)
+  //           .then((value) => value?.forEach((key, value) {
+  //         print("$key : $value");
+  //         //Do something with the result
+  //       }));
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //   }
+  //   return rToken.cftoken;
+  //
+  // }
 }

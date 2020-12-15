@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cashfree_pg/cashfree_pg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -555,8 +554,8 @@ class _HospitalsState extends State<Hospitals> {
     }
     else if (choice == ConstantsH.MakePayment) {
       //todo:hospital settings to be done
-      var paymentResponse = ApiService().getPaymentToken(widget.id,widget.mobile);
-      print(paymentResponse);
+      // var paymentResponse = ApiService().getPaymentToken(widget.id,widget.mobile);
+      // print(paymentResponse);
     }
   }
   Future<Hospital> getHospitals() async {
