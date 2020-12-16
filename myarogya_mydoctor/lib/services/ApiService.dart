@@ -439,4 +439,16 @@ class ApiService{
   //   return rToken.cftoken;
   //
   // }
+
+Future MyAds(String name,String productCatogory, String slogan, List media,String mobile){
+    var db = fb.reference().child("MyAds").push();
+    db.set({
+      "AdName" : name,
+      "ProductCatogory": productCatogory,
+      "Slogan":slogan,
+      "Media":media,
+      "Mobile":mobile,
+    });
+}
+
 }

@@ -1,10 +1,17 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
+import 'package:myarogya_mydoctor/services/ApiService.dart';
 
 class Addads extends StatefulWidget {
+
+  final String id;
+  final String mobile;
+
+  Addads(this.id, this.mobile);
   @override
   _AddadsState createState() => _AddadsState();
 }
@@ -16,7 +23,10 @@ class _AddadsState extends State<Addads> {
   final TextEditingController sloganController = TextEditingController();
   File _image;
   File _video;
+  List<File> _media=[];
+  List _mediaurls=[];
   final picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +36,12 @@ class _AddadsState extends State<Addads> {
           actions: [
             Center(
               child: IconButton(
-                icon: Icon(Icons.cloud_upload,color: Colors.redAccent,),
-                ),
+                icon: Icon(Icons.cloud_upload, color: Colors.redAccent,),
+                onPressed: () {
+                  ApiService().MyAds(nameController.text, categoryController.text, sloganController.text, _mediaurls,widget.mobile);
+                },
               ),
+            ),
           ],
           title: Text("Upload Ads",
               style: TextStyle(
@@ -47,7 +60,7 @@ class _AddadsState extends State<Addads> {
                     TextFormField(
                       controller: nameController,
                       decoration: new InputDecoration(
-                        hintText: "Name"
+                          hintText: "Name"
                       ),
                       style: TextStyle(
                         fontSize: 18,
@@ -136,14 +149,11 @@ class _AddadsState extends State<Addads> {
                 Container(
                   height: 200,
                   width: 200,
-                  child: (_video!=null)?Stack(
+                  child: (_video != null) ? Stack(
                     children: <Widget>[
                       ShowVideoPlayer(_video),
                     ],
-                  ):Container(),
-                ),
-                Container(
-                  height: 200,
+                  ) : Container(),
                 ),
                 Column(
                   children: [
@@ -167,30 +177,34 @@ class _AddadsState extends State<Addads> {
                 Container(
                   height: 200,
                   width: 200,
-                  child: (_image!=null)?Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.file(
-                        _image,
-                        fit: BoxFit.fill,
-                      )
-                  ):Container(),
-                  ),
+                  child: (_image != null) ? AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.file(
+                      _image,
+                      fit: BoxFit.contain,
+                    ),
+                  ) : Container(),
+                ),
                 Container(
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Note",style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.redAccent,
-                    fontFamily: 'Lato',
-                  ),),
-                      Text("    Video should be maximum of 10 seconds",style: TextStyle(
+                      Text("Note", style: TextStyle(
                         fontSize: 18,
                         color: Colors.redAccent,
                         fontFamily: 'Lato',
                       ),),
-                      Text("    Image should be max of 2MB",style: TextStyle(
+                      Text("    Video should be maximum of 10 seconds",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.redAccent,
+                          fontFamily: 'Lato',
+                        ),),
+                      Text("    Image should be max of 2MB", style: TextStyle(
                         fontSize: 18,
                         color: Colors.redAccent,
                         fontFamily: 'Lato',
@@ -210,22 +224,41 @@ class _AddadsState extends State<Addads> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        _media.add(_image);
+        print(_media);
+        uploadtask(_image);
       } else {
         print('No image selected.');
       }
     });
   }
 
-   openVideos() async {
-     final pickedFile = await picker.getVideo(source: ImageSource.camera);
 
-     setState(() {
-       if (pickedFile != null) {
-         _video = File(pickedFile.path);
-         print(_video.path);
-       } else {
-         print('No video selected.');
-       }
-     });
-   }
+  openVideos() async {
+    final pickedFile = await picker.getVideo(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _video = File(pickedFile.path);
+        print(_video.path);
+        _media.add(_video);
+        uploadtask(_video);
+      } else {
+        print('No video selected.');
+      }
+    });
+  }
+
+  uploadtask(File media) async {
+      String fileName = "media"+widget.id;
+      StorageReference reference = FirebaseStorage.instance.ref()
+          .child("MyAds")
+          .child(fileName);
+      StorageUploadTask uploadTask = reference.putFile(media);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      print("Uploading image completed");
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      _mediaurls.add(downloadUrl);
+      print(_mediaurls);
+
+  }
 }

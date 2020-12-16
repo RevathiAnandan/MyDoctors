@@ -3,7 +3,13 @@ import 'package:myarogya_mydoctor/pages/Ads/addAds.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/onscreen_controls.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
 
+import 'addcampaign.dart';
+
 class HomeScreen extends StatelessWidget {
+
+  final String id;
+  final String mobile;
+  HomeScreen(this.id, this.mobile);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +21,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>Addads(),
+                  builder: (context) =>AdsUserProfile(mobile,id),
                 ),
               );
             },),
