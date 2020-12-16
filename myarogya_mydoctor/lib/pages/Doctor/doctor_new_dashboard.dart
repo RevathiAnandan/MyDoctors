@@ -27,10 +27,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
     Hospitals(widget.mobile,widget.id),
     HomeScreen(),
     GestureDetector(
-      onTap:() {
-        AuthService().signOut(context);
-        },
-        child:Text('Setting'),
+        child:Text('My Complains'),
     ),
   ];
  final widgetName = [
@@ -38,7 +35,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
    Text('My Hospitals'),
 //   Text('My Labs'),
    Text('My Ads'),
-//   Text('Settings'),
+  Text('My Complains'),
  ];
 
   @override
@@ -62,8 +59,8 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
 //              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.redAccent,), title: Text('My Labs')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
-//              BottomNavigationBarItem(
-//                  icon: Icon(Icons.settings,color: Colors.redAccent,size: 25,), title: Text('Settings'))
+             BottomNavigationBarItem(
+                 icon: Icon(Icons.add_comment,color: Colors.redAccent,size: 25,), title: Text('MyComplains'))
             ],
             currentIndex: selectedIndex,
             fixedColor: Colors.redAccent,
