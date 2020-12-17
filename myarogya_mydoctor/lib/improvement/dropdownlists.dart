@@ -32,4 +32,14 @@ class Dropdownlists{
     "Quality Council of India", "Joint Commission.org",
 
   ];
+  List<String> categories = [
+   "Water",
+    "Road",
+    "Electricity",
+    "Internet",
+    "Housing",
+    "Credit Card",
+    "Banking",
+    "Court cases"
+  ];
 }

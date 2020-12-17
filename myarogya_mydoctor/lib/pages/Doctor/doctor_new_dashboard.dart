@@ -3,6 +3,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:myarogya_mydoctor/improvement/hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Ads/home_page.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/Appointments.dart';
+import 'package:myarogya_mydoctor/pages/complains/DisplayComplains.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 
 import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
@@ -25,10 +26,8 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
   List<Widget> _widgetOptions() => [
     Appointments(widget.mobile,widget.id),
     Hospitals(widget.mobile,widget.id),
-    HomeScreen(widget.mobile,widget.id),
-    GestureDetector(
-        child:Text('My Complains'),
-    ),
+    HomeScreen(widget.id,widget.mobile),
+    DisplayComplains()
   ];
  final widgetName = [
    Text('My Appointments'),

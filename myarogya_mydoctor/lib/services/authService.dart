@@ -10,6 +10,7 @@ import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'push_notification_service1.dart';
 
 class AuthService{
@@ -116,4 +117,27 @@ class AuthService{
         fontSize: 16.0
     );
   }
+
+  alertDialog(BuildContext context){
+    Alert(
+        context: context,
+        title: "Alert",
+        content: Column(
+          children: <Widget>[
+            Text("Please Update Your Profile for Proceed Further!!")
+         ]
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: (){
+            },
+            child: Text(
+              "OK",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
+
+
 }

@@ -103,12 +103,12 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                 children:[
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
+                                  (refreshValue['Morning Start Time'])?Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
+                                  (refreshValue['Morning Start Time'])?Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
+                                  (refreshValue['Morning Start Time'])?Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
                                   SizedBox(
                                     height: 2,
                                   ),
@@ -272,8 +272,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
         print (snapshot.value);
 
         setState(() {
-//        doctorProfileInfo = DoctorUser.fromJson(snapshot.value);
-//        print (doctorProfileInfo.Name);
           refreshValue =  snapshot.value;
           isLoading = false;
         });
@@ -292,8 +290,6 @@ class _PrescriptionPageState extends State<ShowPrecription> {
       db.once().then((DataSnapshot snapshot){
         print (snapshot.value);
         setState(() {
-//        doctorProfileInfo = DoctorUser.fromJson(snapshot.value);
-//        print (doctorProfileInfo.Name);
           prefreshValue =  snapshot.value;
           isLoading = false;
         });

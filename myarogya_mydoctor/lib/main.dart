@@ -7,6 +7,7 @@ import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/edit_profile_doctor.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/HospitalDashboard.dart';
+import 'package:myarogya_mydoctor/pages/complains/MyComplainList.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
         //   home: SplashScreen()
 //        home: AddHospital(),
 //      home: PatientNewDashboard("0BPnrwIHQDR0ABiYiaIFc1IaSX83","+917810081326")
-        home:
-            DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1", "+919444773937")
+//         home: MyComplainList()
+        home: DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1", "+919444773937")
 //      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
         );
   }
