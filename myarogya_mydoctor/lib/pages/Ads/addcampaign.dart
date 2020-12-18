@@ -83,7 +83,7 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                 ),
                 ),
                 Text(
-                  "10",style: TextStyle(
+                  myads.length.toString(),style: TextStyle(
                   color: Colors.redAccent,
                   fontSize: 18,
                   fontFamily: 'Lato',
@@ -147,14 +147,15 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                       itemCount: myads.length,
                     itemBuilder: (context,index){
                       final List<Widget> imageSliders =
-                          [Container(
+                          [
+                            Container(
                         child: Container(
                           margin: EdgeInsets.all(5.0),
                           child: ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(5.0)),
                               child: Stack(
                                 children: <Widget>[
-                                  (myads[index].image!=null)?Image.network(myads[index].image, fit: BoxFit.cover, width: 1000.0):Container(),
+                                  (myads[index].image=="")?AppVideoPlayer(myads[index].video):Image.network(myads[index].image, fit: BoxFit.cover, width: 1000.0),
                                   Positioned(
                                     bottom: 0.0,
                                     left: 0.0,
@@ -186,101 +187,117 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                           ),
                         ),
                       ),
-                            Container(
-                        child: Container(
-                          margin: EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              child: Stack(
-                                children: <Widget>[
-                                  (myads[index].video!=null)?AppVideoPlayer(myads[index].video):Container(),
-                                  Positioned(
-                                    bottom: 0.0,
-                                    left: 0.0,
-                                    right: 0.0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Color.fromARGB(200, 0, 0, 0),
-                                            Color.fromARGB(0, 0, 0, 0)
-                                          ],
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                        ),
-                                      ),
-                                      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                                      child: Text(
-                                        '${myads[index].slogan} ',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                        ),
-                      )];
+                      //       Container(
+                      //   child: Container(
+                      //     margin: EdgeInsets.all(5.0),
+                      //     child: ClipRRect(
+                      //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      //         child: Stack(
+                      //           children: <Widget>[
+                      //             (myads[index].video!=null)?AppVideoPlayer(myads[index].video):Container(),
+                      //             Positioned(
+                      //               bottom: 0.0,
+                      //               left: 0.0,
+                      //               right: 0.0,
+                      //               child: Container(
+                      //                 decoration: BoxDecoration(
+                      //                   gradient: LinearGradient(
+                      //                     colors: [
+                      //                       Color.fromARGB(200, 0, 0, 0),
+                      //                       Color.fromARGB(0, 0, 0, 0)
+                      //                     ],
+                      //                     begin: Alignment.bottomCenter,
+                      //                     end: Alignment.topCenter,
+                      //                   ),
+                      //                 ),
+                      //                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                      //                 child: Text(
+                      //                   '${myads[index].slogan} ',
+                      //                   style: TextStyle(
+                      //                     color: Colors.white,
+                      //                     fontSize: 20.0,
+                      //                     fontWeight: FontWeight.bold,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         )
+                      //     ),
+                      //   ),
+                      // )
+                          ];
                         return Row(
                           children: [
-                            Container(
-                              height:170,
-                              width: 300,
-                              child: Card(
-                                child:
-                                Stack(
-                                  children: [
-                                    CarouselSlider(
-                                      items: imageSliders,
-                                      options: CarouselOptions(
-                                        enableInfiniteScroll: false,
-                                          // enlargeCenterPage: true,
-                                          aspectRatio: 2,
-                                          onPageChanged: (index, reason) {
-                                            setState(() {
-                                              _current = index;
-                                            });
-                                          }
+                            Flexible(
+                              flex: 4,
+                              child: Container(
+                                // height:160,
+                                // width: 300,
+                                child: Card(
+                                  elevation: 5,
+                                  child:
+                                  Stack(
+                                    children: [
+                                      CarouselSlider(
+                                        items: imageSliders,
+                                        options: CarouselOptions(
+                                          enableInfiniteScroll: false,
+                                            // enlargeCenterPage: true,
+                                            aspectRatio: 2,
+                                            onPageChanged: (index, reason) {
+                                              setState(() {
+                                                _current = index;
+                                              });
+                                            }
+                                        ),
                                       ),
-                                    ),
-                                    // Row(
-                                    //   mainAxisAlignment: MainAxisAlignment.center,
-                                    //   children: myads[index].media.map((url) {
-                                    //     int number = myads[index].media.indexOf(url);
-                                    //     return Container(
-                                    //       width: 8.0,
-                                    //       height: 8.0,
-                                    //       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                                    //       decoration: BoxDecoration(
-                                    //         shape: BoxShape.circle,
-                                    //         color: _current == number
-                                    //             ? Color.fromRGBO(0, 0, 0, 0.9)
-                                    //             : Color.fromRGBO(0, 0, 0, 0.4),
-                                    //       ),
-                                    //     );
-                                    //   }).toList(),
-                                    // ),
-                                  ],
-                                )
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  child: Card(
-                                    // width:
-                                  ),
-                                ),
-                                Container(
-                                  child:MaterialButton(
-
+                                      // Row(
+                                      //   mainAxisAlignment: MainAxisAlignment.center,
+                                      //   children: myads[index].media.map((url) {
+                                      //     int number = myads[index].media.indexOf(url);
+                                      //     return Container(
+                                      //       width: 8.0,
+                                      //       height: 8.0,
+                                      //       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                      //       decoration: BoxDecoration(
+                                      //         shape: BoxShape.circle,
+                                      //         color: _current == number
+                                      //             ? Color.fromRGBO(0, 0, 0, 0.9)
+                                      //             : Color.fromRGBO(0, 0, 0, 0.4),
+                                      //       ),
+                                      //     );
+                                      //   }).toList(),
+                                      // ),
+                                    ],
                                   )
                                 ),
-                              ],
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Flexible(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    // height: 60,
+                                    // width:80,
+                                    child: Card(
+                                      elevation: 8,
+                                      child: Center(child: Text(myads[index].productCatogory)),
+                                    ),
+                                  ),
+                                  Container(
+                                      height: 40,
+                                      width:80,
+                                    child:MaterialButton(
+                                      color: Colors.redAccent,
+                                      child: Text("Renew"),
+                                      onPressed: (){},
+                                    )
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         );

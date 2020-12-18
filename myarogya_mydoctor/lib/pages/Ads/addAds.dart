@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Addads extends StatefulWidget {
   final String id;
@@ -44,17 +46,20 @@ class _AddadsState extends State<Addads> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
+                    ApiService().MyAds(
+                        nameController.text,
+                        categoryController.text,
+                        sloganController.text,
+                        image,
+                        video,
+                        widget.mobile);
+                    AuthService()
+                        .toast("Your ad will be uploaded after reviewing");
+                    Navigator.pop(context);
                   } else {
                     AuthService().toast(
                         "Please Complete filling data and Submit down below");
                   }
-                  ApiService().MyAds(
-                      nameController.text,
-                      categoryController.text,
-                      sloganController.text,
-                      image,
-                      video,
-                      widget.mobile);
                 },
               ),
             ),
@@ -155,7 +160,7 @@ class _AddadsState extends State<Addads> {
                       child: MaterialButton(
                         color: Colors.redAccent,
                         child: Text(
-                          "Pick Video",
+                          "Upload Ad",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -163,7 +168,43 @@ class _AddadsState extends State<Addads> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            openVideos();
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context) {
+                            //       return AlertDialog(
+                            //         title: Text('Country List'),
+                            //         content:  Container(
+                            //         height: 300.0, // Change as per your requirement
+                            //         width: 300.0, // Change as per your requirement
+                            //         child: ListView.builder(
+                            //           shrinkWrap: true,
+                            //           itemCount: 5,
+                            //           itemBuilder: (BuildContext context, int index) {
+                            //             return ListTile(
+                            //               title: Text('Gujarat, India'),
+                            //             );
+                            //           },
+                            //         ),
+                            //       )
+                            //       );
+                            //     });
+                            Alert(
+                                context: context,
+                                title: "Choose Type",
+                                buttons: [
+                                  DialogButton(
+                                      child: Text("Pick Images"),
+                                      onPressed: () {
+                                        openImages();
+                                        Navigator.pop(context);
+                                      }),
+                                  DialogButton(
+                                      child: Text("Pick Video"),
+                                      onPressed: () {
+                                        openVideos();
+                                        Navigator.pop(context);
+                                      }),
+                                ]).show();
                           } else {
                             AuthService().toast("Please type the name above ");
                           }
@@ -181,45 +222,53 @@ class _AddadsState extends State<Addads> {
                             ShowVideoPlayer(_video),
                           ],
                         )
-                      : Container(),
+                      : (_image != null)
+                          ? AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: Image.file(
+                                _image,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                          : Container(),
                 ),
-                Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: MaterialButton(
-                          color: Colors.redAccent,
-                          child: Text(
-                            "Pick Image",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              openImages();
-                            } else {
-                              AuthService()
-                                  .toast("Please type the name above ");
-                            }
-                          }),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 200,
-                  width: 200,
-                  child: (_image != null)
-                      ? AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Image.file(
-                            _image,
-                            fit: BoxFit.contain,
-                          ),
-                        )
-                      : Container(),
-                ),
+                // Column(
+                //   children: [
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: MaterialButton(
+                //           color: Colors.redAccent,
+                //           child: Text(
+                //             "Pick Image",
+                //             style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 16,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //           onPressed: () {
+                //             if (_formKey.currentState.validate()) {
+                //               openImages();
+                //             } else {
+                //               AuthService()
+                //                   .toast("Please type the name above ");
+                //             }
+                //           }),
+                //     ),
+                //   ],
+                // ),
+                // Container(
+                //   height: 200,
+                //   width: 200,
+                //   child: (_image != null)
+                //       ? AspectRatio(
+                //           aspectRatio: 16 / 9,
+                //           child: Image.file(
+                //             _image,
+                //             fit: BoxFit.contain,
+                //           ),
+                //         )
+                //       : Container(),
+                // ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
@@ -265,7 +314,7 @@ class _AddadsState extends State<Addads> {
         _image = File(pickedFile.path);
         _media.add(_image);
         print(_media);
-        uploadtask(_image,"image");
+        uploadtask(_image, "image");
       } else {
         print('No image selected.');
       }
@@ -279,7 +328,7 @@ class _AddadsState extends State<Addads> {
         _video = File(pickedFile.path);
         print(_video.path.split(".")[1]);
         _media.add(_video);
-        uploadtask(_video,"video");
+        uploadtask(_video, "video");
       } else {
         print('No video selected.');
       }
@@ -287,9 +336,10 @@ class _AddadsState extends State<Addads> {
   }
 
   Random rand = Random();
-  uploadtask(File media,String type) async {
+  uploadtask(File media, String type) async {
     print("enter uploadtask");
-    //todo:if by chance this server crashes and user exeeds the level we can increse this random number until then good bye
+    await FirebaseAuth.instance.signInAnonymously();
+    //todo:if by chance this server crashes and user exceeds the level we can increase this random number until then good bye
     String fileName = "media${rand.nextInt(100000)}";
     StorageReference reference = FirebaseStorage.instance
         .ref()
@@ -302,8 +352,10 @@ class _AddadsState extends State<Addads> {
     final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     if (type == "video") {
       video = downloadUrl;
+      image = "";
     } else if (type == "image") {
       image = downloadUrl;
+      video = "";
     }
   }
 }
