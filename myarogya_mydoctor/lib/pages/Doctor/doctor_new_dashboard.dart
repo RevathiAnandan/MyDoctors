@@ -27,7 +27,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
     Appointments(widget.mobile,widget.id),
     Hospitals(widget.mobile,widget.id),
     HomeScreen(widget.id,widget.mobile),
-    DisplayComplains()
+    DisplayComplains(widget.id,widget.mobile)
   ];
  final widgetName = [
    Text('My Appointments'),

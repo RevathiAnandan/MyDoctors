@@ -451,5 +451,21 @@ Future MyAds(String name,String productCatogory, String slogan,String image,Stri
       "Mobile":mobile,
     });
 }
+Future MyComplains(String Cno,String Cabout,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile){
+    var db = fb.reference().child("MyComplains").push();
+
+    db.set({
+      "ComplainNumber" : Cno,
+      "About": Cabout,
+      "SendTo":sendto,
+      "Category":category,
+      "Depart":depart,
+      "CompanyName":cname,
+      "Govt": Gvt,
+      "Image":image,
+      "Video":video,
+      "Mobile":mobile,
+    });
+}
 
 }

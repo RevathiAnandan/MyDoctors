@@ -1,11 +1,30 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
+import 'package:myarogya_mydoctor/model/complains.dart';
 import 'package:myarogya_mydoctor/pages/complains/MyComplainList.dart';
+import 'package:myarogya_mydoctor/pages/widget/home/controls/onscreen_controls.dart';
+import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
 
 import 'NewComplains.dart';
 
-class DisplayComplains extends StatelessWidget {
+class DisplayComplains extends StatefulWidget {
+  final String id;
+  final String mobile;
+  DisplayComplains(this.id, this.mobile);
+  @override
+  _DisplayComplainsState createState() => _DisplayComplainsState();
+}
+
+class _DisplayComplainsState extends State<DisplayComplains> {
   List<Widget> categories = [];
+
+  FirebaseDatabase fb = FirebaseDatabase.instance;
+
+  List<Complains> complain = [];
+
+  bool isLoading = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +36,7 @@ class DisplayComplains extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>MyComplainList(),
+                  builder: (context) =>MyComplainList(widget.id,widget.mobile),
                 ),
               );
             },),
@@ -38,11 +57,11 @@ class DisplayComplains extends StatelessWidget {
                   return Container(
                     color: Colors.black,
                     child: Stack(
-                      // children: <Widget>[AppVideoPlayer(), onScreenControls()],
+                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls()],
                     ),
                   );
                 },
-                itemCount: 10),
+                itemCount: complain.length),
           ),
           Flexible(
             flex: 2,
@@ -79,7 +98,43 @@ class DisplayComplains extends StatelessWidget {
     );
   }
 
-  filtercomplains(String catogory){
+  Future<Complains> getComplains() async{
+    await fb.reference().child("MyComplains").once().then((DataSnapshot snapshot) {
+      print(snapshot);
+      if (snapshot.value != null) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((key, values) {
+          var refreshToken = Complains.fromJson(values);
+          complain.add(refreshToken);
+          setState(() {
+            isLoading =false;
+          });
+        });
+        print(isLoading.toString());
+      }
+    });
+  }
 
+  Future<Complains> filtercomplains(String catogory) async{
+    complain.clear();
+    setState(() {
+      isLoading =true;
+    });
+    await fb.reference().child("MyComplains").once().then((DataSnapshot snapshot) {
+      print(snapshot);
+      if (snapshot.value != null) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        values.forEach((key, values) {
+          var refreshToken = Complains.fromJson(values);
+          if (refreshToken.Category == catogory) {
+            complain.add(refreshToken);
+          }
+          setState(() {
+            isLoading = false;
+          });
+        });
+        print(isLoading.toString());
+      }
+    });
   }
 }

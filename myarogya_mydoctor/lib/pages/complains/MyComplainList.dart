@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myarogya_mydoctor/pages/complains/NewComplains.dart';
+
+import 'NewComplains.dart';
 class MyComplainList extends StatefulWidget {
+  final String id;
+  final String mobile;
+  MyComplainList(this.id, this.mobile);
   @override
   _MyComplainListState createState() => _MyComplainListState();
 }
@@ -21,7 +25,7 @@ class _MyComplainListState extends State<MyComplainList> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>NewComplains(),
+                    builder: (context) =>NewComplains(widget.id,widget.mobile),
                   ),
                 );
               },
@@ -36,61 +40,61 @@ class _MyComplainListState extends State<MyComplainList> {
         child: Container(
           height: 200,
           child: Card(
-            child:
-            // dummyData.length >0?
-            ListView.builder(
-              itemCount:2,
-              itemBuilder:(context,index){
-                return ListTile(
-                  contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  // title: Text(dummyData[index].userNumber),
-                  title:Text("Complain Number:"),
-                  trailing: Container(
-                    width: 200  ,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FlatButton(
-                          child: Text("Not Satisfied",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Lato",
-                                  fontSize: 14)),
-                          textColor: Colors.white,
-                          onPressed: (){
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(25.0),
-                              side: BorderSide(
-                                  color: Colors.redAccent)),
-                          padding: EdgeInsets.all(10),
-                          color: Colors.redAccent,
-                        ),
-                        FlatButton(
-                          child: Text("Satisfied",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Lato",
-                                  fontSize: 14)),
-                          textColor: Colors.white,
-                          onPressed: (){
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(25.0),
-                              side: BorderSide(
-                                  color: Colors.redAccent)),
-                          padding: EdgeInsets.all(10),
-                          color: Colors.redAccent,
-                        ),
-                      ],
+              child:
+              // dummyData.length >0?
+              ListView.builder(
+                itemCount:2,
+                itemBuilder:(context,index){
+                  return ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    // title: Text(dummyData[index].userNumber),
+                    title:Text("Complain Number:"),
+                    trailing: Container(
+                      width: 200  ,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FlatButton(
+                            child: Text("Not Satisfied",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Lato",
+                                    fontSize: 14)),
+                            textColor: Colors.white,
+                            onPressed: (){
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(25.0),
+                                side: BorderSide(
+                                    color: Colors.redAccent)),
+                            padding: EdgeInsets.all(10),
+                            color: Colors.redAccent,
+                          ),
+                          FlatButton(
+                            child: Text("Satisfied",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Lato",
+                                    fontSize: 14)),
+                            textColor: Colors.white,
+                            onPressed: (){
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(25.0),
+                                side: BorderSide(
+                                    color: Colors.redAccent)),
+                            padding: EdgeInsets.all(10),
+                            color: Colors.redAccent,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            )
-                  // :Center(child: Text("No Data Found!!")),
+                  );
+                },
+              )
+            // :Center(child: Text("No Data Found!!")),
           ),
         ),
       ),

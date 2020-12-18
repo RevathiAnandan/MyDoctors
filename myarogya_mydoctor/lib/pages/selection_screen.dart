@@ -63,7 +63,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Doctor);
-                              final FirebaseUser user = await _auth.currentUser();
+                              final FirebaseUser user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
                               final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -95,7 +95,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Patient);
-                              final FirebaseUser user = await _auth.currentUser();
+                              final FirebaseUser user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
                               final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -127,7 +127,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Hospital);
-                              final FirebaseUser user = await _auth.currentUser();
+                              final FirebaseUser user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
 //                        final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();

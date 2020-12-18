@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
     };
-    final PhoneVerificationFailed verificationfailed = (AuthException authException){
+    final PhoneVerificationFailed verificationfailed = (FirebaseAuthException authException){
       print('${authException.message}');
     };
     final PhoneCodeSent smsSent = (String verId, [int forceResend]){

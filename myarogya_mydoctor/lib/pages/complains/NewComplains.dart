@@ -1,14 +1,25 @@
 import 'dart:io';
+import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
-import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
+import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../improvement/dropdownlists.dart';
+import '../Ads/showvideo.dart';
 class NewComplains extends StatefulWidget {
+  final String id;
+  final String mobile;
+  NewComplains(this.id, this.mobile);
   @override
   _NewComplainsState createState() => _NewComplainsState();
 }
 
 class _NewComplainsState extends State<NewComplains> {
+  String video;
+  String image;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController aboutController = TextEditingController();
   final TextEditingController sentoController = TextEditingController();
@@ -19,6 +30,7 @@ class _NewComplainsState extends State<NewComplains> {
   File _image;
   File _video;
   final picker = ImagePicker();
+  Random rand = Random();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +41,19 @@ class _NewComplainsState extends State<NewComplains> {
             Center(
               child: IconButton(
                 icon: Icon(Icons.cloud_upload,color: Colors.redAccent,),
+                onPressed: (){
+                  ApiService().MyComplains(
+                      rand.nextInt(100000).toString(),
+                      aboutController.text,
+                      sentoController.text,
+                      departController.text,
+                      cnameController.text,
+                      gvtController.text,
+                      _chosenValue1,
+                      image,
+                      video,
+                      widget.mobile);
+                },
               ),
             ),
           ],
@@ -145,46 +170,67 @@ class _NewComplainsState extends State<NewComplains> {
                   ],
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "List of my Complains",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "5",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Align(
+                //       alignment: Alignment.centerLeft,
+                //       child: Text(
+                //         "List of my Complains",
+                //         style: TextStyle(
+                //             color: Colors.redAccent,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold),
+                //       ),
+                //     ),
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: Text(
+                //         "5",
+                //         style: TextStyle(
+                //             color: Colors.redAccent,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold),
+                //       ),
+                //     ),
+                //
+                //   ],
+                // ),
                 Column(
                   children: [
                     Align(
                       alignment: Alignment.centerRight,
-                      child: RaisedButton(
+                      child: MaterialButton(
+                        color: Colors.redAccent,
                         child: Text(
-                          "Pick Video",
+                          "Upload Media",
                           style: TextStyle(
-                              color: Colors.redAccent,
+                              color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
-                          openVideos();
+                          if (_formKey.currentState.validate()) {
+                            Alert(
+                                context: context,
+                                title: "Choose Type",
+                                buttons: [
+                                  DialogButton(
+                                      child: Text("Pick Images"),
+                                      onPressed: () {
+                                        openImages();
+                                        Navigator.pop(context);
+                                      }),
+                                  DialogButton(
+                                      child: Text("Pick Video"),
+                                      onPressed: () {
+                                        openVideos();
+                                        Navigator.pop(context);
+                                      }),
+                                ]).show();
+                          } else {
+                            AuthService().toast("Please type the name above ");
+                          }
                         },
                       ),
                     ),
@@ -193,44 +239,21 @@ class _NewComplainsState extends State<NewComplains> {
                 Container(
                   height: 200,
                   width: 200,
-                  child: (_video!=null)?Stack(
+                  child: (_video != null)
+                      ? Stack(
                     children: <Widget>[
                       ShowVideoPlayer(_video),
                     ],
-                  ):Container(),
-                ),
-                Container(
-                  height: 200,
-                ),
-                Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: RaisedButton(
-                        child: Text(
-                          "Pick Image",
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          openImages();
-                        },
-                      ),
+                  )
+                      : (_image != null)
+                      ? AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.file(
+                      _image,
+                      fit: BoxFit.contain,
                     ),
-                  ],
-                ),
-                Container(
-                  height: 200,
-                  width: 200,
-                  child: (_image!=null)?Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.file(
-                        _image,
-                        fit: BoxFit.fill,
-                      )
-                  ):Container(),
+                  )
+                      : Container(),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -252,7 +275,6 @@ class _NewComplainsState extends State<NewComplains> {
                         color: Colors.redAccent,
                         fontFamily: 'Lato',
                       ),),
-
                     ],
                   ),
                 )
@@ -266,6 +288,7 @@ class _NewComplainsState extends State<NewComplains> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        uploadtask(_image,"image");
       } else {
         print('No image selected.');
       }
@@ -274,14 +297,39 @@ class _NewComplainsState extends State<NewComplains> {
 
   openVideos() async {
     final pickedFile = await picker.getVideo(source: ImageSource.camera);
-
     setState(() {
       if (pickedFile != null) {
         _video = File(pickedFile.path);
+        uploadtask(_video,"video");
         print(_video.path);
+
       } else {
         print('No video selected.');
       }
     });
   }
+
+  uploadtask(File media,String type) async {
+    print("enter uploadtask");
+    // await FirebaseAuth.instance.signInAnonymously();
+    //todo:if by chance this server crashes and user exeeds the level we can increse this random number until then good bye
+    String fileName = "media${rand.nextInt(100000)}";
+    StorageReference reference = FirebaseStorage.instance
+        .ref()
+        .child("MyComplains")
+        .child(aboutController.text)
+        .child(fileName);
+    StorageUploadTask uploadTask = reference.putFile(media);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    print("Uploading image completed");
+    final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    if (type == "video") {
+      video = downloadUrl;
+      image = "";
+    } else if (type == "image") {
+      image = downloadUrl;
+      video = "";
+    }
+  }
+
 }
