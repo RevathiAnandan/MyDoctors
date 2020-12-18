@@ -440,13 +440,14 @@ class ApiService{
   //
   // }
 
-Future MyAds(String name,String productCatogory, String slogan, List media,String mobile){
+Future MyAds(String name,String productCatogory, String slogan,String image,String video,String mobile){
     var db = fb.reference().child("MyAds").push();
     db.set({
       "AdName" : name,
       "ProductCatogory": productCatogory,
       "Slogan":slogan,
-      "Media":media,
+      "Image":image,
+      "Video":video,
       "Mobile":mobile,
     });
 }

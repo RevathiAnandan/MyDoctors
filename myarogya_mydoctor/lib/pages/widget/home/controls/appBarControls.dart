@@ -6,11 +6,15 @@ import 'package:myarogya_mydoctor/pages/widget/home/video_metadata/video_desc.da
 import 'package:myarogya_mydoctor/resources/assets.dart';
 
 import '../audio_spinner_icon.dart';
-Widget onScreenControls() {
+Widget appBarControls() {
   return Container(
     child: Row(
       children: <Widget>[
-        Expanded(flex: 5, child: videoDesc()),
+        Expanded(flex: 5, child: Text("My Ads",
+            style: TextStyle(
+                color: Colors.white,
+                fontFamily: "Lato",
+                fontSize: 14)),),
         Expanded(
           flex: 1,
           child: Container(

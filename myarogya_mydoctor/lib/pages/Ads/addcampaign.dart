@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/Ads.dart';
+import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
+import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
 
 import 'addAds.dart';
 
@@ -144,14 +146,15 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
               ListView.builder(
                       itemCount: myads.length,
                     itemBuilder: (context,index){
-                      final List<Widget> imageSliders = myads[index].media.map((item) => Container(
+                      final List<Widget> imageSliders =
+                          [Container(
                         child: Container(
                           margin: EdgeInsets.all(5.0),
                           child: ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(5.0)),
                               child: Stack(
                                 children: <Widget>[
-                                  Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                                  (myads[index].image!=null)?Image.network(myads[index].image, fit: BoxFit.cover, width: 1000.0):Container(),
                                   Positioned(
                                     bottom: 0.0,
                                     left: 0.0,
@@ -169,7 +172,7 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                                       ),
                                       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                                       child: Text(
-                                        'No. ${myads[index].media.indexOf(item)} image',
+                                        '${myads[index].slogan} ',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20.0,
@@ -182,22 +185,61 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                               )
                           ),
                         ),
-                      )).toList();
+                      ),
+                            Container(
+                        child: Container(
+                          margin: EdgeInsets.all(5.0),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              child: Stack(
+                                children: <Widget>[
+                                  (myads[index].video!=null)?AppVideoPlayer(myads[index].video):Container(),
+                                  Positioned(
+                                    bottom: 0.0,
+                                    left: 0.0,
+                                    right: 0.0,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromARGB(200, 0, 0, 0),
+                                            Color.fromARGB(0, 0, 0, 0)
+                                          ],
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                      child: Text(
+                                        '${myads[index].slogan} ',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ),
+                        ),
+                      )];
                         return Row(
                           children: [
                             Container(
-                              height:200,
+                              height:170,
                               width: 300,
                               child: Card(
                                 child:
                                 Stack(
                                   children: [
-
                                     CarouselSlider(
                                       items: imageSliders,
                                       options: CarouselOptions(
-                                          enlargeCenterPage: true,
-                                          aspectRatio: 2.0,
+                                        enableInfiniteScroll: false,
+                                          // enlargeCenterPage: true,
+                                          aspectRatio: 2,
                                           onPageChanged: (index, reason) {
                                             setState(() {
                                               _current = index;
@@ -205,23 +247,23 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                                           }
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: myads[index].media.map((url) {
-                                        int number = myads[index].media.indexOf(url);
-                                        return Container(
-                                          width: 8.0,
-                                          height: 8.0,
-                                          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: _current == number
-                                                ? Color.fromRGBO(0, 0, 0, 0.9)
-                                                : Color.fromRGBO(0, 0, 0, 0.4),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   children: myads[index].media.map((url) {
+                                    //     int number = myads[index].media.indexOf(url);
+                                    //     return Container(
+                                    //       width: 8.0,
+                                    //       height: 8.0,
+                                    //       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                    //       decoration: BoxDecoration(
+                                    //         shape: BoxShape.circle,
+                                    //         color: _current == number
+                                    //             ? Color.fromRGBO(0, 0, 0, 0.9)
+                                    //             : Color.fromRGBO(0, 0, 0, 0.4),
+                                    //       ),
+                                    //     );
+                                    //   }).toList(),
+                                    // ),
                                   ],
                                 )
                               ),
@@ -229,9 +271,15 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
                             Column(
                               children: [
                                 Container(
-
+                                  child: Card(
+                                    // width:
+                                  ),
                                 ),
-                                Container(),
+                                Container(
+                                  child:MaterialButton(
+
+                                  )
+                                ),
                               ],
                             ),
                           ],
@@ -251,10 +299,13 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {
           var refreshToken = MyAds.fromJson(values);
-          print(refreshToken);
+          print(refreshToken.mobile);
+          print(widget.mobile);
+
           if(widget.mobile==refreshToken.mobile){
             myads.add(refreshToken);
           }
+          print(myads.toString());
           setState(() {
             isLoading =false;
           });
