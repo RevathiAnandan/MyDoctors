@@ -21,7 +21,7 @@ Widget onScreenControls() {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 // userProfile(),
-                // videoControlAction(icon: AppIcons.heart, label: "17.8k"),
+                videoControlAction(icon: AppIcons.heart, label: "17.8k"),
                 // videoControlAction(icon: AppIcons.chat_bubble, label: "130"),
                 // videoControlAction(
                 //     icon: AppIcons.reply, label: "Share", size: 27),
