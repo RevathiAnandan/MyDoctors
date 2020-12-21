@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
@@ -20,6 +22,7 @@ class NewComplains extends StatefulWidget {
 class _NewComplainsState extends State<NewComplains> {
   String video;
   String image;
+  String _filePath;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController aboutController = TextEditingController();
   final TextEditingController sentoController = TextEditingController();
@@ -216,15 +219,34 @@ class _NewComplainsState extends State<NewComplains> {
                                 title: "Choose Type",
                                 buttons: [
                                   DialogButton(
-                                      child: Text("Pick Images"),
+                                      child: Text("Pick Photo",style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontFamily: 'Lato',
+                                      ),),
                                       onPressed: () {
                                         openImages();
                                         Navigator.pop(context);
                                       }),
                                   DialogButton(
-                                      child: Text("Pick Video"),
+                                      child: Text("Pick Video",style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontFamily: 'Lato',
+                                      ),),
                                       onPressed: () {
                                         openVideos();
+                                        Navigator.pop(context);
+                                      }),DialogButton(
+                                      child: Center(
+                                        child: Text("Pick Document",style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontFamily: 'Lato',
+                                        ),),
+                                      ),
+                                      onPressed: () {
+                                        opendoc();
                                         Navigator.pop(context);
                                       }),
                                 ]).show();
@@ -307,6 +329,19 @@ class _NewComplainsState extends State<NewComplains> {
         print('No video selected.');
       }
     });
+  }
+
+   opendoc() async {
+    try {
+      String filePath = await FilePicker.getFilePath(type: FileType.custom,allowedExtensions:['pdf', 'doc'] );
+      if (filePath == '') {
+        return;
+      }
+      print("File path: " + filePath);
+      setState((){this._filePath = filePath;});
+    } on PlatformException catch (e) {
+      print("Error while picking the file: " + e.toString());
+    }
   }
 
   uploadtask(File media,String type) async {

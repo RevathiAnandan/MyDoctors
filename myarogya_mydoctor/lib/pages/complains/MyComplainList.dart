@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/complains.dart';
 
 import 'NewComplains.dart';
 class MyComplainList extends StatefulWidget {
   final String id;
   final String mobile;
-  MyComplainList(this.id, this.mobile);
+  List<Complains> complain;
+  MyComplainList(this.id, this.mobile,this.complain);
   @override
   _MyComplainListState createState() => _MyComplainListState();
 }
@@ -38,24 +40,24 @@ class _MyComplainListState extends State<MyComplainList> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: 200,
+          height: MediaQuery.of(context).size.height,
           child: Card(
               child:
-              // dummyData.length >0?
+              widget.complain.length >0?
               ListView.builder(
-                itemCount:2,
+                itemCount:widget.complain.length,
                 itemBuilder:(context,index){
                   return ListTile(
                     contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     // title: Text(dummyData[index].userNumber),
-                    title:Text("Complain Number:"),
+                    title:Text("Complain Number:"+widget.complain[index].ComplainNumber),
                     trailing: Container(
                       width: 200  ,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           FlatButton(
-                            child: Text("Not Satisfied",
+                            child: Text("Satisfied",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Lato",
@@ -72,7 +74,7 @@ class _MyComplainListState extends State<MyComplainList> {
                             color: Colors.redAccent,
                           ),
                           FlatButton(
-                            child: Text("Satisfied",
+                            child: Text("Resolved",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Lato",
@@ -94,7 +96,7 @@ class _MyComplainListState extends State<MyComplainList> {
                   );
                 },
               )
-            // :Center(child: Text("No Data Found!!")),
+            :Center(child: Text("No Data Found!!")),
           ),
         ),
       ),

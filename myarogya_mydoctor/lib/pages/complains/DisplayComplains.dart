@@ -41,7 +41,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>MyComplainList(widget.id,widget.mobile),
+                  builder: (context) =>MyComplainList(widget.id,widget.mobile,complain),
                 ),
               );
             },),
@@ -62,8 +62,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                   return Container(
                     color: Colors.black,
                     child: Stack(
-                      alignment: AlignmentDirectional.topStart,
-                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image,fit: BoxFit.cover,):AppVideoPlayer(complain[position].video), onScreenControls()],
+                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls(complain[position])],
                     ),
                   );
                 },

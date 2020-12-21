@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.black.withOpacity(0.6),
               child: Stack(
                 alignment: AlignmentDirectional.topStart,
-                children: <Widget>[ myads[position].video==""?Image.network(myads[position].image):AppVideoPlayer(myads[position].video), onScreenControls()],
+                // children: <Widget>[ myads[position].video==""?Image.network(myads[position].image):AppVideoPlayer(myads[position].video), onScreenControls(myads[position])],
               ),
             );
           },

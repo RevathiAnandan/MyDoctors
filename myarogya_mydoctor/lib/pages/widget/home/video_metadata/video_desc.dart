@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/complains.dart';
 
-Widget videoDesc() {
+Widget videoDesc(Complains complains) {
   return Container(
     padding: EdgeInsets.only(left: 16, bottom: 60),
     child: Column(
@@ -10,7 +11,7 @@ Widget videoDesc() {
         Padding(
           padding: EdgeInsets.only(top: 7, bottom: 7),
           child: Text(
-            "@mcofie",
+           "Complain Number: "+complains.ComplainNumber,
             style: TextStyle(
                 fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
           ),
@@ -18,9 +19,7 @@ Widget videoDesc() {
         Padding(
           padding: EdgeInsets.only(top: 4, bottom: 7),
           child: Text(
-              "Lorem ipsum dolor sit amet, consectetur "
-              "adipiscing elit, "
-              "sed do eiusmod tempor.",
+              "About: "+complains.About,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -28,13 +27,8 @@ Widget videoDesc() {
         ),
         Row(
           children: <Widget>[
-            Icon(
-              Icons.music_note,
-              size: 19,
-              color: Colors.white,
-            ),
             Text(
-              "Lorem ipsum dolor sit amet ...",
+              "Category: "+complains.Category,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
