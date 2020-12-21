@@ -465,6 +465,10 @@ Future MyComplains(String Cno,String Cabout,String sendto,String depart,String c
       "Image":image,
       "Video":video,
       "Mobile":mobile,
+      "Risky":"0",
+      "Urgent":"0",
+      "Priority":"0",
+      "Views":"0",
     });
 }
 

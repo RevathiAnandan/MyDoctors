@@ -22,6 +22,7 @@ class NewComplains extends StatefulWidget {
 class _NewComplainsState extends State<NewComplains> {
   String video;
   String image;
+  String doc;
   String _filePath;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController aboutController = TextEditingController();
@@ -275,7 +276,57 @@ class _NewComplainsState extends State<NewComplains> {
                       fit: BoxFit.contain,
                     ),
                   )
-                      : Container(),
+                      :(_filePath != null)?Center(child: Text(_filePath)):Container(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "For 18+ viewers",
+                        style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child:MaterialButton(
+                        color: Colors.redAccent,
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: (){
+
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child:MaterialButton(
+                        color: Colors.redAccent,
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: (){
+
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -333,12 +384,13 @@ class _NewComplainsState extends State<NewComplains> {
 
    opendoc() async {
     try {
-      String filePath = await FilePicker.getFilePath(type: FileType.custom,allowedExtensions:['pdf', 'doc'] );
-      if (filePath == '') {
+      File filePath = await FilePicker.getFile(type: FileType.custom,allowedExtensions:['pdf', 'doc'] );
+      if (filePath.path == '') {
         return;
       }
-      print("File path: " + filePath);
-      setState((){this._filePath = filePath;});
+      print("File path: " + filePath.path);
+      setState((){this._filePath = filePath.path;});
+      uploadtask(filePath,"doc");
     } on PlatformException catch (e) {
       print("Error while picking the file: " + e.toString());
     }
@@ -364,6 +416,10 @@ class _NewComplainsState extends State<NewComplains> {
     } else if (type == "image") {
       image = downloadUrl;
       video = "";
+    }else if(type == "doc"){
+      doc = downloadUrl;
+      video = "";
+      image = "";
     }
   }
 

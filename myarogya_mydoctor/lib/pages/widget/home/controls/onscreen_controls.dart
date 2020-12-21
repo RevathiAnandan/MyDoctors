@@ -8,7 +8,7 @@ import 'package:myarogya_mydoctor/resources/assets.dart';
 
 import '../audio_spinner_icon.dart';
 import 'like_widget.dart';
-Widget onScreenControls(Complains complains) {
+Widget onScreenControls(Complains complains,String complainKey) {
   return Container(
     child: Row(
       children: <Widget>[
@@ -24,10 +24,10 @@ Widget onScreenControls(Complains complains) {
               children: <Widget>[
                 // userProfile(),
                 // videoControlAction(icon: AppIcons.heart, label: "17.8k"),
-                likeWidget(icon: Icons.nature,label: "Risky  "),
-                likeWidget(icon: Icons.info,label: "Urgent"),
-                likeWidget(icon: Icons.view_array,label: "Priority"),
-                likeWidget(icon: Icons.view_list,label: "Views "),
+                likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey),
+                likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey),
+                likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey),
+                likeWidget(icon: Icons.view_list,label: "Views",complainKey:complainKey),
                 // videoControlAction(icon: AppIcons.chat_bubble, label: "130"),
                 // videoControlAction(
                 //     icon: AppIcons.reply, label: "Share", size: 27),

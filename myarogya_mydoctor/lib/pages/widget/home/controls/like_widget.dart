@@ -1,8 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:myarogya_mydoctor/resources/dimen.dart';
 
-Widget likeWidget({IconData icon, String label}) {
+Widget likeWidget({IconData icon, String label,String complainKey}) {
+  FirebaseDatabase fb = FirebaseDatabase.instance;
   return Padding(
     padding: EdgeInsets.only(top: 10, bottom: 10),
     child: Column(
@@ -31,11 +33,15 @@ Widget likeWidget({IconData icon, String label}) {
                 label,
                 style: TextStyle(color: color),
               );
-            } else
+            } else {
               result = Text(
                 text,
                 style: TextStyle(color: color),
               );
+            }
+            fb.reference().child("MyComplains/${complainKey}/$label").set(text.toString());
+            print(text);
+            // print(result);
             return result;
           },
         ),

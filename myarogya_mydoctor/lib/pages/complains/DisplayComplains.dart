@@ -22,6 +22,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
 
   List<Complains> complain = [];
+  List<String> complainKey = [];
 
   bool isLoading = true;
 @override
@@ -62,7 +63,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                   return Container(
                     color: Colors.black,
                     child: Stack(
-                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls(complain[position])],
+                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls(complain[position],complainKey[position])],
                     ),
                   );
                 },
@@ -111,6 +112,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
         values.forEach((key, values) {
           var refreshToken = Complains.fromJson(values);
           complain.add(refreshToken);
+          complainKey.add(key);
           setState(() {
             isLoading =false;
           });
