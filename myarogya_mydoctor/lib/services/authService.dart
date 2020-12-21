@@ -14,12 +14,12 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'push_notification_service1.dart';
 
 class AuthService{
-  final PushNotificationService _pns = PushNotificationService();
+  // final PushNotificationService _pns = PushNotificationService();
   AuthCredential creds;
 
   //Handle Auth
-  handleAuth() async {
-    await _pns.initialise();
+  handleAuth() {
+    // await _pns.initialise();
     return StreamBuilder(
       stream:FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context,snapshot){
@@ -123,9 +123,9 @@ class AuthService{
         context: context,
         title: "Alert",
         content: Column(
-          children: <Widget>[
-            Text("Please Update Your Profile for Proceed Further!!")
-         ]
+            children: <Widget>[
+              Text("Please Update Your Profile for Proceed Further!!")
+            ]
         ),
         buttons: [
           DialogButton(

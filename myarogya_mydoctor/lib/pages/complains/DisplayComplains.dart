@@ -24,7 +24,12 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   List<Complains> complain = [];
 
   bool isLoading = true;
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getComplains();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +62,8 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                   return Container(
                     color: Colors.black,
                     child: Stack(
-                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls()],
+                      alignment: AlignmentDirectional.topStart,
+                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image,fit: BoxFit.cover,):AppVideoPlayer(complain[position].video), onScreenControls()],
                     ),
                   );
                 },
