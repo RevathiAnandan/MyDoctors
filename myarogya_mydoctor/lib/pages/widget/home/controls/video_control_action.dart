@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/resources/dimen.dart';
 
-Widget videoControlAction({IconData icon, String label, double size = 35}) {
+Widget videoControlAction({IconData icon, String label, double size = 20  }) {
   return Padding(
     padding: EdgeInsets.only(top: 10, bottom: 10),
-    child: Column(
+    child: Row(
       children: <Widget>[
         Icon(
           icon,

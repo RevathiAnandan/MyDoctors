@@ -451,7 +451,7 @@ Future MyAds(String name,String productCatogory, String slogan,String image,Stri
       "Mobile":mobile,
     });
 }
-Future MyComplains(String Cno,String Cabout,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile){
+Future MyComplains(String Cno,String Cabout,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile,int risky,int urgent,int priority,views){
     var db = fb.reference().child("MyComplains").push();
 
     db.set({
@@ -465,10 +465,10 @@ Future MyComplains(String Cno,String Cabout,String sendto,String depart,String c
       "Image":image,
       "Video":video,
       "Mobile":mobile,
-      "Risky":"0",
-      "Urgent":"0",
-      "Priority":"0",
-      "Views":"0",
+      "Risky":risky,
+      "Urgent":urgent,
+      "Priority":priority,
+      "Views":views,
     });
 }
 

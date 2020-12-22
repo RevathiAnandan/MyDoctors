@@ -83,7 +83,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         //   backgroundColorEnd: Colors.white,
         //
         // ),
-        body: NestedScrollView(
+        body: (selectedIndex!=1)?NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
@@ -285,6 +285,8 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
           body: Center(
             child: _widgetOptions()[selectedIndex],
           ),
+        ):Center(
+          child: _widgetOptions()[selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[

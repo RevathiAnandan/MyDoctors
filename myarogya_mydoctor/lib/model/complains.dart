@@ -9,10 +9,10 @@ class Complains{
   final String image;
   final String video;
   final String mobile;
-  final String Risky;
-  final String Urgent;
-  final String Priority;
-  final String Views;
+  final int Risky;
+  final int Urgent;
+  final int Priority;
+  final int Views;
   Complains._({this.ComplainNumber, this.About, this.SendTo,this.Category,this.Depart,this.CompanyName,this.Govt, this.image,this.video, this.mobile,this.Risky,this.Priority,this.Urgent,this.Views});
 
   factory Complains.fromJson(dynamic json){
@@ -27,10 +27,10 @@ class Complains{
       image: json["Image"] as String,
       video: json["Video"] as String,
       mobile: json["Mobile"] as String,
-      Risky: json["Risky"] as String,
-      Urgent: json["Urgent"] as String,
-      Priority: json["Priority"] as String,
-      Views: json["Views"] as String,
+      Risky: json["Risky"] as int,
+      Urgent: json["Urgent"] as int,
+      Priority: json["Priority"] as int,
+      Views: json["Views"] as int,
     );
   }
 

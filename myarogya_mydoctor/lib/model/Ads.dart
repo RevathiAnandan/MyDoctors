@@ -5,7 +5,8 @@ class MyAds{
   final String image;
   final String video;
   final String mobile;
-  MyAds._({this.name, this.productCatogory, this.slogan, this.image,this.video, this.mobile});
+  final int views;
+  MyAds._({this.name, this.productCatogory, this.slogan, this.image,this.video, this.mobile,this.views});
 
   factory MyAds.fromJson(dynamic json){
     return new MyAds._(
@@ -15,6 +16,7 @@ class MyAds{
       image: json["Image"] as String,
       video: json["Video"] as String,
       mobile: json["Mobile"] as String,
+      views: json["Views"] as int,
     );
   }
 

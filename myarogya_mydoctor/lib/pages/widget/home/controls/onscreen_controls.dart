@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/animations/spinner_animation.dart';
+import 'package:myarogya_mydoctor/model/Ads.dart';
 import 'package:myarogya_mydoctor/model/complains.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/video_control_action.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/video_metadata/user_profile.dart';
@@ -12,7 +13,16 @@ Widget onScreenControls(Complains complains,String complainKey) {
   return Container(
     child: Row(
       children: <Widget>[
-        Expanded(flex: 5, child: videoDesc(complains)),
+        Expanded(flex: 5, child: videoDesc(complains,complainKey)),
+      ],
+    ),
+  );
+}
+Widget onScreenControlsA(MyAds ads) {
+  return Container(
+    child: Row(
+      children: <Widget>[
+        Expanded(flex: 5, child: videoDescA(ads)),
         Expanded(
           flex: 2,
           child: Container(
@@ -23,23 +33,11 @@ Widget onScreenControls(Complains complains,String complainKey) {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 // userProfile(),
-                // videoControlAction(icon: AppIcons.heart, label: "17.8k"),
-                // InkWell(
-                //   onTap: (){
-                //     incrementcounter(complainKey);
-                //   },
-                //   child: Row(
-                //     children: <Widget>[
-                //       Icon(Icons.favorite),
-                //       Text(complains.Risky.toString()
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey),
-                likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey),
-                likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey),
-                likeWidget(icon: Icons.view_list,label: "Views",complainKey:complainKey),
+                videoControlAction(icon: Icons.remove_red_eye_outlined, label: ads.views.toString()),
+                // likeWidget(icon: Icons.nature,label: "Views  "),
+                // likeWidget(icon: Icons.info,label: "Urgent"),
+                // likeWidget(icon: Icons.view_array,label: "Priority"),
+                // likeWidget(icon: Icons.view_list,label: "Views "),
                 // videoControlAction(icon: AppIcons.chat_bubble, label: "130"),
                 // videoControlAction(
                 //     icon: AppIcons.reply, label: "Share", size: 27),
@@ -51,15 +49,4 @@ Widget onScreenControls(Complains complains,String complainKey) {
       ],
     ),
   );
-}
-
-incrementcounter(String key) async{
-  try {
-    var ref = fb.reference().child("MyComplains/$key/Risky");
-    await ref.once().then((data) async => {
-      await ref.set(data.value + 1),
-    });
-  } catch (e) {
-    print(e.message);
-  }
 }

@@ -23,6 +23,7 @@ class _DoctorSettingsState extends State<DoctorSettings> {
     // TODO: implement initState
     super.initState();
     initDynamicLinks();
+
   }
   @override
   Widget build(BuildContext context) {

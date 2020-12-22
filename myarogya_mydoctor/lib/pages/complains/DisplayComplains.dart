@@ -61,9 +61,10 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, position) {
                   return Container(
+                    height: MediaQuery.of(context).size.height,
                     color: Colors.black,
                     child: Stack(
-                      children: <Widget>[complain[position].video==""?Image.network(complain[position].image):AppVideoPlayer(complain[position].video), onScreenControls(complain[position],complainKey[position])],
+                      children: stackwidgets(position),
                     ),
                   );
                 },
@@ -156,5 +157,27 @@ class _DisplayComplainsState extends State<DisplayComplains> {
         print(isLoading.toString());
       }
     });
+  }
+
+  List<Widget> stackwidgets(position)  {
+    incrementcounter(complainKey[position]);
+    return [
+      if(complain[position].video=="")
+        Image.network(complain[position].image)
+      else
+        AppVideoPlayer(complain[position].video),
+      onScreenControls(complain[position],complainKey[position])
+    ];
+  }
+
+  incrementcounter(String key) async{
+    try {
+      var ref = fb.reference().child("MyComplains/$key/Views");
+      await ref.once().then((data) async => {
+        await ref.set(data.value + 1),
+      });
+    } catch (e) {
+      print(e.message);
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:myarogya_mydoctor/pages/Ads/addAds.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/appBarControls.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/onscreen_controls.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
+import 'package:myarogya_mydoctor/services/ApiService.dart';
 
 import 'addcampaign.dart';
 
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
   List<MyAds> myads = [];
+  List keys = [];
   bool isLoading = true;
   @override
   void initState() {
@@ -60,13 +62,26 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.black.withOpacity(0.6),
               child: Stack(
                 alignment: AlignmentDirectional.topStart,
-                // children: <Widget>[ myads[position].video==""?Image.network(myads[position].image):AppVideoPlayer(myads[position].video), onScreenControls(myads[position])],
+                children: stackwidgets(position),
               ),
             );
           },
           itemCount: myads.length),
     );
   }
+
+
+  List<Widget> stackwidgets(position)  {
+    incrementcounter(keys[position]);
+    return [
+      if(myads[position].video=="")
+        Image.network(myads[position].image)
+      else
+        AppVideoPlayer(myads[position].video),
+      onScreenControlsA(myads[position])
+    ];
+  }
+
   Future<MyAds> getads() async{
     await fb.reference().child("MyAds").once().then((DataSnapshot snapshot) {
       print(snapshot);
@@ -76,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           var refreshToken = MyAds.fromJson(values);
           print(refreshToken.mobile);
           myads.add(refreshToken);
+          keys.add(key);
           print(myads.toString());
           setState(() {
             isLoading =false;
@@ -84,5 +100,16 @@ class _HomeScreenState extends State<HomeScreen> {
         print(isLoading.toString());
       }
     });
+
+  }
+  incrementcounter(String key) async{
+    try {
+      var ref = fb.reference().child("MyAds/$key/Views");
+      await ref.once().then((data) async => {
+        await ref.set(data.value + 1),
+      });
+    } catch (e) {
+      print(e.message);
+    }
   }
 }
