@@ -61,7 +61,7 @@ class _NewComplainsState extends State<NewComplains> {
               ),
             ),
           ],
-          title: Text("Raise Complains",
+          title: Text("Raise Complain",
               style: TextStyle(
                   color: Colors.redAccent, fontFamily: "Lato", fontSize: 20)),
         ),
@@ -79,19 +79,6 @@ class _NewComplainsState extends State<NewComplains> {
                       controller: aboutController,
                       decoration: new InputDecoration(
                           hintText: "Complain About"
-                      ),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: sentoController,
-                      decoration: new InputDecoration(
-                          hintText: "Send To"
                       ),
                       style: TextStyle(
                         fontSize: 18,
@@ -133,9 +120,23 @@ class _NewComplainsState extends State<NewComplains> {
                       height: 15,
                     ),
                     TextFormField(
+                      controller: sentoController,
+                      decoration: new InputDecoration(
+                          hintText: "Send To (Phone Number)"
+                      ),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    TextFormField(
                       controller: departController,
                       decoration: new InputDecoration(
-                          hintText: "Department"
+                          hintText: "Govt Department"
                       ),
                       style: TextStyle(
                         fontSize: 18,
@@ -158,19 +159,19 @@ class _NewComplainsState extends State<NewComplains> {
                     SizedBox(
                       height: 15,
                     ),
-                    TextFormField(
-                      controller: gvtController,
-                      decoration: new InputDecoration(
-                          hintText: "Govt Authority"
-                      ),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                    // TextFormField(
+                    //   controller: gvtController,
+                    //   decoration: new InputDecoration(
+                    //       hintText: "Govt Authority"
+                    //   ),
+                    //   style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontFamily: 'Lato',
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
                   ],
                 ),
 

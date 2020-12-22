@@ -2,14 +2,18 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:myarogya_mydoctor/resources/dimen.dart';
-
+FirebaseDatabase fb = FirebaseDatabase.instance;
+int counter = 0;
 Widget likeWidget({IconData icon, String label,String complainKey}) {
-  FirebaseDatabase fb = FirebaseDatabase.instance;
+
   return Padding(
     padding: EdgeInsets.only(top: 10, bottom: 10),
     child: Column(
       children: <Widget>[
         LikeButton(
+          onTap: (isLiked){
+            return changedata(isLiked,complainKey,label);
+          },
           size: 30,
           circleColor:
           CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -39,8 +43,7 @@ Widget likeWidget({IconData icon, String label,String complainKey}) {
                 style: TextStyle(color: color),
               );
             }
-            fb.reference().child("MyComplains/${complainKey}/$label").set(text.toString());
-            print(text);
+
             // print(result);
             return result;
           },
@@ -48,4 +51,15 @@ Widget likeWidget({IconData icon, String label,String complainKey}) {
       ],
     ),
   );
+}
+
+Future<bool> changedata(bool isLiked,String complainKey,String label)async{
+  if(isLiked){
+    counter = counter++;
+  }else{
+    counter = counter--;
+  }
+  // fb.reference().child("MyComplains/${complainKey}/$label").set(countlike.toString());
+  print(label +"" + counter.toString());
+  return !isLiked;
 }

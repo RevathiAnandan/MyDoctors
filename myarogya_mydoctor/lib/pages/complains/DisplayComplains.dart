@@ -77,22 +77,35 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                   flex: 1,
                   child: Center(child: Text("Issue Catogory"),),
                 ),
+                new Divider(
+                  height: 10.0,
+                  color: Colors.redAccent,
+                ),
                 Flexible(
                   flex: 7,
                   child: ListView.builder(
                     itemCount: Dropdownlists().categories.length,
                     itemBuilder: (context,index){
-                      return MaterialButton(
-                        child: Text(Dropdownlists().categories[index],style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 15.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),),
-                        onPressed: (){
-                            filtercomplains(Dropdownlists().categories[index]);
-                        },
+                      return Column(
+                        children: [
+                          MaterialButton(
+                            child: Text(Dropdownlists().categories[index],style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 15.0,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold,
+                            ),),
+                            onPressed: (){
+                                filtercomplains(Dropdownlists().categories[index]);
+                            },
+                          ),
+                          new Divider(
+                            height: 10.0,
+                            color: Colors.redAccent,
+                          ),
+                        ],
                       );
+
                     },
                   ),
                 ),

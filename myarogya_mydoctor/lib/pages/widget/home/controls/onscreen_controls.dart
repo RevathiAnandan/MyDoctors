@@ -24,6 +24,18 @@ Widget onScreenControls(Complains complains,String complainKey) {
               children: <Widget>[
                 // userProfile(),
                 // videoControlAction(icon: AppIcons.heart, label: "17.8k"),
+                // InkWell(
+                //   onTap: (){
+                //     incrementcounter(complainKey);
+                //   },
+                //   child: Row(
+                //     children: <Widget>[
+                //       Icon(Icons.favorite),
+                //       Text(complains.Risky.toString()
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey),
                 likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey),
                 likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey),
@@ -39,4 +51,15 @@ Widget onScreenControls(Complains complains,String complainKey) {
       ],
     ),
   );
+}
+
+incrementcounter(String key) async{
+  try {
+    var ref = fb.reference().child("MyComplains/$key/Risky");
+    await ref.once().then((data) async => {
+      await ref.set(data.value + 1),
+    });
+  } catch (e) {
+    print(e.message);
+  }
 }

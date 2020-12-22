@@ -51,6 +51,11 @@ class _MyComplainListState extends State<MyComplainList> {
                     contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     // title: Text(dummyData[index].userNumber),
                     title:Text("Complain Number:"+widget.complain[index].ComplainNumber),
+                    subtitle: Column(
+                      children: [
+                        Text("About:" +widget.complain[index].About),
+                      ],
+                    ),
                     trailing: Container(
                       width: 200  ,
                       child: Row(
