@@ -52,7 +52,9 @@ class _AddadsState extends State<Addads> {
                         sloganController.text,
                         image,
                         video,
-                        widget.mobile);
+                        widget.mobile,
+                      0,
+                    );
                     AuthService()
                         .toast("Your ad will be uploaded after reviewing");
                     Navigator.pop(context);

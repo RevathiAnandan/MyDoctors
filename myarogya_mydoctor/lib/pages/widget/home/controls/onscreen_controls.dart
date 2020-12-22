@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/animations/spinner_animation.dart';
 import 'package:myarogya_mydoctor/model/Ads.dart';
@@ -8,8 +10,11 @@ import 'package:myarogya_mydoctor/pages/widget/home/video_metadata/video_desc.da
 import 'package:myarogya_mydoctor/resources/assets.dart';
 
 import '../audio_spinner_icon.dart';
+import '../home_video_renderer.dart';
 import 'like_widget.dart';
+
 Widget onScreenControls(Complains complains,String complainKey) {
+
   return Container(
     child: Row(
       children: <Widget>[
@@ -18,7 +23,9 @@ Widget onScreenControls(Complains complains,String complainKey) {
     ),
   );
 }
-Widget onScreenControlsA(MyAds ads) {
+Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position) {
+
+
   return Container(
     child: Row(
       children: <Widget>[
@@ -34,18 +41,11 @@ Widget onScreenControlsA(MyAds ads) {
               children: <Widget>[
                 // userProfile(),
                 videoControlAction(icon: Icons.remove_red_eye_outlined, label: ads.views.toString()),
-                // likeWidget(icon: Icons.nature,label: "Views  "),
-                // likeWidget(icon: Icons.info,label: "Urgent"),
-                // likeWidget(icon: Icons.view_array,label: "Priority"),
-                // likeWidget(icon: Icons.view_list,label: "Views "),
-                // videoControlAction(icon: AppIcons.chat_bubble, label: "130"),
-                // videoControlAction(
-                //     icon: AppIcons.reply, label: "Share", size: 27),
-                // SpinnerAnimation(body: audioSpinner())
               ],
             ),
           ),
-        )
+        ),
+
       ],
     ),
   );

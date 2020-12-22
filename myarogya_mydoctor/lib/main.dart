@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 import 'package:myarogya_mydoctor/improvement/bookdetailed.dart';
@@ -22,7 +23,18 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Firebase.initializeApp();
+  }
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(

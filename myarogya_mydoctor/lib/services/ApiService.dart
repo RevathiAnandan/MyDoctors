@@ -440,7 +440,7 @@ class ApiService{
   //
   // }
 
-Future MyAds(String name,String productCatogory, String slogan,String image,String video,String mobile){
+Future MyAds(String name,String productCatogory, String slogan,String image,String video,String mobile,int views){
     var db = fb.reference().child("MyAds").push();
     db.set({
       "AdName" : name,
@@ -449,6 +449,7 @@ Future MyAds(String name,String productCatogory, String slogan,String image,Stri
       "Image":image,
       "Video":video,
       "Mobile":mobile,
+      "Views":views,
     });
 }
 Future MyComplains(String Cno,String Cabout,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile,int risky,int urgent,int priority,views){

@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
   List<MyAds> myads = [];
+  List<MyAds> nextads = [];
   List keys = [];
   bool isLoading = true;
   @override
@@ -54,19 +55,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontFamily: "Lato",
                 fontSize: 20)),
       ),
-      body: PageView.builder(
-
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, position) {
-            return Container(
-              color: Colors.black.withOpacity(0.6),
-              child: Stack(
-                alignment: AlignmentDirectional.topStart,
-                children: stackwidgets(position),
-              ),
-            );
-          },
-          itemCount: myads.length),
+      body: Row(
+        children: [
+          Flexible(
+            flex:5,
+            child: PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, position) {
+                return Container(
+                  color: Colors.black.withOpacity(0.6),
+                  child: Stack(
+                    alignment: AlignmentDirectional.topStart,
+                    children: stackwidgets(position),
+                  ),
+                );
+              },
+              itemCount: myads.length),
+          ),
+          Flexible(
+           flex: 2,
+           child: ListView.builder(
+             itemCount: 3,
+             itemBuilder: (_,index){
+               nextthreeads(index);
+               return Column(
+                 children: [
+                   Container(
+                     height:75,
+                     decoration: BoxDecoration(
+                       // color: (add) ? Colors.green : Colors.red,
+                       borderRadius: BorderRadius.circular(20),
+                     ),
+                     child: myads[index].video=="" ? Image.network(myads[index].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index].video),
+                   ),
+                   SizedBox(height: 10,)
+                 ],
+               );
+             },
+           ),
+          ),
+        ]
+    ),
     );
   }
 
@@ -78,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Image.network(myads[position].image)
       else
         AppVideoPlayer(myads[position].video),
-      onScreenControlsA(myads[position])
+      onScreenControlsA(myads[position],myads,position)
     ];
   }
 
@@ -100,7 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
         print(isLoading.toString());
       }
     });
+  }
 
+  nextthreeads(int position){
+    nextads.add(myads[position+1]);
+    print("Harun"+nextads.toString());
   }
   incrementcounter(String key) async{
     try {
