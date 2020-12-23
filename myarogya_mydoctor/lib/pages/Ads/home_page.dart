@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
 import 'package:myarogya_mydoctor/model/Ads.dart';
 import 'package:myarogya_mydoctor/pages/Ads/addAds.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/appBarControls.dart';
@@ -88,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                      ),
                      child: myads[index].video=="" ? Image.network(myads[index].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index].video),
                    ),
-                   SizedBox(height: 10,)
+                   SizedBox(height: 10,),
                  ],
                );
              },
@@ -144,5 +145,25 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       print(e.message);
     }
+  }
+
+   filterAds(String catogory) async {
+     await fb.reference().child("MyAds").once().then((DataSnapshot snapshot) {
+       print(snapshot);
+       if (snapshot.value != null) {
+         Map<dynamic, dynamic> values = snapshot.value;
+         values.forEach((key, values) {
+           var refreshToken = MyAds.fromJson(values);
+           print(refreshToken.mobile);
+           if (refreshToken.productCatogory == catogory) {
+             myads.add(refreshToken);
+           }
+           setState(() {
+             isLoading =false;
+           });
+         });
+         print(isLoading.toString());
+       }
+     });
   }
 }

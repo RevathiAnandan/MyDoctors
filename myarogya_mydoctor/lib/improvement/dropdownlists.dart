@@ -33,6 +33,7 @@ class Dropdownlists{
 
   ];
   List<String> categories = [
+   "General",
    "Water",
     "Road",
     "Electricity",
@@ -41,5 +42,19 @@ class Dropdownlists{
     "Credit Card",
     "Banking",
     "Court cases"
+  ];
+  List<String> adscategories = [
+    "Mobiles",
+    "Computers",
+    "Electronic",
+    "Cars",
+    "Bikes",
+    "Property",
+    "Company",
+    "Textile",
+    "Hotels",
+    "Restaurant"
+    "Jewellery"
+    "General"
   ];
 }

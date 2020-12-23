@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
 import 'package:myarogya_mydoctor/pages/Ads/showvideo.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
@@ -29,6 +30,7 @@ class _AddadsState extends State<Addads> {
   List<File> _media = [];
   String image;
   String video;
+  String _chosenValue1 = "Mobiles";
   final picker = ImagePicker();
   bool name = false;
   @override
@@ -102,14 +104,42 @@ class _AddadsState extends State<Addads> {
                     SizedBox(
                       height: 15,
                     ),
-                    TextFormField(
-                      controller: categoryController,
-                      decoration:
-                          new InputDecoration(hintText: "Product Category"),
+                    // TextFormField(
+                    //   controller: categoryController,
+                    //   decoration:
+                    //       new InputDecoration(hintText: "Product Category"),
+                    //   style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontFamily: 'Lato',
+                    //   ),
+                    // ),
+                    Text(
+                      "Product Category",
                       style: TextStyle(
+                        color: Colors.redAccent,
                         fontSize: 18,
                         fontFamily: 'Lato',
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    DropdownButton<String>(
+                      isExpanded: true,
+                      icon: Icon(Icons.arrow_drop_down),
+                      iconSize: 42,
+                      value: _chosenValue1,
+                      // underline: SizedBox(),
+                      items: Dropdownlists().adscategories
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          _chosenValue1 = value;
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 15,
