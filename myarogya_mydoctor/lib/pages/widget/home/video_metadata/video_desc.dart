@@ -62,7 +62,7 @@ Widget videoDesc(Complains complains,String complainKey) {
             Flexible(flex:5,child: likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey,type: complains.Urgent)),
             Flexible(flex:5,child: likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey,type: complains.Priority)),
 
-            Flexible(flex:5,child: videoControlAction(icon: Icons.remove_red_eye_outlined, label: complains.Views.toString())),
+            Flexible(flex:5,child: videoControlAction(icon: Icons.remove_red_eye, label: complains.Views.toString())),
           ],
         )
       ],

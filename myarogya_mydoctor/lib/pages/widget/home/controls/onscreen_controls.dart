@@ -40,7 +40,7 @@ Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position) {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 // userProfile(),
-                videoControlAction(icon: Icons.remove_red_eye_outlined, label: ads.views.toString()),
+                videoControlAction(icon: Icons.remove_red_eye, label: ads.views.toString()),
               ],
             ),
           ),

@@ -170,6 +170,8 @@ class _EditAddHospital extends State<EditAddHospital> {
     nurlist.add(widget.hospitalValues.nurseslist);
     stafflist.add(widget.hospitalValues.staffslist);
     TPA.add(widget.hospitalValues.tpalist);
+    fcl.add(widget.hospitalValues.facilities[0]);
+    print(fcl.toString());
   }
 
   @override
@@ -371,8 +373,8 @@ class _EditAddHospital extends State<EditAddHospital> {
                     }
                   }else if(pageindex == 4){
                     print("page5");
+                    addHeathCheckup();
                     health.clear();
-                    diagnosis.clear();
                     for(int i=0;i<widget.hospitalValues.health.length;i++) {
                       health.add(
                           {
@@ -385,8 +387,8 @@ class _EditAddHospital extends State<EditAddHospital> {
                     });
                   }  else if(pageindex == 5){
                     print("page6");
+                    addSurgery();
                     surgery.clear();
-                    health.clear();
                     for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
                       surgery.add({
                         "Type": widget.hospitalValues.surgery[i].surgeryname,

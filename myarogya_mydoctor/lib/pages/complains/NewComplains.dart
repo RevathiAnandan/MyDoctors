@@ -364,6 +364,7 @@ class _NewComplainsState extends State<NewComplains> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        print("File path: " + _image.path.split('/').last);
         uploadtask(_image,"image");
       } else {
         print('No image selected.');
@@ -391,7 +392,7 @@ class _NewComplainsState extends State<NewComplains> {
       if (filePath.path == '') {
         return;
       }
-      print("File path: " + filePath.path);
+      print("File path: " + filePath.path.split('/').last);
       setState((){this._filePath = filePath.path;});
       uploadtask(filePath,"doc");
     } on PlatformException catch (e) {

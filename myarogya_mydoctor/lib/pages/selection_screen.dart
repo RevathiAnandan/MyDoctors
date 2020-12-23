@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
@@ -23,6 +24,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   initState()  {
     // TODO: implement initState
     super.initState();
+    Firebase.initializeApp();
   }
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Doctor);
-                              final FirebaseUser user = await _auth.currentUser;
+                              final User user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
                               final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -95,7 +97,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Patient);
-                              final FirebaseUser user = await _auth.currentUser;
+                              final User user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
                               final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -127,7 +129,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             padding: EdgeInsets.all(16),
                             onPressed: () async{
                               SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Hospital);
-                              final FirebaseUser user = await _auth.currentUser;
+                              final User user = await _auth.currentUser;
                               final uid = user.uid.toString();
                               final usermobile = user.phoneNumber.toString();
 //                        final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();

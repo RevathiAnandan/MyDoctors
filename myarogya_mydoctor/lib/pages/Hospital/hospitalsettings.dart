@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Firebase.initializeApp();
     getBooking();
   }
   List<Booking> dummyData = [];

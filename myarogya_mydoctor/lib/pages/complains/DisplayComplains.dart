@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
 import 'package:myarogya_mydoctor/model/complains.dart';
+import 'package:myarogya_mydoctor/pages/complains/ComplainResolution.dart';
 import 'package:myarogya_mydoctor/pages/complains/MyComplainList.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/onscreen_controls.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
@@ -42,7 +43,25 @@ class _DisplayComplainsState extends State<DisplayComplains> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
+                  builder: (context) =>NewComplains(widget.id,widget.mobile),
+                ),
+              );
+            },),
+          IconButton(icon: Icon(Icons.list,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
                   builder: (context) =>MyComplainList(widget.id,widget.mobile,complain),
+                ),
+              );
+            },),
+          IconButton(icon: Icon(Icons.announcement,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>ComplainResolution(widget.id,widget.mobile),
                 ),
               );
             },),
