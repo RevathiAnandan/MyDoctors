@@ -95,7 +95,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: Center(child: Text("Issue Catogory"),),
+                  child: Center(child: Text("Issue Category"),),
                 ),
                 new Divider(
                   height: 10.0,

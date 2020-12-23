@@ -26,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<MyAds> nextads = [];
   List keys = [];
   bool isLoading = true;
+  int nxtadindex = 0;
+  PageController _pagePosition = PageController();
   @override
   void initState() {
     // TODO: implement initState
@@ -56,13 +58,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontFamily: "Lato",
                 fontSize: 20)),
       ),
-      body: Row(
+      body: isLoading?Column(
+        children: [
+          LinearProgressIndicator(),
+          Text("Your ads is on the way!!")
+        ],
+      ):Row(
         children: [
           Flexible(
             flex:5,
             child: PageView.builder(
+              onPageChanged: (index){
+                setState(() {
+                  nxtadindex = index+1;
+                });
+              },
               scrollDirection: Axis.vertical,
+              controller: _pagePosition,
               itemBuilder: (context, position) {
+                print("Harun"+_pagePosition.toString());
                 return Container(
                   color: Colors.black.withOpacity(0.6),
                   child: Stack(
@@ -75,24 +89,66 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Flexible(
            flex: 2,
-           child: ListView.builder(
-             itemCount: 3,
-             itemBuilder: (_,index){
-               nextthreeads(index);
-               return Column(
-                 children: [
-                   Container(
-                     height:75,
-                     decoration: BoxDecoration(
-                       // color: (add) ? Colors.green : Colors.red,
-                       borderRadius: BorderRadius.circular(20),
-                     ),
-                     child: myads[index].video=="" ? Image.network(myads[index].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index].video),
-                   ),
-                   SizedBox(height: 10,),
-                 ],
-               );
-             },
+           child: Column(
+             children: [
+               SizedBox(height: 10,),
+               Flexible(
+                 flex: 0,
+                 child: Center(child: Text("Product Category"),),
+               ),
+               new Divider(
+                 height: 10.0,
+                 color: Colors.redAccent,
+               ),
+               Flexible(
+                 child: ListView.builder(
+                   itemCount: Dropdownlists().adscategories.length,
+                   itemBuilder: (context,index){
+                     return Column(
+                       children: [
+                         MaterialButton(
+                           child: Text(Dropdownlists().adscategories[index],style: TextStyle(
+                             color: Colors.redAccent,
+                             fontSize: 15.0,
+                             fontFamily: 'Lato',
+                             fontWeight: FontWeight.bold,
+                           ),),
+                           onPressed: (){
+                             filterAds(Dropdownlists().adscategories[index]);
+                           },
+                         ),
+                         new Divider(
+                           height: 10.0,
+                           color: Colors.redAccent,
+                         ),
+                       ],
+                     );
+
+                   },
+                 ),
+               ),
+               Expanded(
+                 child: ListView.builder(
+                   itemCount: 3,
+                   itemBuilder: (_,index){
+                     return Column(
+                       children: [
+                         Container(
+                           height:75,
+                           decoration: BoxDecoration(
+                             // color: (add) ? Colors.green : Colors.red,
+                             borderRadius: BorderRadius.circular(20),
+                           ),
+                           // child: myads[index+nxtadindex].video=="" ? Image.network(myads[index+nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index+nxtadindex].video),
+                           child: myads[nxtadindex].video=="" ? Image.network(myads[nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[nxtadindex].video),
+                         ),
+                         SizedBox(height: 10,),
+                       ],
+                     );
+                   },
+                 ),
+               ),
+             ],
            ),
           ),
         ]
@@ -102,7 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   List<Widget> stackwidgets(position)  {
+    print(position.toString());
     incrementcounter(keys[position]);
+    // nextthreeads(position);
     return [
       if(myads[position].video=="")
         Image.network(myads[position].image)
@@ -133,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   nextthreeads(int position){
+    print(position.toString());
     nextads.add(myads[position+1]);
     print("Harun"+nextads.toString());
   }
@@ -148,6 +207,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
    filterAds(String catogory) async {
+    nextads.clear();
+     setState(() {
+       isLoading =true;
+     });
+
+    print("Enter filter ads");
      await fb.reference().child("MyAds").once().then((DataSnapshot snapshot) {
        print(snapshot);
        if (snapshot.value != null) {

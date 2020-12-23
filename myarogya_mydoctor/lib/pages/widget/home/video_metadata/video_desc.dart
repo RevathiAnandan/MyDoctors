@@ -58,11 +58,32 @@ Widget videoDesc(Complains complains,String complainKey) {
             //   ),
             // ),
 
-            Flexible(flex:5,child: likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey,type: complains.Risky)),
-            Flexible(flex:5,child: likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey,type: complains.Urgent)),
-            Flexible(flex:5,child: likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey,type: complains.Priority)),
+            Flexible(flex:5,child: Column(
+              children: [
+                likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey,type: complains.Risky),
+                Text("Risky",style: TextStyle(color: Colors.white,),),
+              ],
+            )),
+            Flexible(flex:5,child: Column(
+              children: [
+                likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey,type: complains.Urgent),
+                Text("Urgent",style: TextStyle(color: Colors.white,),),
 
-            Flexible(flex:5,child: videoControlAction(icon: Icons.remove_red_eye, label: complains.Views.toString())),
+              ],
+            )),
+            Flexible(flex:5,child: Column(
+              children: [
+                likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey,type: complains.Priority),
+                Text("Priority",style: TextStyle(color: Colors.white,),),
+              ],
+            )),
+
+            Flexible(flex:5,child: Column(
+              children: [
+                videoControlAction(icon: Icons.remove_red_eye, label: complains.Views.toString()),
+                Text("Views",style: TextStyle(color: Colors.white,),),
+              ],
+            )),
           ],
         )
       ],

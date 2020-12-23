@@ -20,6 +20,9 @@ class NewComplains extends StatefulWidget {
 }
 
 class _NewComplainsState extends State<NewComplains> {
+
+
+  int complainnumber;
   String video;
   String image;
   String doc;
@@ -35,6 +38,15 @@ class _NewComplainsState extends State<NewComplains> {
   File _video;
   final picker = ImagePicker();
   Random rand = Random();
+  bool isLoading = false;
+  bool mediauploaded = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    complainnumber = rand.nextInt(100000);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,19 +58,25 @@ class _NewComplainsState extends State<NewComplains> {
               child: IconButton(
                 icon: Icon(Icons.cloud_upload,color: Colors.redAccent,),
                 onPressed: (){
-                  AuthService().toast("Your complaint is under process");
-                  Navigator.pop(context);
-                  ApiService().MyComplains(
-                      rand.nextInt(100000).toString(),
-                      aboutController.text,
-                      "+91${sentoController.text}",
-                      departController.text,
-                      cnameController.text,
-                      gvtController.text,
-                      _chosenValue1,
-                      image,
-                      video,
-                      widget.mobile,0,0,0,0);
+                  if (_formKey.currentState.validate()&&mediauploaded) {
+                    _formKey.currentState.save();
+                    AuthService().toast("Your complaint is under process");
+                    Navigator.pop(context);
+                    ApiService().MyComplains(
+                        complainnumber.toString(),
+                        aboutController.text,
+                        "+91${sentoController.text}",
+                        departController.text,
+                        cnameController.text,
+                        gvtController.text,
+                        _chosenValue1,
+                        image,
+                        video,
+                        widget.mobile,0,0,0,0);
+                  }else{
+                    AuthService().toast("Please Complete filling data and upload media");
+                  }
+
                 },
               ),
             ),
@@ -68,7 +86,7 @@ class _NewComplainsState extends State<NewComplains> {
                   color: Colors.redAccent, fontFamily: "Lato", fontSize: 20)),
         ),
 
-        body: SingleChildScrollView(
+        body: isLoading?loadingprogess():SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
           child: Container(
             child: Form(
@@ -86,6 +104,12 @@ class _NewComplainsState extends State<NewComplains> {
                         fontSize: 18,
                         fontFamily: 'Lato',
                       ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15,
@@ -130,6 +154,12 @@ class _NewComplainsState extends State<NewComplains> {
                         fontSize: 18,
                         fontFamily: 'Lato',
                       ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15,
@@ -144,6 +174,12 @@ class _NewComplainsState extends State<NewComplains> {
                         fontSize: 18,
                         fontFamily: 'Lato',
                       ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15,
@@ -157,6 +193,12 @@ class _NewComplainsState extends State<NewComplains> {
                         fontSize: 18,
                         fontFamily: 'Lato',
                       ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 15,
@@ -346,7 +388,7 @@ class _NewComplainsState extends State<NewComplains> {
                         color: Colors.redAccent,
                         fontFamily: 'Lato',
                       ),),
-                      Text("    Image should be max of 2MB",style: TextStyle(
+                      Text("    Image should be max of 1MB",style: TextStyle(
                         fontSize: 18,
                         color: Colors.redAccent,
                         fontFamily: 'Lato',
@@ -373,13 +415,12 @@ class _NewComplainsState extends State<NewComplains> {
   }
 
   openVideos() async {
-    final pickedFile = await picker.getVideo(source: ImageSource.camera);
+    final pickedFile = await picker.getVideo(source: ImageSource.camera,maxDuration: Duration(seconds: 10));
     setState(() {
       if (pickedFile != null) {
         _video = File(pickedFile.path);
         uploadtask(_video,"video");
         print(_video.path);
-
       } else {
         print('No video selected.');
       }
@@ -402,17 +443,24 @@ class _NewComplainsState extends State<NewComplains> {
 
   uploadtask(File media,String type) async {
     print("enter uploadtask");
+    setState(() {
+      isLoading = true;
+    });
     // await FirebaseAuth.instance.signInAnonymously();
     //todo:if by chance this server crashes and user exeeds the level we can increse this random number until then good bye
     String fileName = "media${rand.nextInt(100000)}";
     StorageReference reference = FirebaseStorage.instance
         .ref()
         .child("MyComplains")
-        .child(aboutController.text)
+        .child(complainnumber.toString())
         .child(fileName);
     StorageUploadTask uploadTask = reference.putFile(media);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     print("Uploading image completed");
+    setState(() {
+      isLoading = false;
+      mediauploaded = true;
+    });
     final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     if (type == "video") {
       video = downloadUrl;
@@ -426,5 +474,12 @@ class _NewComplainsState extends State<NewComplains> {
       image = "";
     }
   }
-
+  Widget loadingprogess(){
+    return Column(
+      children: [
+        LinearProgressIndicator(),
+        Text("Uploading please wait"),
+      ],
+    );
+  }
 }

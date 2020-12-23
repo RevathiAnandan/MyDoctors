@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mock_data/mock_data.dart';
-import 'addSpecialBed.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AddHospital extends StatefulWidget {

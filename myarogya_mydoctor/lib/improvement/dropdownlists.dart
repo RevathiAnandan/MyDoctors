@@ -53,8 +53,8 @@ class Dropdownlists{
     "Company",
     "Textile",
     "Hotels",
-    "Restaurant"
-    "Jewellery"
-    "General"
+    "Restaurant",
+    "Jewellery",
+    "General",
   ];
 }

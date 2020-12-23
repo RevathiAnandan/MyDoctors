@@ -33,17 +33,10 @@ Widget likeWidget({IconData icon, String label,String complainKey,int type}) {
             var color = isLiked ? Colors.white : Colors.white;
             count = type;
             Widget result;
-            if (count == 0) {
-              result = Text(
-                label,
-                style: TextStyle(color: color),
-              );
-            } else {
               result = Text(
                 text,
                 style: TextStyle(color: color),
               );
-            }
             print("Harun"+text);
             // print(result);
             return result;

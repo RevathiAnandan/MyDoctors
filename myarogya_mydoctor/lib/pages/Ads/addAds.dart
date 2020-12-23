@@ -33,6 +33,8 @@ class _AddadsState extends State<Addads> {
   String _chosenValue1 = "Mobiles";
   final picker = ImagePicker();
   bool name = false;
+  bool isLoading = false;
+  bool uploadedmedia = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,7 @@ class _AddadsState extends State<Addads> {
                   color: Colors.redAccent,
                 ),
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState.validate()&&uploadedmedia) {
                     ApiService().MyAds(
                         nameController.text,
                         categoryController.text,
@@ -62,7 +64,7 @@ class _AddadsState extends State<Addads> {
                     Navigator.pop(context);
                   } else {
                     AuthService().toast(
-                        "Please Complete filling data and Submit down below");
+                        "Please Complete filling data and upload media");
                   }
                 },
               ),
@@ -72,7 +74,7 @@ class _AddadsState extends State<Addads> {
               style: TextStyle(
                   color: Colors.redAccent, fontFamily: "Lato", fontSize: 20)),
         ),
-        body: SingleChildScrollView(
+        body: isLoading?loadingprogess():SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
           child: Container(
             child: Form(
@@ -105,23 +107,22 @@ class _AddadsState extends State<Addads> {
                       height: 15,
                     ),
                     // TextFormField(
+                    //   validator: (value) {
+                    //     if (value.isEmpty) {
+                    //       return 'Please enter some text';
+                    //     }
+                    //     return null;
+                    //   },
                     //   controller: categoryController,
                     //   decoration:
                     //       new InputDecoration(hintText: "Product Category"),
                     //   style: TextStyle(
+                    //     color: Colors.redAccent,
                     //     fontSize: 18,
                     //     fontFamily: 'Lato',
+                    //     fontWeight: FontWeight.bold,
                     //   ),
                     // ),
-                    Text(
-                      "Product Category",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     DropdownButton<String>(
                       isExpanded: true,
                       icon: Icon(Icons.arrow_drop_down),
@@ -145,6 +146,12 @@ class _AddadsState extends State<Addads> {
                       height: 15,
                     ),
                     TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                       controller: sloganController,
                       decoration: new InputDecoration(hintText: "Slogan"),
                       style: TextStyle(
@@ -160,31 +167,31 @@ class _AddadsState extends State<Addads> {
                 SizedBox(
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "List of my Ads",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "5",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Align(
+                //       alignment: Alignment.centerLeft,
+                //       child: Text(
+                //         "List of my Ads",
+                //         style: TextStyle(
+                //             color: Colors.redAccent,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold),
+                //       ),
+                //     ),
+                //     Align(
+                //       alignment: Alignment.centerRight,
+                //       child: Text(
+                //         ,
+                //         style: TextStyle(
+                //             color: Colors.redAccent,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Column(
                   children: [
                     Align(
@@ -323,7 +330,7 @@ class _AddadsState extends State<Addads> {
                         ),
                       ),
                       Text(
-                        "    Image should be max of 2MB",
+                        "    Image should be max of 1MB",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.redAccent,
@@ -370,6 +377,9 @@ class _AddadsState extends State<Addads> {
   Random rand = Random();
   uploadtask(File media, String type) async {
     print("enter uploadtask");
+    setState(() {
+      isLoading = true;
+    });
     await FirebaseAuth.instance.signInAnonymously();
     //todo:if by chance this server crashes and user exceeds the level we can increase this random number until then good bye
     String fileName = "media${rand.nextInt(100000)}";
@@ -381,6 +391,10 @@ class _AddadsState extends State<Addads> {
     StorageUploadTask uploadTask = reference.putFile(media);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     print("Uploading image completed");
+    setState(() {
+      isLoading = false;
+      uploadedmedia = true;
+    });
     final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     if (type == "video") {
       video = downloadUrl;
@@ -389,5 +403,13 @@ class _AddadsState extends State<Addads> {
       image = downloadUrl;
       video = "";
     }
+  }
+  Widget loadingprogess(){
+    return Column(
+      children: [
+        LinearProgressIndicator(),
+        Text("Uploading please wait"),
+      ],
+    );
   }
 }
