@@ -47,10 +47,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
+                  builder: (context) =>Addads(widget.id,widget.mobile),
                 ),
               );
             },),
+          IconButton(
+            color: Colors.redAccent,
+            icon: Icon(Icons.list),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
+                ),
+              );
+            },
+          ),
         ],
         title: Text("My Ads",
             style: TextStyle(

@@ -53,18 +53,18 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
             ),
             ),
           ),
-          IconButton(
-            color: Colors.redAccent,
-            icon: Icon(Icons.add),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>Addads(widget.id,widget.mobile),
-                ),
-              );
-            },
-          ),
+          // IconButton(
+          //   color: Colors.redAccent,
+          //   icon: Icon(Icons.add),
+          //   onPressed: (){
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) =>Addads(widget.id,widget.mobile),
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
       body: Padding(

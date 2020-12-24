@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:myarogya_mydoctor/improvement/hospitals.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
+import 'package:myarogya_mydoctor/pages/Ads/home_page.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/Appointments.dart';
+import 'package:myarogya_mydoctor/pages/complains/DisplayComplains.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 
 import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
@@ -41,21 +43,14 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
   List<Widget> _widgetOptions() => [
     MyPendings(widget.id,widget.mobile,"MY DOCTOR"),
     Hospitals(widget.mobile,widget.id),
-//    Text('My Labs'),
-    Text('My Ads'),
-    GestureDetector(
-      onTap:() {
-        AuthService().signOut(context);
-      },
-      child:Text('Setting'),
-    ),
+    HomeScreen(widget.id,widget.mobile),
+    DisplayComplains(widget.id,widget.mobile)
   ];
   final widgetName = [
     Text('  My Doctors',style: TextStyle(color: Colors.white),),
     Text('  My Hospitals',style: TextStyle(color: Colors.white),),
-//    Text('My Labs'),
     Text('  My Ads',style: TextStyle(color: Colors.white),),
-//    Text('Settings'),
+    Text('My Complains'),
   ];
   @override
   void initState() {
@@ -83,7 +78,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
         //   backgroundColorEnd: Colors.white,
         //
         // ),
-        body: (selectedIndex!=1)?NestedScrollView(
+        body: (selectedIndex==0)?NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
@@ -106,15 +101,15 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
                         onPressed: (){
                           _openPopup(context);
                         },),
-                      IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>  DashBoardScreen(
-                                                                widget.mobile,
-                                                                "MY DOCTOR",widget.id))
-                          );
-                        },),
+                      // IconButton(icon: Icon(Icons.account_circle,color: Colors.white),
+                      //   onPressed: (){
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(builder: (context) =>  DashBoardScreen(
+                      //                                           widget.mobile,
+                      //                                           "MY DOCTOR",widget.id))
+                      //     );
+                      //   },),
                       PopupMenuButton<String>(
                         color: Colors.redAccent,
                         onSelected: choiceAction,
@@ -293,11 +288,10 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
               BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.redAccent), title: Text('MyDoctor')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.hotel,color: Colors.redAccent), title: Text('My Hospital')),
-//              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
+             BottomNavigationBarItem(
+                  icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.list,color: Colors.redAccent), title: Text('My Ads')),
-//              BottomNavigationBarItem(
-//                  icon: Icon(Icons.settings,color: Colors.redAccent), title: Text('Settings'))
+                  icon: Icon(Icons.add_comment,color: Colors.redAccent,size: 25,), title: Text('MyComplains'))
             ],
             currentIndex: selectedIndex,
             fixedColor: Colors.redAccent,
