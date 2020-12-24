@@ -322,8 +322,8 @@ class _DoctorSettingsState extends State<DoctorSettings> {
     });
 
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://myarogyamydoctor.page.link',
-      link: Uri.parse('https://myarogyamydoctor.page.link/invite'),
+      uriPrefix: 'https://myarogya.page.link',
+      link: Uri.parse('https://myarogya.page.link/invite'),
       androidParameters: AndroidParameters(
         packageName: 'com.example.myarogya_mydoctor',
         minimumVersion: 16,
@@ -356,7 +356,7 @@ class _DoctorSettingsState extends State<DoctorSettings> {
   shareLink(BuildContext context,String url,String message){
     final RenderBox Box = context.findRenderObject();
     Share.share(
-        message+""+url,
+        message+" "+url,
         subject: message,
         sharePositionOrigin: Box.localToGlobal(Offset.zero)&Box.size
     );

@@ -30,8 +30,9 @@ class Appointments extends StatefulWidget {
 }
 
 class _AppointmentsState extends State<Appointments> {
-  List dummyData = [];
-  List dummyData1 = [];
+  List<Appointmnet> dummyData = [];
+  List<Appointmnet> dummyData1 = [];
+  List<Appointmnet> filterdata = [];
   List refresh = [];
   List keys1 = [];
   DateTime start1;
@@ -105,10 +106,64 @@ class _AppointmentsState extends State<Appointments> {
                     ),
                   ),
                 ),
-                background: Image.network(
-                  "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
-                  fit: BoxFit.cover,
+                background: Column(
+                  children: <Widget>[
+                    Stack(
+                      children: [
+                        Image.network(
+                          "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                          fit: BoxFit.cover,
+                          // color: Colors.blue,
+                          colorBlendMode: BlendMode.hue,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16.0, 11.0,100.0, 16.0),
+                          child: Container(
+                            height: 36.0,
+                            width: double.infinity,
+                            child: CupertinoTextField(
+                              onChanged: (text){
+                                setState(() {
+                                  dummyData = filterdata
+                                      .where((u) => (u.doctorName
+                                      .toLowerCase()
+                                      .contains(text.toLowerCase()) ||
+                                      u.patientMobile
+                                          .toLowerCase().contains(text.toLowerCase())))
+                                      .toList();
+                                });
+                              },
+                              keyboardType: TextInputType.text,
+                              placeholder: 'Search',
+                              placeholderStyle: TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 14.0,
+                                fontFamily: 'Brutal',
+                              ),
+                              prefix: Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xffF0F1F5),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
+
+                // background: Image.network(
+                //   "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                //   fit: BoxFit.cover,
+                // ),
               ),
               actions: [
                 IconButton(
@@ -392,6 +447,7 @@ class _AppointmentsState extends State<Appointments> {
           setState(() {
             if (refreshToken.doctorMobile == widget.mobile) {
               dummyData.add(refreshToken);
+              filterdata.add(refreshToken);
               keys1.add(key);
               print(dummyData[0].status);
             }

@@ -127,27 +127,27 @@ class _HomeScreenState extends State<HomeScreen> {
                    },
                  ),
                ),
-               Expanded(
-                 child: ListView.builder(
-                   itemCount: 3,
-                   itemBuilder: (_,index){
-                     return Column(
-                       children: [
-                         Container(
-                           height:75,
-                           decoration: BoxDecoration(
-                             // color: (add) ? Colors.green : Colors.red,
-                             borderRadius: BorderRadius.circular(20),
-                           ),
-                           // child: myads[index+nxtadindex].video=="" ? Image.network(myads[index+nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index+nxtadindex].video),
-                           child: myads[nxtadindex].video=="" ? Image.network(myads[nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[nxtadindex].video),
-                         ),
-                         SizedBox(height: 10,),
-                       ],
-                     );
-                   },
-                 ),
-               ),
+               // Expanded(
+               //   child: ListView.builder(
+               //     itemCount: 3,
+               //     itemBuilder: (_,index){
+               //       return Column(
+               //         children: [
+               //           Container(
+               //             height:75,
+               //             decoration: BoxDecoration(
+               //               // color: (add) ? Colors.green : Colors.red,
+               //               borderRadius: BorderRadius.circular(20),
+               //             ),
+               //             // child: myads[index+nxtadindex].video=="" ? Image.network(myads[index+nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[index+nxtadindex].video),
+               //             child: myads[nxtadindex].video=="" ? Image.network(myads[nxtadindex].image,fit: BoxFit.fill,):AppVideoPlayer(myads[nxtadindex].video),
+               //           ),
+               //           SizedBox(height: 10,),
+               //         ],
+               //       );
+               //     },
+               //   ),
+               // ),
              ],
            ),
           ),

@@ -32,16 +32,19 @@ class Hospitals extends StatefulWidget {
 
 class _HospitalsState extends State<Hospitals> {
   List<Hospital> hospitalvalues = [];
+  List<Hospital> filteredhospital = [];
   FirebaseDatabase fb = FirebaseDatabase.instance;
   bool isLoading = true;
   final _random = new Random();
+  List hospitalnames = [];
+  final key = new GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = new TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getHospitals();
   }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,75 +53,128 @@ class _HospitalsState extends State<Hospitals> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                leading: Container(),
-                backgroundColor: Colors.white,
-                expandedHeight: 250.0,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      " My Hospital",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 25.0,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
+                  leading: Container(),
+                  backgroundColor: Colors.white,
+                  expandedHeight: 250.0,
+                  floating: false,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        " My Hospital",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 25.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  background: Image.network(
-                    "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
-                    fit: BoxFit.cover,
-                    // color: Colors.blue,
-                    colorBlendMode: BlendMode.hue,
-                  ),
-                ),
-                actions: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      color: Colors.redAccent,
-                      size: 35,
+                    background: Column(
+                      children: <Widget>[
+                        Stack(
+                          children: [
+                            Image.network(
+                              "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
+                              fit: BoxFit.cover,
+                              // color: Colors.blue,
+                              colorBlendMode: BlendMode.hue,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(16.0, 11.0,100.0, 16.0),
+                              child: Container(
+                                height: 36.0,
+                                width: double.infinity,
+                                child: CupertinoTextField(
+                                  onChanged: (text){
+                                    setState(() {
+                                      hospitalvalues = filteredhospital
+                                          .where((u) => (u.hospitalName
+                                          .toLowerCase()
+                                          .contains(text.toLowerCase()) ||
+                                          u.hospitalAddress
+                                          .toLowerCase().contains(text.toLowerCase()) ||
+                                          checkspeciality(u.specialities,text)|| u.facilities[0]
+                                          .toLowerCase().contains(text.toLowerCase())
+                                      ))
+                                          .toList();
+                                    });
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  placeholder: 'Search',
+                                  placeholderStyle: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontSize: 14.0,
+                                    fontFamily: 'Brutal',
+                                  ),
+                                  prefix: Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: Color(0xffF0F1F5),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddHospital()),
-                      );
-                    },
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.redAccent,
-                      size: 35,
-                    ),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch());
-                    },
-                  ),
-                  PopupMenuButton<String>(
-                    icon: new Icon(
-                      Icons.settings,
-                      // Icons.more_vert_rounded,
-                      color: Colors.redAccent,
-                      size: 35,
-                    ),
-                    onSelected: choiceAction,
-                    itemBuilder: (BuildContext context) {
-                      return ConstantsH.choices.map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
+                  actions: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.redAccent,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddHospital()),
                         );
-                      }).toList();
-                    },
-                  )
-                ],
-              ),
+                      },
+                    ),
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.search,
+                    //     color: Colors.redAccent,
+                    //     size: 35,
+                    //   ),
+                    //   onPressed: () {
+                    //     hospitalvalues.forEach((name){
+                    //       hospitalnames.add(name.hospitalName);
+                    //     });
+                    //     showSearch(context: context, delegate: DataSearch());
+                    //   },
+                    // ),
+                    PopupMenuButton<String>(
+                      icon: new Icon(
+                        Icons.settings,
+                        // Icons.more_vert_rounded,
+                        color: Colors.redAccent,
+                        size: 35,
+                      ),
+                      onSelected: choiceAction,
+                      itemBuilder: (BuildContext context) {
+                        return ConstantsH.choices.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    )
+                  ],
+                  ),
             ];
           },
           body: (hospitalvalues == null)
@@ -141,8 +197,8 @@ class _HospitalsState extends State<Hospitals> {
                       ],
                     )
                   : Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ListView.builder(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: hospitalvalues.length == null
                             ? null
@@ -195,8 +251,8 @@ class _HospitalsState extends State<Hospitals> {
                                                           "https://previews.agefotostock.com/previewimage/medibigoff/f755e0d1e3ecce9569f57604ac0fd9a8/esy-001476475.jpg",
                                                         ),
                                                         width: 50,
-                                                        alignment:
-                                                            Alignment.centerLeft,
+                                                        alignment: Alignment
+                                                            .centerLeft,
                                                       )
                                                     : Container(
                                                         width: 150,
@@ -223,7 +279,7 @@ class _HospitalsState extends State<Hospitals> {
                                         width: 10,
                                       ),
                                       Flexible(
-                                        flex:3,
+                                        flex: 3,
                                         child: Container(
                                           width: 220,
                                           child: Column(
@@ -243,7 +299,8 @@ class _HospitalsState extends State<Hospitals> {
                                                   Container(),
                                                   Row(
                                                     children: [
-                                                      hospitalvalues[i].isNabh ==
+                                                      hospitalvalues[i]
+                                                                  .isNabh ==
                                                               "true"
                                                           ? Image(
                                                               height: 25,
@@ -268,7 +325,8 @@ class _HospitalsState extends State<Hospitals> {
                                                       SizedBox(
                                                         width: 5,
                                                       ),
-                                                      hospitalvalues[i].isCovid ==
+                                                      hospitalvalues[i]
+                                                                  .isCovid ==
                                                               "true"
                                                           ? Container(
                                                               height: 30,
@@ -310,14 +368,15 @@ class _HospitalsState extends State<Hospitals> {
                                                 ],
                                               ),
                                               Text(
-                                                hospitalvalues[i].hospitalAddress,
+                                                hospitalvalues[i]
+                                                    .hospitalAddress,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 18,
                                                     fontFamily: 'Lato'),
                                               ),
-                                              getspeciality(
-                                                  hospitalvalues[i].specialities),
+                                              getspeciality(hospitalvalues[i]
+                                                  .specialities),
                                               Container(
                                                 width: 300,
                                                 child: Column(
@@ -467,7 +526,8 @@ class _HospitalsState extends State<Hospitals> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment: Alignment.centerRight,
+                                                alignment:
+                                                    Alignment.centerRight,
                                                 child: FlatButton(
                                                     onPressed: () {
                                                       Navigator.push(
@@ -483,13 +543,15 @@ class _HospitalsState extends State<Hospitals> {
                                                       // ApiService().bookhospital(hospitalvalues[i].bookingPhNo, widget.mobile,"Booked","");
                                                       // AuthService().toast("Waiting for Confirmation");
                                                     },
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                25.0),
-                                                        side: BorderSide(
-                                                            color: Colors
-                                                                .redAccent)),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25.0),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .redAccent)),
                                                     padding: EdgeInsets.all(10),
                                                     color: Colors.redAccent,
                                                     child: hospitalvalues[i]
@@ -498,8 +560,8 @@ class _HospitalsState extends State<Hospitals> {
                                                         ? Text(
                                                             "Confirm",
                                                             style: TextStyle(
-                                                                color:
-                                                                    Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontFamily:
                                                                     "Lato",
                                                                 fontSize: 14),
@@ -507,8 +569,8 @@ class _HospitalsState extends State<Hospitals> {
                                                         : Text(
                                                             "Book Now",
                                                             style: TextStyle(
-                                                                color:
-                                                                    Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontFamily:
                                                                     "Lato",
                                                                 fontSize: 14),
@@ -529,7 +591,7 @@ class _HospitalsState extends State<Hospitals> {
                           );
                         },
                       ),
-                  ),
+                    ),
         ),
       ),
     );
@@ -581,6 +643,7 @@ class _HospitalsState extends State<Hospitals> {
             // print(value["hospitalName"]);
             var refreshToken = Hospital.fromJson(value);
             hospitalvalues.add(refreshToken);
+            filteredhospital.add(refreshToken);
             key1.add(key);
             print("Hops::::${hospitalvalues.toString()}");
             setState(() {
@@ -678,5 +741,19 @@ class _HospitalsState extends State<Hospitals> {
       }
     }
     return minValue;
+  }
+
+
+
+  checkspeciality(List splity,String text){
+    bool status;
+    splity.forEach((element) {
+      if(element.toLowerCase().contains(text.toLowerCase())){
+        status = true;
+      }else{
+       status = false;
+      }
+    });
+    return status;
   }
 }

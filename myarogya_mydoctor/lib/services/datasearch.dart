@@ -1,7 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/Hospitals.dart';
 
 class DataSearch extends SearchDelegate<String> {
+
+
+
+
+
   final searchData = [
     "hi",
     "hello",
@@ -24,6 +30,7 @@ class DataSearch extends SearchDelegate<String> {
     ];
   }
 
+
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
@@ -39,14 +46,8 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-   return  Card(
-     color: Colors.red,
-     child: Center(
-       child: Text(query),
-     ),
-   );
+   return  ListView.builder();
   }
-
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -64,3 +65,5 @@ class DataSearch extends SearchDelegate<String> {
   }
 
 }
+
+
