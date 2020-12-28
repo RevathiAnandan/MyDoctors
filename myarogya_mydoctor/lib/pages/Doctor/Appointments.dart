@@ -88,7 +88,7 @@ class _AppointmentsState extends State<Appointments> {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 300.0,
+              expandedHeight: 250,
               floating: false,
               pinned: true,
               leading: Container(),
@@ -188,7 +188,7 @@ class _AppointmentsState extends State<Appointments> {
 //                  },
 //                ),
                   PopupMenuButton<String>(
-                    color: Colors.redAccent,
+                    icon: Icon(Icons.settings,color: Colors.redAccent,),
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context){
                       return ConstantsD.choices.map((String choice){
@@ -208,136 +208,139 @@ class _AppointmentsState extends State<Appointments> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Container(
-                                width: 130,
-                                height: 40,
-                                child: Card(
-                                  color: new Color(0xffFFFFFF),
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20)),
-                                  child: Center(
-                                      child: GestureDetector(
-                                          // onTap: () => Navigator.pop(context),
-                                          child: Text("My Waiting",
-                                              style: new TextStyle(
-                                                  color: Colors.redAccent,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Lato")))),
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Container(
+                                  width: 130,
+                                  height: 40,
+                                  child: Card(
+                                    color: new Color(0xffFFFFFF),
+                                    elevation: 6,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                        child: GestureDetector(
+                                            // onTap: () => Navigator.pop(context),
+                                            child: Text("My Waiting",
+                                                style: new TextStyle(
+                                                    color: Colors.redAccent,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Lato")))),
+                                  ),
                                 ),
-                              ),
-                              Text((dummyData.length == 0?"0":(dummyData.length).toString()),
-                                  style: new TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Lato")),
-                            ],
-                          ),
-                        ],
+                                Text((dummyData.length == 0?"0":(dummyData.length).toString()),
+                                    style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Lato")),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Container(
-                                width: 130,
-                                height: 40,
-                                child: Card(
-                                  color: new Color(0xffFFFFFF),
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20)),
-                                  child: Center(
-                                      child: GestureDetector(
-                                          onTap: () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DashBoardScreen(
-                                                            widget.mobile,
-                                                            "MY PATIENT",widget.id)),
-                                              ),
-                                          child: Text("My Patient",
-                                              style: new TextStyle(
-                                                  color: Colors.redAccent,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Lato")))),
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Container(
+                                  width: 130,
+                                  height: 40,
+                                  child: Card(
+                                    color: new Color(0xffFFFFFF),
+                                    elevation: 6,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DashBoardScreen(
+                                                              widget.mobile,
+                                                              "MY PATIENT",widget.id)),
+                                                ),
+                                            child: Text("My Patient",
+                                                style: new TextStyle(
+                                                    color: Colors.redAccent,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Lato")))),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5.0),
-                              Text(refresh.length.toString(),
-                                  style: new TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Lato")),
-                            ],
-                          ),
-                        ],
+                                SizedBox(height: 5.0),
+                                Text(refresh.length.toString(),
+                                    style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Lato")),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Row(
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Row(
 //                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[]),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Column(
+                          children: <Widget>[
+                            Column(
 //                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Container(
-                                width: 130,
-                                height: 40,
-                                child: Card(
-                                  color: new Color(0xffFFFFFF),
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20)),
-                                  child: Center(
-                                      child: GestureDetector(
-                                          onTap: () => Navigator.pop(context),
-                                          child: Text("Next Visit",
-                                              style: new TextStyle(
-                                                  color: Colors.redAccent,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Lato")))),
+                              children: <Widget>[
+                                Container(
+                                  width: 130,
+                                  height: 40,
+                                  child: Card(
+                                    color: new Color(0xffFFFFFF),
+                                    elevation: 6,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.pop(context),
+                                            child: Text("Today Count",
+                                                style: new TextStyle(
+                                                    color: Colors.redAccent,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Lato")))),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5.0),
-                              Text(ApiService().addpres().toString()== null ?"0":ApiService().addpres().toString(),
-                                  style: new TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Lato")),
-                            ],
-                          ),
-                        ],
+                                SizedBox(height: 5.0),
+                                Text(dummyData == null ?"0":dummyData.length.toString(),
+                                    style: new TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Lato")),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -478,7 +481,7 @@ class _AppointmentsState extends State<Appointments> {
   _openPopup(context)  {
     Alert(
         context: context,
-        title: "Add Contact",
+        title: "Add My Patient",
         content: Column(
           children: <Widget>[
             TextField(

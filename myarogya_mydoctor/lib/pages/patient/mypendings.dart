@@ -105,7 +105,7 @@ class _MyPendingsState extends State<MyPendings> {
                               child: CupertinoTextField(
                                 onChanged: (text){
                                   setState(() {
-                                    dummyData = filterdata
+                                    appoint = filterdata
                                         .where((u) => (u.doctorName
                                         .toLowerCase()
                                         .contains(text.toLowerCase()) ||
@@ -300,7 +300,7 @@ class _MyPendingsState extends State<MyPendings> {
                                         child: Center(
                                             child: GestureDetector(
                                                 onTap: () => Navigator.pop(context),
-                                                child: Text("My Appointments",
+                                                child: Text("My Reports",
                                                     style: new TextStyle(
                                                         color: Colors.redAccent,
                                                         fontSize: 14,
@@ -471,7 +471,7 @@ class _MyPendingsState extends State<MyPendings> {
   _openPopupP(context) {
     Alert(
         context: context,
-        title: "Add Contact",
+        title: "Add my doctor",
         content: Column(
           children: <Widget>[
             TextField(

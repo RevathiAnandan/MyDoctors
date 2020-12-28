@@ -138,7 +138,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   _openPopup(context) {
     Alert(
         context: context,
-        title: "Add Contact",
+        title: "Add "+widget.category.toLowerCase(),
         content: Column(
           children: <Widget>[
             TextField(

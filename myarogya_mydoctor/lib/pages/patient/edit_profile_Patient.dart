@@ -34,7 +34,7 @@ class _EditProfilePatientState extends State<EditProfilePatient> {
 
   var refresh;
 
-   TextEditingController nameController;
+  final TextEditingController nameController= TextEditingController();
 
   final TextEditingController bioController = TextEditingController();
 
@@ -141,20 +141,23 @@ class _EditProfilePatientState extends State<EditProfilePatient> {
                   child: FutureBuilder(
                       future: fb.reference().child('User').child(widget.mobile).once(),
                       builder: (context, snapshot) {
+                        // print(snapshot.data);
                         if (!snapshot.hasData)
                           return Container(
                               alignment: FractionalOffset.center,
                               child: CircularProgressIndicator());
-
                         Map<dynamic, dynamic> values = snapshot.data.value;
+                        print(values);
                         if(values == null){
+                          print("ifnull");
                           nameController.text = " ";
                           bioController.text =" ";
-                          emailController.text = "";
-                          ageController.text = "";
+                          emailController.text = " ";
+                          ageController.text = " ";
                         }else{
+                          print("elsenull");
                           values.forEach((key, values) {
-                            print(values);
+                            print("hchgfg"+values);
                             refresh = values;
                           });
                           nameController.text = values['Name'];

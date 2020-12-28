@@ -409,10 +409,10 @@ class _HospitalSettingsState extends State<HospitalSettings> {
       context: context,
       title: "Log out",
       buttons: [
-        DialogButton(child: Text("Log out"), onPressed:(){
+        DialogButton(child: Text("Log out",style: TextStyle(color: Colors.white),), onPressed:(){
           AuthService().signOut(context);
         }),
-        DialogButton(child: Text("Cancel"), onPressed:(){
+        DialogButton(child: Text("Cancel",style: TextStyle(color: Colors.white),), onPressed:(){
           Navigator.pop(context);
         }),
       ],

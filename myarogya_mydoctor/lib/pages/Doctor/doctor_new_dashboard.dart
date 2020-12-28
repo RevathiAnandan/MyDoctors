@@ -46,6 +46,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
             child: _widgetOptions()[selectedIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
             selectedIconTheme: IconThemeData(
               color: Colors.red,
               size: 30

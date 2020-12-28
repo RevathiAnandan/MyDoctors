@@ -47,7 +47,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     DisplayComplains(widget.id,widget.mobile)
   ];
   final widgetName = [
-    Text('  My Doctors',style: TextStyle(color: Colors.white),),
+    Text('  My Appointments',style: TextStyle(color: Colors.white),),
     Text('  My Hospitals',style: TextStyle(color: Colors.white),),
     Text('  My Ads',style: TextStyle(color: Colors.white),),
     Text('  My Complains',style: TextStyle(color: Colors.white),),
@@ -82,8 +82,10 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
             child: _widgetOptions()[selectedIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            unselectedLabelStyle: TextStyle(color: Colors.redAccent),
               items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.redAccent), title: Text('MyDoctor')),
+                BottomNavigationBarItem(icon: Icon(Icons.people,color: Colors.redAccent), title: Text('Appointments')),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.hotel,color: Colors.redAccent), title: Text('My Hospital')),
 //              BottomNavigationBarItem(icon: Icon(Icons.local_pharmacy,color: Colors.grey,size: 25), title: Text('My Labs')),
@@ -109,7 +111,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
   _openPopup(context) {
     Alert(
         context: context,
-        title: "Add Contact",
+        title: "Add my doctor",
         content: Column(
           children: <Widget>[
             TextField(
