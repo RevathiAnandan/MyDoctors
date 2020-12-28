@@ -1,7 +1,11 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/HospitalTabPage.dart';
+import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
+import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
+import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share/share.dart';
 
 import 'edit_profile_doctor.dart';
@@ -145,84 +149,102 @@ class _DoctorSettingsState extends State<DoctorSettings> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.priority_high,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Privacy",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Privacy()),
+                ),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.priority_high,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Privacy",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.border_color,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Terms and Conditions",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Termsandconditions()),
+                ),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.border_color,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Terms and Conditions",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.local_offer,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Disclaimer",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Disclaimer()),),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.local_offer,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Disclaimer",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -261,7 +283,8 @@ class _DoctorSettingsState extends State<DoctorSettings> {
                 width: MediaQuery.of(context).size.width,
                 child: InkWell(
                   onTap: (){
-                    AuthService().signOut(context);
+                    _openPopup(context);
+                    // AuthService().signOut(context);
                   },
                   child: Card(
                     child: Row(
@@ -360,5 +383,25 @@ class _DoctorSettingsState extends State<DoctorSettings> {
         subject: message,
         sharePositionOrigin: Box.localToGlobal(Offset.zero)&Box.size
     );
+  }
+  _openPopup(context) {
+    Alert(
+      context: context,
+      title: "Log out",
+      buttons: [
+        DialogButton(child: Text("Log out"), onPressed:(){
+          AuthService().signOut(context);
+        }),
+        DialogButton(child: Text("Cancel"), onPressed:(){
+          Navigator.pop(context);
+        }),
+      ],
+      content: Center(
+        child: Text(
+          "Are you sure?",
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ).show();
   }
 }

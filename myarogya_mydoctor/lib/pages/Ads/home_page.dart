@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         actions: [
           IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
@@ -76,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
               scrollDirection: Axis.vertical,
               controller: _pagePosition,
               itemBuilder: (context, position) {
-                print("Harun"+_pagePosition.toString());
                 return Container(
                   color: Colors.black.withOpacity(0.6),
                   child: Stack(
@@ -106,16 +106,19 @@ class _HomeScreenState extends State<HomeScreen> {
                    itemBuilder: (context,index){
                      return Column(
                        children: [
-                         MaterialButton(
-                           child: Text(Dropdownlists().adscategories[index],style: TextStyle(
-                             color: Colors.redAccent,
-                             fontSize: 15.0,
-                             fontFamily: 'Lato',
-                             fontWeight: FontWeight.bold,
-                           ),),
-                           onPressed: (){
-                             filterAds(Dropdownlists().adscategories[index]);
-                           },
+                         Container(
+                           height: 30,
+                           child: MaterialButton(
+                             child: Text(Dropdownlists().adscategories[index],style: TextStyle(
+                               color: Colors.redAccent,
+                               fontSize: 15.0,
+                               fontFamily: 'Lato',
+                               fontWeight: FontWeight.bold,
+                             ),),
+                             onPressed: (){
+                               filterAds(Dropdownlists().adscategories[index]);
+                             },
+                           ),
                          ),
                          new Divider(
                            height: 10.0,
@@ -193,7 +196,6 @@ class _HomeScreenState extends State<HomeScreen> {
   nextthreeads(int position){
     print(position.toString());
     nextads.add(myads[position+1]);
-    print("Harun"+nextads.toString());
   }
   incrementcounter(String key) async{
     try {

@@ -36,6 +36,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         actions: [
           IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
@@ -94,7 +95,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
             child: Column(
               children: [
                 Flexible(
-                  flex: 1,
+                  flex: 0,
                   child: Center(child: Text("Issue Category"),),
                 ),
                 new Divider(
@@ -108,16 +109,19 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                     itemBuilder: (context,index){
                       return Column(
                         children: [
-                          MaterialButton(
-                            child: Text(Dropdownlists().categories[index],style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 15.0,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.bold,
-                            ),),
-                            onPressed: (){
-                                filtercomplains(Dropdownlists().categories[index]);
-                            },
+                          Container(
+                            height: 30,
+                            child: MaterialButton(
+                              child: Text(Dropdownlists().categories[index],style: TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 15.0,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                              ),),
+                              onPressed: (){
+                                  filtercomplains(Dropdownlists().categories[index]);
+                              },
+                            ),
                           ),
                           new Divider(
                             height: 10.0,

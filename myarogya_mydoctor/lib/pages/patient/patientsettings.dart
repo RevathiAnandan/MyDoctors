@@ -1,6 +1,10 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
+import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
+import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share/share.dart';
 
 import 'edit_profile_Patient.dart';
@@ -144,84 +148,102 @@ class _PatientSettingsState extends State<PatientSettings> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.priority_high,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Privacy",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Privacy()),
+                ),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.priority_high,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Privacy",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.border_color,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Terms and Conditions",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Termsandconditions()),
+                ),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.border_color,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Terms and Conditions",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.local_offer,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Disclaimer",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
+              InkWell(
+                onTap: ()=>Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Disclaimer()),),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.local_offer,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Disclaimer",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -260,7 +282,8 @@ class _PatientSettingsState extends State<PatientSettings> {
                 width: MediaQuery.of(context).size.width,
                 child: InkWell(
                   onTap: (){
-                    AuthService().signOut(context);
+                    _openPopup(context);
+                    // AuthService().signOut(context);
                   },
                   child: Card(
                     child: Row(
@@ -298,8 +321,8 @@ class _PatientSettingsState extends State<PatientSettings> {
     });
 
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://myarogyamydoctor.page.link',
-      link: Uri.parse('https://myarogyamydoctor.page.link/invite'),
+      uriPrefix: 'https://myarogya.page.link',
+      link: Uri.parse('https://myarogya.page.link/invite'),
       androidParameters: AndroidParameters(
         packageName: 'com.example.myarogya_mydoctor',
         minimumVersion: 16,
@@ -357,5 +380,25 @@ class _PatientSettingsState extends State<PatientSettings> {
     if (deepLink != null) {
       Navigator.pushNamed(context, deepLink.path);
     }
+  }
+  _openPopup(context) {
+    Alert(
+      context: context,
+      title: "Log out",
+      buttons: [
+        DialogButton(child: Text("Log out"), onPressed:(){
+          AuthService().signOut(context);
+        }),
+        DialogButton(child: Text("Cancel"), onPressed:(){
+          Navigator.pop(context);
+        }),
+      ],
+      content: Center(
+        child: Text(
+          "Are you sure?",
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ).show();
   }
 }

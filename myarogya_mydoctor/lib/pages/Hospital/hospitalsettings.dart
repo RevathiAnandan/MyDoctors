@@ -8,6 +8,7 @@ import 'package:myarogya_mydoctor/pages/settings/myincome.dart';
 import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
 import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'HospitalTabPage.dart';
 
@@ -346,7 +347,8 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                 width: MediaQuery.of(context).size.width,
                 child: InkWell(
                   onTap: (){
-                    AuthService().signOut(context);
+                    _openPopup(context);
+                    // AuthService().signOut(context);
                   },
                   child: Card(
                     child: Row(
@@ -401,5 +403,25 @@ class _HospitalSettingsState extends State<HospitalSettings> {
     } catch (e) {
       print(e);
     }
+  }
+  _openPopup(context) {
+    Alert(
+      context: context,
+      title: "Log out",
+      buttons: [
+        DialogButton(child: Text("Log out"), onPressed:(){
+          AuthService().signOut(context);
+        }),
+        DialogButton(child: Text("Cancel"), onPressed:(){
+          Navigator.pop(context);
+        }),
+      ],
+      content: Center(
+        child: Text(
+          "Are you sure?",
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ).show();
   }
 }

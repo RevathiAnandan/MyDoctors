@@ -67,6 +67,7 @@ class _PescriptionListState extends State<PescriptionList> {
 //                ),
 //              ),
                 onTap: (){
+                  print(dummyData[i]);
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>ShowPrecription(dummyData[i],widget.dmobile,widget.pmobile),
@@ -92,6 +93,8 @@ class _PescriptionListState extends State<PescriptionList> {
           setState(() {
             if(widget.dmobile == prescription1.doctorMobile) {
               dummyData.add(prescription1);
+              print(dummyData);
+              print(dummyData.length);
             }
             if(dummyData.length == 0){
 

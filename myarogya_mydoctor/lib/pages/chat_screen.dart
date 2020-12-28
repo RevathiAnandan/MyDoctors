@@ -221,7 +221,6 @@ class MyScreenState extends State<MyScreen> {
             Map<dynamic, dynamic> values = snapshot.value;
             values.forEach((key, values) {
               var refreshToken = Appointmnet.fromJson(values);
-              print("Harun");
               print(refreshToken);
 
               setState(() {

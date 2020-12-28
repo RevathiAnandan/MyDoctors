@@ -65,7 +65,7 @@ class _AddHospitalState extends State<AddHospital> {
   }
 
   openFileExplorer() async {
-    print("Harun here");
+
     try {
       _path = null;
       _paths = await FilePicker.getMultiFilePath(type: FileType.image);

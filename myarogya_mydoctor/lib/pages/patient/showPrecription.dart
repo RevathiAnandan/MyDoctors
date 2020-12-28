@@ -45,7 +45,8 @@ class _PrescriptionPageState extends State<ShowPrecription> {
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(height: 20,),
+                  refreshValue['hospitalName']!=null?Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*25/100,
                      padding: EdgeInsets.only(left: 15, top: 10, right: 15),
@@ -103,11 +104,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                 children:[
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
-                                  (refreshValue['Morning Start Time'])?Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
+                                  (refreshValue['Morning Start Time']!=null)?Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
-                                  (refreshValue['Morning Start Time'])?Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
+                                  (refreshValue['Morning Start Time']!=null)?Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
-                                  (refreshValue['Morning Start Time'])?Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
+                                  (refreshValue['Morning Start Time']!=null)?Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
                                   SizedBox(
                                     height: 2,
@@ -126,7 +127,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                         ),
                       ],
                     ),
-                  ),
+                  ):Text("Doctor details not available yet"),
                   SizedBox(
                     height: 40,
                   ),
@@ -135,7 +136,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        'Patient Name: '+widget.prescripe.patientName+', '+ widget.prescripe.patientMobile+" ",
+                        'Patient Name: '+widget.prescripe.patientName.toUpperCase()+', '+ widget.prescripe.patientMobile+" ",
 //                            prefreshValue['Age']+" "+prefreshValue['Gender'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16,fontFamily: 'Lato'),

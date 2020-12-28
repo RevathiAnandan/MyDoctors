@@ -256,7 +256,6 @@ class _MyIncomePageState extends State<MyIncomePage> {
   getdatarow(List type,String catogory){
      var totalcount = 0;
      var totalincome = 0;
-     print("Harun");
      for(int i=0;i<type.length;i++){
        if(type[i].bookdetails[0].type=="Rooms"){
        totalcount = totalcount + int.parse(type[i].bookdetails[0].noOfBeds);

@@ -45,7 +45,7 @@ class Dropdownlists{
   ];
   List<String> adscategories = [
     "Mobiles",
-    "Computers",
+    "Computer",
     "Electronic",
     "Cars",
     "Bikes",

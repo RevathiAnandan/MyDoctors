@@ -37,7 +37,6 @@ Widget likeWidget({IconData icon, String label,String complainKey,int type}) {
                 text,
                 style: TextStyle(color: color),
               );
-            print("Harun"+text);
             // print(result);
             return result;
           },

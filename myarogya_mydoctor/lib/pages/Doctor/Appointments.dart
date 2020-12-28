@@ -97,7 +97,7 @@ class _AppointmentsState extends State<Appointments> {
                 title: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    "    Appointments",
+                    "  Appointments",
                     style: TextStyle(
                       color: Colors.redAccent,
                       fontSize: 25.0,
@@ -111,7 +111,7 @@ class _AppointmentsState extends State<Appointments> {
                     Stack(
                       children: [
                         Image.network(
-                          "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                          "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
                           fit: BoxFit.cover,
                           // color: Colors.blue,
                           colorBlendMode: BlendMode.hue,
@@ -166,12 +166,12 @@ class _AppointmentsState extends State<Appointments> {
                 // ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.search, color: Colors.redAccent,size: 30,),
-            onPressed: () {
-                    showSearch(context: context, delegate: DataSearch());
-                  },
-                ),
+            //     IconButton(
+            //       icon: Icon(Icons.search, color: Colors.redAccent,size: 30,),
+            // onPressed: () {
+            //         showSearch(context: context, delegate: DataSearch());
+            //       },
+            //     ),
                 IconButton(
                   icon: Icon(Icons.add, color: Colors.redAccent,size: 35,),
                   onPressed: () {
