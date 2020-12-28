@@ -109,7 +109,7 @@ class MyScreenState extends State<MyScreen> {
                             crossAxisAlignment:CrossAxisAlignment.start,
                             children: [
                               new Text(
-                                "Dr. "+dummyData[i].name != null ? "Dr. "+dummyData[i].name : "",
+                                dummyData[i].name != null ? "Dr. "+dummyData[i].name : "",
                                 style: new TextStyle(fontWeight: FontWeight.bold),
                               ),
                               new Container(

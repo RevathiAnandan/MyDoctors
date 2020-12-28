@@ -486,6 +486,7 @@ class _AppointmentsState extends State<Appointments> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
+                prefixText: "Dr.",
                 icon: Icon(Icons.person),
                 labelText: 'Name',
               ),

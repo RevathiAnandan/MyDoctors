@@ -80,7 +80,7 @@ class _MyPendingsState extends State<MyPendings> {
                   centerTitle: true,
                   title: Align(
                     alignment: Alignment.bottomLeft,
-                    child: Text("  My Pendings",style: TextStyle(
+                    child: Text("  Appointments",style: TextStyle(
                       color: Colors.redAccent,
                       fontSize: 25.0,
                       fontFamily: 'Lato',
@@ -476,6 +476,7 @@ class _MyPendingsState extends State<MyPendings> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
+                prefixText: "Dr.",
                 icon: Icon(Icons.person),
                 labelText: 'Name',
               ),
