@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/Ads/home_page.dart';
+import 'package:myarogya_mydoctor/pages/complains/DisplayComplains.dart';
 
 import 'MyBooking.dart';
 class HospitalDashboard extends StatefulWidget {
@@ -13,11 +15,13 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
   int selectedIndex = 0;
   List<Widget> _widgetOptions() => [
     MyBooking(widget.id,widget.mobile),
-    Text('My Ads'),
+    HomeScreen(widget.id,widget.mobile),
+    DisplayComplains(widget.id,widget.mobile)
   ];
   final widgetName = [
     Text('My Booking'),
     Text('My Ads'),
+    Text('My Complains'),
   ];
   void onItemTapped(int index) {
     setState(() {
@@ -43,6 +47,8 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
 
 BottomNavigationBarItem(
                     icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Complains')),
               ],
               currentIndex: selectedIndex,
               fixedColor: Colors.redAccent,

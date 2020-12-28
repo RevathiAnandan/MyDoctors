@@ -88,7 +88,7 @@ class _AppointmentsState extends State<Appointments> {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 250.0,
+              expandedHeight: 300.0,
               floating: false,
               pinned: true,
               leading: Container(),
@@ -117,7 +117,7 @@ class _AppointmentsState extends State<Appointments> {
                           colorBlendMode: BlendMode.hue,
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 11.0,100.0, 16.0),
+                          padding: const EdgeInsets.fromLTRB(16.0, 11.0,100.0, 0.0),
                           child: Container(
                             height: 36.0,
                             width: double.infinity,

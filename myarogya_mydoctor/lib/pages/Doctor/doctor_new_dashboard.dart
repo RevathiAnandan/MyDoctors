@@ -32,7 +32,6 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
  final widgetName = [
    Text('My Appointments'),
    Text('My Hospitals'),
-//   Text('My Labs'),
    Text('My Ads'),
   Text('My Complains'),
  ];
