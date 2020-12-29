@@ -277,7 +277,7 @@ class ApiService{
     }
   }
 
-  Future hospitals(String name,String regno,String address,String dateof,String adminname, String pricerange,
+  Future hospitals(String name,String regno,String address,String dateof,String adminname, String pincode,
       String adminph,
       List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status,
       List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health,List surgery,
@@ -294,7 +294,7 @@ class ApiService{
           'Administration Name':adminname,
           'Administration Ph no':adminph,
           'accredition' : accred,
-          'Price Range': pricerange,
+          'Pin code': pincode,
           'Ambulance': ambulance,
           'Emergency':emergency,
           'Booking Ph':bookph,
@@ -341,7 +341,7 @@ class ApiService{
           'Administration Name':adminname,
           'Administration Ph no':adminph,
           'accredition' : accred,
-          'Price Range': pricerange,
+          'Price Range': pincode,
           'Ambulance': ambulance,
           'Emergency':emergency,
           'Booking Ph':bookph,

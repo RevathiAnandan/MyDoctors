@@ -39,6 +39,15 @@ class _DisplayComplainsState extends State<DisplayComplains> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         actions: [
+          IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
+            onPressed: (){
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>Addads(widget.id,widget.mobile),
+              //   ),
+              // );
+            },),
           IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
             onPressed: (){
               Navigator.push(
@@ -95,15 +104,25 @@ class _DisplayComplainsState extends State<DisplayComplains> {
             child: Column(
               children: [
                 Flexible(
-                  flex: 0,
-                  child: Center(child: Text("Issue Category"),),
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent
+                    ),
+                    child: Center(child: Text("Issue Category",style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
+                    ),),),
+                  ),
                 ),
-                new Divider(
-                  height: 10.0,
-                  color: Colors.redAccent,
-                ),
+                // new Divider(
+                //   height: 10.0,
+                //   color: Colors.redAccent,
+                // ),
                 Flexible(
-                  flex: 7,
+                  flex: 10,
                   child: ListView.builder(
                     itemCount: Dropdownlists().categories.length,
                     itemBuilder: (context,index){

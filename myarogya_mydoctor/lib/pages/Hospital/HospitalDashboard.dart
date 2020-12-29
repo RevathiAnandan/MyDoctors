@@ -43,7 +43,7 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
                   size: 30
               ),
               items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,), title: Text('MyBooking')),
+                BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,), title: Text('My Bookings')),
 
 BottomNavigationBarItem(
                     icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),

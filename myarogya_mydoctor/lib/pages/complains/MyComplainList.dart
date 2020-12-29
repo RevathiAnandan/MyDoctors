@@ -34,7 +34,7 @@ class _MyComplainListState extends State<MyComplainList> {
           //   ),
           // ),
         ],
-        title: Text("My ComplainsList",
+        title: Text("My Complains List (${widget.complain.length})",
             style: TextStyle(
                 color: Colors.redAccent, fontFamily: "Lato", fontSize: 20)),
       ),
@@ -47,57 +47,66 @@ class _MyComplainListState extends State<MyComplainList> {
               ListView.builder(
                 itemCount:widget.complain.length,
                 itemBuilder:(context,index){
-                  return ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    // title: Text(dummyData[index].userNumber),
-                    title:Text("Complain Number:"+widget.complain[index].ComplainNumber),
-                    subtitle: Column(
-                      children: [
-                        Text("About:" +widget.complain[index].About),
-                      ],
-                    ),
-                    trailing: Container(
-                      width: 200  ,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          FlatButton(
-                            child: Text("Satisfied",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Lato",
-                                    fontSize: 14)),
-                            textColor: Colors.white,
-                            onPressed: (){
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(25.0),
-                                side: BorderSide(
-                                    color: Colors.redAccent)),
-                            padding: EdgeInsets.all(10),
-                            color: Colors.redAccent,
+                  return Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        // title: Text(dummyData[index].userNumber),
+                        title:Text("Complain Number: "+widget.complain[index].ComplainNumber,style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),),
+                        subtitle: Text("About:" +widget.complain[index].About),
+                        trailing: Container(
+                          width: 200  ,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                child: Text("Satisfied",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Lato",
+                                        fontSize: 14)),
+                                textColor: Colors.white,
+                                onPressed: (){
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(25.0),
+                                    side: BorderSide(
+                                        color: Colors.redAccent)),
+                                padding: EdgeInsets.all(10),
+                                color: Colors.redAccent,
+                              ),
+                              FlatButton(
+                                child: Text("Resolved",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Lato",
+                                        fontSize: 14)),
+                                textColor: Colors.white,
+                                onPressed: (){
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(25.0),
+                                    side: BorderSide(
+                                        color: Colors.redAccent)),
+                                padding: EdgeInsets.all(10),
+                                color: Colors.redAccent,
+                              ),
+                            ],
                           ),
-                          FlatButton(
-                            child: Text("Resolved",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Lato",
-                                    fontSize: 14)),
-                            textColor: Colors.white,
-                            onPressed: (){
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(25.0),
-                                side: BorderSide(
-                                    color: Colors.redAccent)),
-                            padding: EdgeInsets.all(10),
-                            color: Colors.redAccent,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      Divider(
+                        height: 1,
+                        thickness: 1,
+                      ),
+                    ],
                   );
                 },
               )

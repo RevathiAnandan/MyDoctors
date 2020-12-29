@@ -36,21 +36,24 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Text('My Ads Profile',style: TextStyle(
+        title: Text('My Ads List',style: TextStyle(
           color: Colors.redAccent,
           fontSize: 18,
           fontFamily: 'Lato',
           fontWeight: FontWeight.bold,
         ),),
         actions: [
-          Center(
-            child: Text(
-              "Add",style: TextStyle(
-              color: Colors.redAccent,
-              fontSize: 18,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Center(
+              child: Text(
+                myads.length.toString(),style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 18,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.bold,
+              ),
+              ),
             ),
           ),
           // IconButton(
@@ -71,29 +74,22 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
         padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "List of my Ads",style: TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: 18,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-                Text(
-                  myads.length.toString(),style: TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: 18,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       "List of my Ads",style: TextStyle(
+            //       color: Colors.redAccent,
+            //       fontSize: 18,
+            //       fontFamily: 'Lato',
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //     ),
+            //
+            //   ],
+            // ),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +137,7 @@ class _AdsUserProfileState extends State<AdsUserProfile> {
               ],
             ),
             Container(
-              height: 500,
+              height: 600,
               child: isLoading?Center(child: CircularProgressIndicator(),):
               ListView.builder(
                       itemCount: myads.length,

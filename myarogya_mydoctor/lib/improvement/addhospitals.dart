@@ -27,6 +27,7 @@ class _AddHospitalState extends State<AddHospital> {
   void initState() {
     super.initState();
     _nameController = TextEditingController();
+    notecontroller.text = "3 days charges will be paid as Deposit" ;
   }
 
   @override
@@ -258,8 +259,8 @@ class _AddHospitalState extends State<AddHospital> {
     "Surgery Details",
     "Speciality",
     "Facility",
+    "Insurance",
     "Staff Details",
-    "Insurance"
   ];
   int pageindex = 0;
   String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
@@ -286,6 +287,7 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController chargesController = TextEditingController();
   final TextEditingController chargesController1 = TextEditingController();
   final TextEditingController chargesController2 = TextEditingController();
+  final TextEditingController notecontroller = TextEditingController();
   final TextEditingController chargesController3 = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
@@ -298,7 +300,7 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController suramtController = TextEditingController();
   final TextEditingController amtController = TextEditingController();
   final TextEditingController roomtype = TextEditingController();
-  final TextEditingController pricerange = TextEditingController();
+  final TextEditingController pincode = TextEditingController();
 
   List<bool> _selected = [
     false,
@@ -421,7 +423,7 @@ class _AddHospitalState extends State<AddHospital> {
                                           addressController.text,
                                           dateofController.text,
                                           adminiController.text,
-                                          pricerange.text,
+                                          pincode.text,
                                           adminiphoneController.text,
                                           ACCRED,
                                           "+91${ambuController.text}",
@@ -470,7 +472,7 @@ class _AddHospitalState extends State<AddHospital> {
                         pageindex++;
                       });
                     }
-                  }else if(pageindex == 9){
+                  }else if(pageindex == 10){
                     if (_formKey.currentState.validate()&&_checked) {
                       _formKey.currentState.save();
                       setState(() {
@@ -750,7 +752,7 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 35,
                 ),
                 Text(
-                  "Price Range",
+                  "Pin code",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -759,7 +761,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
-                  controller: pricerange,
+                  controller: pincode,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
                     // focusedBorder: InputBorder.none,
@@ -1374,6 +1376,44 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 SizedBox(
                   height: 15,
+                ),
+                Row(
+
+                  children: [
+                    Flexible(flex:1,child: Container(width: 110,
+                        height: 40,child: Text("Note:"))),
+                    Flexible(flex:3,
+                      child: Container(
+                        // width: 200,
+                        height: 35,
+                        child: TextFormField(
+                          // keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            // FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: notecontroller,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Lato',
+                          ),
+//                        validator: (value) {
+//                          if (value.isEmpty) {
+//                            return 'Please enter some text';
+//                          }
+//                          return null;
+//                        },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -2906,62 +2946,6 @@ class _AddHospitalState extends State<AddHospital> {
       case 9:
         setState(() {});
         return new Container(
-          //padding: EdgeInsets.all(20),
-          // height: 1000,
-          width: MediaQuery.of(context).size.width,
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    RaisedButton(
-                      child: Text("Add Doctors"),
-                      onPressed: addDynamicD,
-                    ),
-                    Doctor.length == 0 ? dynamicD() : resultD(),
-                    RaisedButton(
-                      child: Text("Add Nurses"),
-                      onPressed: addDynamicN,
-                    ),
-                    Nurse.length == 0 ? dynamicN() : resultN(),
-                    RaisedButton(
-                      child: Text("Add Staffs"),
-                      onPressed: addDynamicS,
-                    ),
-                    Staff.length == 0 ? dynamicS() : resultS(),
-                    Row(
-                      children: [
-                        Container(
-                          height:50,
-                          width: 200,
-                          child: CheckboxListTile(
-                            title: Text('Finished adding data'),
-                            value: _checked,
-                            onChanged: (v){
-                              setState(() {
-                                _checked = !_checked;
-                                buttonstatus = !buttonstatus;
-                              });
-                            },
-                          ),
-                        ),
-                        MaterialButton(
-                            disabledColor: Colors.grey,
-                            color: Colors.redAccent,
-                            child: Text("Submit Staff details"),
-                            onPressed: buttonstatus?null:submitData
-                        ),
-                      ],
-                    ),
-                  ]
-              ),
-            ),
-          ),
-        );
-      case 10:
-        return new Container(
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
           child: Form(
@@ -3050,6 +3034,63 @@ class _AddHospitalState extends State<AddHospital> {
                       itemBuilder: (_, index) => TPAInsurance[index]),
                 ),
               ],
+            ),
+          ),
+        );
+      case 10:
+
+        return new Container(
+          //padding: EdgeInsets.all(20),
+          // height: 1000,
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text("Add Doctors"),
+                      onPressed: addDynamicD,
+                    ),
+                    Doctor.length == 0 ? dynamicD() : resultD(),
+                    RaisedButton(
+                      child: Text("Add Nurses"),
+                      onPressed: addDynamicN,
+                    ),
+                    Nurse.length == 0 ? dynamicN() : resultN(),
+                    RaisedButton(
+                      child: Text("Add Staffs"),
+                      onPressed: addDynamicS,
+                    ),
+                    Staff.length == 0 ? dynamicS() : resultS(),
+                    Row(
+                      children: [
+                        Container(
+                          height:50,
+                          width: 200,
+                          child: CheckboxListTile(
+                            title: Text('Finished adding data'),
+                            value: _checked,
+                            onChanged: (v){
+                              setState(() {
+                                _checked = !_checked;
+                                buttonstatus = !buttonstatus;
+                              });
+                            },
+                          ),
+                        ),
+                        MaterialButton(
+                            disabledColor: Colors.grey,
+                            color: Colors.redAccent,
+                            child: Text("Submit Staff details"),
+                            onPressed: buttonstatus?null:submitData
+                        ),
+                      ],
+                    ),
+                  ]
+              ),
             ),
           ),
         );

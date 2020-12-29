@@ -43,6 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         actions: [
+          IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
+            onPressed: (){
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>Addads(widget.id,widget.mobile),
+              //   ),
+              // );
+            },),
           IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
             onPressed: (){
               Navigator.push(

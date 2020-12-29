@@ -369,14 +369,31 @@ class _HospitalsState extends State<Hospitals> {
                                               ),
                                               Text(
                                                 hospitalvalues[i]
-                                                    .hospitalAddress,
+                                                    .hospitalAddress+"-"+hospitalvalues[i].pincode,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontFamily: 'Lato'),
                                               ),
                                               getspeciality(hospitalvalues[i]
                                                   .specialities),
+                                              // Container(
+                                              //   width: 300,
+                                              //   child: Column(
+                                              //     crossAxisAlignment:
+                                              //     CrossAxisAlignment.end,
+                                              //     children: [
+                                              //       Text(
+                                              //         "Pincode: "+hospitalvalues[i].pincode,
+                                              //         style: TextStyle(
+                                              //             fontFamily: 'Lato',
+                                              //             fontSize: 14,
+                                              //             fontWeight:
+                                              //             FontWeight.w900),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
                                               Container(
                                                 width: 300,
                                                 child: Column(
@@ -493,34 +510,6 @@ class _HospitalsState extends State<Hospitals> {
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                width: 300,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      hospitalvalues[i]
-                                                              .beds[_random.nextInt(
-                                                                  hospitalvalues[
-                                                                          i]
-                                                                      .beds
-                                                                      .length)]
-                                                              .roomType +
-                                                          "- Rs." +
-                                                          hospitalvalues[i]
-                                                              .pricerange
-                                                              .split("-")[0] +
-                                                          "/-per day per bed ",
-                                                      style: TextStyle(
-                                                          fontFamily: 'Lato',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w900),
                                                     ),
                                                   ],
                                                 ),

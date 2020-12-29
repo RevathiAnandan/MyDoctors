@@ -123,6 +123,14 @@ class _AddadsState extends State<Addads> {
                     //     fontWeight: FontWeight.bold,
                     //   ),
                     // ),
+                    Text(
+                      "Category",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.redAccent,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
                     DropdownButton<String>(
                       isExpanded: true,
                       icon: Icon(Icons.arrow_drop_down),

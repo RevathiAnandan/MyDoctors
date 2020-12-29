@@ -151,7 +151,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     ambuController.text = widget.hospitalValues.ambulanceNo;
     emerController.text = widget.hospitalValues.emergencyNo;
     opdbkController.text = widget.hospitalValues.opdBookingNo;
-    pricerange.text = widget.hospitalValues.pricerange;
+    pricerange.text = widget.hospitalValues.pincode;
     bedsController.text =  widget.hospitalValues.freebeds[0].noOfBeds;
     bedsController1.text =  widget.hospitalValues.conbeds[0].noOfBeds;
     bedsController3.text =  widget.hospitalValues.covidbeds[0].noOfBeds;

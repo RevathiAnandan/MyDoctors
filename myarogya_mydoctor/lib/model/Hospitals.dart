@@ -9,7 +9,7 @@ class Hospital{
   String adminName;
   String adminPh;
   List<AccredList> accred;
-  String pricerange;
+  String pincode;
   String ambulanceNo;
   String emergencyNo;
   String bookingPhNo;
@@ -43,7 +43,7 @@ class Hospital{
     this.adminName,
     this.adminPh,
     this.accred,
-    this.pricerange,
+    this.pincode,
     this.ambulanceNo,
     this.emergencyNo,
     this.bookingPhNo,
@@ -104,7 +104,7 @@ class Hospital{
       adminName: json['Administration Name'] as String,
       adminPh: json['Administration Ph no'] as String,
       accred: _ACCRED,
-      pricerange: json['Price Range'] as String,
+      pincode: json['Pin code'] as String,
       ambulanceNo: json['Ambulance'] as String,
       emergencyNo: json['Emergency'] as String,
       bookingPhNo: json['Booking Ph'] as String,
