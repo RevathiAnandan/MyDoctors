@@ -19,6 +19,7 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   String text = '';
+  bool validate = false;
   void _onKeyboardTap(String value) {
     setState(() {
       text = text + value;
@@ -27,60 +28,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//        body:Container(
-//          child: new Column(
-//            children: [
-//              new Text("Welcome",style: TextStyle(color: Colors.black,fontFamily: "Lato",fontSize: 32),),
-//              new Text("Enter the 4-digit code which is just sent to your Registered Mobile Number",style: TextStyle(color: Colors.grey,fontSize:14 ),),
-//              Container(
-//                constraints: const BoxConstraints(
-//                    maxWidth: 500
-//                ),
-//                child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-//                  children: <Widget>[
-//                    otpNumberWidget(0),
-//                    otpNumberWidget(1),
-//                    otpNumberWidget(2),
-//                    otpNumberWidget(3),
-//                    otpNumberWidget(4),
-//                    otpNumberWidget(5),
-//                  ],
-//                ),
-//
-//              ),
-//              Container(
-//                width: double.infinity,
-//                child: FlatButton(
-//                  child: Text("Continue",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
-//                  textColor: Colors.white,
-//                  shape: RoundedRectangleBorder(
-//                      borderRadius: BorderRadius.circular(25.0),
-//                      side: BorderSide(color: Colors.redAccent)
-//                  ),
-//                  padding: EdgeInsets.all(16),
-//                  onPressed: (){
-//                  },
-//                  color: Colors.redAccent,
-//                ),
-//              ),
-//              NumericKeyboard(
-//                onKeyboardTap: _onKeyboardTap,
-//                textColor: Colors.white,
-//                rightIcon: Icon(
-//                  Icons.backspace,
-//                  color: Colors.white,
-//                ),
-//                rightButtonFn: () {
-//                  setState(() {
-//                    text = text.substring(0, text.length - 1);
-//                  });
-//                },
-//              )
-//            ],
-//          ),
-//        )
+
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,11 +90,16 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         padding: EdgeInsets.all(16),
                         onPressed: (){
-                        AuthService().signIn(widget.creds);
+
+                        if (validate == true) {
+                          AuthService().signIn(widget.creds);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SelectionScreen()),
                           );
+                        } else {
+                          AuthService().toast("Please Enter the OTP!!");
+                        }
                         },
                         color: Colors.redAccent,
                       ),
@@ -177,6 +130,11 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Widget otpNumberWidget(int position) {
     try {
+      if (position == 5) {
+        validate = true;
+      }else{
+        validate = false;
+      }
       return Container(
         height: 40,
         width: 40,

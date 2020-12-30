@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   TextEditingController m_endtymController = new TextEditingController();
   TextEditingController e_endtymController = new TextEditingController();
   TextEditingController s_endtymController = new TextEditingController();
-
+  TextEditingController dateController = new TextEditingController();
 
   var qrData;
   File _image;
@@ -67,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   String m_endtym;
   String e_endtym;
   String s_endtym;
+  String date5;
   DoctorUser refreshToken;
   @override
   void initState() {
@@ -92,8 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             },
           ),
           title: Text('Profile',
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold)),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
@@ -120,9 +121,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                     e_starttym,
                     e_endtym,
                     s_starttym,
-                    s_endtym,                                            );
+                    s_endtym,
+                  );
                   setState(() {
-                    qrData=widget.mobile;
+                    qrData = widget.mobile;
                   });
                 })
           ],
@@ -156,28 +158,31 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           image: (_image != null)
                                               ? FileImage(File(_image.path))
                                               : new ExactAssetImage(
-                                              'assets/images/user_profile.png'),
+                                                  'assets/images/user_profile.png'),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
-                                    onTap: ()=> getImage(),
+                                    onTap: () => getImage(),
                                   ),
                                   SizedBox(
                                     width: 20,
                                   ),
                                   //TODO: YET TO BE UPDATED TO THE FIREBASE (QRDATA)
-                                  (qrData!= null)?
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    child: QrImage(
-                                      data: widget.mobile, //place where the QR Image will be shown
-                                    ),
-                                  ): Text('')
+                                  (qrData != null)
+                                      ? Container(
+                                          width: 100.0,
+                                          height: 100.0,
+                                          child: QrImage(
+                                            data: widget
+                                                .mobile, //place where the QR Image will be shown
+                                          ),
+                                        )
+                                      : Text('')
                                 ],
                               ),
-                            ],),
+                            ],
+                          ),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
@@ -187,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               children: <Widget>[
                                 new Container(
                                   height: MediaQuery.of(context).size.height *
-                                      78/
+                                      78 /
                                       100,
                                   child: ListView(
                                     children: <Widget>[
@@ -205,7 +210,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         height: 5,
                                       ),
                                       TextFormField(
-
                                         decoration: InputDecoration(
                                           prefixText: 'Dr.',
                                           contentPadding: EdgeInsets.fromLTRB(
@@ -242,9 +246,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           decoration: InputDecoration(
                                               prefixIcon: new Icon(
                                                   Icons.phone_android,
-                                                  color:  Colors.redAccent),
-                                              contentPadding: EdgeInsets.fromLTRB(
-                                                  20.0, 15.0, 20.0, 5.0),
+                                                  color: Colors.redAccent),
+                                              contentPadding:
+                                                  EdgeInsets.fromLTRB(
+                                                      20.0, 15.0, 20.0, 5.0),
                                               // enabledBorder: OutlineInputBorder(
                                               //     borderRadius: BorderRadius.all(
                                               //         Radius.circular(8)),
@@ -259,8 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               // fillColor: Colors.grey[100],
                                               hintText: ""),
                                           autofocus: false,
-                                          initialValue: widget.mobile
-                                      ),
+                                          initialValue: widget.mobile),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -277,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             contentPadding: EdgeInsets.fromLTRB(
                                                 20.0, 15.0, 20.0, 5.0),
                                             prefixIcon: new Icon(Icons.person,
-                                                color:  Colors.redAccent),
+                                                color: Colors.redAccent),
                                             // enabledBorder: OutlineInputBorder(
                                             //     borderRadius: BorderRadius.all(
                                             //         Radius.circular(8)),
@@ -306,7 +310,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       TextFormField(
                                         decoration: InputDecoration(
                                             prefixIcon: new Icon(Icons.business,
-                                                color:  Colors.redAccent),
+                                                color: Colors.redAccent),
                                             contentPadding: EdgeInsets.fromLTRB(
                                                 20.0, 15.0, 20.0, 5.0),
                                             // enabledBorder: OutlineInputBorder(
@@ -353,7 +357,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             // filled: true,
                                             // fillColor: Colors.grey[100],
                                             hintText: ""),
-                                        validator: (_address) => _address==null?"Invalid Address":null,
+                                        validator: (_address) =>
+                                            _address == null
+                                                ? "Invalid Address"
+                                                : null,
                                         controller: _address,
                                       ),
                                       SizedBox(
@@ -372,7 +379,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 20.0, 15.0, 20.0, 5.0),
                                             prefixIcon: new Icon(
                                                 Icons.business_center,
-                                                color:  Colors.redAccent),
+                                                color: Colors.redAccent),
                                             // enabledBorder: OutlineInputBorder(
                                             //     borderRadius: BorderRadius.all(
                                             //         Radius.circular(8)),
@@ -404,7 +411,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 20.0, 15.0, 20.0, 5.0),
                                             prefixIcon: new Icon(
                                                 Icons.library_books,
-                                                color:  Colors.redAccent),
+                                                color: Colors.redAccent),
                                             // enabledBorder: OutlineInputBorder(
                                             //     borderRadius: BorderRadius.all(
                                             //         Radius.circular(8)),
@@ -423,7 +430,50 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text("Available Time   (Time Format is 24 hrs)",
+                                      Text("Date of Registration",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Lato")),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Theme(
+                                        data: ThemeData(
+                                            primaryColor: Colors.redAccent),
+                                        child: DateTimeField(
+                                          format: DateFormat("dd-MM-yyyy"),
+                                          controller: dateController,
+                                          decoration: InputDecoration(
+                                              fillColor: Colors.redAccent,
+                                              labelStyle: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
+                                              // border: OutlineInputBorder(),
+                                              icon: Icon(Icons.cake),
+                                              labelText: 'DOB',
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.never),
+                                          onShowPicker: (context, dt) {
+                                            return showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1990),
+                                              lastDate: DateTime(2050),
+                                            );
+                                          },
+                                          onChanged: (dt) {
+                                            setState(() {
+                                              date5 = formatDate(
+                                                  dt, [dd, ' ', MM, ' ', yyyy]);
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                          "Available Time   (Time Format is 24 hrs)",
                                           style: new TextStyle(
                                               fontWeight: FontWeight.normal,
                                               fontFamily: "Lato")),
@@ -431,7 +481,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         height: 5,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Container(
                                             height: 40,
@@ -445,26 +496,37 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'Start Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
-                                                    context: context,
-                                                    initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
+                                                  context: context,
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                    return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
                                                 setState(() => starttym = dt);
-                                                print('Selected date: $starttym');
+                                                print(
+                                                    'Selected date: $starttym');
                                               },
                                             ),
                                           ),
@@ -473,30 +535,39 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             width: 170,
                                             child: DateTimeField(
                                               readOnly: true,
-                                              controller:endtymController,
+                                              controller: endtymController,
                                               //inputType: InputType.time,
                                               format: DateFormat("HH:mm"),
                                               //editable: false,
                                               decoration: InputDecoration(
-                                                // border: OutlineInputBorder(),
+                                                  // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'End Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
-
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
                                                 setState(() => endtym = dt);
@@ -510,7 +581,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text("Appointment Interval (In minutes,Between Two Patients)",
+                                      Text(
+                                          "Appointment Interval (In minutes,Between Two Patients)",
                                           style: new TextStyle(
                                               fontWeight: FontWeight.normal,
                                               fontFamily: "Lato")),
@@ -520,24 +592,23 @@ class _ProfileScreenState extends State<ProfileScreen>
 
                                       TextFormField(
                                         decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                20.0, 15.0, 20.0, 5.0),
-                                            prefixIcon: new Icon(
-                                                Icons.timer,
-                                                color: Colors.redAccent),
-                                            // enabledBorder: OutlineInputBorder(
-                                            //     borderRadius: BorderRadius.all(
-                                            //         Radius.circular(8)),
-                                            //     borderSide: BorderSide(
-                                            //         color: Colors.redAccent)),
-                                            // focusedBorder: OutlineInputBorder(
-                                            //     borderRadius: BorderRadius.all(
-                                            //         Radius.circular(8)),
-                                            //     borderSide: BorderSide(
-                                            //         color: Colors.redAccent)),
-                                            // filled: true,
-                                            // fillColor: Colors.grey[100],
-                                            ),
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              20.0, 15.0, 20.0, 5.0),
+                                          prefixIcon: new Icon(Icons.timer,
+                                              color: Colors.redAccent),
+                                          // enabledBorder: OutlineInputBorder(
+                                          //     borderRadius: BorderRadius.all(
+                                          //         Radius.circular(8)),
+                                          //     borderSide: BorderSide(
+                                          //         color: Colors.redAccent)),
+                                          // focusedBorder: OutlineInputBorder(
+                                          //     borderRadius: BorderRadius.all(
+                                          //         Radius.circular(8)),
+                                          //     borderSide: BorderSide(
+                                          //         color: Colors.redAccent)),
+                                          // filled: true,
+                                          // fillColor: Colors.grey[100],
+                                        ),
                                         controller: _interval,
                                       ),
                                       SizedBox(
@@ -569,7 +640,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             contentPadding: EdgeInsets.fromLTRB(
                                                 20.0, 15.0, 20.0, 5.0),
                                             prefixIcon: new Icon(Icons.email,
-                                                color:  Colors.redAccent),
+                                                color: Colors.redAccent),
                                             // enabledBorder: OutlineInputBorder(
                                             //     borderRadius: BorderRadius.all(
                                             //         Radius.circular(8)),
@@ -588,7 +659,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       SizedBox(
                                         height: 15,
                                       ),
-                                      Text("Clinic Timing  (Time Format is 24 hrs)",
+                                      Text(
+                                          "Clinic Timing  (Time Format is 24 hrs)",
                                           style: new TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -605,42 +677,55 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         height: 5,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Container(
                                             height: 40,
                                             width: 170,
                                             child: DateTimeField(
-
                                               readOnly: true,
                                               //inputType: InputType.time,
                                               format: DateFormat("HH:mm"),
-                                              controller:mstarttymController,
+                                              controller: mstarttymController,
                                               //editable: false,
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'Start Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() =>
-                                                m_starttym = formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $m_starttym');
+                                                setState(() => m_starttym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $m_starttym');
                                               },
                                             ),
                                           ),
@@ -651,31 +736,45 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               readOnly: true,
                                               //inputType: InputType.time,
                                               format: DateFormat("HH:mm"),
-                                              controller:m_endtymController,
+                                              controller: m_endtymController,
                                               //editable: false,
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'End Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() => m_endtym = formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $m_endtym');
+                                                setState(() => m_endtym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $m_endtym');
                                               },
                                             ),
                                           ),
@@ -693,7 +792,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         height: 5,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Container(
                                             height: 40,
@@ -707,27 +807,40 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'Start Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
-
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() => e_starttym = formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $starttym');
+                                                setState(() => e_starttym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $starttym');
                                               },
                                             ),
                                           ),
@@ -743,26 +856,40 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'End Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() => e_endtym = formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $e_endtym');
+                                                setState(() => e_endtym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $e_endtym');
                                               },
                                             ),
                                           ),
@@ -780,7 +907,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         height: 5,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Container(
                                             height: 40,
@@ -794,26 +922,40 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'Start Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() => s_starttym =formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $s_starttym');
+                                                setState(() => s_starttym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $s_starttym');
                                               },
                                             ),
                                           ),
@@ -822,33 +964,47 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             width: 170,
                                             child: DateTimeField(
                                               readOnly: true,
-                                              controller: s_endtymController ,
+                                              controller: s_endtymController,
                                               //inputType: InputType.time,
                                               format: DateFormat("HH:mm"),
                                               //editable: false,
                                               decoration: InputDecoration(
                                                   // border: OutlineInputBorder(),
                                                   labelStyle: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   labelText: 'End Time',
-                                                  floatingLabelBehavior: FloatingLabelBehavior.never
-                                              ),
-                                              onShowPicker: (context, dt) async {
-                                                final time = await showTimePicker(
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .never),
+                                              onShowPicker:
+                                                  (context, dt) async {
+                                                final time =
+                                                    await showTimePicker(
                                                   context: context,
-                                                  initialTime: TimeOfDay.fromDateTime(dt ?? DateTime.now()),
-                                                  builder: (context, child) => MediaQuery(
-                                                      data: MediaQuery.of(context)
-                                                          .copyWith(alwaysUse24HourFormat: true),
-                                                      child: child),
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          dt ?? DateTime.now()),
+                                                  builder: (context, child) =>
+                                                      MediaQuery(
+                                                          data: MediaQuery.of(
+                                                                  context)
+                                                              .copyWith(
+                                                                  alwaysUse24HourFormat:
+                                                                      true),
+                                                          child: child),
                                                 );
-                                                return DateTimeField.convert(time);
+                                                return DateTimeField.convert(
+                                                    time);
                                               },
                                               onChanged: (dt) {
-                                                setState(() => s_endtym =formatDate(dt, [ HH , ':', nn]).toString());
-                                                print('Selected date: $s_endtym');
+                                                setState(() => s_endtym =
+                                                    formatDate(
+                                                            dt, [HH, ':', nn])
+                                                        .toString());
+                                                print(
+                                                    'Selected date: $s_endtym');
                                               },
                                             ),
                                           ),
@@ -857,32 +1013,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       SizedBox(
                                         height: 35,
                                       ),
-                                      // Container(
-                                      //   width: double.infinity,
-                                      //   child: FlatButton(
-                                      //     child: Text("SAVE",
-                                      //         style: TextStyle(
-                                      //             color: Colors.white,
-                                      //             fontFamily: "Lato",
-                                      //             fontSize: 14,
-                                      //             fontWeight: FontWeight.bold)),
-                                      //     textColor: Colors.white,
-                                      //     shape: RoundedRectangleBorder(
-                                      //         borderRadius:
-                                      //         BorderRadius.circular(25.0),
-                                      //         side: BorderSide(
-                                      //             color: Colors.redAccent)),
-                                      //     padding: EdgeInsets.all(16),
-                                      //     onPressed: () async {
-                                      //
-                                      //     },
-                                      //     //TODO: Take the mobile number and generate bar code
-                                      //     color: Colors.redAccent,
-                                      //   ),
-                                      // ),
-                                      // SizedBox(
-                                      //   height: 25,
-                                      // ),
                                     ],
                                   ),
                                 )
@@ -909,47 +1039,39 @@ class _ProfileScreenState extends State<ProfileScreen>
     });
   }
 
-  Future<void> updatingProfile(File image, String doctorId, String hospitalName,
-      String specialist, String degree, String dName, String email,String Qrdata,String address, String starttym,String endtym,String interval, String mstarttym,String mendtym,String estarttym,String eendtymm,String sstarttym,String sendtym) async {
-
-    if(image != null){
+  Future<void> updatingProfile(
+      File image,
+      String doctorId,
+      String hospitalName,
+      String specialist,
+      String degree,
+      String dName,
+      String email,
+      String Qrdata,
+      String address,
+      String starttym,
+      String endtym,
+      String interval,
+      String mstarttym,
+      String mendtym,
+      String estarttym,
+      String eendtymm,
+      String sstarttym,
+      String sendtym) async {
+    if (image != null) {
       String fileName = "image" + widget.userId;
-      StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+      StorageReference reference =
+          FirebaseStorage.instance.ref().child(fileName);
       StorageUploadTask uploadTask = reference.putFile(_image);
       StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
       if (taskSnapshot.error == null) {
         if (widget.userId != null && widget.mobile != null) {
           final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
           ApiService().updateProfile(
-            widget.userId,
-            widget.mobile,
-            ConstantUtils().Doctor,
-            downloadUrl,
-            doctorId,
-            hospitalName,
-            specialist,
-            degree,
-            dName,
-            email,
-            Qrdata,
-            address,
-            starttym,
-            endtym,
-            interval,
-            mstarttym,
-            mendtym,
-            estarttym,
-            eendtymm,
-            sstarttym,
-            sendtym
-          );
-        }else {
-          if (widget.userId != null && widget.mobile != null) {
-            ApiService().updateProfile(
               widget.userId,
               widget.mobile,
               ConstantUtils().Doctor,
-              "null",
+              downloadUrl,
               doctorId,
               hospitalName,
               specialist,
@@ -966,96 +1088,123 @@ class _ProfileScreenState extends State<ProfileScreen>
               estarttym,
               eendtymm,
               sstarttym,
-              sendtym
-            );
+              sendtym,
+              date5);
+        } else {
+          if (widget.userId != null && widget.mobile != null) {
+            ApiService().updateProfile(
+                widget.userId,
+                widget.mobile,
+                ConstantUtils().Doctor,
+                "null",
+                doctorId,
+                hospitalName,
+                specialist,
+                degree,
+                dName,
+                email,
+                Qrdata,
+                address,
+                starttym,
+                endtym,
+                interval,
+                mstarttym,
+                mendtym,
+                estarttym,
+                eendtymm,
+                sstarttym,
+                sendtym,
+                date5);
           }
         }
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+            builder: (context) =>
+                DoctorNewDashboard(widget.userId, widget.mobile),
           ),
         );
-       }
-    }else{
+      }
+    } else {
       if (widget.userId != null && widget.mobile != null) {
         ApiService().updateProfile(
-          widget.userId,
-          widget.mobile,
-          ConstantUtils().Doctor,
-          "null",
-          doctorId,
-          hospitalName,
-          specialist,
-          degree,
-          dName,
-          email,
-          Qrdata,
-          address,
-          starttym,
-          endtym,
-          interval,
-          mstarttym,
-          mendtym,
-          estarttym,
-          eendtymm,
-          sstarttym,
-          sendtym
-        );
+            widget.userId,
+            widget.mobile,
+            ConstantUtils().Doctor,
+            "null",
+            doctorId,
+            hospitalName,
+            specialist,
+            degree,
+            dName,
+            email,
+            Qrdata,
+            address,
+            starttym,
+            endtym,
+            interval,
+            mstarttym,
+            mendtym,
+            estarttym,
+            eendtymm,
+            sstarttym,
+            sendtym,
+            date5);
       }
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DoctorNewDashboard(widget.userId, widget.mobile),
+          builder: (context) =>
+              DoctorNewDashboard(widget.userId, widget.mobile),
         ),
       );
     }
   }
+
   FirebaseDatabase fb = FirebaseDatabase.instance;
-  Future <DoctorUser> getProfileDetails()async{
+  Future<DoctorUser> getProfileDetails() async {
     try {
       var db = await fb.reference().child("User").child(widget.mobile);
       if (db != null) {
         db.once().then((DataSnapshot snapshot) {
           print(snapshot.value);
           if (snapshot.value == null) {
-
           } else {
             Map<dynamic, dynamic> values = snapshot.value;
 
-              print("Harun"+values.toString());
-               refreshToken = DoctorUser.fromJson(values);
-              print("Harun"+refreshToken.toString());
-
-              _doctorId.text = values['registerId'];
-              _hospitalName.text = refreshToken.hospitalName;
-              _specialist.text = refreshToken.specialist;
-              _degree.text = refreshToken.degree;
-              _dName.text = refreshToken.Name;
-              _email.text = refreshToken.emailId;
-              _address.text = refreshToken.Hospital_Address;
-            starttymController.text = refreshToken.StartTime.split(" ")[1].split(".")[0];
-            endtymController.text = refreshToken.EndTime.split(" ")[1].split(".")[0];
+            print("Harun" + values.toString());
+            refreshToken = DoctorUser.fromJson(values);
+            print("Harun" + refreshToken.toString());
+            _doctorId.text = values['registerId'];
+            _hospitalName.text = refreshToken.hospitalName;
+            _specialist.text = refreshToken.specialist;
+            _degree.text = refreshToken.degree;
+            _dName.text = refreshToken.Name;
+            _email.text = refreshToken.emailId;
+            _address.text = refreshToken.Hospital_Address;
+            starttymController.text =
+                refreshToken.StartTime.split(" ")[1].split(".")[0];
+            endtymController.text =
+                refreshToken.EndTime.split(" ")[1].split(".")[0];
             mstarttymController.text = refreshToken.mstarttym;
             m_starttym = refreshToken.mstarttym;
             m_endtymController.text = refreshToken.mendtym;
             m_endtym = refreshToken.mendtym;
             e_endtymController.text = refreshToken.eendtymm;
-            e_endtym= refreshToken.eendtymm;
+            e_endtym = refreshToken.eendtymm;
             e_starttymController.text = refreshToken.estarttym;
             e_starttym = refreshToken.estarttym;
             s_starttymController.text = refreshToken.sstarttym;
             s_starttym = refreshToken.sstarttym;
             s_endtymController.text = refreshToken.sendtym;
-            s_endtym= refreshToken.sendtym;
+            s_endtym = refreshToken.sendtym;
             _interval.text = refreshToken.Intervals;
-
+            dateController.text = refreshToken.date5;
+            date5 = refreshToken.date5;
           }
         });
-      } else {
-
-      }
+      } else {}
     } catch (e) {
       print(e);
     }

@@ -397,7 +397,7 @@ class _MyPendingsState extends State<MyPendings> {
 
     Alert(
       context: context,
-      title: "Booking Information",
+      title: "Appointment Information",
       buttons: [],
       content: Center(
         child: Text(

@@ -1,6 +1,6 @@
 import 'MyPatient.dart';
 
-class DoctorUser{
+class DoctorUser {
   String id;
   String Name;
   String category;
@@ -18,18 +18,37 @@ class DoctorUser{
   String Hospital_Address;
   String Qrcode;
   String mstarttym;
- String  mendtym;
+  String mendtym;
   String estarttym;
- String eendtymm;
+  String eendtymm;
   String sstarttym;
   String sendtym;
+  String date5;
 
-  DoctorUser._({this.id,this.Name,
-    this.category,this.mobile,this.degree,this.emailId,
-    this.hospitalName,this.registerId,this.specialist,this.EndTime,
-    this.image,this.Intervals,this.StartTime,
-    this.Hospital_Address,this.myPatient,this.Qrcode,this.mstarttym,this.mendtym,this.estarttym,this.eendtymm
-  ,this.sstarttym,this.sendtym});
+  DoctorUser._(
+      {this.id,
+      this.Name,
+      this.category,
+      this.mobile,
+      this.degree,
+      this.emailId,
+      this.hospitalName,
+      this.registerId,
+      this.specialist,
+      this.EndTime,
+      this.image,
+      this.Intervals,
+      this.StartTime,
+      this.Hospital_Address,
+      this.myPatient,
+      this.Qrcode,
+      this.mstarttym,
+      this.mendtym,
+      this.estarttym,
+      this.eendtymm,
+      this.sstarttym,
+      this.sendtym,
+      this.date5});
 
   factory DoctorUser.fromJson(dynamic json) {
     // var tagObjsJson = json['myPatient'] as List;
@@ -57,6 +76,7 @@ class DoctorUser{
       eendtymm: json['Evening End Time'] as String,
       sstarttym: json['Sunday Start Time'] as String,
       sendtym: json['Sunday End Time'] as String,
+      date5: json['Date of Registration'] as String,
     );
   }
 }

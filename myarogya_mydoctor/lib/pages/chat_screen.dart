@@ -288,7 +288,7 @@ class MyScreenState extends State<MyScreen> {
 
     Alert(
       context: context,
-      title: "Booking Information",
+      title: "Appointment Information",
       buttons: [],
       content: Center(
         child: Text(
@@ -298,120 +298,5 @@ class MyScreenState extends State<MyScreen> {
       ),
     ).show();
   }
-  // buttonfunction(String status,int i){
-  //   if (status == "Book Now") {
-  //     // if(i != 0){
-  //     //   for (int l = 0; l <= i; l++) {
-  //     //     ApiService().appointment("widget.mobile", "dummyData[i].phone",
-  //     //         "dummyData[i].name", "", 0, "", "", "");
-  //     //   }
-  //     // }else{
-  //     //   _widgetIndex=0;
-  //     //   print("returing index 0");
-  //     //   return buttons(_widgetIndex, i);
-  //     // }
-  //     // ApiService().appointment(widget.mobile, dummyData[i].phone,
-  //     //     dummyData[i].name, "Waiting!", 0, "", "", i.toString());
-  //     // AuthService().toast("Requesting for Confirmation");
-  //     _widgetIndex=0;
-  //     print("returing index 0");
-  //     return buttons(_widgetIndex, i);
-  //   }
-  //   if (status == "Waiting!") {
-  //     //todo: Button disable
-  //     // if(i != 0){
-  //     //   // if(i!=appoint.length) {
-  //     //   //   for (int l = 0; l <= i; l++) {
-  //     //   //     ApiService().appointment(
-  //     //   //         "widget.mobile",
-  //     //   //         "dummyData[i].phone",
-  //     //   //         "dummyData[i].name",
-  //     //   //         "",
-  //     //   //         0,
-  //     //   //         "",
-  //     //   //         "",
-  //     //   //         "");
-  //     //   //   }
-  //     //   // }
-  //     //     print("returing index 1");
-  //     //     //_widgetIndex=1;
-  //     //     return buttons(_widgetIndex, i);
-  //     //   }else{
-  //         //_widgetIndex=1;
-  //         print("returing index 1");
-  //         return buttons(_widgetIndex, i);
-  //       // }
-  //
-  //   } else if (status == "View") {
-  //     _openPopup(context, i);
-  //     _widgetIndex=2;
-  //     print("returing index 1");
-  //     return buttons(_widgetIndex, i);
-  //   }
-  // }
-  // IndexedStack  buttons(int index,int i){
-  //   return IndexedStack(
-  //     index: index,
-  //     children: [
-  //       FlatButton(
-  //         child: Text(
-  //           "Book Now",
-  //           style: TextStyle(
-  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
-  //         ),
-  //         textColor: Colors.white,
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(25.0),
-  //             side: BorderSide(color: Colors.redAccent)),
-  //         padding: EdgeInsets.all(10),
-  //         color: Colors.redAccent,
-  //         onPressed: (){
-  //           ApiService().appointment(widget.mobile, dummyData[i].phone,
-  //               dummyData[i].name, "Waiting!",i, "", "", i.toString());
-  //           AuthService().toast("Requesting for Confirmation");
-  //           setState(() {
-  //             buttonStatus = "Waiting!";
-  //             _widgetIndex=1;
-  //           });
-  //         },
-  //       ),
-  //       FlatButton(
-  //         child: Text(
-  //           "Waiting",
-  //           style: TextStyle(
-  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
-  //         ),
-  //         textColor: Colors.white,
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(25.0),
-  //             side: BorderSide(color: Colors.redAccent)),
-  //         padding: EdgeInsets.all(10),
-  //         color: Colors.redAccent,
-  //         onPressed: (){
-  //          AuthService().toast("Your Appointment is on waiting");
-  //         },
-  //       )
-  //       ,
-  //       FlatButton(
-  //         child: Text(
-  //           "View",
-  //           style: TextStyle(
-  //               color: Colors.white, fontFamily: "Lato", fontSize: 14),
-  //         ),
-  //         textColor: Colors.white,
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(25.0),
-  //             side: BorderSide(color: Colors.redAccent)),
-  //         padding: EdgeInsets.all(10),
-  //         color: Colors.redAccent,
-  //         onPressed: (){
-  //           _openPopup(context, i);
-  //         },
-  //       )
-  //     ],
-  //
-  //   );
-  // }
-
 
 }

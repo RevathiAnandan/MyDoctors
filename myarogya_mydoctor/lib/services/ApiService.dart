@@ -149,7 +149,8 @@ class ApiService{
       String estarttym,
       String eendtymm,
       String sstarttym,
-      String sendtym) async{
+      String sendtym,
+      String date5) async{
     print(id);
     try {
       return fb.reference().child('User').child(mobile)
@@ -174,7 +175,8 @@ class ApiService{
         "Evening Start Time":estarttym,
         "Evening End Time":eendtymm,
         "Sunday Start Time":sstarttym,
-        "Sunday End Time":sendtym
+        "Sunday End Time":sendtym,
+        "Date of Registration":date5
       });
 
     } catch (e) {
