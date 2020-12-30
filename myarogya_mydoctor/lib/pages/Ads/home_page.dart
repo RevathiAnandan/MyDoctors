@@ -4,6 +4,7 @@ import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
 import 'package:myarogya_mydoctor/model/Ads.dart';
 import 'package:myarogya_mydoctor/pages/Ads/addAds.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/appBarControls.dart';
+import 'package:myarogya_mydoctor/pages/widget/home/controls/like_widget.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/controls/onscreen_controls.dart';
 import 'package:myarogya_mydoctor/pages/widget/home/home_video_renderer.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
@@ -50,47 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildBar(context),
-      // AppBar(
-      //   automaticallyImplyLeading: false,
-      //   backgroundColor: Colors.white,
-      //   actions: [
-      //     IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
-      //       onPressed: (){
-      //         // Navigator.push(
-      //         //   context,
-      //         //   MaterialPageRoute(
-      //         //     builder: (context) =>Addads(widget.id,widget.mobile),
-      //         //   ),
-      //         // );
-      //       },),
-      //     IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
-      //       onPressed: (){
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) =>Addads(widget.id,widget.mobile),
-      //           ),
-      //         );
-      //       },),
-      //     IconButton(
-      //       color: Colors.redAccent,
-      //       icon: Icon(Icons.list),
-      //       onPressed: (){
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //   ],
-      //   title: Text("My Ads",
-      //       style: TextStyle(
-      //           color: Colors.redAccent,
-      //           fontFamily: "Lato",
-      //           fontSize: 20)),
-      // ),
       body: isLoading?Column(
         children: [
           LinearProgressIndicator(),
@@ -156,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                            height: 10.0,
                            color: Colors.redAccent,
                          ),
+
                        ],
                      );
 
@@ -201,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Image.network(myads[position].image)
       else
         AppVideoPlayer(myads[position].video),
-      onScreenControlsA(myads[position],myads,position)
+      onScreenControlsA(myads[position],myads,position,keys[position])
     ];
   }
 

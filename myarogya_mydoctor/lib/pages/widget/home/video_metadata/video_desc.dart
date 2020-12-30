@@ -60,20 +60,20 @@ Widget videoDesc(Complains complains,String complainKey) {
 
             Flexible(flex:5,child: Column(
               children: [
-                likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey,type: complains.Risky),
+                likeWidget(icon: Icons.nature,label: "Risky",complainKey:complainKey,type: complains.Risky,category: "Complain"),
                 Text("Risky",style: TextStyle(color: Colors.white,),),
               ],
             )),
             Flexible(flex:5,child: Column(
               children: [
-                likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey,type: complains.Urgent),
+                likeWidget(icon: Icons.info,label: "Urgent",complainKey:complainKey,type: complains.Urgent,category: "Complain"),
                 Text("Urgent",style: TextStyle(color: Colors.white,),),
 
               ],
             )),
             Flexible(flex:5,child: Column(
               children: [
-                likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey,type: complains.Priority),
+                likeWidget(icon: Icons.view_array,label: "Priority",complainKey:complainKey,type: complains.Priority,category: "Complain"),
                 Text("Priority",style: TextStyle(color: Colors.white,),),
               ],
             )),
@@ -90,7 +90,7 @@ Widget videoDesc(Complains complains,String complainKey) {
     ),
   );
 }
-Widget videoDescA(MyAds ads) {
+Widget videoDescA(MyAds ads,String adsKey) {
   return Container(
     padding: EdgeInsets.only(left: 16, bottom: 60),
     child: Column(
@@ -128,6 +128,23 @@ Widget videoDescA(MyAds ads) {
             )
           ],
         ),
+        Row(
+          children: [
+            Flexible(flex:5,child: Column(
+              children: [
+                likeWidget(icon: Icons.thumb_down,label: "Boring",complainKey:adsKey,type: ads.boring,category: "ads"),
+                Text("Boring",style: TextStyle(color: Colors.white,),),
+              ],
+            )),
+            Flexible(flex:5,child: Column(
+              children: [
+                likeWidget(icon: Icons.thumb_up,label: "Top of Top",complainKey:adsKey,type: ads.topoftop,category: "ads"),
+                Text("Top of Top",style: TextStyle(color: Colors.white,),),
+
+              ],
+            )),
+          ],
+        )
       ],
     ),
   );

@@ -5,7 +5,7 @@ import 'package:myarogya_mydoctor/model/complains.dart';
 import 'package:myarogya_mydoctor/pages/complains/MyComplainList.dart';
 import 'package:myarogya_mydoctor/resources/dimen.dart';
 FirebaseDatabase fb = FirebaseDatabase.instance;
-Widget likeWidget({IconData icon, String label,String complainKey,int type}) {
+Widget likeWidget({IconData icon, String label,String complainKey,int type, String category}) {
   return Padding(
     padding: EdgeInsets.only(top: 10, bottom: 10),
     child: Column(
@@ -19,7 +19,11 @@ Widget likeWidget({IconData icon, String label,String complainKey,int type}) {
             dotSecondaryColor: Color(0xff0099cc),
           ),
           onTap: (bool isliked){
-            return onLikebuttonTap(isliked,complainKey,label);
+            if (category == "ads") {
+              return onLikebuttonTapA(isliked,complainKey,label);
+            } else {
+              return onLikebuttonTap(isliked,complainKey,label);
+            }
           },
           likeBuilder: (bool isLiked) {
             return Icon(
@@ -55,7 +59,15 @@ Future<bool> onLikebuttonTap(bool isLiked,String complainKey,String label)async{
   });
   return !isLiked;
 }
-
+Future<bool> onLikebuttonTapA(bool isLiked,String complainKey,String label)async{
+  var ref = fb.reference().child("MyAds/$complainKey/$label");
+  !isLiked?ref.once().then((data)async=>{
+    await ref.set(data.value+1),
+  }):ref.once().then((data)async=>{
+    await ref.set(data.value+-1),
+  });
+  return !isLiked;
+}
 
 
 

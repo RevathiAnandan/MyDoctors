@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
-import 'package:myarogya_mydoctor/utils/const.dart';
-import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 
 class OtpScreen extends StatefulWidget {

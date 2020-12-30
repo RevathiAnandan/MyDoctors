@@ -23,13 +23,13 @@ Widget onScreenControls(Complains complains,String complainKey) {
     ),
   );
 }
-Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position) {
+Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position,String adsKey) {
 
 
   return Container(
     child: Row(
       children: <Widget>[
-        Expanded(flex: 5, child: videoDescA(ads)),
+        Expanded(flex: 5, child: videoDescA(ads,adsKey)),
         Expanded(
           flex: 2,
           child: Container(
