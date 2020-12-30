@@ -33,28 +33,34 @@ class Dropdownlists{
 
   ];
   List<String> categories = [
-   "General",
-   "Water",
+    "General",
+    "Water",
     "Road",
     "Electricity",
     "Internet",
     "Housing",
+    "Unemployment",
+    "Pollution",
+    "Corruption",
+    "Health care",
+    "Women safety",
+    "Education",
     "Credit Card",
     "Banking",
     "Court cases"
   ];
   List<String> adscategories = [
+    "General",
     "Mobiles",
     "Computer",
     "Electronic",
     "Cars",
     "Bikes",
-    "Property",
-    "Company",
+    "Pvt Companies",
     "Textile",
     "Hotels",
     "Restaurant",
     "Jewellery",
-    "General",
+    "My Shop",
   ];
 }

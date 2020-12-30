@@ -116,6 +116,7 @@ class _EditAddHospital extends State<EditAddHospital> {
   final TextEditingController chargesController1 = TextEditingController();
   final TextEditingController chargesController2 = TextEditingController();
   final TextEditingController chargesController3 = TextEditingController();
+  final TextEditingController notecontroller = TextEditingController();
   final TextEditingController dchargesController = TextEditingController();
   final TextEditingController nchargesController = TextEditingController();
   final TextEditingController pchargesController = TextEditingController();
@@ -127,7 +128,7 @@ class _EditAddHospital extends State<EditAddHospital> {
   final TextEditingController suramtController = TextEditingController();
   final TextEditingController amtController = TextEditingController();
   final TextEditingController roomtype = TextEditingController();
-  final TextEditingController pricerange = TextEditingController();
+  final TextEditingController pincode = TextEditingController();
 
   List<bool> _selected = [false, false, false, false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false];
@@ -151,7 +152,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     ambuController.text = widget.hospitalValues.ambulanceNo;
     emerController.text = widget.hospitalValues.emergencyNo;
     opdbkController.text = widget.hospitalValues.opdBookingNo;
-    pricerange.text = widget.hospitalValues.pincode;
+    pincode.text = widget.hospitalValues.pincode;
     bedsController.text =  widget.hospitalValues.freebeds[0].noOfBeds;
     bedsController1.text =  widget.hospitalValues.conbeds[0].noOfBeds;
     bedsController3.text =  widget.hospitalValues.covidbeds[0].noOfBeds;
@@ -304,7 +305,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                         addressController.text,
                         dateofController.text,
                         adminiController.text,
-                        pricerange.text,
+                        pincode.text,
                         adminiphoneController.text,
                         ACCRED,
                         "+91${ambuController.text}",
@@ -317,6 +318,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                         conbeds,
                         covidbeds,
                         Beds,
+                        notecontroller.text,
                         diagnosis,
                         health,
                         surgery,
@@ -647,7 +649,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                   ),
                 ),
                 TextFormField(
-                  controller: pricerange,
+                  controller: pincode,
                   decoration: new InputDecoration(
                       hintText: "Low - High"
                   ),

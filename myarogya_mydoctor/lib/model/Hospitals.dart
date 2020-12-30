@@ -24,6 +24,7 @@ class Hospital{
   List<ConBeds> conbeds;
   List<CovidBeds> covidbeds;
   List<OtherBeds> beds;
+  String note;
   List<Diagnosis> diagnosis;
   List<Health> health;
   List<Surgery> surgery;
@@ -53,6 +54,7 @@ class Hospital{
     this.freebeds,
     this.conbeds,
     this.beds,
+    this.note,
     this.covidbeds,
     this.diagnosis,
     this.health,
@@ -114,6 +116,7 @@ class Hospital{
       freebeds: _FREE,
       conbeds: _CON,
       beds: _BED,
+      note: json['Note'] as String,
       covidbeds: _COVID,
       diagnosis: _DIAGNOSIS,
       health: _HEALTH,

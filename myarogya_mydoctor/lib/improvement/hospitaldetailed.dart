@@ -9,9 +9,9 @@ import 'addhospitals.dart';
 
 class HospitalDetails extends StatefulWidget {
   int index;
-  String hospitalname;
-
-  HospitalDetails(this.index, this.hospitalname);
+  
+  Hospital hospitalvalues;
+  HospitalDetails(this.index, this.hospitalvalues);
 
   @override
   _HospitalDetailsState createState() => _HospitalDetailsState();
@@ -19,14 +19,14 @@ class HospitalDetails extends StatefulWidget {
 
 class _HospitalDetailsState extends State<HospitalDetails> {
   @override
-  List<Hospital> hospitalvalues = [];
   bool isLoading=true;
   final controller = PageController(initialPage: 1,);
   FirebaseDatabase fb = FirebaseDatabase.instance;
   void initState() {
     // TODO: implement initState
     super.initState();
-    getHospitals();
+    // getHospitals();
+    isLoading=false;
   }
 
   @override
@@ -50,7 +50,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                 //     children: [
                 //     Image(
                 //                 image: NetworkImage(
-                //                   hospitalvalues[0].image[0],
+                //                   widget.hospitalvalues.image[0],
                 //                 ),
                 //                 height: 150,
                 //                 width: 200,
@@ -71,10 +71,10 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                         shrinkWrap: true,
-                        children: List.generate(hospitalvalues[0].image.length, (index) {
+                        children: List.generate(widget.hospitalvalues.image.length, (index) {
                           return Image(
                             image: NetworkImage(
-                              hospitalvalues[0].image[index],
+                              widget.hospitalvalues.image[index],
                             ),
                             height: 150,
                             width: 200,
@@ -92,7 +92,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        hospitalvalues[0].hospitalName,
+                        widget.hospitalvalues.hospitalName,
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 28.0,
@@ -105,7 +105,6 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       ),
                       Row(
                         children: [
-
                           Text(
                             "Administration Name: ",
                             style: TextStyle(
@@ -116,7 +115,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ),
                           ),
                           Text(
-                            hospitalvalues[0].adminName,
+                            widget.hospitalvalues.adminName,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16.0,
@@ -130,7 +129,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       //   height: 15,
                       // ),
                       // Text(
-                      //   "Admin Registration Number: " +hospitalvalues[0].hospitalRegNo,
+                      //   "Admin Registration Number: " +widget.hospitalvalues.hospitalRegNo,
                       //   style: TextStyle(
                       //     color: Colors.redAccent,
                       //     fontSize: 16.0,
@@ -153,7 +152,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ),
                           ),
                           Text(
-                            hospitalvalues[0].hospitalAddress,
+                            widget.hospitalvalues.hospitalAddress,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16.0,
@@ -168,6 +167,19 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                         height: 15,
                       ),
                       Text(
+                        "TPA Details: ",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      getTPAlist(widget.hospitalvalues.tpalist),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
                         "Facilities: ",
                         style: TextStyle(
                           color: Colors.redAccent,
@@ -179,7 +191,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      getfacility(hospitalvalues[0].facilities),
+                      getfacility(widget.hospitalvalues.facilities),
                       SizedBox(
                         height: 15,
                       ),
@@ -195,7 +207,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      getspeciality(hospitalvalues[0].specialities),
+                      getspeciality(widget.hospitalvalues.specialities),
                       SizedBox(
                         height: 15,
                       ),
@@ -230,7 +242,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               fontWeight: FontWeight.bold,
                             ),)),
                           ],
-                          rows: hospitalvalues[0].freebeds.map((e) =>
+                          rows: widget.hospitalvalues.freebeds.map((e) =>
                               DataRow(
                                 cells: [
                                   DataCell(Container(width:130,child: Text(e.roomType))),
@@ -251,7 +263,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             DataColumn(label: Text("")),
                             DataColumn(label: Text("")),
                           ],
-                          rows: hospitalvalues[0].conbeds.map((e) =>
+                          rows: widget.hospitalvalues.conbeds.map((e) =>
                               DataRow(
                                 cells: [
                                   DataCell(Container(width:90,child: Text(e.roomType))),
@@ -272,7 +284,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             DataColumn(label: Text("")),
                             DataColumn(label: Text("")),
                           ],
-                          rows: hospitalvalues[0].covidbeds.map((e) =>
+                          rows: widget.hospitalvalues.covidbeds.map((e) =>
                               DataRow(
                                 cells: [
                                   DataCell(Container(width:90,child: Text(e.roomType))),
@@ -283,186 +295,10 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                           ).toList()
                         ),
                       ),
-                      getdatatable(hospitalvalues[0].beds),
+                      getdatatable(widget.hospitalvalues.beds),
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        "TPA Details: ",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getTPAlist(hospitalvalues[0].tpalist),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Accrediation: ",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      // Text(
-                      //   hospitalvalues[0].accred,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getaccred(hospitalvalues[0].accred),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "Important Numbers",
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 20.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "Administration Ph: "+hospitalvalues[0].adminPh,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "Ambulance: "+hospitalvalues[0].ambulanceNo,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "Booking Ph: "+hospitalvalues[0].bookingPhNo,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "Emergency Number: "+hospitalvalues[0].emergencyNo,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   "OPD Booking: "+hospitalvalues[0].opdBookingNo,
-                      //   style: TextStyle(
-                      //     color: Colors.redAccent,
-                      //     fontSize: 16.0,
-                      //     fontFamily: 'Lato',
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Health Packages:",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        width: 400,
-                        child: DataTable(
-                            columnSpacing: 0,
-                            columns: [
-                              DataColumn(label: Text("Package Name")),
-                              DataColumn(label: Text("Amount")),
-
-                            ],
-                            rows: hospitalvalues[0].health.map((e) =>
-                                DataRow(
-                                    cells: [
-                                      DataCell(Container(width:130,child: Text(e.packagename))),
-                                      DataCell(Container(width:50,child: Text(e.amount))),
-                                    ]
-                                ),
-                            ).toList()
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Surgery Packages:",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        width: 400,
-                        child: DataTable(
-                            columnSpacing: 0,
-                            columns: [
-                              DataColumn(label: Text("Surgery Name")),
-                              DataColumn(label: Text("Amount")),
-
-                            ],
-                            rows: hospitalvalues[0].surgery.map((e) =>
-                                DataRow(
-                                    cells: [
-                                      DataCell(Container(width:130,child: Text(e.surgeryname))),
-                                      DataCell(Container(width:50,child: Text(e.suramount))),
-                                    ]
-                                ),
-                            ).toList()
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-
                       Text(
                         "Pathology Charges:",
                         style: TextStyle(
@@ -481,7 +317,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               DataColumn(label: Text("Amount")),
 
                             ],
-                            rows: hospitalvalues[0].diagnosis.map((e) =>
+                            rows: widget.hospitalvalues.diagnosis.map((e) =>
                                 DataRow(
                                     cells: [
                                       DataCell(Container(width:130,child: Text(e.test))),
@@ -491,6 +327,152 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ).toList()
                         ),
                       ),
+
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      Text(
+                        "Health Packages:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Package Name")),
+                              DataColumn(label: Text("Amount")),
+
+                            ],
+                            rows: widget.hospitalvalues.health.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:130,child: Text(e.packagename))),
+                                      DataCell(Container(width:50,child: Text(e.amount))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Surgery & Other Packages:",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        child: DataTable(
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(label: Text("Surgery Name")),
+                              DataColumn(label: Text("Amount")),
+
+                            ],
+                            rows: widget.hospitalvalues.surgery.map((e) =>
+                                DataRow(
+                                    cells: [
+                                      DataCell(Container(width:130,child: Text(e.surgeryname))),
+                                      DataCell(Container(width:50,child: Text(e.suramount))),
+                                    ]
+                                ),
+                            ).toList()
+                        ),
+                      ),
+
+
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Important Numbers",
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 20.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Administration Ph: "+widget.hospitalvalues.adminPh,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Ambulance: "+widget.hospitalvalues.ambulanceNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Booking Ph: "+widget.hospitalvalues.bookingPhNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "Emergency Number: "+widget.hospitalvalues.emergencyNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   "OPD Booking: "+widget.hospitalvalues.opdBookingNo,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+
+
+                      SizedBox(
+                        height: 15,
+                      ),
+
+
 
                       Text(
                         "Doctor Details:",
@@ -511,7 +493,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               DataColumn(label: Text("Specialist")),
 
                             ],
-                            rows: hospitalvalues[0].doctorslist.map((e) =>
+                            rows: widget.hospitalvalues.doctorslist.map((e) =>
                                 DataRow(
                                     cells: [
                                       DataCell(Container(width:150,child: Text(e.name))),
@@ -540,7 +522,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               DataColumn(label: Text("Phone Number")),
 
                             ],
-                            rows: hospitalvalues[0].nurseslist.map((e) =>
+                            rows: widget.hospitalvalues.nurseslist.map((e) =>
                                 DataRow(
                                     cells: [
                                       DataCell(Container(width:150,child: Text(e.name))),
@@ -568,7 +550,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                               DataColumn(label: Text("Phone Number")),
 
                             ],
-                            rows: hospitalvalues[0].staffslist.map((e) =>
+                            rows: widget.hospitalvalues.staffslist.map((e) =>
                                 DataRow(
                                     cells: [
                                       DataCell(Container(width:150,child: Text(e.name))),
@@ -578,6 +560,31 @@ class _HospitalDetailsState extends State<HospitalDetails> {
                             ).toList()
                         ),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Accreditation: ",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.0,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      // Text(
+                      //   widget.hospitalvalues.accred,
+                      //   style: TextStyle(
+                      //     color: Colors.redAccent,
+                      //     fontSize: 16.0,
+                      //     fontFamily: 'Lato',
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      getaccred(widget.hospitalvalues.accred),
                     ],
                   ),
                 ),
@@ -589,33 +596,33 @@ class _HospitalDetailsState extends State<HospitalDetails> {
     );
   }
 
-  Future<Hospital> getHospitals() async {
-    var db = await fb.reference().child("Hospitals");
-    print(db);
-    try {
-      if (db != null) {
-        db.once().then((DataSnapshot snapshot) {
-          Map<dynamic, dynamic> values = snapshot.value;
-          values.forEach((key, value) {
-            var refreshToken = Hospital.fromJson(value);
-            setState(() {
-              if(widget.hospitalname==refreshToken.hospitalName) {
-                hospitalvalues.add(refreshToken);
-              }
-            });
-            print("Hops::::${hospitalvalues.toString()}");
-            setState(() {
-              isLoading=false;
-            });
-          });
-        });
-      } else {
-        print('Something is Null');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<Hospital> getHospitals() async {
+  //   var db = await fb.reference().child("Hospitals");
+  //   print(db);
+  //   try {
+  //     if (db != null) {
+  //       db.once().then((DataSnapshot snapshot) {
+  //         Map<dynamic, dynamic> values = snapshot.value;
+  //         values.forEach((key, value) {
+  //           var refreshToken = Hospital.fromJson(value);
+  //           setState(() {
+  //             if(widget.hospitalname==refreshToken.hospitalName) {
+  //               hospitalvalues.add(refreshToken);
+  //             }
+  //           });
+  //           print("Hops::::${hospitalvalues.toString()}");
+  //           setState(() {
+  //             isLoading=false;
+  //           });
+  //         });
+  //       });
+  //     } else {
+  //       print('Something is Null');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Widget getfacility(List facility){
     List<Widget> list = new List<Widget>();
@@ -692,7 +699,7 @@ class _HospitalDetailsState extends State<HospitalDetails> {
               DataColumn(label: Text("")),
               DataColumn(label: Text("")),
             ],
-            rows: hospitalvalues[0].beds.map((e) =>
+            rows: widget.hospitalvalues.beds.map((e) =>
                 DataRow(
                     cells: [
                       DataCell(Container(width:90,child: Text(e.roomType))),

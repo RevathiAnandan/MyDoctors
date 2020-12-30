@@ -282,7 +282,7 @@ class ApiService{
   Future hospitals(String name,String regno,String address,String dateof,String adminname, String pincode,
       String adminph,
       List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status,
-      List freebeds,List conbeds,List coivdbeds ,List beds, List diagnosis, List health,List surgery,
+      List freebeds,List conbeds,List coivdbeds ,List beds,String note, List diagnosis, List health,List surgery,
       List special, List facility, List docList, List nurseList, List staffList, List TPA
       ,String is24,String isCovid,String isnabh,String award,String key){
     try {
@@ -307,6 +307,7 @@ class ApiService{
           'Covid Bed Details':coivdbeds,
           'Concessional Bed Details':conbeds,
           'Special Bed Details':beds,
+          "Note":note,
           'Diagnosis Details':diagnosis,
           'Health Package':health,
           'Surgery Packages':surgery,
@@ -354,6 +355,7 @@ class ApiService{
           'Covid Bed Details':coivdbeds,
           'Concessional Bed Details':conbeds,
           'Special Bed Details':beds,
+          "Note":note,
           'Diagnosis Details':diagnosis,
           'Health Package':health,
           'Surgery Packages':surgery,
@@ -454,12 +456,13 @@ Future MyAds(String name,String productCatogory, String slogan,String image,Stri
       "Views":views,
     });
 }
-Future MyComplains(String Cno,String Cabout,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile,int risky,int urgent,int priority,views){
+Future MyComplains(String Cno,String Cabout,String location,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile,int risky,int urgent,int priority,views){
     var db = fb.reference().child("MyComplains").push();
 
     db.set({
       "ComplainNumber" : Cno,
       "About": Cabout,
+      "Location":location,
       "SendTo":sendto,
       "Category":category,
       "Depart":depart,

@@ -23,10 +23,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
   List<MyAds> myads = [];
+  List<MyAds> filterads = [];
   List<MyAds> nextads = [];
   List keys = [];
   bool isLoading = true;
   int nxtadindex = 0;
+  Widget appBarTitle = new Text("My Ads",
+      style: TextStyle(
+          color: Colors.redAccent,
+          fontFamily: "Lato",
+          fontSize: 20));
+  Icon actionIcon = new Icon(Icons.search, color: Colors.redAccent,);
+  final key = new GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = new TextEditingController();
+  bool _IsSearching;
   PageController _pagePosition = PageController();
   @override
   void initState() {
@@ -39,51 +49,52 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
-            onPressed: (){
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) =>Addads(widget.id,widget.mobile),
-              //   ),
-              // );
-            },),
-          IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>Addads(widget.id,widget.mobile),
-                ),
-              );
-            },),
-          IconButton(
-            color: Colors.redAccent,
-            icon: Icon(Icons.list),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
-                ),
-              );
-            },
-          ),
-        ],
-        title: Text("My Ads",
-            style: TextStyle(
-                color: Colors.redAccent,
-                fontFamily: "Lato",
-                fontSize: 20)),
-      ),
+      appBar: buildBar(context),
+      // AppBar(
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Colors.white,
+      //   actions: [
+      //     IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
+      //       onPressed: (){
+      //         // Navigator.push(
+      //         //   context,
+      //         //   MaterialPageRoute(
+      //         //     builder: (context) =>Addads(widget.id,widget.mobile),
+      //         //   ),
+      //         // );
+      //       },),
+      //     IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
+      //       onPressed: (){
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) =>Addads(widget.id,widget.mobile),
+      //           ),
+      //         );
+      //       },),
+      //     IconButton(
+      //       color: Colors.redAccent,
+      //       icon: Icon(Icons.list),
+      //       onPressed: (){
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //   ],
+      //   title: Text("My Ads",
+      //       style: TextStyle(
+      //           color: Colors.redAccent,
+      //           fontFamily: "Lato",
+      //           fontSize: 20)),
+      // ),
       body: isLoading?Column(
         children: [
           LinearProgressIndicator(),
-          Text("Your ads is on the way!!")
+          Text("Your ads are on the way!!")
         ],
       ):Row(
         children: [
@@ -203,6 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
           var refreshToken = MyAds.fromJson(values);
           print(refreshToken.mobile);
           myads.add(refreshToken);
+          filterads.add(refreshToken);
           keys.add(key);
           print(myads.toString());
           setState(() {
@@ -253,5 +265,87 @@ class _HomeScreenState extends State<HomeScreen> {
          print(isLoading.toString());
        }
      });
+  }
+  Widget buildBar(BuildContext context) {
+    return new AppBar(
+        backgroundColor: Colors.white,
+        // centerTitle: true,
+        title: appBarTitle,
+        actions: <Widget>[
+          new IconButton(icon: actionIcon, onPressed: () {
+            setState(() {
+              if (this.actionIcon.icon == Icons.search) {
+                this.actionIcon = new Icon(Icons.close, color: Colors.redAccent,);
+                this.appBarTitle = new TextField(
+                  onChanged: (text){
+                    setState(() {
+                      myads = filterads
+                          .where((u) => (u.slogan
+                          .toLowerCase()
+                          .contains(text.toLowerCase())||u.name
+                          .toLowerCase()
+                          .contains(text.toLowerCase())))
+                          .toList();
+                    });
+                  },
+                  controller: _searchQuery,
+                  style: new TextStyle(
+                    color: Colors.redAccent,
+                  ),
+                  decoration: new InputDecoration(
+                      prefixIcon: new Icon(Icons.search, color: Colors.redAccent),
+                      hintText: "Search...",
+                      hintStyle: new TextStyle(color: Colors.white)
+                  ),
+                );
+                _handleSearchStart();
+              }
+              else {
+                _handleSearchEnd();
+              }
+            });
+          },),
+          IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>Addads(widget.id,widget.mobile),
+                ),
+              );
+            },),
+          IconButton(
+            color: Colors.redAccent,
+            icon: Icon(Icons.list),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>AdsUserProfile(widget.id,widget.mobile),
+                ),
+              );
+            },
+          ),
+        ]
+    );
+  }
+  void _handleSearchStart() {
+    setState(() {
+      _IsSearching = true;
+    });
+  }
+
+  void _handleSearchEnd() {
+    setState(() {
+      this.actionIcon = new Icon(Icons.search, color: Colors.redAccent,);
+      this.appBarTitle =
+      new Text("My Ads",
+          style: TextStyle(
+              color: Colors.redAccent,
+              fontFamily: "Lato",
+              fontSize: 20));
+      _IsSearching = false;
+      _searchQuery.clear();
+    });
   }
 }

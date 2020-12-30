@@ -243,6 +243,8 @@ class _AddHospitalState extends State<AddHospital> {
   List diagnosis = [];
   List health = [];
   List surgery = [];
+  List accred = [];
+  List insurance = [];
   List docnamenum = [];
   List nursenamenum = [];
   List staffnamenum = [];
@@ -256,11 +258,12 @@ class _AddHospitalState extends State<AddHospital> {
     "Room Tariff",
     "Diagnosis Charges",
     "Health Checkup Packages",
-    "Surgery Details",
+    "Surgery & Other Packages",
     "Speciality",
     "Facility",
     "Insurance",
     "Staff Details",
+    "Terms & Conditions",
   ];
   int pageindex = 0;
   String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
@@ -392,7 +395,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 10
+                child: pageindex == 11
                     ? Text(
                   "Save",
                   style: TextStyle(
@@ -412,7 +415,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
               ),
-              pageindex == 10
+              pageindex == 11
                   ? IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () {
@@ -436,6 +439,7 @@ class _AddHospitalState extends State<AddHospital> {
                                           conbeds,
                                           covidbeds,
                                           Beds,
+                                          notecontroller.text,
                                           diagnosis,
                                           health,
                                           surgery,
@@ -500,7 +504,7 @@ class _AddHospitalState extends State<AddHospital> {
               topics[pageindex],
               style: TextStyle(
                 color: Colors.redAccent,
-                fontSize: 22.0,
+                fontSize: 20.0,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.bold,
               ),
@@ -687,7 +691,7 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 35,
                 ),
                 Text(
-                  "Accredition",
+                  "Accreditation",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -743,11 +747,19 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: Accred.length,
-                      itemBuilder: (_, index) => Accred[index]),
+                    child: Center(
+                        child: dataBody3("Acredition",ACCRED))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: healthCharges.length,
+//                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
+                // Container(
+                //   child: ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: Accred.length,
+                //       itemBuilder: (_, index) => Accred[index]),
+                // ),
                 SizedBox(
                   height: 35,
                 ),
@@ -768,7 +780,7 @@ class _AddHospitalState extends State<AddHospital> {
                     // enabledBorder: InputBorder.none,
                     //errorBorder: OutlineInputBorder(),
                     //disabledBorder: InputBorder.none,
-                      hintText: "Low - High"
+                    //   hintText: ""
                   ),
                   style: TextStyle(
                     fontSize: 18,
@@ -1380,37 +1392,38 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
 
                   children: [
-                    Flexible(flex:1,child: Container(width: 110,
-                        height: 40,child: Text("Note:"))),
-                    Flexible(flex:3,
-                      child: Container(
-                        // width: 200,
-                        height: 35,
-                        child: TextFormField(
-                          // keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            // FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: new InputDecoration(
-                            border: OutlineInputBorder(),
-                            // focusedBorder: InputBorder.none,
-                            // enabledBorder: InputBorder.none,
-                            //errorBorder: OutlineInputBorder(),
-                            //disabledBorder: InputBorder.none,
-                            // hintText: "Hospital Name"
-                          ),
-                          controller: notecontroller,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                          ),
+                    Container(width: 110,
+                        height: 40,child: Center(child: Text("Note:",style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Lato',
+                ),))),
+                    Container(
+                      width: 250,
+                      height: 40,
+                      child: TextFormField(
+                        // keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          // FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: notecontroller,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Lato',
+                        ),
 //                        validator: (value) {
 //                          if (value.isEmpty) {
 //                            return 'Please enter some text';
 //                          }
 //                          return null;
 //                        },
-                        ),
                       ),
                     ),
                   ],
@@ -3027,18 +3040,26 @@ class _AddHospitalState extends State<AddHospital> {
                 SizedBox(
                   height: 15,
                 ),
+                //Insurance Name
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: TPAInsurance.length,
-                      itemBuilder: (_, index) => TPAInsurance[index]),
+                    child: Center(
+                        child: dataBody3("Insurance Name",TPA))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: healthCharges.length,
+//                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
+                // Container(
+                //   child: ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: TPAInsurance.length,
+                //       itemBuilder: (_, index) => TPAInsurance[index]),
+                // ),
               ],
             ),
           ),
         );
       case 10:
-
         return new Container(
           //padding: EdgeInsets.all(20),
           // height: 1000,
@@ -3094,6 +3115,8 @@ class _AddHospitalState extends State<AddHospital> {
             ),
           ),
         );
+      case 11:
+        return new Container();
 
     }
   }
@@ -3265,6 +3288,55 @@ class _AddHospitalState extends State<AddHospital> {
                             print(Values[index][item2]);
                           })),
                   showEditIcon: true),
+            ]);
+          },
+        ),
+        columnSpacing: 100.0,
+      ),
+    );
+  }
+  SingleChildScrollView dataBody3(String title, List Values) {
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+              label: Text(title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+        ],
+        rows: List.generate(
+          Values.length,
+          (index) {
+            return DataRow(cells: [
+              DataCell(
+                  Center(
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  if(Values==TPA) {
+                                    TPA.removeAt(index);
+                                  }else if(Values==ACCRED){
+                                    ACCRED.removeAt(index);
+                                  }
+                                });
+                                print(TPA);
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
+                          initialValue: Values[index][title],
+                          onChanged: (v) {
+                            setState(() {
+                              Values[index][title] = v;
+                            });
+                            print(Values[index][title]);
+                          })),
+                  showEditIcon: true,),
             ]);
           },
         ),

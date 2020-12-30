@@ -6,10 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/model/Booking.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctorsettings.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/hospitalsettings.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'hospitaltabsettings.dart';
 class MyBooking extends StatefulWidget {
   String id;
   String mobile;
@@ -42,7 +45,7 @@ class _MyBookingState extends State<MyBooking> {
                  icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
                  onSelected: choiceAction,
                  itemBuilder: (BuildContext context){
-                   return ConstantsD.choices.map((String choice){
+                   return ConstantsHospitalTab.choices.map((String choice){
                      return PopupMenuItem<String>(
                        value: choice,
                        child: Text(choice),
@@ -52,7 +55,7 @@ class _MyBookingState extends State<MyBooking> {
                )
              ],
              backgroundColor: Colors.white,
-             expandedHeight: 280.0,
+             expandedHeight: MediaQuery.of(context).size.height/2.8,
              floating: false,
              pinned: true,
              leading: Container(),
@@ -89,13 +92,11 @@ class _MyBookingState extends State<MyBooking> {
                            child: CupertinoTextField(
                              onChanged: (text){
                                setState(() {
-                                 // dummyData = filterdata
-                                 //     .where((u) => (u.doctorName
-                                 //     .toLowerCase()
-                                 //     .contains(text.toLowerCase()) ||
-                                 //     u.patientMobile
-                                 //         .toLowerCase().contains(text.toLowerCase())))
-                                 //     .toList();
+                                 dummyData = dummyData1
+                                     .where((u) => (u.userNumber
+                                     .toLowerCase()
+                                     .contains(text.toLowerCase())))
+                                     .toList();
                                });
                              },
                              keyboardType: TextInputType.text,
@@ -143,8 +144,8 @@ class _MyBookingState extends State<MyBooking> {
                 ListTile(
                   leading: Text((index+1).toString()),
                   title: Text(dummyData[index].userNumber),
-                  subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text("Package Name:"+dummyData[index].bookdetails[0].packName
-                      +"Charges:"+dummyData[index].bookdetails[0].charges ):(Text("RoomType:"+dummyData[index].bookdetails[0].roomType
+                  subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text(dummyData[index].bookdetails[0].packName
+                      +" Charges:"+dummyData[index].bookdetails[0].charges ):(Text(dummyData[index].bookdetails[0].roomType
                       +"  "+"Charges:"+dummyData[index].bookdetails[0].charges )),
                   trailing: FlatButton(
                     child: Text(dummyData[index].status,
@@ -201,7 +202,7 @@ class _MyBookingState extends State<MyBooking> {
   }
   FirebaseDatabase fb = FirebaseDatabase.instance;
   List<Booking> dummyData = [];
-  List dummyData1 = [];
+  List<Booking> dummyData1 = [];
   List refresh = [];
   List keys1 = [];
   Future<Booking> getBooking() async {
@@ -217,6 +218,7 @@ class _MyBookingState extends State<MyBooking> {
           setState(() {
             if (refreshToken.bookingNumber == widget.mobile&& refreshToken.status!="Cancel") {
               dummyData.add(refreshToken);
+              dummyData1.add(refreshToken);
               keys1.add(key);
               print(dummyData[0].status);
             }
@@ -228,12 +230,12 @@ class _MyBookingState extends State<MyBooking> {
     }
   }
   void choiceAction(String choice){
-     if(choice == ConstantsD.Settings){
+    if(choice == ConstantsHospitalTab.Settings){
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) =>
-              DoctorSettings(widget.id,widget.mobile),
+              HospitalTabSettings(widget.id,widget.mobile),
         ),
       );
     }

@@ -23,9 +23,18 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
 
   List<Complains> complain = [];
+  List<Complains> filterdata = [];
   List<String> complainKey = [];
-
+  Widget appBarTitle = new Text("My Complains",
+      style: TextStyle(
+          color: Colors.redAccent,
+          fontFamily: "Lato",
+          fontSize: 20));
+  Icon actionIcon = new Icon(Icons.search, color: Colors.redAccent,);
+  final key = new GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = new TextEditingController();
   bool isLoading = true;
+  bool _IsSearching;
 @override
   void initState() {
     // TODO: implement initState
@@ -35,53 +44,50 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
-            onPressed: (){
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) =>Addads(widget.id,widget.mobile),
-              //   ),
-              // );
-            },),
-          IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>NewComplains(widget.id,widget.mobile),
-                ),
-              );
-            },),
-          IconButton(icon: Icon(Icons.list,color: Colors.redAccent),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>MyComplainList(widget.id,widget.mobile,complain),
-                ),
-              );
-            },),
-          IconButton(icon: Icon(Icons.announcement,color: Colors.redAccent),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>ComplainResolution(widget.id,widget.mobile),
-                ),
-              );
-            },),
-        ],
-        title: Text("My Complains",
-            style: TextStyle(
-                color: Colors.redAccent,
-                fontFamily: "Lato",
-                fontSize: 20)),
-      ),
+      appBar: buildBar(context),
+      // AppBar(
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Colors.white,
+      //   actions: [
+      //     IconButton(icon: Icon(Icons.search,color: Colors.redAccent),
+      //       onPressed: (){
+      //         // Navigator.push(
+      //         //   context,
+      //         //   MaterialPageRoute(
+      //         //     builder: (context) =>Addads(widget.id,widget.mobile),
+      //         //   ),
+      //         // );
+      //       },),
+      //     IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
+      //       onPressed: (){
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) =>NewComplains(widget.id,widget.mobile),
+      //           ),
+      //         );
+      //       },),
+      //     IconButton(icon: Icon(Icons.list,color: Colors.redAccent),
+      //       onPressed: (){
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) =>MyComplainList(widget.id,widget.mobile,complain),
+      //           ),
+      //         );
+      //       },),
+      //     IconButton(icon: Icon(Icons.announcement,color: Colors.redAccent),
+      //       onPressed: (){
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) =>ComplainResolution(widget.id,widget.mobile),
+      //           ),
+      //         );
+      //       },),
+      //   ],
+      //   title: appBarTitle,
+      // ),
       body: Row(
         children: [
           Flexible(
@@ -168,6 +174,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
         values.forEach((key, values) {
           var refreshToken = Complains.fromJson(values);
           complain.add(refreshToken);
+          filterdata.add(refreshToken);
           complainKey.add(key);
           setState(() {
             isLoading =false;
@@ -221,5 +228,96 @@ class _DisplayComplainsState extends State<DisplayComplains> {
     } catch (e) {
       print(e.message);
     }
+  }
+  Widget buildBar(BuildContext context) {
+    return new AppBar(
+      backgroundColor: Colors.white,
+        // centerTitle: true,
+        title: appBarTitle,
+        actions: <Widget>[
+          new IconButton(icon: actionIcon, onPressed: () {
+            setState(() {
+              if (this.actionIcon.icon == Icons.search) {
+                this.actionIcon = new Icon(Icons.close, color: Colors.redAccent,);
+                this.appBarTitle = new TextField(
+                  onChanged: (text){
+                    setState(() {
+                      complain = filterdata
+                          .where((u) => (u.ComplainNumber
+                          .toLowerCase()
+                          .contains(text.toLowerCase())||u.About
+                          .toLowerCase()
+                          .contains(text.toLowerCase()) ||
+                          u.Category
+                              .toLowerCase().contains(text.toLowerCase())||u.location
+                          .toLowerCase().contains(text.toLowerCase())))
+                          .toList();
+                    });
+                  },
+                  controller: _searchQuery,
+                  style: new TextStyle(
+                    color: Colors.redAccent,
+                  ),
+                  decoration: new InputDecoration(
+                      prefixIcon: new Icon(Icons.search, color: Colors.redAccent),
+                      hintText: "Search...",
+                      hintStyle: new TextStyle(color: Colors.white)
+                  ),
+                );
+                _handleSearchStart();
+              }
+              else {
+                _handleSearchEnd();
+              }
+            });
+          },),
+          IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>NewComplains(widget.id,widget.mobile),
+                ),
+              );
+            },),
+          IconButton(icon: Icon(Icons.list,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>MyComplainList(widget.id,widget.mobile,complain),
+                ),
+              );
+            },),
+          IconButton(icon: Icon(Icons.announcement,color: Colors.redAccent),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>ComplainResolution(widget.id,widget.mobile),
+                ),
+              );
+            },),
+        ]
+    );
+  }
+  void _handleSearchStart() {
+    setState(() {
+       _IsSearching = true;
+    });
+  }
+
+  void _handleSearchEnd() {
+    setState(() {
+      this.actionIcon = new Icon(Icons.search, color: Colors.redAccent,);
+      this.appBarTitle =
+      new Text("My Complains",
+          style: TextStyle(
+              color: Colors.redAccent,
+              fontFamily: "Lato",
+              fontSize: 20));
+      _IsSearching = false;
+      _searchQuery.clear();
+    });
   }
 }

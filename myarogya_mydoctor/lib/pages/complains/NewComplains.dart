@@ -33,6 +33,7 @@ class _NewComplainsState extends State<NewComplains> {
   final TextEditingController departController = TextEditingController();
   final TextEditingController cnameController = TextEditingController();
   final TextEditingController gvtController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
   String _chosenValue1 = "Water";
   File _image;
   File _video;
@@ -65,6 +66,7 @@ class _NewComplainsState extends State<NewComplains> {
                     ApiService().MyComplains(
                         complainnumber.toString(),
                         aboutController.text,
+                        locationController.text,
                         "+91${sentoController.text}",
                         departController.text,
                         cnameController.text,
@@ -99,6 +101,25 @@ class _NewComplainsState extends State<NewComplains> {
                       controller: aboutController,
                       decoration: new InputDecoration(
                           hintText: "Complain About"
+                      ),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Lato',
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: locationController,
+                      decoration: new InputDecoration(
+                          hintText: "Location"
                       ),
                       style: TextStyle(
                         fontSize: 18,

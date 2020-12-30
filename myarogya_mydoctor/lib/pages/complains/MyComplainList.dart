@@ -54,7 +54,7 @@ class _MyComplainListState extends State<MyComplainList> {
                         // title: Text(dummyData[index].userNumber),
                         title:Text("Complain Number: "+widget.complain[index].ComplainNumber,style: TextStyle(
                           color: Colors.black,
-                          fontSize: 15.0,
+                          fontSize: 12.0,
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.bold,
                         ),),
@@ -79,7 +79,7 @@ class _MyComplainListState extends State<MyComplainList> {
                                     side: BorderSide(
                                         color: Colors.redAccent)),
                                 padding: EdgeInsets.all(10),
-                                color: Colors.redAccent,
+                                color: Colors.green,
                               ),
                               FlatButton(
                                 child: Text("Resolved",

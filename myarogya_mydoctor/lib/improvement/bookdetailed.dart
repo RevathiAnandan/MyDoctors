@@ -297,7 +297,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                             ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: Text("*Deposit may needed",style: TextStyle(
+                          child: Text("* "+widget.hospitalvalues.note,style: TextStyle(
                             fontSize: 14,color: Colors.redAccent)),
                         ),
                         //     RadioButtonGroup(
@@ -1752,6 +1752,11 @@ class _BookdetailedState extends State<Bookdetailed> {
                             //     });
                             //   },
                             // ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("* Deposit may required",style: TextStyle(
+                                  fontSize: 14,color: Colors.redAccent)),
+                            ),
                           ],
                         ),
 

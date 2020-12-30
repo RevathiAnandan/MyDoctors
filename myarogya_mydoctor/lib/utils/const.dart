@@ -14,6 +14,11 @@ class ConstantUtils{
     Cancel,
   ];
 }
+//Pending confirmation
+//Admitted - booking confirmed
+
+
+
 
 class ConstantsD{
   static const String Settings = 'Settings';
@@ -31,6 +36,13 @@ class ConstantsH{
   static const List<String> choices = <String>[
     MakePayment,
     MyBooking,
+    Settings,
+  ];
+}
+class ConstantsHospitalTab{
+  static const String Settings = 'Settings';
+
+  static const List<String> choices = <String>[
     Settings,
   ];
 }

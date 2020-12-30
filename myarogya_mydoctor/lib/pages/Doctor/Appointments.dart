@@ -85,7 +85,7 @@ class _AppointmentsState extends State<Appointments> {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 300,
+              expandedHeight: MediaQuery.of(context).size.height/2.8,
               floating: false,
               pinned: true,
               leading: Container(),

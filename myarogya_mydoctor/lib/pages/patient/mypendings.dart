@@ -72,7 +72,7 @@ class _MyPendingsState extends State<MyPendings> {
               SliverAppBar(
                 leading: Container(),
                 backgroundColor: Colors.white,
-                expandedHeight: 300,
+                expandedHeight: MediaQuery.of(context).size.height/2.8,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
