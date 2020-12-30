@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myarogya_mydoctor/model/patientUser.dart';
 import 'dart:io';
 
 import 'package:myarogya_mydoctor/services/ApiService.dart';
@@ -18,61 +20,92 @@ class PatientProfile extends StatefulWidget {
 class _PatientProfileState extends State<PatientProfile> {
   File _image;
   bool isLoading = false;
+  PatientUser refreshToken;
   TextEditingController _pName = new TextEditingController();
   TextEditingController _age = new TextEditingController();
   TextEditingController _email = new TextEditingController();
   TextEditingController _phone = new TextEditingController() ;
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProfileDetails();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.close,
+            color: Colors.redAccent,
+          ),
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+        ),
+        title: Text('Profile',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.check,
+                color: Colors.redAccent,
+              ),
+              onPressed: () {
+                updatePatientProfile(_image,_pName.text,_email.text,_age.text);
+              })
+        ],
+      ),
       body: new Container(
         child: ListView(
           children: <Widget>[
             Column(
               children: <Widget>[
-                Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft:Radius.circular(15) ,
-                        bottomRight: Radius.circular(15)
-                    ),
-                  ),
-                  child:Column(
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon:Icon(Icons.arrow_back_ios,color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop() ;
-                            },
-                          ),                          Expanded(
-                            child: new Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(height: 30 ),
-                                Container(
-                                    child: Text('Hello Patient!', style: TextStyle(color:Colors.white, fontSize: 26, fontWeight: FontWeight.w500,fontFamily: "Lato"))
-                                ),
-                                SizedBox(height: 10 ),
-                                Container(
-                                    child: Text('please fill out the following details to create your profile', style: TextStyle(color: new Color(0xffCBD2D9), fontSize: 14 , fontWeight: FontWeight.w500,fontFamily: "Lato"))
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                ),
+                // Container(
+                //   height: 120,
+                //   width: double.infinity,
+                //   decoration: BoxDecoration(
+                //     color: Colors.redAccent,
+                //     borderRadius: BorderRadius.only(
+                //         bottomLeft:Radius.circular(15) ,
+                //         bottomRight: Radius.circular(15)
+                //     ),
+                //   ),
+                //   child:Column(
+                //     children: [
+                //       Row(
+                //         children: [
+                //           IconButton(
+                //             icon:Icon(Icons.arrow_back_ios,color: Colors.white,
+                //             ),
+                //             onPressed: () {
+                //               Navigator.of(context).pop() ;
+                //             },
+                //           ),                          Expanded(
+                //             child: new Column(
+                //               crossAxisAlignment: CrossAxisAlignment.center,
+                //               mainAxisSize: MainAxisSize.max,
+                //               children: [
+                //                 SizedBox(height: 30 ),
+                //                 Container(
+                //                     child: Text('Hello Patient!', style: TextStyle(color:Colors.white, fontSize: 26, fontWeight: FontWeight.w500,fontFamily: "Lato"))
+                //                 ),
+                //                 SizedBox(height: 10 ),
+                //                 Container(
+                //                     child: Text('please fill out the following details to create your profile', style: TextStyle(color: new Color(0xffCBD2D9), fontSize: 14 , fontWeight: FontWeight.w500,fontFamily: "Lato"))
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                //
+                // ),
                 Container(
                   height: MediaQuery.of(context).size.height * 20/100,
                   color: Colors.white,
@@ -137,18 +170,18 @@ class _PatientProfileState extends State<PatientProfile> {
                               SizedBox(height: 5,),
                               TextFormField(
                                 decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
                                     prefixIcon: new Icon(Icons.person,color: new Color(0xffACCCF8)),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    filled: true, fillColor: Colors.grey[100],
-                                    hintText: ""
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // filled: true, fillColor: Colors.grey[100],
+                                    // hintText: ""
                                 ),
                                 controller: _pName,
                               ),
@@ -159,17 +192,17 @@ class _PatientProfileState extends State<PatientProfile> {
                                 decoration: InputDecoration(
 
                                     prefixIcon: new Icon(Icons.phone_android,color: new Color(0xffACCCF8)),
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    filled: true, fillColor: Colors.grey[100],
-                                    hintText: "",
+                                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // filled: true, fillColor: Colors.grey[100],
+                                    // hintText: "",
 
                                 ),
                                 autofocus: false,
@@ -180,18 +213,18 @@ class _PatientProfileState extends State<PatientProfile> {
                               SizedBox(height: 5,),
                               TextFormField(
                                 decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
                                     prefixIcon: new Icon(Icons.email,color: new Color(0xffACCCF8)),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    filled: true, fillColor: Colors.grey[100],
-                                    hintText: ""
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // filled: true, fillColor: Colors.grey[100],
+                                    // hintText: ""
                                 ),
                                 controller: _age,
                               ),
@@ -199,40 +232,40 @@ class _PatientProfileState extends State<PatientProfile> {
                               SizedBox(height: 5,),
                               TextFormField(
                                 decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
                                     prefixIcon: new Icon(Icons.email,color: new Color(0xffACCCF8)),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                        borderSide: BorderSide(color: Colors.redAccent)
-                                    ),
-                                    filled: true, fillColor: Colors.grey[100],
-                                    hintText: ""
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    //     borderSide: BorderSide(color: Colors.redAccent)
+                                    // ),
+                                    // filled: true, fillColor: Colors.grey[100],
+                                    // hintText: ""
 
                                 ),
                                 controller: _email,
                               ),
                               SizedBox(height: 25,),
-                              Container(
-                                width: double.infinity,
-                                child: FlatButton(
-                                  child: Text("CREATE",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14,fontWeight:FontWeight.bold )),
-                                  textColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      side: BorderSide(color: Colors.redAccent)
-                                  ),
-                                  padding: EdgeInsets.all(16),
-                                  onPressed: (){
-                                    updatePatientProfile(_image,_pName.text,_email.text,_age.text);
-                                  },
-                                  color: new Color(0xff2F80ED),
-                                ),
-                              ),
-                              SizedBox(height: 25,),
+                              // Container(
+                              //   width: double.infinity,
+                              //   child: FlatButton(
+                              //     child: Text("CREATE",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14,fontWeight:FontWeight.bold )),
+                              //     textColor: Colors.white,
+                              //     shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(25.0),
+                              //         side: BorderSide(color: Colors.redAccent)
+                              //     ),
+                              //     padding: EdgeInsets.all(16),
+                              //     onPressed: (){
+                              //
+                              //     },
+                              //     color: new Color(0xff2F80ED),
+                              //   ),
+                              // ),
+                              // SizedBox(height: 25,),
                             ],
                           ),
                         )
@@ -278,5 +311,32 @@ class _PatientProfileState extends State<PatientProfile> {
       }
     }
   }
+  FirebaseDatabase fb = FirebaseDatabase.instance;
+  Future <PatientUser> getProfileDetails()async{
+    try {
+      var db = await fb.reference().child("User").child(widget.mobile);
+      if (db != null) {
+        db.once().then((DataSnapshot snapshot) {
+          print(snapshot.value);
+          if (snapshot.value == null) {
 
+          } else {
+            Map<dynamic, dynamic> values = snapshot.value;
+
+            print("Harun"+values.toString());
+            refreshToken = PatientUser.fromJson(values);
+            _pName.text = refreshToken.Name;
+            _age.text = refreshToken.Age;
+            _phone.text = refreshToken.mobile;
+            _email.text = refreshToken.emailId;
+            _image = File(refreshToken.image);
+          }
+        });
+      } else {
+
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

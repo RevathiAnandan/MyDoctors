@@ -443,15 +443,20 @@ class _PatientDashboardState extends State<PatientDashboard> {
     var db = fb.reference().child("User");
     db.once().then((DataSnapshot snapshot){
 //      print("snapshot${snapshot.value}");
-      ApiService().addPatientToDoctor(widget.mobile,phone,dname);
-      ApiService().addDoctorToPatient(widget.mobile,phone,pname);
+
       Map<dynamic, dynamic > values = snapshot.value;
       values.forEach((key,values) {
 //        print(values);
 //        if(key == pname) {
         var refreshToken = values;
         print(refreshToken);
-
+        if(values['phone'] == phone) {
+          print("Already Number Exist");
+        AuthService().toast("The Number already Exists");
+        }else{
+          ApiService().addPatientToDoctor(widget.mobile,phone,dname);
+          ApiService().addDoctorToPatient(widget.mobile,phone,pname);
+        }
 //        }else{
 //          //Sent an Invite to  this number to install the app.
 //

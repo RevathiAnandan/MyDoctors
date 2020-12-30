@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/pages/login_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
@@ -118,7 +119,7 @@ class AuthService{
     );
   }
 
-  alertDialog(BuildContext context){
+  alertDialog(BuildContext context,String id,String mobile){
     Alert(
         context: context,
         title: "Alert",
@@ -130,6 +131,13 @@ class AuthService{
         buttons: [
           DialogButton(
             onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ProfileScreen(id,mobile),
+                ),
+              );
             },
             child: Text(
               "OK",

@@ -16,11 +16,10 @@ class ConstantUtils{
 }
 
 class ConstantsD{
-  static const String Profile = 'Profile';
   static const String Settings = 'Settings';
 
   static const List<String> choices = <String>[
-    Profile,
+
     Settings
   ];
 }

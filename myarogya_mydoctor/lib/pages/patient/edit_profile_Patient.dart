@@ -1,22 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
-//class EditProfileDoctor extends StatefulWidget {
-//  String userId;
-//  String mobile;
-//  EditProfileDoctor(this.userId, this.mobile);
-//  @override
-//  _EditProfileDoctorState createState() => _EditProfileDoctorState();
-//}
-//
-//class _EditProfileDoctorState extends State<EditProfileDoctor> {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//
-//    );
-//  }
-//}
+
 
 
 class EditProfilePatient extends StatefulWidget {

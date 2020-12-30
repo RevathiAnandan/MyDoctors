@@ -45,7 +45,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       SizedBox(height: 100),
                       Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Select Who You Are?', style: TextStyle(color:new Color(0xff323F4B), fontSize: 32, fontWeight: FontWeight.w700,fontFamily: "Lato"))
+                          child: Text('Get registered as a:', style: TextStyle(color:new Color(0xff323F4B), fontSize: 32, fontWeight: FontWeight.w700,fontFamily: "Lato"))
                       ),
                       SizedBox(height: 100),
                       Container(
@@ -56,7 +56,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         child:Container(
                           width: double.infinity,
                           child: FlatButton(
-                            child: Text("DOCTOR",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                            child: Text("DOCTOR (CLINIC)",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
                             textColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
@@ -80,6 +80,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                           ),
                         ),
                       ),
+
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         constraints: const BoxConstraints(
@@ -88,39 +89,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         child:Container(
                           width: double.infinity,
                           child: FlatButton(
-                            child: Text("PATIENT",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: Colors.redAccent)
-                            ),
-                            padding: EdgeInsets.all(16),
-                            onPressed: () async{
-                              SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Patient);
-                              final User user = await _auth.currentUser;
-                              final uid = user.uid.toString();
-                              final usermobile = user.phoneNumber.toString();
-                              final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-                              _firebaseMessaging.getToken().then((token) =>fcmToken = token);
-                              ApiService().createUser(uid,usermobile,ConstantUtils().Patient,fcmToken);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,usermobile)),
-                              );
-                            },
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        constraints: const BoxConstraints(
-                            maxWidth: 500
-                        ),
-                        child:Container(
-                          width: double.infinity,
-                          child: FlatButton(
-                            child: Text("MY HOSPITALS",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                            child: Text("HOSPITAL",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
                             textColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
@@ -145,7 +114,39 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             color: Colors.redAccent,
                           ),
                         ),
-                      )
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        constraints: const BoxConstraints(
+                            maxWidth: 500
+                        ),
+                        child:Container(
+                          width: double.infinity,
+                          child: FlatButton(
+                            child: Text("SKIP",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: BorderSide(color: Colors.redAccent)
+                            ),
+                            padding: EdgeInsets.all(16),
+                            onPressed: () async{
+                              SharedPrefUtil().storeString(ConstantUtils().Category, ConstantUtils().Patient);
+                              final User user = await _auth.currentUser;
+                              final uid = user.uid.toString();
+                              final usermobile = user.phoneNumber.toString();
+                              final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+                              _firebaseMessaging.getToken().then((token) =>fcmToken = token);
+                              ApiService().createUser(uid,usermobile,ConstantUtils().Patient,fcmToken);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,usermobile)),
+                              );
+                            },
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

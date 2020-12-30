@@ -9,9 +9,10 @@ class PatientUser{
   String Age;
   String Gender;
   String image;
+  String emailId;
 
   PatientUser._({this.Name, this.category,this.mobile,this.Age
-    ,this.Gender,this.image});
+    ,this.Gender,this.image,this.emailId});
 
   factory PatientUser.fromJson(dynamic json) {
 
@@ -22,6 +23,7 @@ class PatientUser{
       Age: json['Age'] as String,
       Gender: json['Gender'] as String,
       image: json['image'] as String,
+      emailId: json['emailId'] as String,
     );
   }
 }

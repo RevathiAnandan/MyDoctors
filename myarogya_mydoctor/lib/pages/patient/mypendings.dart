@@ -16,6 +16,7 @@ import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:intl/intl.dart';
 
 import '../dashboard_screen.dart';
 import 'PrescriptionList.dart';
@@ -61,8 +62,6 @@ class _MyPendingsState extends State<MyPendings> {
         dname =  snapshot.value['Name'];
       });
     });
-//    timer =
-//        Timer.periodic(Duration(seconds: 5), (Timer t) => getAppointments());
 
   }
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class _MyPendingsState extends State<MyPendings> {
               SliverAppBar(
                 leading: Container(),
                 backgroundColor: Colors.white,
-                expandedHeight: 250.0,
+                expandedHeight: 300,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -146,15 +145,7 @@ class _MyPendingsState extends State<MyPendings> {
                     onPressed: (){
                       _openPopupP(context);
                     },),
-                  // IconButton(icon: Icon(Icons.account_circle,color: Colors.redAccent),
-                  //   onPressed: (){
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(builder: (context) =>  DashBoardScreen(
-                  //             widget.mobile,
-                  //             "MY DOCTOR",widget.id))
-                  //     );
-                  //   },),
+
                   PopupMenuButton<String>(
                     icon: new Icon(
                       Icons.settings,
@@ -182,51 +173,7 @@ class _MyPendingsState extends State<MyPendings> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          // Container(
-                          //   padding: EdgeInsets.only(top: 16),
-                          //   child: Row(
-                          //     mainAxisSize: MainAxisSize.max,
-                          //     children: <Widget>[
-                          //       Column(
-                          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          //         children: <Widget>[
-                          //           Container(
-                          //             width: 130,
-                          //             height: 40,
-                          //             child: Card(
-                          //               color: new Color(0xffFFFFFF),
-                          //               elevation: 6,
-                          //               shape: RoundedRectangleBorder(
-                          //                   borderRadius:
-                          //                   BorderRadius.circular(20)),
-                          //               child: Center(
-                          //                   child: GestureDetector(
-                          //                       onTap: () => Navigator.push(
-                          //                         context,
-                          //                         MaterialPageRoute(
-                          //                             builder: (context) =>
-                          //                                 MyPendings(widget.id,widget.mobile,"MY DOCTOR")
-                          //                         ),
-                          //                       ),
-                          //                       child: Text("My Pendings",
-                          //                           style: new TextStyle(
-                          //                               color: Colors.redAccent,
-                          //                               fontSize: 14,
-                          //                               fontWeight: FontWeight.bold,
-                          //                               fontFamily: "Lato")))),
-                          //             ),
-                          //           ),
-                          //           Text("",
-                          //               style: new TextStyle(
-                          //                   color: Colors.black,
-                          //                   fontSize: 16,
-                          //                   fontWeight: FontWeight.bold,
-                          //                   fontFamily: "Lato")),
-                          //         ],
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
+
                           Container(
                             padding: EdgeInsets.only(top: 16),
                             child: Row(
@@ -273,12 +220,6 @@ class _MyPendingsState extends State<MyPendings> {
                                 ),
                               ],
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[]),
                           ),
                           Container(
                             padding: EdgeInsets.only(top: 16),
@@ -342,7 +283,7 @@ class _MyPendingsState extends State<MyPendings> {
                     crossAxisAlignment:CrossAxisAlignment.start,
                     children: [
                       new Text(
-                        appoint[i].doctorName != null ? appoint[i].doctorName : "",
+                        appoint[i].doctorName != null ? "Dr. "+ appoint[i].doctorName : "",
                         style: new TextStyle(fontWeight: FontWeight.bold),
                       ),
                       new Container(
@@ -359,12 +300,7 @@ class _MyPendingsState extends State<MyPendings> {
                   // (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonfunction("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonfunction(appoint[int.parse(appoint[i].Index)].status,i):buttonfunction(buttonStatus,i))),
                 ],
               ),
-              //trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[appoint[i].Index].status,i):(appoint[i].Index==i.toString()?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i):buttonstatus("Book Now",i)))),
-              //trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus(appoint[i].status,i):buttonstatus("Book Now",i))),
-              // trailing: (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonstatus("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonstatus("Book Now",i):buttonstatus(status[i],i))),
-              //trailing: (widget.category == "MY PATIENT")?Text(" "):(appoint.isEmpty) ?(appoint.asMap().containsKey(int.parse(appoint[i].Index))?Text("11"): buttonstatus("Book Now",i)):(appoint.asMap().containsKey(i)?buttonstatus(appoint[int.parse(appoint[i].Index)].status,i): buttonstatus("Book Now",i)),
-              //trailing: (widget.category == "MY PATIENT")?Text(" "):buttons(_widgetIndex,i),
-              onTap: () {
+             onTap: () {
                 if (widget.category == "MY PATIENT") {
                   Navigator.push(
                     context,
@@ -394,6 +330,9 @@ class _MyPendingsState extends State<MyPendings> {
 
   Future<Appointmnet> getAppointments() async {
     try {
+      final now = new DateTime.now();
+      String formatter = DateFormat('yMd').format(now);
+      print(formatter);
       var db = await fb.reference().child("Appointment");
       if (db != null) {
         db.once().then((DataSnapshot snapshot) {
@@ -406,7 +345,7 @@ class _MyPendingsState extends State<MyPendings> {
               var refreshToken = Appointmnet.fromJson(values);
               print(refreshToken);
               setState(() {
-                if (refreshToken.patientMobile == widget.mobile) {
+                if (refreshToken.patientMobile == widget.mobile && refreshToken.date == formatter) {
                   appoint.add(refreshToken);
                   filterdata.add(refreshToken);
                   print(appoint[0].status);
@@ -572,15 +511,16 @@ class _MyPendingsState extends State<MyPendings> {
     }
   }
   void choiceAction(String choice){
-    if(choice == ConstantsD.Profile){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              PatientProfile(widget.id,widget.mobile),
-        ),
-      );
-    }else if(choice == ConstantsD.Settings){
+    // if(choice == ConstantsD.Profile){
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) =>
+    //           PatientProfile(widget.id,widget.mobile),
+    //     ),
+    //   );
+    // }else
+      if(choice == ConstantsD.Settings){
       Navigator.push(
         context,
         MaterialPageRoute(

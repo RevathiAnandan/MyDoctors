@@ -223,15 +223,16 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
     }
   }
   void choiceAction(String choice){
-    if(choice == ConstantsD.Profile){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ProfileScreen(widget.id,widget.mobile),
-        ),
-      );
-    }else if(choice == ConstantsD.Settings){
+    // if(choice == ConstantsD.Profile){
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) =>
+    //           ProfileScreen(widget.id,widget.mobile),
+    //     ),
+    //   );
+    // }else
+      if(choice == ConstantsD.Settings){
       Navigator.push(
         context,
         MaterialPageRoute(

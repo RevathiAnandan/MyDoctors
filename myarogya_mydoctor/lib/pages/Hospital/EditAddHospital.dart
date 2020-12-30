@@ -46,19 +46,19 @@ class _EditAddHospital extends State<EditAddHospital> {
   List staffnamenum = [];
   List TPA = [];
   List ACCRED = [];
-  List topics = [
-    "Hospital Details",
-    "Important Numbers",
-    "Upload images",
-    "Room Tariff",
-    "Diagnosis Charges",
-    "Health Checkup Packages",
-    "Surgery Details",
-    "Speciality",
-    "Facility",
-    "Staff Details",
-    "Insurance"
-  ];
+    List topics = [
+      "Hospital Details",
+      "Important Numbers",
+      "Upload images",
+      "Room Tariff",
+      "Diagnosis Charges",
+      "Health Checkup Packages",
+      "Surgery Details",
+      "Speciality",
+      "Facility",
+      "Staff Details",
+      "Insurance"
+    ];
   List<String> path = [];
   String _path;
   Map<String, String> _paths;

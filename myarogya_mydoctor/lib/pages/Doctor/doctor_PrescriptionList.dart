@@ -1,8 +1,10 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/Precription.dart';
 import 'package:myarogya_mydoctor/pages/patient/showPrecription.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 
 import 'createPrecription.dart';
 class DoctorPrescriptionList extends StatefulWidget {
@@ -21,6 +23,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
   Prescription prescription1;
   var refreshValue;
   var isLoading = false;
+  FirebaseDatabase fb = FirebaseDatabase.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -39,6 +42,12 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
             },
           ),
           backgroundColor: Colors.white,
+          actions: [
+            IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
+              onPressed: (){
+                getprofileDetails();
+              },),
+          ],
         ),
         body:isLoading
             ? Center(
@@ -79,22 +88,10 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
           ),
         )
         ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CreatePrescription(widget.pmobile,widget.dmobile,widget.pname,widget.id)),
-                );
-        },
-        child: Icon(Icons.send),
-        backgroundColor: Colors.redAccent,
-      ),
-
     );
   }
   Future<Prescription> getPrecriptionDetails(){
-    FirebaseDatabase fb = FirebaseDatabase.instance;
+
     try {
       var db = fb.reference().child("Prescription").child(widget.pmobile);
       db.once().then((DataSnapshot snapshot){
@@ -120,4 +117,24 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
     }
   }
 
+  Future<DoctorUser> getprofileDetails() async {
+    try {
+      var db = await fb.reference().child("User").child(widget.dmobile);
+      db.once().then((DataSnapshot snapshot) {
+        print(snapshot.value);
+        var start = snapshot.value['Start Time'];
+        var interval = snapshot.value['Consulting Interval'];
+     if(snapshot.value['Morning Start Time'] != null && snapshot.value['Morning End Time'] != null){
+       Navigator.push(
+         context,
+         MaterialPageRoute(builder: (context) => CreatePrescription(widget.pmobile,widget.dmobile,widget.pname,widget.id)),
+       );
+     }else{
+       AuthService().alertDialog(context,widget.id,widget.dmobile);
+     }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 }

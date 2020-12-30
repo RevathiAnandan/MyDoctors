@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/NavDrawer.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
+import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/push_notification_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -518,14 +519,14 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
       Map<dynamic, dynamic > values = snapshot.value;
       values.forEach((key,values) {
         print(values);
-//        if(values['phone'] == pmobile) {
-//          print("Already Number Exist");
-//          AuthService().toast("The Number already Exists");
-//        }
-//        else{
+       if(values['phone'] == pmobile) {
+          print("Already Number Exist");
+          AuthService().toast("The Number already Exists");
+        }
+       else{
           ApiService().addPatientToDoctor(pmobile,widget.mobile,pname);
           ApiService().addDoctorToPatient(pmobile,widget.mobile,dname);
-//        }
+       }
 //        }else{
 //          //Sent an Invite to  this number to install the app.
 //

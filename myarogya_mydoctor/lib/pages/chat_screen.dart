@@ -108,8 +108,11 @@ class MyScreenState extends State<MyScreen> {
                           Column(
                             crossAxisAlignment:CrossAxisAlignment.start,
                             children: [
-                              new Text(
-                                dummyData[i].name != null ? "Dr. "+dummyData[i].name : "",
+                              (widget.category == "MY PATIENT")? new Text(
+                                dummyData[i].name != null ? dummyData[i].name : "",
+                                style: new TextStyle(fontWeight: FontWeight.bold),
+                              ):new Text(
+                                dummyData[i].name != null ?  "Dr. "+dummyData[i].name : "",
                                 style: new TextStyle(fontWeight: FontWeight.bold),
                               ),
                               new Container(
@@ -122,7 +125,6 @@ class MyScreenState extends State<MyScreen> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                       onTap: () {
@@ -186,8 +188,7 @@ class MyScreenState extends State<MyScreen> {
           .child("User")
           .child(widget.mobile)
           .child("myDoctor");
-      var db1 = db.orderByChild("name");
-      db1.once().then((DataSnapshot snapshot) {
+      db.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {

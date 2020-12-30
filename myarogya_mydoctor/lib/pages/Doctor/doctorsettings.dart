@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/HospitalTabPage.dart';
 import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
 import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
@@ -62,8 +63,8 @@ class _DoctorSettingsState extends State<DoctorSettings> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              EditProfileDoctor(widget.id,widget.mobile)
+                        builder: (context) =>
+                            ProfileScreen(widget.id,widget.mobile),
                       ),
                     );
                   },
@@ -78,7 +79,7 @@ class _DoctorSettingsState extends State<DoctorSettings> {
                           width: 20,
                         ),
                         Text(
-                          "Edit Profile",
+                          "Profile",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,

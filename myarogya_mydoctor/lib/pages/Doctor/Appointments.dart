@@ -72,9 +72,6 @@ class _AppointmentsState extends State<Appointments> {
         refresh.add(refreshToken);
       });
       print(refresh.length);
-      for (var value in snapshot.value.values){
-        //print(value);
-      }
     });
 
   }
@@ -88,7 +85,7 @@ class _AppointmentsState extends State<Appointments> {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 250,
+              expandedHeight: 300,
               floating: false,
               pinned: true,
               leading: Container(),
@@ -159,36 +156,18 @@ class _AppointmentsState extends State<Appointments> {
                     ),
                   ],
                 ),
-
-                // background: Image.network(
-                //   "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
-                //   fit: BoxFit.cover,
-                // ),
               ),
               actions: [
-            //     IconButton(
-            //       icon: Icon(Icons.search, color: Colors.redAccent,size: 30,),
-            // onPressed: () {
-            //         showSearch(context: context, delegate: DataSearch());
-            //       },
-            //     ),
+
                 IconButton(
                   icon: Icon(Icons.add, color: Colors.redAccent,size: 35,),
                   onPressed: () {
                     _openPopup(context);
                   },
                 ),
-//                IconButton(
-//                  icon: Icon(Icons.people, color: Colors.white),
-//                  onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => ProfileScreen(widget.id,widget.mobile)),
-//                    );
-//                  },
-//                ),
+
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.settings,color: Colors.redAccent,),
+                    icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
                     onSelected: choiceAction,
                     itemBuilder: (BuildContext context){
                       return ConstantsD.choices.map((String choice){
@@ -279,7 +258,7 @@ class _AppointmentsState extends State<Appointments> {
                                                               widget.mobile,
                                                               "MY PATIENT",widget.id)),
                                                 ),
-                                            child: Text("My Patient",
+                                            child: Text("My Patients",
                                                 style: new TextStyle(
                                                     color: Colors.redAccent,
                                                     fontSize: 14,
@@ -322,7 +301,7 @@ class _AppointmentsState extends State<Appointments> {
                                     child: Center(
                                         child: GestureDetector(
                                             onTap: () => Navigator.pop(context),
-                                            child: Text("Today Count",
+                                            child: Text("Today's Count",
                                                 style: new TextStyle(
                                                     color: Colors.redAccent,
                                                     fontSize: 14,
@@ -439,6 +418,7 @@ class _AppointmentsState extends State<Appointments> {
     try {
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);
+      print(formatter);
       var db = await fb.reference().child("Appointment");
       db.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
@@ -448,7 +428,7 @@ class _AppointmentsState extends State<Appointments> {
           var refreshToken = Appointmnet.fromJson(values);
           print(refreshToken);
           setState(() {
-            if (refreshToken.doctorMobile == widget.mobile) {
+            if (refreshToken.doctorMobile == widget.mobile && refreshToken.date == formatter) {
               dummyData.add(refreshToken);
               filterdata.add(refreshToken);
               keys1.add(key);
@@ -486,7 +466,6 @@ class _AppointmentsState extends State<Appointments> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                prefixText: "Dr.",
                 icon: Icon(Icons.person),
                 labelText: 'Name',
               ),
@@ -509,7 +488,6 @@ class _AppointmentsState extends State<Appointments> {
           DialogButton(
             onPressed: () {
               checkDuplication("+91"+phone.text,name.text);
-//              addPatient(name.text, "+91" + phone.text);
             },
             child: Text(
               "Add",
@@ -595,15 +573,7 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   void choiceAction(String choice){
-    if(choice == ConstantsD.Profile){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ProfileScreen(widget.id,widget.mobile),
-        ),
-      );
-    }else if(choice == ConstantsD.Settings){
+    if(choice == ConstantsD.Settings){
       Navigator.push(
         context,
         MaterialPageRoute(

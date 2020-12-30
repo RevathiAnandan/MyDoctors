@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/pages/patient/patientprofile.dart';
 import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
 import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
 import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
@@ -62,7 +63,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              EditProfilePatient(widget.id,widget.mobile)
+                              PatientProfile(widget.id,widget.mobile)
                       ),
                     );
                   },
@@ -77,7 +78,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                           width: 20,
                         ),
                         Text(
-                          "Edit Profile",
+                          "Profile",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,

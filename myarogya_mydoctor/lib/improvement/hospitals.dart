@@ -55,7 +55,7 @@ class _HospitalsState extends State<Hospitals> {
               SliverAppBar(
                   leading: Container(),
                   backgroundColor: Colors.white,
-                  expandedHeight: 250.0,
+                  expandedHeight: 300,
                   floating: false,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(

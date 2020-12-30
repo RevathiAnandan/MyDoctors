@@ -60,7 +60,7 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                             Container(
                               //width: 200,
                               child: Text(
-                                refreshValue['hospitalName']!=null?refreshValue['hospitalName']:"Yet to be updated",
+                                (refreshValue['hospitalName']!=null)?refreshValue['hospitalName']:"Yet to be updated",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 24,fontFamily: 'Lato'),
                               ),
@@ -105,11 +105,11 @@ class _PrescriptionPageState extends State<ShowPrecription> {
                                   Text('Consulting Hours',style: TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),),
                                   (refreshValue['Morning Start Time']!=null)?Text("Morning: "+refreshValue['Morning Start Time'] +" to "+refreshValue['Morning End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text("Morning Start Time:10:00 to 12:00"),
                                   (refreshValue['Morning Start Time']!=null)?Text("Evening: "+refreshValue['Evening Start Time'] +" to "+refreshValue['Evening End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text("Evening Start Time:13:00 to 16:00"),
                                   (refreshValue['Morning Start Time']!=null)?Text("Sunday: "+refreshValue['Sunday Start Time'] +" to "+refreshValue['Sunday End Time'] ,style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text(""),
+                                      fontWeight: FontWeight.bold, fontSize: 14,fontFamily: 'Lato'),):Text("Sunday Start Time: 10:00 to 12:00"),
                                   SizedBox(
                                     height: 2,
                                   ),
