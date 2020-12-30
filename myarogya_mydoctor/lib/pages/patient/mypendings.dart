@@ -224,10 +224,8 @@ class _MyPendingsState extends State<MyPendings> {
                           Container(
                             padding: EdgeInsets.only(top: 16),
                             child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Column(
-//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     Container(
                                       width: 160,
@@ -240,7 +238,9 @@ class _MyPendingsState extends State<MyPendings> {
                                             BorderRadius.circular(20)),
                                         child: Center(
                                             child: GestureDetector(
-                                                onTap: () => Navigator.pop(context),
+                                                onTap: () {
+                                                  AuthService().toast("Coming Soon!!");
+                                                },
                                                 child: Text("My Reports",
                                                     style: new TextStyle(
                                                         color: Colors.redAccent,
