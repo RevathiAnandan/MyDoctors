@@ -20,8 +20,8 @@ class MyAds{
       video: json["Video"] as String,
       mobile: json["Mobile"] as String,
       views: json["Views"] as int,
-      boring: json["boring"] as int,
-      topoftop: json["topoftop"] as int,
+      boring: json["Boring"] as int,
+      topoftop: json["Top of Top"] as int,
     );
   }
 

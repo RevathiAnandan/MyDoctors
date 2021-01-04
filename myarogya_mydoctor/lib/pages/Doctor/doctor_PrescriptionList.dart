@@ -43,6 +43,7 @@ class _DoctorPrescriptionListState extends State<DoctorPrescriptionList> {
           ),
           backgroundColor: Colors.white,
           actions: [
+            Center(child: Text("Prescribe",style:TextStyle(color: Colors.redAccent) ,)),
             IconButton(icon: Icon(Icons.add,color: Colors.redAccent),
               onPressed: (){
                 getprofileDetails();

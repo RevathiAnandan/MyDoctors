@@ -19,6 +19,7 @@ class PatientProfile extends StatefulWidget {
 
 class _PatientProfileState extends State<PatientProfile> {
   File _image;
+  String imagelink;
   bool isLoading = false;
   PatientUser refreshToken;
   TextEditingController _pName = new TextEditingController();
@@ -118,37 +119,44 @@ class _PatientProfileState extends State<PatientProfile> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              new Container(
-                                  width: 100.0,
-                                  height: 100.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                      image: (_image!= null)?FileImage(File(_image.path)):new ExactAssetImage(
-                                          'assets/images/user_profile.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )),
+                              InkWell(
+                                child: new Container(
+                                    width: 100.0,
+                                    height: 100.0,
+                                    decoration: new BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: new DecorationImage(
+                                        image: (_image != null)
+                                            ? FileImage(File(_image.path))
+                                            :(imagelink != null?
+                                        NetworkImage(imagelink)
+                                            : new ExactAssetImage(
+                                            'assets/images/user_profile.png')),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                onTap: () => getImage(),
+                              ),
                             ],
                           ),
-                          Padding(
-                              padding: EdgeInsets.only(top: 70.0, left: 80.0),
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new CircleAvatar(
-                                    backgroundColor: Colors.redAccent,
-                                    radius: 20.0,
-                                    child: new IconButton(
-                                      icon:Icon(Icons.camera_alt),
-                                      color: Colors.white,
-                                      onPressed: (){
-                                        getImage();
-                                      },
-                                    ),
-                                  )
-                                ],
-                              )),
+                          // Padding(
+                          //     padding: EdgeInsets.only(top: 70.0, left: 80.0),
+                          //     child: new Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: <Widget>[
+                          //         new CircleAvatar(
+                          //           backgroundColor: Colors.redAccent,
+                          //           radius: 20.0,
+                          //           child: new IconButton(
+                          //             icon:Icon(Icons.camera_alt),
+                          //             color: Colors.white,
+                          //             onPressed: (){
+                          //               getImage();
+                          //             },
+                          //           ),
+                          //         )
+                          //       ],
+                          //     )),
                         ]),
                       )
                     ],
@@ -319,17 +327,18 @@ class _PatientProfileState extends State<PatientProfile> {
         db.once().then((DataSnapshot snapshot) {
           print(snapshot.value);
           if (snapshot.value == null) {
-
           } else {
             Map<dynamic, dynamic> values = snapshot.value;
-
             print("Harun"+values.toString());
             refreshToken = PatientUser.fromJson(values);
             _pName.text = refreshToken.Name;
             _age.text = refreshToken.Age;
             _phone.text = refreshToken.mobile;
             _email.text = refreshToken.emailId;
-            _image = File(refreshToken.image);
+            setState(() {
+              imagelink = refreshToken.image;
+            });
+            print(imagelink);
           }
         });
       } else {

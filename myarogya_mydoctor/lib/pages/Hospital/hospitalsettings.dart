@@ -199,7 +199,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                         width: 20,
                       ),
                       Text(
-                        "My Holdings",
+                        "My Investment in this startup",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 20.0,

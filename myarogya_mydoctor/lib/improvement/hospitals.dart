@@ -56,7 +56,7 @@ class _HospitalsState extends State<Hospitals> {
               SliverAppBar(
                 leading: Container(),
                 backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height/2.8,
+                expandedHeight: MediaQuery.of(context).size.height/3.2,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -77,8 +77,8 @@ class _HospitalsState extends State<Hospitals> {
                     children: <Widget>[
                       Stack(
                         children: [
-                          Image.network(
-                            "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
+                          Image.asset(
+                            "assets/images/3996.jpg",
                             fit: BoxFit.cover,
                             // color: Colors.blue,
                             colorBlendMode: BlendMode.hue,
@@ -632,10 +632,6 @@ class _HospitalsState extends State<Hospitals> {
           builder: (context) => HospitalSettings(widget.id, widget.mobile),
         ),
       );
-    } else if (choice == ConstantsH.MakePayment) {
-      //todo:hospital settings to be done
-      // var paymentResponse = ApiService().getPaymentToken(widget.id,widget.mobile);
-      // print(paymentResponse);
     }
   }
 
@@ -754,12 +750,17 @@ class _HospitalsState extends State<Hospitals> {
   List getMin(List<OtherBeds> inputArray) {
     minbedtype.clear();
     print("Harun");
-    int minValue = int.parse(inputArray[1].charges);
-    // print(minValue);
+    int minValue = int.parse(inputArray[0].charges);
+    if (inputArray.length == 1) {
+      minbedtype.add({
+        "Bed" : inputArray[0].roomType,
+        "Charges" : int.parse(inputArray[0].charges)
+      });
+    }else{
     for (int i = 0; i < inputArray.length; i++) {
       print(int.parse(inputArray[i].charges));
       print(inputArray[i].roomType);
-      if (int.parse(inputArray[i].charges) < minValue) {
+      if (int.parse(inputArray[i].charges) <= minValue) {
         print("Inside if");
           minbedtype.add({
             "Bed" : inputArray[i].roomType,
@@ -769,6 +770,7 @@ class _HospitalsState extends State<Hospitals> {
         // minValue = int.parse(inputArray[i].charges);
         // minbed = inputArray[i].roomType;
       }
+    }
     }
     return minbedtype;
   }

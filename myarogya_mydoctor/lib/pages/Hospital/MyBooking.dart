@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/model/Booking.dart';
+import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctorsettings.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/hospitalsettings.dart';
@@ -14,9 +15,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'hospitaltabsettings.dart';
 class MyBooking extends StatefulWidget {
-  String id;
-  String mobile;
-  MyBooking(this.id,this.mobile);
+  final String id;
+  final String mobile;
+  final List<Hospital> hospitalvalues;
+  MyBooking(this.id,this.mobile,this.hospitalvalues);
   @override
   _MyBookingState createState() => _MyBookingState();
 }
@@ -78,8 +80,8 @@ class _MyBookingState extends State<MyBooking> {
                  children: <Widget>[
                    Stack(
                      children: [
-                       Image.network(
-                         "https://www.connect5000.com/wp-content/uploads/2016/07/blog-pic-117-1.jpeg",
+                       Image.asset(
+                         "assets/images/3996.jpg",
                          fit: BoxFit.cover,
                          // color: Colors.blue,
                          colorBlendMode: BlendMode.hue,
@@ -235,7 +237,7 @@ class _MyBookingState extends State<MyBooking> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              HospitalTabSettings(widget.id,widget.mobile),
+              HospitalTabSettings(widget.id,widget.mobile,widget.hospitalvalues),
         ),
       );
     }

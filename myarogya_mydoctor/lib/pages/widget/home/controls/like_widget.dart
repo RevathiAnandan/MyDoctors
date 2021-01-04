@@ -20,8 +20,10 @@ Widget likeWidget({IconData icon, String label,String complainKey,int type, Stri
           ),
           onTap: (bool isliked){
             if (category == "ads") {
+              print("Ads");
               return onLikebuttonTapA(isliked,complainKey,label);
             } else {
+              print("Complains");
               return onLikebuttonTap(isliked,complainKey,label);
             }
           },

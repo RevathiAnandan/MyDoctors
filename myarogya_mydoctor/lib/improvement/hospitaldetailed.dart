@@ -8,9 +8,9 @@ import 'package:myarogya_mydoctor/utils/const.dart';
 import 'addhospitals.dart';
 
 class HospitalDetails extends StatefulWidget {
-  int index;
+  final int index;
   
-  Hospital hospitalvalues;
+  final Hospital hospitalvalues;
   HospitalDetails(this.index, this.hospitalvalues);
 
   @override

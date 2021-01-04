@@ -83,16 +83,22 @@ class _HomeScreenState extends State<HomeScreen> {
            flex: 2,
            child: Column(
              children: [
-               SizedBox(height: 10,),
                Flexible(
-                 flex: 0,
-                 child: Center(child: Text("Product Category"),),
-               ),
-               new Divider(
-                 height: 10.0,
-                 color: Colors.redAccent,
+                 flex: 1,
+                 child: Container(
+                   decoration: BoxDecoration(
+                       color: Colors.redAccent
+                   ),
+                   child: Center(child: Text("Product category",style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 14.0,
+                     fontFamily: 'Lato',
+                     fontWeight: FontWeight.bold,
+                   ),),),
+                 ),
                ),
                Flexible(
+                 flex:10,
                  child: ListView.builder(
                    itemCount: Dropdownlists().adscategories.length,
                    itemBuilder: (context,index){
@@ -103,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                            child: MaterialButton(
                              child: Text(Dropdownlists().adscategories[index],style: TextStyle(
                                color: Colors.redAccent,
-                               fontSize: 15.0,
+                               fontSize: 13.0,
                                fontFamily: 'Lato',
                                fontWeight: FontWeight.bold,
                              ),),
@@ -203,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
    filterAds(String catogory) async {
-    nextads.clear();
+     myads.clear();
      setState(() {
        isLoading =true;
      });
@@ -229,6 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   Widget buildBar(BuildContext context) {
     return new AppBar(
+      automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         // centerTitle: true,
         title: appBarTitle,

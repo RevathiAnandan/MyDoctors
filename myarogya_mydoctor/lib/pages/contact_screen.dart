@@ -44,7 +44,7 @@ class _ContactsPageState extends State<ContactsPage> {
       //Build a list view of all contacts, displaying their avatar and
       // display name
           ? ListView.builder(
-        itemCount: _contacts?.length ?? 0,
+        itemCount: _contacts.length,
         itemBuilder: (BuildContext context, int index) {
           Contact contact = _contacts?.elementAt(index);
           return ListTile(
@@ -78,7 +78,9 @@ class _ContactsPageState extends State<ContactsPage> {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
-      onPressed:  () {},
+      onPressed:  () {
+        Navigator.pop(context);
+      },
     );
     Widget continueButton = FlatButton(
       child: Text("Add"),

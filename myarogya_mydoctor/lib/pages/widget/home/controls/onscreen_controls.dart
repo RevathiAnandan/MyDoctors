@@ -24,8 +24,6 @@ Widget onScreenControls(Complains complains,String complainKey) {
   );
 }
 Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position,String adsKey) {
-
-
   return Container(
     child: Row(
       children: <Widget>[
@@ -41,6 +39,7 @@ Widget onScreenControlsA(MyAds ads,List<MyAds> totalads,int position,String adsK
               children: <Widget>[
                 // userProfile(),
                 videoControlAction(icon: Icons.remove_red_eye, label: ads.views.toString()),
+                Text("Views",style: TextStyle(color: Colors.white,),)
               ],
             ),
           ),

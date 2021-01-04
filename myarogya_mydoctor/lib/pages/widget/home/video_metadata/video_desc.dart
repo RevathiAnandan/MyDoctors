@@ -100,7 +100,7 @@ Widget videoDescA(MyAds ads,String adsKey) {
         Padding(
           padding: EdgeInsets.only(top: 7, bottom: 7),
           child: Text(
-            ads.name,
+            "Name: "+ads.name,
            // "Complain Number: "+ads.ComplainNumber,
             style: TextStyle(
                 fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
@@ -109,7 +109,7 @@ Widget videoDescA(MyAds ads,String adsKey) {
         Padding(
           padding: EdgeInsets.only(top: 4, bottom: 7),
           child: Text(
-              ads.slogan,
+              "Slogan: "+ads.slogan,
               // "About: "+complains.About,
               style: TextStyle(
                   color: Colors.white,
@@ -119,7 +119,7 @@ Widget videoDescA(MyAds ads,String adsKey) {
         Row(
           children: <Widget>[
             Text(
-              ads.productCatogory,
+              "Category: "+ads.productCatogory,
               // "Category: "+complains.Category,
               style: TextStyle(
                   color: Colors.white,

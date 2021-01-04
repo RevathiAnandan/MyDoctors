@@ -90,8 +90,8 @@ class _MyPendingsState extends State<MyPendings> {
                     children: <Widget>[
                       Stack(
                         children: [
-                          Image.network(
-                            "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
+                          Image.asset(
+                            "assets/images/13092.jpg",
                             fit: BoxFit.cover,
                             // color: Colors.blue,
                             colorBlendMode: BlendMode.hue,

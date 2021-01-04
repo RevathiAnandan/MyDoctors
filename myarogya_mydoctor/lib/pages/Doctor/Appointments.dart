@@ -107,8 +107,8 @@ class _AppointmentsState extends State<Appointments> {
                   children: <Widget>[
                     Stack(
                       children: [
-                        Image.network(
-                          "https://www.healthcareitnews.com/sites/hitn/files/pexels-pixabay-236380.jpg",
+                        Image.asset(
+                          "assets/images/13092.jpg",
                           fit: BoxFit.cover,
                           // color: Colors.blue,
                           colorBlendMode: BlendMode.hue,
@@ -380,23 +380,27 @@ class _AppointmentsState extends State<Appointments> {
                               color: Colors.redAccent)),
                       padding: EdgeInsets.all(10),
                       onPressed: () async {
-                        if (i == 0) {
-                        } else {
-                          setState(() {
-                            start1 = start1.add(
-                                new Duration(minutes: interval1));
-                            h=2;
-                          });
+                        if (start1!=null&&interval1!=null) {
+                          if (i == 0) {
+                          } else {
+                            setState(() {
+                              start1 = start1.add(
+                                  new Duration(minutes: interval1));
+                              h=2;
+                            });
+                          }
+                          ApiService().appointment(
+                              dummyData[i].patientMobile,
+                              widget.mobile,
+                              dummyData[i].doctorName,
+                              "View",
+                              i + 1,
+                              start1.toString(),
+                              keys1[i],h.toString());
+                          ApiService().trigger=false;
+                        }else{
+                          AuthService().alertDialog(context, widget.id, widget.mobile);
                         }
-                        ApiService().appointment(
-                            dummyData[i].patientMobile,
-                            widget.mobile,
-                            dummyData[i].doctorName,
-                            "View",
-                            i + 1,
-                            start1.toString(),
-                            keys1[i],h.toString());
-                        ApiService().trigger=false;
                       },
                       color: Colors.redAccent,
                     ),

@@ -58,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   var qrData;
   File _image;
+  String imagelink;
   bool editable;
   DateTime starttym;
   String m_starttym;
@@ -157,8 +158,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         image: new DecorationImage(
                                           image: (_image != null)
                                               ? FileImage(File(_image.path))
-                                              : new ExactAssetImage(
-                                                  'assets/images/user_profile.png'),
+                                              :(imagelink != null?NetworkImage(imagelink): new ExactAssetImage(
+                                                  'assets/images/user_profile.png')),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -1202,6 +1203,9 @@ class _ProfileScreenState extends State<ProfileScreen>
             _interval.text = refreshToken.Intervals;
             dateController.text = refreshToken.date5;
             date5 = refreshToken.date5;
+            setState(() {
+              imagelink = refreshToken.image;
+            });
           }
         });
       } else {}

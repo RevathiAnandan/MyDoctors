@@ -43,7 +43,7 @@ class _HospitalTabPageState extends State<HospitalTabPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
+    _tabController = TabController(vsync: this, initialIndex: 0, length: 1);
     _tabController.addListener(() {
       if (_tabController.index == 0) {
         showFab = true;
@@ -77,7 +77,7 @@ class _HospitalTabPageState extends State<HospitalTabPage>
             indicatorColor: Colors.redAccent,
             labelColor: Colors.redAccent,
             tabs: <Widget>[
-              Tab(text: 'PENDING',),
+              // Tab(text: 'PENDING',),
               Tab(
                 text: "COMPLETED",
               ),
@@ -87,7 +87,7 @@ class _HospitalTabPageState extends State<HospitalTabPage>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            PendingPage(),
+            // PendingPage(),
             CompletedPage()
 //            MyScreen(widget.id,widget.mobile),
 //            ContactsPage(widget.mobile),

@@ -110,108 +110,145 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
               child:Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(18.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
+                    padding: EdgeInsets.all(10.0),
+                    // width: MediaQuery.of(context).size.width,
+                    child: Column(
                       children: [
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
+                            Flexible(
+                              flex:2,
                               child: Column(
                                 children: [
-                                  Container(
-                                    width: 160,
-                                    child: Text(
-                                      'BP',
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.6),
-                                          fontSize: 18),
-                                    ),
+                                  Text(
+                                    'BP',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.6),
+                                        fontSize: 18),
                                   ),
-
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                        child: Row(
-                                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    width: 55,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.grey[200],
-                                                        borderRadius: BorderRadius.circular(14)),
-                                                    child: TextField(
-                                                      controller:  bpController,
-                                                      onEditingComplete: () =>
-                                                          FocusScope.of(context).nextFocus(),
-                                                      maxLength: 3,
-                                                      keyboardType: TextInputType.number,
-                                                      inputFormatters: <TextInputFormatter>[
-                                                        //FilteringTextInputFormatter.digitsOnly
-                                                      ],
-                                                      // textAlign: TextAlign.center,
-                                                      decoration: InputDecoration(
-                                                          contentPadding: EdgeInsets.all(16.0),
-                                                          border: InputBorder.none,
-                                                          counterText: ""),
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 15,
-                                                          color: Colors.black),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Container(
-                                                    width: 60,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.grey[200],
-                                                        borderRadius: BorderRadius.circular(14)),
-                                                    child: Center(
-                                                      child: TextField(
-                                                        controller:  bpController1,
-                                                        onEditingComplete: () =>
-                                                            FocusScope.of(context).nextFocus(),
-                                                        maxLength: 3,
-                                                        keyboardType: TextInputType.number,
-                                                        inputFormatters: <TextInputFormatter>[
-                                                          //FilteringTextInputFormatter.digitsOnly
-                                                        ],
-                                                        // textAlign: TextAlign.center,
-                                                        decoration: InputDecoration(
-                                                            contentPadding: EdgeInsets.all(16.0),
-                                                            border: InputBorder.none,
-                                                            counterText: ""),
-                                                        style: TextStyle(
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 15,
-                                                            color: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                ],
-                                              ),
-                                            )
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 55,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(14)),
+                                        child: TextField(
+                                          controller:  bpController,
+                                          onEditingComplete: () =>
+                                              FocusScope.of(context).nextFocus(),
+                                          maxLength: 3,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            //FilteringTextInputFormatter.digitsOnly
                                           ],
+                                          // textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                              contentPadding: EdgeInsets.all(16.0),
+                                              border: InputBorder.none,
+                                              counterText: ""),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.black),
                                         ),
-                                      ))
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                        width: 60,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(14)),
+                                        child: Center(
+                                          child: TextField(
+                                            controller:  bpController1,
+                                            onEditingComplete: () =>
+                                                FocusScope.of(context).nextFocus(),
+                                            maxLength: 3,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: <TextInputFormatter>[
+                                              //FilteringTextInputFormatter.digitsOnly
+                                            ],
+                                            // textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(16.0),
+                                                border: InputBorder.none,
+                                                counterText: ""),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
-                            Container(
+                            Flexible(
+                              flex:2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Weight',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.6),
+                                        fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 5),
+                                    height: 50,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: TextField(
+                                        controller: weightController,
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context)
+                                                .nextFocus(),
+                                        maxLength: 3,
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          //FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        // textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                            contentPadding:
+                                            EdgeInsets.all(16.0),
+                                            border: InputBorder.none,
+                                            counterText: ""),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Flexible(
+                              flex:2,
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 160,
                                     child: Text(
-                                      'Weight',
+                                      'Pulse',
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6),
                                           fontSize: 18),
@@ -220,170 +257,48 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Container(
-                                            padding: EdgeInsets.only(left: 5),
-                                            height: 50,
-                                            width: 170,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey[200],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: TextField(
-                                                controller: weightController,
-                                                onEditingComplete: () =>
-                                                    FocusScope.of(context)
-                                                        .nextFocus(),
-                                                maxLength: 3,
-                                                keyboardType: TextInputType.number,
-                                                inputFormatters: <TextInputFormatter>[
-                                                  //FilteringTextInputFormatter.digitsOnly
-                                                ],
-                                                // textAlign: TextAlign.center,
-                                                decoration: InputDecoration(
-                                                    contentPadding:
-                                                    EdgeInsets.all(16.0),
-                                                    border: InputBorder.none,
-                                                    counterText: ""),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15,
-                                                    color: Colors.black),
-                                              ),
+                                  Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                          padding: EdgeInsets.only(left: 5),
+                                          height: 50,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: TextField(
+                                              controller: pulseController,
+                                              onEditingComplete: () =>
+                                                  FocusScope.of(context)
+                                                      .nextFocus(),
+                                              maxLength: 3,
+                                              keyboardType:
+                                              TextInputType.number,
+
+                                              // textAlign: TextAlign.center,
+                                              decoration: InputDecoration(
+                                                  contentPadding:
+                                                  EdgeInsets.all(16.0),
+                                                  border: InputBorder.none,
+                                                  counterText: ""),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.black),
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),
                             )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 160,
-                                    child: Text(
-                                      'Next Visit',
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.6),
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 55,
-                                    width: 170,
-                                    child: DateTimeField(
-                                      format: DateFormat("dd-MM-yyyy"),
-                                      //editable: false,
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
-                                          border: OutlineInputBorder(),
-                                          labelText: 'Next Visit',
-                                          floatingLabelBehavior: FloatingLabelBehavior.never
-                                      ),
-                                      onShowPicker: (context,dt){
-                                        return showDatePicker(
-                                          context: context,
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime(1990),
-                                          lastDate: DateTime(2050),
-                                        );
-                                      },
-                                      onChanged: (dt) {
-                                        setState(() {
-                                          date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]);
-                                          ApiService().addpres();
-                                        });
-                                        //setState(() => date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]));
-                                        print('Selected date: $date5');
-                                        print(date5);
-                                        print(ApiService().no);
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 160,
-                                          child: Text(
-                                            'Pulse',
-                                            style: TextStyle(
-                                                color: Colors.black.withOpacity(0.6),
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Container(
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Container(
-                                                  padding: EdgeInsets.only(left: 5),
-                                                  height: 50,
-                                                  width: 170,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey[200],
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(10))),
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: TextField(
-                                                      controller: pulseController,
-                                                      onEditingComplete: () =>
-                                                          FocusScope.of(context)
-                                                              .nextFocus(),
-                                                      maxLength: 3,
-                                                      keyboardType:
-                                                      TextInputType.number,
-
-                                                      // textAlign: TextAlign.center,
-                                                      decoration: InputDecoration(
-                                                          contentPadding:
-                                                          EdgeInsets.all(16.0),
-                                                          border: InputBorder.none,
-                                                          counterText: ""),
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 15,
-                                                          color: Colors.black),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ],
@@ -716,22 +631,22 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                     ),
                   ),
 
-                  Container(
-                    padding: EdgeInsets.only(left: 15, right: 10),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 0,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: labtests.length,
-                              itemBuilder: (_, index) => labtests[index]),
-
-                        ),
-
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.only(left: 15, right: 10),
+                  //   child: Column(
+                  //     children: [
+                  //       Expanded(
+                  //         flex: 0,
+                  //         child: ListView.builder(
+                  //             shrinkWrap: true,
+                  //             itemCount: labtests.length,
+                  //             itemBuilder: (_, index) => labtests[index]),
+                  //
+                  //       ),
+                  //
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     padding: EdgeInsets.only(left:18.0,right: 18.0),
                     width: MediaQuery.of(context).size.width,
@@ -782,6 +697,60 @@ class _CreatePrescriptionState extends State<CreatePrescription> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Next Visit',
+                            style: TextStyle(
+                                color: Colors.black.withOpacity(0.6),
+                                fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 55,
+                            width: 170,
+                            child: DateTimeField(
+                              format: DateFormat("dd-MM-yyyy"),
+                              //editable: false,
+                              decoration: InputDecoration(
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Next Visit',
+                                  floatingLabelBehavior: FloatingLabelBehavior.never
+                              ),
+                              onShowPicker: (context,dt){
+                                return showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1990),
+                                  lastDate: DateTime(2050),
+                                );
+                              },
+                              onChanged: (dt) {
+                                setState(() {
+                                  date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]);
+                                  ApiService().addpres();
+                                });
+                                //setState(() => date5 = formatDate( dt , [dd, ' ', MM, ' ', yyyy]));
+                                print('Selected date: $date5');
+                                print(date5);
+                                print(ApiService().no);
+                              },
+                            ),
+                          ),
+
+                        ],
+                      ),
                     ),
                   ),
                   Container(

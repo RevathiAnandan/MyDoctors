@@ -415,52 +415,57 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
               ),
-              pageindex == 11
+              pageindex == 10
                   ? IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () {
                   try {
-                    ApiService().hospitals(
-                                          nameController.text,
-                                          regController.text,
-                                          addressController.text,
-                                          dateofController.text,
-                                          adminiController.text,
-                                          pincode.text,
-                                          adminiphoneController.text,
-                                          ACCRED,
-                                          "+91${ambuController.text}",
-                                          "+91${emerController.text}",
-                                          "+91${bookphController.text}",
-                                          "+91${opdbkController.text}",
-                                          imagesUrl,
-                                          "Completed",
-                                          freebeds,
-                                          conbeds,
-                                          covidbeds,
-                                          Beds,
-                                          notecontroller.text,
-                                          diagnosis,
-                                          health,
-                                          surgery,
-                                          spl,
-                                          fcl,
-                                          doclist,
-                                          nurlist,
-                                          stafflist,
-                                          TPA,
-                                          is24.toString(),
-                                          isCovid.toString(),
-                                          isnabh.toString(),
-                        awardsController.text,
-                                            ""
-                    );
+                    if (_checked) {
+                      ApiService().hospitals(
+                                            nameController.text,
+                                            regController.text,
+                                            addressController.text,
+                                            dateofController.text,
+                                            adminiController.text,
+                                            pincode.text,
+                                            adminiphoneController.text,
+                                            ACCRED,
+                                            "+91${ambuController.text}",
+                                            "+91${emerController.text}",
+                                            "+91${bookphController.text}",
+                                            "+91${opdbkController.text}",
+                                            imagesUrl,
+                                            "Completed",
+                                            freebeds,
+                                            conbeds,
+                                            covidbeds,
+                                            Beds,
+                                            notecontroller.text,
+                                            diagnosis,
+                                            health,
+                                            surgery,
+                                            spl,
+                                            fcl,
+                                            doclist,
+                                            nurlist,
+                                            stafflist,
+                                            TPA,
+                                            is24.toString(),
+                                            isCovid.toString(),
+                                            isnabh.toString(),
+                          awardsController.text,
+                                              ""
+                      );
+                      AuthService()
+                          .toast("Your Added Hospital Is Under Verification");
+                      Navigator.pop(context);
+                    }else{
+                      AuthService().toast("Please Complete filling data and Submit down below");
+                    }
                   } catch (e) {
                     print(e);
                   }
-                  AuthService()
-                      .toast("Your Added Hospital Is Under Verification");
-                  Navigator.pop(context);
+
                 },
                 color: Colors.redAccent,
                 iconSize: 30,

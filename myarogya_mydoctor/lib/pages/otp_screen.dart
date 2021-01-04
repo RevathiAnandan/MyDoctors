@@ -128,9 +128,13 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget otpNumberWidget(int position) {
     try {
       if (position == 5) {
-        validate = true;
+        setState(() {
+          validate = true;
+        });
       }else{
-        validate = false;
+        setState(() {
+          validate = false;
+        });
       }
       return Container(
         height: 40,

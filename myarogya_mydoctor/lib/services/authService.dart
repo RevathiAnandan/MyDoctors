@@ -34,7 +34,7 @@ class AuthService{
   }
 
   getcategory() async{
-    final FirebaseUser user = await _auth.currentUser;
+    final User user = await _auth.currentUser;
     final uid = user.uid.toString();
     final usermobile = user.phoneNumber.toString();
     if( SharedPrefUtil().readPrefStr(ConstantUtils().Category) == ConstantUtils().Doctor){
@@ -58,7 +58,7 @@ class AuthService{
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   getCurrentUser() async {
-    final FirebaseUser user = await _auth.currentUser;
+    final User user = await _auth.currentUser;
     final uid = user.uid.toString();
     final usermobile = user.phoneNumber.toString();
     SharedPrefUtil().storeString(ConstantUtils().UserID, uid);
@@ -82,7 +82,7 @@ class AuthService{
 
   checkLogin(BuildContext context) async{
     FirebaseDatabase fb = FirebaseDatabase.instance;
-    final FirebaseUser user = await _auth.currentUser;
+    final User user = await _auth.currentUser;
     final uid = user.uid.toString();
     final mobile = user.phoneNumber.toString();
     if(uid != null){

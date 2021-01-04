@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
        // home: SelectionScreen(),
      // home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
 //         home: MyComplainList()
-        home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528")
+        home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528"),
 //      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
         );
   }

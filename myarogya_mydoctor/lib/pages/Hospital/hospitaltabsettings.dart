@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/hospitaldetailed.dart';
 import 'package:myarogya_mydoctor/model/Booking.dart';
+import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/settings/disclaimer.dart';
 import 'package:myarogya_mydoctor/pages/settings/myincome.dart';
 import 'package:myarogya_mydoctor/pages/settings/privacy.dart';
@@ -15,9 +17,9 @@ import 'HospitalTabPage.dart';
 class HospitalTabSettings extends StatefulWidget {
   final String id;
   final String mobile;
+  final List<Hospital> hospitalvalues;
 
-
-  HospitalTabSettings(this.id, this.mobile);
+  HospitalTabSettings(this.id, this.mobile,this.hospitalvalues);
 
   @override
   _HospitalTabSettingsState createState() => _HospitalTabSettingsState();
@@ -109,7 +111,7 @@ class _HospitalTabSettingsState extends State<HospitalTabSettings> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              HospitalTabPage(widget.mobile,widget.id)
+                              HospitalDetails(0,widget.hospitalvalues[0])
                       ),
                     );
                   },
@@ -153,7 +155,7 @@ class _HospitalTabSettingsState extends State<HospitalTabSettings> {
                         width: 20,
                       ),
                       Text(
-                        "My Holdings",
+                        "My Investment in this startup",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 20.0,

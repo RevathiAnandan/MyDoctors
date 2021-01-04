@@ -22,7 +22,7 @@ class ApiService{
     try {
       if(category == "Doctor"){
         return fb.reference().child('User').child(mobile)
-            .set({
+            .update({
           'id': id,
           'mobile': mobile,
           'category': category,
@@ -31,7 +31,7 @@ class ApiService{
         });
       }else{
         return fb.reference().child('User').child(mobile)
-            .set({
+            .update({
           'id': id,
           'mobile': mobile,
           'category': category,
@@ -454,6 +454,8 @@ Future MyAds(String name,String productCatogory, String slogan,String image,Stri
       "Video":video,
       "Mobile":mobile,
       "Views":views,
+      "Boring":0,
+      "Top of Top":0,
     });
 }
 Future MyComplains(String Cno,String Cabout,String location,String sendto,String depart,String cname,String Gvt,String category,String image,String video,String mobile,int risky,int urgent,int priority,views){

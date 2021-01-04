@@ -139,7 +139,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
                             child: MaterialButton(
                               child: Text(Dropdownlists().categories[index],style: TextStyle(
                                 color: Colors.redAccent,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                                 fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
                               ),),
@@ -231,6 +231,7 @@ class _DisplayComplainsState extends State<DisplayComplains> {
   }
   Widget buildBar(BuildContext context) {
     return new AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
         // centerTitle: true,
         title: appBarTitle,
