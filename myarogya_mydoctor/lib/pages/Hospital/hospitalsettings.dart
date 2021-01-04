@@ -100,52 +100,52 @@ class _HospitalSettingsState extends State<HospitalSettings> {
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                onTap: ()=>Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyIncomePage("My Income",widget.mobile)),
-                ),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.memory,size: 30,color: Colors.redAccent,),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "My Income",
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 20.0,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(
-                          width:140,
-                        ),
-                        Text(
-                          "Rs."+((myincome/100).toString().split(".")[0]),
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 20.0,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold,
-                          ),)
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              // InkWell(
+              //   onTap: ()=>Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => MyIncomePage("My Income",widget.mobile)),
+              //   ),
+              //   child: Container(
+              //     height: 60,
+              //     width: MediaQuery.of(context).size.width,
+              //     child: Card(
+              //       child: Row(
+              //         children: [
+              //           SizedBox(
+              //             width: 10,
+              //           ),
+              //           Icon(Icons.memory,size: 30,color: Colors.redAccent,),
+              //           SizedBox(
+              //             width: 20,
+              //           ),
+              //           Text(
+              //             "My Income",
+              //             style: TextStyle(
+              //               color: Colors.redAccent,
+              //               fontSize: 20.0,
+              //               fontFamily: 'Lato',
+              //               fontWeight: FontWeight.bold,
+              //             ),),
+              //           SizedBox(
+              //             width:140,
+              //           ),
+              //           Text(
+              //             "Rs."+((myincome/100).toString().split(".")[0]),
+              //             style: TextStyle(
+              //               color: Colors.redAccent,
+              //               fontSize: 20.0,
+              //               fontFamily: 'Lato',
+              //               fontWeight: FontWeight.bold,
+              //             ),)
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,

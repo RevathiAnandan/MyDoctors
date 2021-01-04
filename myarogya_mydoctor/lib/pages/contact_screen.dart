@@ -100,7 +100,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
+      title: Text("Add Contact"),
       content: Text("Would you like to Add the Contact?"),
       actions: [
         cancelButton,

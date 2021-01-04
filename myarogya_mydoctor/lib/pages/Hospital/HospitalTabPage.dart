@@ -59,40 +59,41 @@ class _HospitalTabPageState extends State<HospitalTabPage>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back,color: Colors.redAccent),
-            onPressed: ()async{
-              Navigator.pop(context);
-            },
-          ),
-          backgroundColor: Colors.white,
-          // title: Text("My Arogya My Doctor"),
-          // elevation: 0.7,
-          bottom: TabBar(
-            controller: _tabController,
-            indicatorColor: Colors.redAccent,
-            labelColor: Colors.redAccent,
-            tabs: <Widget>[
-              // Tab(text: 'PENDING',),
-              Tab(
-                text: "COMPLETED",
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My Hospitals",style: TextStyle(
+          color: Colors.redAccent,
+          fontSize: 18,
+        ),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.redAccent),
+          onPressed: ()async{
+            Navigator.pop(context);
+          },
         ),
-        body: TabBarView(
+        backgroundColor: Colors.white,
+        // title: Text("My Arogya My Doctor"),
+        // elevation: 0.7,
+        bottom: TabBar(
           controller: _tabController,
-          children: <Widget>[
-            // PendingPage(),
-            CompletedPage()
-//            MyScreen(widget.id,widget.mobile),
-//            ContactsPage(widget.mobile),
+          indicatorColor: Colors.redAccent,
+          labelColor: Colors.redAccent,
+          tabs: <Widget>[
+            // Tab(text: 'PENDING',),
+            Tab(
+              text: "COMPLETED",
+            ),
           ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          // PendingPage(),
+          CompletedPage(widget.mobile)
+//            MyScreen(widget.id,widget.mobile),
+//            ContactsPage(widget.mobile),
+        ],
       ),
     );
   }

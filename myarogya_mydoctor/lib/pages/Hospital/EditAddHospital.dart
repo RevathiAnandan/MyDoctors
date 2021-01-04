@@ -332,7 +332,8 @@ class _EditAddHospital extends State<EditAddHospital> {
                         isCovid.toString(),
                         isnabh.toString(),
                         awardsController.text,
-                        widget.key1
+                        widget.key1,
+                        "",
                     );
                   } catch (e) {
                     print(e);
@@ -640,7 +641,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                   height: 35,
                 ),
                 Text(
-                  "Price Range",
+                  "Pincode",
                   style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 18,
@@ -650,9 +651,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 ),
                 TextFormField(
                   controller: pincode,
-                  decoration: new InputDecoration(
-                      hintText: "Low - High"
-                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Lato',

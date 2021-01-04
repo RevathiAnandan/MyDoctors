@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Hospital/EditAddHospital.dart';
 class CompletedPage extends StatefulWidget {
+  final String mobile;
+
+
+  CompletedPage(this.mobile);
+
   @override
   _CompletedPageState createState() => _CompletedPageState();
 }
@@ -84,7 +89,7 @@ class _CompletedPageState extends State<CompletedPage> {
             Key1.add(key);
           var refreshToken = Hospital.fromJson(values);
           print(refreshToken);
-         if(refreshToken.status == "Completed"){
+         if(refreshToken.status == "Completed"&&refreshToken.userno==widget.mobile){
            dummyData.add(refreshToken);
            print(dummyData.length);
            setState(() {

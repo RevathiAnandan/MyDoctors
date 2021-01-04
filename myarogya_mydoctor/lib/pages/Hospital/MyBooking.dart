@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myarogya_mydoctor/improvement/addhospitals.dart';
 import 'package:myarogya_mydoctor/model/Booking.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctorsettings.dart';
@@ -43,6 +44,12 @@ class _MyBookingState extends State<MyBooking> {
          return <Widget>[
            SliverAppBar(
              actions: [
+               IconButton(
+                 icon: Icon(Icons.add,color: Colors.redAccent,size: 35,),
+                 onPressed: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>AddHospital(widget.mobile)));
+                 },
+               ),
                PopupMenuButton<String>(
                  icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
                  onSelected: choiceAction,

@@ -11,6 +11,12 @@ import 'package:mock_data/mock_data.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AddHospital extends StatefulWidget {
+
+  final String mobile;
+
+
+  AddHospital(this.mobile);
+
   @override
   _AddHospitalState createState() => _AddHospitalState();
 }
@@ -453,8 +459,9 @@ class _AddHospitalState extends State<AddHospital> {
                                             is24.toString(),
                                             isCovid.toString(),
                                             isnabh.toString(),
-                          awardsController.text,
-                                              ""
+                                            awardsController.text,
+                        "",
+                                            widget.mobile,
                       );
                       AuthService()
                           .toast("Your Added Hospital Is Under Verification");
@@ -474,7 +481,7 @@ class _AddHospitalState extends State<AddHospital> {
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () {
                   if (pageindex == 3) {
-                    addfreeBeds();
+
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       setState(() {
@@ -1014,7 +1021,7 @@ class _AddHospitalState extends State<AddHospital> {
       case 3:
         setState(() {});
         return new Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width,
           child: Form(
             key: _formKey,
@@ -1482,29 +1489,35 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Test Description",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 110,
+                        // height: 40,
+                        child: Text(
+                          "Test Description",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Charges",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 110,
+                        // height: 40,
+                        child: Text(
+                          "Charges",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1513,45 +1526,51 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: descController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: descController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: opdController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          // FilteringTextInputFormatter.digitsOnly
-                        ],
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: opdController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            // FilteringTextInputFormatter.digitsOnly
+                          ],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -1610,29 +1629,33 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Package Name",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: Text(
+                          "Package Name",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Amount",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: Text(
+                          "Amount",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1641,45 +1664,49 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: packController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: packController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: amtController,
-                        inputFormatters: <TextInputFormatter>[
-                          // FilteringTextInputFormatter.digitsOnly
-                        ],
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: amtController,
+                          inputFormatters: <TextInputFormatter>[
+                            // FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -1737,29 +1764,33 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Surgery Name",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: Text(
+                          "Surgery Name",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Amount",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: Text(
+                          "Amount",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1768,45 +1799,49 @@ class _AddHospitalState extends State<AddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: surController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: surController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: suramtController,
-                        inputFormatters: <TextInputFormatter>[
-                        //  FilteringTextInputFormatter.digitsOnly
-                        ],
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: suramtController,
+                          inputFormatters: <TextInputFormatter>[
+                          //  FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -3132,7 +3167,7 @@ class _AddHospitalState extends State<AddHospital> {
         sortAscending: true,
         columns: [
           DataColumn(
-              label: Text(item1,
+              label:  Text(item1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,

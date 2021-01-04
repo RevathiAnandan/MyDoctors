@@ -20,6 +20,7 @@ class Hospital{
   String is24;
   String isCovid;
   String isNabh;
+  String userno;
   List<FreeBeds> freebeds;
   List<ConBeds> conbeds;
   List<CovidBeds> covidbeds;
@@ -55,6 +56,7 @@ class Hospital{
     this.conbeds,
     this.beds,
     this.note,
+    this.userno,
     this.covidbeds,
     this.diagnosis,
     this.health,
@@ -73,64 +75,65 @@ class Hospital{
 
   factory Hospital.fromJson(dynamic json){
     var freebeddetails = json["Free Bed Details"] as List;
-    List<FreeBeds> _FREE = freebeddetails.map((tagJson) => FreeBeds.fromJson(tagJson)).toList();
+    List<FreeBeds> _FREE = freebeddetails?.map((tagJson) => FreeBeds.fromJson(tagJson))?.toList()??[];
     var conbeddetails = json["Concessional Bed Details"] as List;
-    List<ConBeds> _CON = conbeddetails.map((tagJson) => ConBeds.fromJson(tagJson)).toList();
+    List<ConBeds> _CON = conbeddetails?.map((tagJson) => ConBeds.fromJson(tagJson))?.toList()??[];
     var coviddetails = json["Covid Bed Details"] as List;
-    List<CovidBeds> _COVID = coviddetails.map((tagJson) => CovidBeds.fromJson(tagJson)).toList();
+    List<CovidBeds> _COVID = coviddetails?.map((tagJson) => CovidBeds.fromJson(tagJson))?.toList()??[];
     var splbeddetails = json["Special Bed Details"] as List;
-    List<OtherBeds> _BED = splbeddetails.map((tagJson) => OtherBeds.fromJson(tagJson)).toList();
+    List<OtherBeds> _BED = splbeddetails?.map((tagJson) => OtherBeds.fromJson(tagJson))?.toList()??[];
     var diagnosis = json["Diagnosis Details"] as List;
-    List<Diagnosis> _DIAGNOSIS = diagnosis.map((tagJson) => Diagnosis.fromJson(tagJson)).toList();
+    List<Diagnosis> _DIAGNOSIS = diagnosis?.map((tagJson) => Diagnosis.fromJson(tagJson))?.toList()??[];
     var health = json["Health Package"] as List;
-    List<Health> _HEALTH = health.map((tagJson) => Health.fromJson(tagJson)).toList();
+    List<Health> _HEALTH = health?.map((tagJson) => Health.fromJson(tagJson))?.toList()??[];
     var surgery = json["Surgery Packages"] as List;
-    List<Surgery> _SUR = surgery.map((tagJson) => Surgery.fromJson(tagJson)).toList();
+    List<Surgery> _SUR = surgery?.map((tagJson) => Surgery.fromJson(tagJson))?.toList()??[];
     var doctors = json["Doctors"] as List;
-    List<DoctorList> _DOCTOR = doctors.map((tagJson) => DoctorList.fromJson(tagJson)).toList();
+    List<DoctorList> _DOCTOR = doctors?.map((tagJson) => DoctorList.fromJson(tagJson))?.toList()??[];
     var nurses = json["Nurses"] as List;
-    List<NursesList> _NURSE = nurses.map((tagJson) => NursesList.fromJson(tagJson)).toList();
+    List<NursesList> _NURSE = nurses?.map((tagJson) => NursesList.fromJson(tagJson))?.toList()??[];
     var staff = json["Staff"] as List;
-    List<StaffsList> _STAFF = staff.map((tagJson) => StaffsList.fromJson(tagJson)).toList();
+    List<StaffsList> _STAFF = staff?.map((tagJson) => StaffsList.fromJson(tagJson))?.toList()??[];
     var tpa = json["TPA"] as List;
-    List<TpaList> _TPA = tpa.map((tagJson) => TpaList.fromJson(tagJson)).toList();
+    List<TpaList> _TPA = tpa?.map((tagJson) => TpaList.fromJson(tagJson))?.toList()??[];
     var acred = json["accredition"] as List;
-    List<AccredList> _ACCRED = acred.map((tagJson) => AccredList.fromJson(tagJson)).toList();
+    List<AccredList> _ACCRED = acred?.map((tagJson) => AccredList.fromJson(tagJson))?.toList()??[];
 
 
     return new Hospital._(
-      hospitalRegNo: json['hospitalId'] as String,
-      hospitalName: json['hospitalName'] as String,
+      hospitalRegNo: json['hospitalId'] as String??"??",
+      hospitalName: json['hospitalName'] as String??"",
       hospitalAddress: json['address'] as String,
-      dateofIncorporation: json['Date of Incorporation'] as String,
-      adminName: json['Administration Name'] as String,
-      adminPh: json['Administration Ph no'] as String,
+      dateofIncorporation: json['Date of Incorporation'] as String??"",
+      adminName: json['Administration Name'] as String??"",
+      adminPh: json['Administration Ph no'] as String??"",
       accred: _ACCRED,
-      pincode: json['Pin code'] as String,
-      ambulanceNo: json['Ambulance'] as String,
-      emergencyNo: json['Emergency'] as String,
-      bookingPhNo: json['Booking Ph'] as String,
-      opdBookingNo: json['OPD Booking'] as String,
-      image: json['Images'] as List,
-      status: json['Status'] as String,
+      pincode: json['Pin code'] as String??"",
+      ambulanceNo: json['Ambulance'] as String??"",
+      emergencyNo: json['Emergency'] as String??"",
+      bookingPhNo: json['Booking Ph'] as String??"",
+      opdBookingNo: json['OPD Booking'] as String??"",
+      image: json['Images'] as List??[],
+      status: json['Status'] as String??"",
       freebeds: _FREE,
       conbeds: _CON,
       beds: _BED,
-      note: json['Note'] as String,
+      note: json['Note'] as String??"",
       covidbeds: _COVID,
       diagnosis: _DIAGNOSIS,
       health: _HEALTH,
       surgery: _SUR,
-      specialities: json['Speciality'] as List,
-      facilities: json['Facilities'] as List,
+      specialities: json['Speciality'] as List??[],
+      facilities: json['Facilities'] as List??[],
       doctorslist: _DOCTOR,
       nurseslist: _NURSE,
       staffslist: _STAFF,
       tpalist: _TPA,
-      is24: json['Availabilty'] as String,
-      isCovid: json['Covid'] as String,
-      isNabh: json['NABH'] as String,
-      award: json['Award'] as String,
+      is24: json['Availabilty'] as String??"",
+      isCovid: json['Covid'] as String??"",
+      isNabh: json['NABH'] as String??"",
+      award: json['Award'] as String??"",
+      userno: json['UserNo'] as String??"",
     );
   }
 

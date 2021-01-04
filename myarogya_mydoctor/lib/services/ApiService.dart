@@ -284,7 +284,7 @@ class ApiService{
       List accred, String ambulance, String emergency, String bookph, String Opdbk, List images ,String status,
       List freebeds,List conbeds,List coivdbeds ,List beds,String note, List diagnosis, List health,List surgery,
       List special, List facility, List docList, List nurseList, List staffList, List TPA
-      ,String is24,String isCovid,String isnabh,String award,String key){
+      ,String is24,String isCovid,String isnabh,String award,String key,String userno){
     try {
       if (key == "") {
         var db = fb.reference().child("Hospitals").push();
@@ -320,7 +320,8 @@ class ApiService{
           'Availabilty':is24,
           'Covid':isCovid,
           'NABH':isnabh,
-          'Award':award
+          'Award':award,
+          "UserNo":userno
           //      'rating': hospitals.rating,
           //      'pricerange': hospitals.pricerange,
           //      'prepayment': hospitals.prepayment,
@@ -368,7 +369,7 @@ class ApiService{
           'Availabilty':is24,
           'Covid':isCovid,
           'NABH':isnabh,
-          'Award':award
+          'Award':award,
           //      'rating': hospitals.rating,
           //      'pricerange': hospitals.pricerange,
           //      'prepayment': hospitals.prepayment,

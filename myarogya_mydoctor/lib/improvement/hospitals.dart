@@ -144,7 +144,7 @@ class _HospitalsState extends State<Hospitals> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AddHospital()),
+                        MaterialPageRoute(builder: (context) => AddHospital(widget.mobile)),
                       );
                     },
                   ),
@@ -651,11 +651,11 @@ class _HospitalsState extends State<Hospitals> {
           print(snapshot.value);
           // print(snapshot.value["Special Bed Details"]);
           // print(snapshot.value);
-          Map<dynamic, dynamic> values = snapshot.value;
+          Map<dynamic, dynamic> values = snapshot.value??"";
           values.forEach((key, value) {
             print("VAlues:: $value");
             // print(value["hospitalName"]);
-            var refreshToken = Hospital.fromJson(value);
+            var refreshToken = Hospital.fromJson(value)??"";
             hospitalvalues.add(refreshToken);
             filteredhospital.add(refreshToken);
             key1.add(key);
@@ -740,6 +740,7 @@ class _HospitalsState extends State<Hospitals> {
   }
 
   yearsofexperience(String date) {
+    print(date);
     int now;
     int year;
     year = int.parse(date.split('/')[2]);
@@ -748,30 +749,39 @@ class _HospitalsState extends State<Hospitals> {
   }
 
   List getMin(List<OtherBeds> inputArray) {
-    minbedtype.clear();
-    print("Harun");
-    int minValue = int.parse(inputArray[0].charges);
-    if (inputArray.length == 1) {
-      minbedtype.add({
-        "Bed" : inputArray[0].roomType,
-        "Charges" : int.parse(inputArray[0].charges)
-      });
-    }else{
-    for (int i = 0; i < inputArray.length; i++) {
-      print(int.parse(inputArray[i].charges));
-      print(inputArray[i].roomType);
-      if (int.parse(inputArray[i].charges) <= minValue) {
-        print("Inside if");
-          minbedtype.add({
-            "Bed" : inputArray[i].roomType,
-            "Charges" : int.parse(inputArray[i].charges)
+    print(inputArray);
+    if (inputArray.isNotEmpty) {
+      minbedtype.clear();
+      print("Harun");
+      int minValue = int.parse(inputArray[0].charges)??0;
+      if (inputArray.length == 1) {
+        minbedtype.add({
+          "Bed" : inputArray[0].roomType,
+          "Charges" : int.parse(inputArray[0].charges)
         });
-        print(minbedtype);
-        // minValue = int.parse(inputArray[i].charges);
-        // minbed = inputArray[i].roomType;
+      }else if(inputArray.length > 1){
+      for (int i = 0; i < inputArray.length; i++) {
+        print(int.parse(inputArray[i].charges));
+        print(inputArray[i].roomType);
+        if (int.parse(inputArray[i].charges) <= minValue) {
+          print("Inside if");
+            minbedtype.add({
+              "Bed" : inputArray[i].roomType,
+              "Charges" : int.parse(inputArray[i].charges)
+          });
+          print(minbedtype);
+          // minValue = int.parse(inputArray[i].charges);
+          // minbed = inputArray[i].roomType;
+        }
       }
-    }
-    }
+      }
+    } else{
+        minbedtype.add({
+          "Bed" : "",
+          "Charges" : 0
+        });
+      }
+
     return minbedtype;
   }
 
