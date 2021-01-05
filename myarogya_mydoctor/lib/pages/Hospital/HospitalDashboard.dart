@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myarogya_mydoctor/improvement/hospitals.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
 import 'package:myarogya_mydoctor/pages/Ads/home_page.dart';
 import 'package:myarogya_mydoctor/pages/complains/DisplayComplains.dart';
@@ -20,11 +21,13 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
   bool isLoading = true;
   List<Widget> _widgetOptions() => [
     MyBooking(widget.id,widget.mobile,hospitalvalues),
+    Hospitals(widget.mobile,widget.id),
     HomeScreen(widget.id,widget.mobile),
     DisplayComplains(widget.id,widget.mobile)
   ];
   final widgetName = [
     Text('My Booking'),
+    Text('My Hospitals'),
     Text('My Ads'),
     Text('My Complains'),
   ];
@@ -56,7 +59,8 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
               ),
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(icon: Icon(Icons.local_hospital,color: Colors.redAccent,), title: Text('My Bookings')),
-
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.hotel,color: Colors.redAccent,), title: Text('My Hospital')),
 BottomNavigationBarItem(
                     icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
                 BottomNavigationBarItem(

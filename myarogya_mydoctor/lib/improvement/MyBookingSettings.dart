@@ -124,7 +124,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
           var refreshToken = Booking.fromJson(values);
           print(refreshToken);
           setState(() {
-            if (refreshToken.userNumber == widget.mobile&&refreshToken.status!="Cancel") {
+            if (refreshToken.userNumber == widget.mobile) {
               dummyData.add(refreshToken);
               keys1.add(key);
               print(dummyData[0].status);
@@ -141,7 +141,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
       // ApiService().bookhospital(dummyData[token].bookingNumber,dummyData[token].hospitalName , widget.mobile, "Cancel", dummyData[token].bookdetails , "","","",DateTime.now().toString());
       var db = fb.reference().child("HospitalBookings").child( keys1[token].toString());
       db.update({
-        'Status':"Cancel",
+        'Status':"Cancelled",
         "CancelDate": formatDate( DateTime.now() , [dd, ' ', MM, ' ', yyyy,'/', HH , ':', nn]).toString(),
       });
     }

@@ -101,9 +101,9 @@ class Hospital{
 
 
     return new Hospital._(
-      hospitalRegNo: json['hospitalId'] as String??"??",
+      hospitalRegNo: json['hospitalId'] as String??"",
       hospitalName: json['hospitalName'] as String??"",
-      hospitalAddress: json['address'] as String,
+      hospitalAddress: json['address'] as String??"",
       dateofIncorporation: json['Date of Incorporation'] as String??"",
       adminName: json['Administration Name'] as String??"",
       adminPh: json['Administration Ph no'] as String??"",
@@ -220,7 +220,7 @@ class Health {
   factory Health.fromJson(dynamic json){
     return Health._(
       packagename: json['Type'] as String,
-      amount: json['charges'] as String,
+      amount: json['charges'] as String??"0",
     );
   }
 }
@@ -233,7 +233,7 @@ class Surgery {
   factory Surgery.fromJson(dynamic json){
     return Surgery._(
       surgeryname: json['Type'] as String,
-      suramount: json['charges'] as String,
+      suramount: json['charges'] as String??"0",
     );
   }
 }
@@ -248,7 +248,7 @@ class Diagnosis {
   factory Diagnosis.fromJson(dynamic json){
     return Diagnosis._(
       test: json['Type'] as String,
-      charge: json['charges'] as String,
+      charge: json['charges'] as String??"0",
     );
   }
 }
@@ -263,8 +263,8 @@ class ConBeds {
   factory ConBeds.fromJson(dynamic json){
     return ConBeds._(
       roomType: json['roomType'] as String,
-      noOfBeds: json['noOfBeds'] as String,
-      charges: json['charges'] as String,
+      noOfBeds: json['noOfBeds'] as String??"0",
+      charges: json['charges'] as String??"0",
 
     );
   }
@@ -280,8 +280,8 @@ class FreeBeds {
   factory FreeBeds.fromJson(dynamic json){
     return FreeBeds._(
       roomType: json['roomType'] as String,
-      noOfBeds: json['noOfBeds'] as String,
-      charges: json['charges'] as String,
+      noOfBeds: json['noOfBeds'] as String??"0",
+      charges: json['charges'] as String??"0",
 
     );
   }
@@ -297,8 +297,8 @@ class CovidBeds{
   factory CovidBeds.fromJson(dynamic json){
     return CovidBeds._(
       roomType: json['roomType'] as String,
-      noOfBeds: json['noOfBeds'] as String,
-      charges: json['charges'] as String,
+      noOfBeds: json['noOfBeds'] as String??"0",
+      charges: json['charges'] as String??"0",
 
     );
   }
@@ -315,8 +315,8 @@ class OtherBeds {
   factory OtherBeds.fromJson(dynamic json){
     return OtherBeds._(
       roomType: json['roomType'] as String,
-      noOfBeds: json['noOfBeds'] as String,
-      charges: json['charges'] as String,
+      noOfBeds: json['noOfBeds'] as String??"0",
+      charges: json['charges'] as String??"0",
 
     );
   }

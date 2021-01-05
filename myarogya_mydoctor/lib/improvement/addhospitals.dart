@@ -427,6 +427,7 @@ class _AddHospitalState extends State<AddHospital> {
                 onPressed: () {
                   try {
                     if (_checked) {
+                      addfreeBeds();
                       ApiService().hospitals(
                                             nameController.text,
                                             regController.text,

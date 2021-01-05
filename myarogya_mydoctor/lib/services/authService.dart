@@ -19,12 +19,18 @@ class AuthService{
   AuthCredential creds;
 
   //Handle Auth
-  handleAuth() {
+  Widget handleAuth() {
+    print("HArun");
     // await _pns.initialise();
     return StreamBuilder(
-      stream:FirebaseAuth.instance.onAuthStateChanged,
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context,snapshot){
-        if(snapshot.hasData){
+        print(snapshot.data);
+        if(snapshot.hasError){
+          return Scaffold(body: Center(child: Text("Something went wrong"),),);
+        }else if(snapshot.connectionState==ConnectionState.waiting) {
+          return Scaffold(body: Center(child:CircularProgressIndicator()),);
+        }else if(snapshot.hasData){
           return checkLogin(context);
         }else{
           return LoginScreen();
@@ -88,7 +94,7 @@ class AuthService{
     if(uid != null){
       var db = fb.reference().child("User").child(mobile).child("category");
       db.once().then((DataSnapshot snapshot){
-        print (snapshot.value);
+        print ("snapshot"+snapshot.value);
 //      print (db);
         if((snapshot.value) == "Doctor"){
           Navigator.push(

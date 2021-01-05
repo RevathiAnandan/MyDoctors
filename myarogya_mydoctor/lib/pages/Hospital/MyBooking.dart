@@ -88,7 +88,7 @@ class _MyBookingState extends State<MyBooking> {
                    Stack(
                      children: [
                        Image.asset(
-                         "assets/images/3996.jpg",
+                         "assets/images/13092.jpg",
                          fit: BoxFit.cover,
                          // color: Colors.blue,
                          colorBlendMode: BlendMode.hue,
@@ -224,14 +224,14 @@ class _MyBookingState extends State<MyBooking> {
         values.forEach((key, values) {
           var refreshToken = Booking.fromJson(values);
           print(refreshToken);
-          setState(() {
-            if (refreshToken.bookingNumber == widget.mobile&& refreshToken.status!="Cancel") {
+          // setState(() {
+            if (refreshToken.bookingNumber == widget.mobile && refreshToken.status!="Cancelled") {
               dummyData.add(refreshToken);
               dummyData1.add(refreshToken);
               keys1.add(key);
-              print(dummyData[0].status);
+              print("fdkjhkfjs"+dummyData[0].status);
             }
-          });
+          // });
         });
       });
     } catch (e) {

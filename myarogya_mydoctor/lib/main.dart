@@ -49,12 +49,12 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         // home: MyIncomePage("Income Settings","+919444773937"),
         // home: Bookdetailed("Revathi"),
-        //   home: SplashScreen()
+          home: SplashScreen()
        // home: SelectionScreen(),
      // home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
 //         home: MyComplainList()
-//         home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528"),
-     home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+//         home: DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1", "+919444773937"),
+//      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
         );
   }
 }
