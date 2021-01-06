@@ -41,17 +41,24 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                 fontFamily: "Lato",
                 fontSize: 20)),
       ),
-      body: Container(
-        child: Card(
-          child:dummyData.length >0?
-          ListView.builder(
-            itemCount: dummyData.length,
-            itemBuilder:(context,index){
-              print(dummyData[index].bookdetails.toString());
-              return ListTile(
+      body: dummyData.length >0?
+      ListView.builder(
+        itemCount: dummyData.length,
+        itemBuilder:(context,index){
+          print(dummyData[index].bookdetails.toString());
+          return Column(
+            children: [
+              ListTile(
                 contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 // title: Text(dummyData[index].userNumber),
-                title:(dummyData[index].bookdetails[0].packName !=null ) ?Text(dummyData[index].bookdetails[0].packName
+                title:(dummyData[index].hospitalName !=null ) ?Text(dummyData[index].hospitalName,style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Lato",
+                    fontSize: 18), ):(Text(" ",style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Lato",
+                    fontSize: 18),)),
+                subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text(dummyData[index].bookdetails[0].packName
                     +" "+"Charges:"+dummyData[index].bookdetails[0].charges,style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Lato",
@@ -106,11 +113,13 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                     ],
                   ),
                 ),
-              );
-            },
-          ):Center(child: Text("No Data Found!!")),
-        ),
-      ),
+              ),
+              Divider()
+            ],
+          );
+
+        },
+      ):Center(child: CircularProgressIndicator()),
     );
   }
   Future<Booking> getBooking() async {

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -165,19 +164,31 @@ class _AppointmentsState extends State<Appointments> {
                     _openPopup(context);
                   },
                 ),
+              IconButton(
+                  icon: Icon(Icons.settings, color: Colors.redAccent,size: 35,),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DoctorSettings(widget.id,widget.mobile),
+                      ),
+                    );
+                  },
+                ),
 
-                  PopupMenuButton<String>(
-                    icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
-                    onSelected: choiceAction,
-                    itemBuilder: (BuildContext context){
-                      return ConstantsD.choices.map((String choice){
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
-                  )
+                  // PopupMenuButton<String>(
+                  //   icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
+                  //   onSelected: choiceAction,
+                  //   itemBuilder: (BuildContext context){
+                  //     return ConstantsD.choices.map((String choice){
+                  //       return PopupMenuItem<String>(
+                  //         value: choice,
+                  //         child: Text(choice),
+                  //       );
+                  //     }).toList();
+                  //   },
+                  // )
               ],
             ),
             new SliverPadding(

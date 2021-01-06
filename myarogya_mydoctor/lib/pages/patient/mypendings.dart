@@ -22,7 +22,6 @@ import '../dashboard_screen.dart';
 import 'PrescriptionList.dart';
 
 class MyPendings extends StatefulWidget {
-
   String mobile;
   String category;
   String id;
@@ -43,7 +42,7 @@ class _MyPendingsState extends State<MyPendings> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
   var isLoading = false;
   bool appointstatus = false;
-  int _widgetIndex=0;
+  int _widgetIndex = 0;
   bool duplicate = false;
   String dname;
   TextEditingController name = new TextEditingController();
@@ -56,218 +55,242 @@ class _MyPendingsState extends State<MyPendings> {
     _isButtondisable = false;
     getAppointments();
     var db = fb.reference().child("User").child(widget.mobile);
-    db.once().then((DataSnapshot snapshot){
-      print (snapshot.value['Name']);
+    db.once().then((DataSnapshot snapshot) {
+      print(snapshot.value['Name']);
       setState(() {
-        dname =  snapshot.value['Name'];
+        dname = snapshot.value['Name'];
       });
     });
-
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                leading: Container(),
-                backgroundColor: Colors.white,
-                expandedHeight: MediaQuery.of(context).size.height/2.8,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text("  Appointments",style: TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: 25.0,
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.bold,
-                    ),),
+        body: NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SliverAppBar(
+            leading: Container(),
+            backgroundColor: Colors.white,
+            expandedHeight: MediaQuery.of(context).size.height / 2.8,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "  Appointments",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 25.0,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
                   ),
-                  background: Column(
-                    children: <Widget>[
-                      Stack(
-                        children: [
-                          Image.asset(
-                            "assets/images/13092.jpg",
-                            fit: BoxFit.cover,
-                            // color: Colors.blue,
-                            colorBlendMode: BlendMode.hue,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16.0, 11.0,100.0, 16.0),
-                            child: Container(
-                              height: 36.0,
-                              width: double.infinity,
-                              child: CupertinoTextField(
-                                onChanged: (text){
-                                  setState(() {
-                                    appoint = filterdata
-                                        .where((u) => (u.doctorName
-                                        .toLowerCase()
-                                        .contains(text.toLowerCase()) ||
+                ),
+              ),
+              background: Column(
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      Image.asset(
+                        "assets/images/13092.jpg",
+                        fit: BoxFit.cover,
+                        // color: Colors.blue,
+                        colorBlendMode: BlendMode.hue,
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 11.0, 100.0, 16.0),
+                        child: Container(
+                          height: 36.0,
+                          width: double.infinity,
+                          child: CupertinoTextField(
+                            onChanged: (text) {
+                              setState(() {
+                                appoint = filterdata
+                                    .where((u) => (u.doctorName
+                                            .toLowerCase()
+                                            .contains(text.toLowerCase()) ||
                                         u.doctorMobile
-                                            .toLowerCase().contains(text.toLowerCase())))
-                                        .toList();
-                                  });
-                                },
-                                keyboardType: TextInputType.text,
-                                placeholder: 'Search',
-                                placeholderStyle: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontSize: 14.0,
-                                  fontFamily: 'Brutal',
-                                ),
-                                prefix: Padding(
-                                  padding:
+                                            .toLowerCase()
+                                            .contains(text.toLowerCase())))
+                                    .toList();
+                              });
+                            },
+                            keyboardType: TextInputType.text,
+                            placeholder: 'Search',
+                            placeholderStyle: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 14.0,
+                              fontFamily: 'Brutal',
+                            ),
+                            prefix: Padding(
+                              padding:
                                   const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  color: Color(0xffF0F1F5),
-                                ),
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.redAccent,
                               ),
                             ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Color(0xffF0F1F5),
+                            ),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                actions: [
-                  IconButton(icon: Icon(Icons.add,color: Colors.redAccent,size: 35,),
-                    onPressed: (){
-                      _openPopupP(context);
-                    },),
-
-                  PopupMenuButton<String>(
-                    icon: new Icon(
-                      Icons.settings,
-                      // Icons.more_vert_rounded,
-                      color: Colors.redAccent,
-                      size: 35,
-                    ),
-                    onSelected: choiceAction,
-                    itemBuilder: (BuildContext context){
-                      return ConstantsD.choices.map((String choice){
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
-                  )
                 ],
               ),
-              new SliverPadding(
-                padding: new EdgeInsets.all(1.0),
-                sliver: new SliverList(
-                    delegate: SliverChildListDelegate([
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-
-                          Container(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Container(
-                                      width: 160,
-                                      height: 40,
-                                      child: Card(
-                                        color: new Color(0xffFFFFFF),
-                                        elevation: 6,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(20)),
-                                        child: Center(
-                                            child: GestureDetector(
-                                                onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DashBoardScreen(
-                                                              widget.mobile,
-                                                              "MY DOCTOR",widget.id)),
-                                                ),
-                                                child: Text("My Doctors",
-                                                    style: new TextStyle(
-                                                        color: Colors.redAccent,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: "Lato")))),
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    Text("",
-                                        style: new TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Lato")),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Row(
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      width: 160,
-                                      height: 40,
-                                      child: Card(
-                                        color: new Color(0xffFFFFFF),
-                                        elevation: 6,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(20)),
-                                        child: Center(
-                                            child: GestureDetector(
-                                                onTap: () {
-                                                  AuthService().toast("Coming Soon!!");
-                                                },
-                                                child: Text("My Reports",
-                                                    style: new TextStyle(
-                                                        color: Colors.redAccent,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: "Lato")))),
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    Text("",
-                                        style: new TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Lato")),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ])),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.redAccent,
+                  size: 35,
+                ),
+                onPressed: () {
+                  _openPopupP(context);
+                },
               ),
-            ];
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.redAccent,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PatientSettings(widget.id,widget.mobile),
+                    ),
+                  );
+                },
+              ),
 
-          },
+              // PopupMenuButton<String>(
+              //   icon: new Icon(
+              //     Icons.settings,
+              //     // Icons.more_vert_rounded,
+              //     color: Colors.redAccent,
+              //     size: 35,
+              //   ),
+              //   onSelected: choiceAction,
+              //   itemBuilder: (BuildContext context){
+              //     return ConstantsD.choices.map((String choice){
+              //       return PopupMenuItem<String>(
+              //         value: choice,
+              //         child: Text(choice),
+              //       );
+              //     }).toList();
+              //   },
+              // )
+            ],
+          ),
+          new SliverPadding(
+            padding: new EdgeInsets.all(1.0),
+            sliver: new SliverList(
+                delegate: SliverChildListDelegate([
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              width: 160,
+                              height: 40,
+                              child: Card(
+                                color: new Color(0xffFFFFFF),
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                    child: GestureDetector(
+                                        onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DashBoardScreen(
+                                                          widget.mobile,
+                                                          "MY DOCTOR",
+                                                          widget.id)),
+                                            ),
+                                        child: Text("My Doctors",
+                                            style: new TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Lato")))),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("",
+                                style: new TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Lato")),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Container(
+                              width: 160,
+                              height: 40,
+                              child: Card(
+                                color: new Color(0xffFFFFFF),
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          AuthService().toast("Coming Soon!!");
+                                        },
+                                        child: Text("My Reports",
+                                            style: new TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Lato")))),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("",
+                                style: new TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Lato")),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ])),
+          ),
+        ];
+      },
       body: new ListView.builder(
         itemCount: appoint.length,
         itemBuilder: (context, i) => new Column(
@@ -280,52 +303,57 @@ class _MyPendingsState extends State<MyPendings> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment:CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       new Text(
-                        appoint[i].doctorName != null ? "Dr. "+ appoint[i].doctorName : "",
+                        appoint[i].doctorName != null
+                            ? appoint[i].doctorName
+                            : "",
                         style: new TextStyle(fontWeight: FontWeight.bold),
                       ),
                       new Container(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: new Text(
-                          appoint[i].doctorMobile != null ? appoint[i].doctorMobile : "",
+                          appoint[i].doctorMobile != null
+                              ? appoint[i].doctorMobile
+                              : "",
                           style:
-                          new TextStyle(color: Colors.grey, fontSize: 15.0),
+                              new TextStyle(color: Colors.grey, fontSize: 15.0),
                         ),
                       ),
                     ],
                   ),
-                  appoint.isEmpty ?Text("No Appointments Booked!!"):buttonstatus(appoint[i].status,i)
+                  appoint.isEmpty
+                      ? Text("No Appointments Booked!!")
+                      : buttonstatus(appoint[i].status, i)
                   // (widget.category == "MY PATIENT")?Text(" "):((appoint.isEmpty) ? buttonfunction("Book Now",i) : ((appoint.asMap().containsKey(i))?buttonfunction(appoint[int.parse(appoint[i].Index)].status,i):buttonfunction(buttonStatus,i))),
                 ],
               ),
-             onTap: () {
-                if (widget.category == "MY PATIENT") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DoctorPrescriptionList(
-                            widget.mobile,
-                            dummyData[i].phone,
-                            dummyData[i].name,
-                            widget.id)),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PescriptionList(
-                            dummyData[i].phone, widget.mobile)),
-                  );
-                }
-              },
+              // onTap: () {
+              //   if (widget.category == "MY PATIENT") {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => DoctorPrescriptionList(
+              //               widget.mobile,
+              //               dummyData[i].phone,
+              //               dummyData[i].name,
+              //               widget.id)),
+              //     );
+              //   } else {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) =>
+              //               PescriptionList(dummyData[i].phone, widget.mobile)),
+              //     );
+              //   }
+              // },
             )
           ],
         ),
       ),
-    )
-    );
+    ));
   }
 
   Future<Appointmnet> getAppointments() async {
@@ -345,7 +373,8 @@ class _MyPendingsState extends State<MyPendings> {
               var refreshToken = Appointmnet.fromJson(values);
               print(refreshToken);
               setState(() {
-                if (refreshToken.patientMobile == widget.mobile && refreshToken.date == formatter) {
+                if (refreshToken.patientMobile == widget.mobile &&
+                    refreshToken.date == formatter) {
                   appoint.add(refreshToken);
                   filterdata.add(refreshToken);
                   print(appoint[0].status);
@@ -355,7 +384,6 @@ class _MyPendingsState extends State<MyPendings> {
                 }
               });
             });
-
           }
         });
       } else {
@@ -372,7 +400,6 @@ class _MyPendingsState extends State<MyPendings> {
   FlatButton buttonstatus(String status, int i) {
     return FlatButton(
         onPressed: () {
-
           if (status == "Waiting!") {
             //todo: Button disable
           } else if (status == "View") {
@@ -387,8 +414,8 @@ class _MyPendingsState extends State<MyPendings> {
         color: Colors.redAccent,
         child: Text(
           status,
-          style: TextStyle(
-              color: Colors.white, fontFamily: "Lato", fontSize: 14),
+          style:
+              TextStyle(color: Colors.white, fontFamily: "Lato", fontSize: 14),
         ));
   }
 
@@ -407,6 +434,7 @@ class _MyPendingsState extends State<MyPendings> {
       ),
     ).show();
   }
+
   _openPopupP(context) {
     Alert(
         context: context,
@@ -436,8 +464,8 @@ class _MyPendingsState extends State<MyPendings> {
         ),
         buttons: [
           DialogButton(
-            onPressed: (){
-              checkDuplication("+91"+phone.text,name.text);
+            onPressed: () {
+              checkDuplication("+91" + phone.text, name.text);
 //              addDoctor(name.text,"+91"+phone.text);
             },
             child: Text(
@@ -447,70 +475,70 @@ class _MyPendingsState extends State<MyPendings> {
           )
         ]).show();
   }
-  addDoctor(String name , String phone)async {
+
+  addDoctor(String name, String phone) async {
     final PermissionStatus permission = await Permission.contacts.status;
-    if(permission == PermissionStatus.granted){
+    if (permission == PermissionStatus.granted) {
       Contact newContact = new Contact();
       newContact.givenName = name;
-      newContact.phones = [
-        Item(label: "mobile", value:phone)
-      ];
+      newContact.phones = [Item(label: "mobile", value: phone)];
       await ContactsService.addContact(newContact);
-      checkmobile(name,phone);
+      checkmobile(name, phone);
       Navigator.of(context).pop();
-
     }
   }
-  checkmobile(String pname,String phone){
+
+  checkmobile(String pname, String phone) {
     var db = fb.reference().child("User");
-    db.once().then((DataSnapshot snapshot){
-      ApiService().addPatientToDoctor(widget.mobile,phone,dname);
-      ApiService().addDoctorToPatient(widget.mobile,phone,pname);
+    db.once().then((DataSnapshot snapshot) {
+      ApiService().addPatientToDoctor(widget.mobile, phone, dname);
+      ApiService().addDoctorToPatient(widget.mobile, phone, pname);
       AuthService().toast("Added Successfully!!");
       duplicate = false;
-      Map<dynamic, dynamic > values = snapshot.value;
-      values.forEach((key,values) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
         var refreshToken = values;
         print(refreshToken);
       });
     });
   }
-  checkDuplication(String phone,String name){
-    var db = fb.reference().child("User").child(widget.mobile).child("myDoctor");
-    db.once().then((DataSnapshot snapshot){
-      Map<dynamic, dynamic > values = snapshot.value;
+
+  checkDuplication(String phone, String name) {
+    var db =
+        fb.reference().child("User").child(widget.mobile).child("myDoctor");
+    db.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
       print(snapshot.value);
-      if(values == null){
+      if (values == null) {
         duplicate = false;
-      }else{
-        values.forEach((key,values) {
+      } else {
+        values.forEach((key, values) {
           var refreshToken = values["phone"].toString();
-          if(refreshToken == phone){
+          if (refreshToken == phone) {
             duplicate = true;
           }
-          print("Values!!!"+values["phone"].toString());
+          print("Values!!!" + values["phone"].toString());
           print(refreshToken);
           print(duplicate);
         });
       }
-      checkDuplicate(phone,name);
-    }
-
-    );
-
+      checkDuplicate(phone, name);
+    });
   }
-  checkDuplicate(String phone,String name){
-    if(duplicate == false){
-      addDoctor(name , phone);
-      print("not"+ duplicate.toString());
-    }else if(duplicate == true){
+
+  checkDuplicate(String phone, String name) {
+    if (duplicate == false) {
+      addDoctor(name, phone);
+      print("not" + duplicate.toString());
+    } else if (duplicate == true) {
       Navigator.pop(context);
       AuthService().toast("The Number Already Exist");
       duplicate = false;
-      print("exist"+ duplicate.toString());
+      print("exist" + duplicate.toString());
     }
   }
-  void choiceAction(String choice){
+
+  void choiceAction(String choice) {
     // if(choice == ConstantsD.Profile){
     //   Navigator.push(
     //     context,
@@ -520,12 +548,11 @@ class _MyPendingsState extends State<MyPendings> {
     //     ),
     //   );
     // }else
-      if(choice == ConstantsD.Settings){
+    if (choice == ConstantsD.Settings) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              PatientSettings(widget.id,widget.mobile),
+          builder: (context) => PatientSettings(widget.id, widget.mobile),
         ),
       );
     }

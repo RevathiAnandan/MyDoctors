@@ -14,8 +14,8 @@ class Dropdownlists{
   "IFFCO TOKIO General Insurance Co. Ltd.",	"Paramount Health Services & Insurance TPA Pvt. Ltd.",
   "Kotak Mahindra General Insurance Co. Ltd.",	"Park Mediclaim Insurance TPA Pvt. Ltd.",
   "Liberty General Insurance Ltd.",	"Raksha Health Insurance TPA Pvt. Ltd.",
-  "ManipalCigna Health Insurance Co. Ltd."	"Rothshield Insurance TPA Ltd."
-  "Max Bupa Health Insurance Co. Ltd."	"UnitedHealthcare India Pvt. Ltd.",
+  "ManipalCigna Health Insurance Co. Ltd.",	"Rothshield Insurance TPA Ltd.",
+  "Max Bupa Health Insurance Co. Ltd.",	"UnitedHealthcare India Pvt. Ltd.",
   "National Insurance Co. Ltd.",	'UnitedHealthcare Parekh Insurance TPA Pvt. Ltd.',
   "Reliance General Insurance Co. Ltd.",	"Vidal Health Insurance TPA Pvt. Ltd.",
   "Religare Health Insurance Co. Ltd.",	"Vipul MedCorp Insurance TPA Pvt. Ltd.",

@@ -35,7 +35,7 @@ class _PescriptionListState extends State<PescriptionList> {
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.redAccent),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
           ),
@@ -70,7 +70,6 @@ class _PescriptionListState extends State<PescriptionList> {
                                 ),
                               ],
                             ),
-
                             onTap: () {
                               print(dummyData[i]);
                               Navigator.push(
@@ -97,7 +96,13 @@ class _PescriptionListState extends State<PescriptionList> {
         values.forEach((key, values) {
           prescription1 = Prescription.fromJson(values);
           setState(() {
-            if (widget.dmobile == prescription1.doctorMobile) {
+            if (widget.dmobile != " ") {
+              if (widget.dmobile == prescription1.doctorMobile) {
+                dummyData.add(prescription1);
+                print(dummyData);
+                print(dummyData.length);
+              }
+            } else {
               dummyData.add(prescription1);
               print(dummyData);
               print(dummyData.length);

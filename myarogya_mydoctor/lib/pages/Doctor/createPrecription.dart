@@ -1,6 +1,5 @@
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +8,6 @@ import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import '../labtests.dart';
 import 'package:date_format/date_format.dart';
-import '../my_flutter_app_icons.dart';
 import 'addmedicine.dart';
 class CreatePrescription extends StatefulWidget {
   String pmobile,dmobile,pname,id;

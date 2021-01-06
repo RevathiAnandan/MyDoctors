@@ -166,7 +166,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                                       side: BorderSide(
                                           color: Colors.redAccent)),
                                   onPressed: () {
-                                        ApiService().appointment(widget.mobile, widget.hospitalvalues.opdBookingNo, "pname", "Confirm", 1, DateTime.now().toString(), "", "");
+                                        ApiService().appointment(widget.mobile, widget.hospitalvalues.opdBookingNo, widget.hospitalvalues.hospitalName, "Confirm", 1, DateTime.now().toString(), "", "");
                                   },
                                   color: Colors.redAccent,
                                   child: Text(
