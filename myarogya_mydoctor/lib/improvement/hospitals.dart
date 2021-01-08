@@ -249,8 +249,7 @@ class _HospitalsState extends State<Hospitals> {
                                             Hero(
                                                 tag: 'tagImage$i',
                                                 child: (hospitalvalues[i]
-                                                            .image[0] ==
-                                                        null)
+                                                    .image.isEmpty )
                                                     ? Image(
                                                         image: NetworkImage(
                                                           "https://previews.agefotostock.com/previewimage/medibigoff/f755e0d1e3ecce9569f57604ac0fd9a8/esy-001476475.jpg",

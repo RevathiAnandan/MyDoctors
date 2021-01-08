@@ -16,7 +16,6 @@ import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 import 'package:myarogya_mydoctor/pages/settings/myincome.dart';
 import 'package:myarogya_mydoctor/pages/splash_screen.dart';
 import 'package:myarogya_mydoctor/test.dart';
-
 import 'improvement/new.dart';
 
 void main() {
@@ -49,12 +48,17 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         // home: MyIncomePage("Income Settings","+919444773937"),
         // home: Bookdetailed("Revathi"),
-        //   home: SplashScreen()
-       // home: SelectionScreen(),
-     home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
-//         home: MyComplainList()
-//         home: DoctorNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1", "+919444773937"),
-//      home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+        // home: SplashScreen()
+        // home: SelectionScreen(),
+        // home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+        // home: MyComplainList()
+        home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528"),
+        //  home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
         );
   }
 }
+
+//Testing:
+
+// pfEKUrxcZWa5UFTYNwqMimJbVo93, "+918610905528"
+// 2T2HZP3UWJTfMjzr4TbT7hhE9qz1,"+919444773937"

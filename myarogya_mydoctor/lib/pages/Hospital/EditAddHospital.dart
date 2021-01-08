@@ -87,6 +87,7 @@ class _EditAddHospital extends State<EditAddHospital> {
   List stafflist=[];
   bool _checked = false;
   bool buttonstatus = true;
+  bool pressed = false;
   List<String> NumberD = [];
   List<String>Doctor = [];
   List<String>Specialist = [];
@@ -152,6 +153,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     ambuController.text = widget.hospitalValues.ambulanceNo;
     emerController.text = widget.hospitalValues.emergencyNo;
     opdbkController.text = widget.hospitalValues.opdBookingNo;
+    bookphController.text = widget.hospitalValues.bookingPhNo;
     pincode.text = widget.hospitalValues.pincode;
     bedsController.text =  widget.hospitalValues.freebeds[0].noOfBeds;
     bedsController1.text =  widget.hospitalValues.conbeds[0].noOfBeds;
@@ -166,11 +168,76 @@ class _EditAddHospital extends State<EditAddHospital> {
         "charges": widget.hospitalValues.beds[i].charges,
       });
     }
+    print(widget.hospitalValues.diagnosis);
+    for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
+      diagnosis.add({
+        "Type": widget.hospitalValues.diagnosis[i].test,
+        "charges": widget.hospitalValues.diagnosis[i].charge,
+      });
+    }
+    setState(() {});
+    for(int i=0;i<widget.hospitalValues.health.length;i++) {
+      health.add(
+          {
+            "Type": widget.hospitalValues.health[i].packagename,
+            "charges": widget.hospitalValues.health[i].amount
+          });
+    }
+    setState(() {});
+    for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
+      surgery.add({
+        "Type": widget.hospitalValues.surgery[i].surgeryname,
+        "charges": widget.hospitalValues.surgery[i].suramount,
+      });
+    }
+    setState(() {});
+    print(diagnosis);
+    print(health);
+    print(surgery);
+    print(widget.hospitalValues.doctorslist);
+    print(widget.hospitalValues.nurseslist);
+    print(widget.hospitalValues.staffslist);
+    widget.hospitalValues.doctorslist.forEach((element) {
+      doclist.add(
+          {
+            "Name":element.name,"Number":element.phno,"Specialist":element.Specialist,
+          }
+      );
+      Doctor.add(element.name);
+      NumberD.add(element.phno);
+      Specialist.add(element.Specialist);
 
-    doclist.add(widget.hospitalValues.doctorslist);
-    nurlist.add(widget.hospitalValues.nurseslist);
-    stafflist.add(widget.hospitalValues.staffslist);
-    TPA.add(widget.hospitalValues.tpalist);
+    });
+    widget.hospitalValues.nurseslist.forEach((element) {
+      nurlist.add(
+          {
+            "Name":element.name,"Number":element.phno
+          }
+      );
+      Nurse?.add(element.name);
+      NumberN?.add(element.phno);
+
+    });
+    widget.hospitalValues.staffslist.forEach((element) {
+      stafflist.add(
+          {
+            "Name":element.name,"Number":element.phno
+          }
+      );
+      Staff?.add(element.name);
+      NumberS?.add(element.phno);
+
+    });
+    // doclist.add(widget.hospitalValues.doctorslist);
+    // nurlist.add(widget.hospitalValues.nurseslist);
+    // stafflist.add(widget.hospitalValues.staffslist);
+    print(widget.hospitalValues.tpalist[0].insurName);
+    for(int i=0;i<widget.hospitalValues.tpalist.length;i++) {
+      TPA.add({
+        "Insurance Name": widget.hospitalValues.tpalist[i].insurName,
+      });
+    }
+    // TPA.add(widget.hospitalValues.tpalist);
     fcl.add(widget.hospitalValues.facilities[0]);
     print(fcl.toString());
   }
@@ -284,7 +351,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                     fontWeight: FontWeight.bold,
                   ),
                 )
-                    : Text(
+                    : pageindex==9?Container():(Text(
                   "Next",
                   style: TextStyle(
                     color: Colors.redAccent,
@@ -292,7 +359,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.bold,
                   ),
-                ),
+                )),
               ),
               pageindex == 10
                   ? IconButton(
@@ -341,23 +408,19 @@ class _EditAddHospital extends State<EditAddHospital> {
                   AuthService()
                       .toast("Your Added Hospital Is Under Verification");
                   Navigator.pop(context);
+                  pressed = false;
+                  print(pressed);
                 },
                 color: Colors.redAccent,
                 iconSize: 30,
               )
-                  : IconButton(
+                  : pageindex==9?Container():(IconButton(
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () {
                   if (pageindex == 3) {
                     addfreeBeds();
                     print("page4");
-                    diagnosis.clear();
-                    for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
-                      diagnosis.add({
-                        "Type": widget.hospitalValues.diagnosis[i].test,
-                        "charges": widget.hospitalValues.diagnosis[i].charge,
-                      });
-                    }
+
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       setState(() {
@@ -375,28 +438,17 @@ class _EditAddHospital extends State<EditAddHospital> {
                     }
                   }else if(pageindex == 4){
                     print("page5");
-                    addHeathCheckup();
-                    health.clear();
-                    for(int i=0;i<widget.hospitalValues.health.length;i++) {
-                      health.add(
-                          {
-                            "Type": widget.hospitalValues.health[i].packagename,
-                            "charges": widget.hospitalValues.health[i].amount
-                          });
-                    }
                     setState(() {
+                      // health.clear();
                       pageindex++;
+
+                      print(health);
+                    });
+                    setState(() {
+
                     });
                   }  else if(pageindex == 5){
                     print("page6");
-                    addSurgery();
-                    surgery.clear();
-                    for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
-                      surgery.add({
-                        "Type": widget.hospitalValues.surgery[i].surgeryname,
-                        "charges": widget.hospitalValues.surgery[i].suramount,
-                      });
-                    }
                     setState(() {
                       pageindex++;
                     });
@@ -412,7 +464,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 },
                 color: Colors.redAccent,
                 iconSize: 30,
-              ),
+              )),
             ],
             backgroundColor: Colors.white,
             title: Text(
@@ -632,11 +684,19 @@ class _EditAddHospital extends State<EditAddHospital> {
                   ),
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: Accred.length,
-                      itemBuilder: (_, index) => Accred[index]),
+                    child: Center(
+                        child: dataBody3("Acredition",ACCRED))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: healthCharges.length,
+//                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
+                // Container(
+                //   child: ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: Accred.length,
+                //       itemBuilder: (_, index) => Accred[index]),
+                // ),
                 SizedBox(
                   height: 35,
                 ),
@@ -814,7 +874,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                   child: RaisedButton(
                     color: Colors.white,
                     child: Text(
-                      "Pick images",
+                      "Add more images",
                       style: TextStyle(
                         color: Colors.redAccent,
                       ),
@@ -1380,6 +1440,10 @@ class _EditAddHospital extends State<EditAddHospital> {
                 SizedBox(
                   height: 15,
                 ),
+                // Container(
+                //   height: 200,
+                // ),
+
                 Container(
                     child: Center(
                         child:
@@ -1388,6 +1452,28 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      shrinkWrap: true,
 //                      itemCount: diagnosisCharge.length,
 //                      itemBuilder: (_, index) => diagnosisCharge[index]),
+                ),
+                Text("Old Data"),
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: widget.hospitalValues.diagnosis.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: new EdgeInsets.all(10.0),
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Container(
+                              margin: new EdgeInsets.only(left: 10.0),
+                              child: new Text("${index + 1} : Type.${widget.hospitalValues.diagnosis[index].test}  Charge.${widget.hospitalValues.diagnosis[index].charge}"),
+                            ),
+                            new Divider()
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -1515,6 +1601,28 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      shrinkWrap: true,
 //                      itemCount: healthCharges.length,
 //                      itemBuilder: (_, index) => healthCharges[index]),
+                ),
+                Text("Old Data"),
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: widget.hospitalValues.health.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: new EdgeInsets.all(10.0),
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Container(
+                              margin: new EdgeInsets.only(left: 10.0),
+                              child: new Text("${index + 1} : Type.${widget.hospitalValues.health[index].packagename}  Charge.${widget.hospitalValues.health[index].amount}"),
+                            ),
+                            new Divider()
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -1647,6 +1755,28 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      itemCount: healthCharges.length,
 //                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
+                Text("Old Data"),
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: widget.hospitalValues.surgery.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: new EdgeInsets.all(10.0),
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Container(
+                              margin: new EdgeInsets.only(left: 10.0),
+                              child: new Text("${index + 1} : Type.${widget.hospitalValues.surgery[index].surgeryname}  Charge.${widget.hospitalValues.surgery[index].suramount}"),
+                            ),
+                            new Divider()
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -1661,18 +1791,34 @@ class _EditAddHospital extends State<EditAddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(
-                //   "Specialities",
-                //   style: TextStyle(
-                //     color: Colors.redAccent,
-                //     fontSize: 18,
-                //     fontFamily: 'Lato',
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
+              Text("Selected Specialities: ",style:TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 10,
                 ),
+              Wrap(
+                spacing: 5.0,
+                children: List.generate(widget.hospitalValues.specialities.length??0, (index) => ChoiceChip(
+                  onSelected: (_){},
+                    selectedColor: Color(0xffededed),
+                    labelStyle: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),selected:false,label: Text(widget.hospitalValues.specialities[index]))),
+              ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("**Note: The old Specialities will be deleted so please select it again ",style:TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0,
+                )),
+                SizedBox(
+                  height: 10,
+                ),
+
                 Container(
                   child: Wrap(
                     spacing: 5.0,
@@ -2144,6 +2290,31 @@ class _EditAddHospital extends State<EditAddHospital> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text("Selected Facilities: ",style:TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 10,
+                ),
+                Wrap(
+                  spacing: 5.0,
+                  children: List.generate(widget.hospitalValues.facilities.length??0, (index) => ChoiceChip(
+                      onSelected: (_){},
+                      selectedColor: Color(0xffededed),
+                      labelStyle: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold),selected:false,label: Text(widget.hospitalValues.facilities[index]))),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("**Note: The old Facilities will be deleted so please select it again ",style:TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.0,
+                )),
+
                 // Text(
                 //   "Facilities",
                 //   style: TextStyle(
@@ -2898,11 +3069,19 @@ class _EditAddHospital extends State<EditAddHospital> {
                   height: 15,
                 ),
                 Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: TPAInsurance.length,
-                      itemBuilder: (_, index) => TPAInsurance[index]),
+                    child: Center(
+                        child: dataBody3("Insurance Name",TPA))
+//                  ListView.builder(
+//                      shrinkWrap: true,
+//                      itemCount: healthCharges.length,
+//                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
+                // Container(
+                //   child: ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: TPAInsurance.length,
+                //       itemBuilder: (_, index) => TPAInsurance[index]),
+                // ),
               ],
             ),
           ),
@@ -3005,7 +3184,6 @@ class _EditAddHospital extends State<EditAddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
-
                           initialValue: Values[index][item1],
                           onChanged: (v) {
                             setState(() {
@@ -3033,7 +3211,8 @@ class _EditAddHospital extends State<EditAddHospital> {
       ),
     );
   }
-  SingleChildScrollView dataBody2(String item1, String item2, List Values) {
+  SingleChildScrollView dataBody2(String item1, String item2, List values1) {
+    setState(() {});
     return SingleChildScrollView(
       child: DataTable(
         columns: [
@@ -3051,33 +3230,83 @@ class _EditAddHospital extends State<EditAddHospital> {
                       fontFamily: 'Lato'))),
         ],
         rows: List.generate(
-          Values.length,
+          values1.length,
               (index) {
 
             return DataRow(cells: [
               DataCell(
                   Center(
                       child: TextFormField(
-                          initialValue: Values[index][item1],
+                          initialValue: values1[index][item1],
                           onChanged: (v) {
                             setState(() {
-                              Values[index][item1] = v;
+                              values1[index][item1] = v;
                             });
-                            print(Values[index][item1]);
+                            print(values1[index][item1]);
                           })),
                   showEditIcon: true),
               DataCell(
                   Center(
                       child: TextFormField(
                           keyboardType: TextInputType.number,
-                          initialValue: Values[index][item2],
+                          initialValue: values1[index][item2],
                           onChanged: (v) {
                             setState(() {
-                              Values[index][item2] = v;
+                              values1[index][item2] = v;
                             });
-                            print(Values[index][item2]);
+                            print(values1[index][item2]);
                           })),
                   showEditIcon: true),
+            ]);
+          },
+        ),
+        columnSpacing: 100.0,
+      ),
+    );
+  }
+
+  SingleChildScrollView dataBody3(String title, List Values) {
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+              label: Text(title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      fontFamily: 'Lato'))),
+        ],
+        rows: List.generate(
+          Values.length??0,
+              (index) {
+            return DataRow(cells: [
+              DataCell(
+                Center(
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              print("Onpressed");
+                              setState(() {
+                                if(Values==TPA) {
+                                  TPA.removeAt(index);
+                                }else if(Values==ACCRED){
+                                  ACCRED.removeAt(index);
+                                }
+                              });
+                              print(TPA);
+                            },
+                            icon: Icon(Icons.clear),
+                          ),
+                        ),
+                        initialValue: Values[index][title],
+                        onChanged: (v) {
+                          setState(() {
+                            Values[index][title] = v;
+                          });
+                          print(Values[index][title]);
+                        })),
+                showEditIcon: true,),
             ]);
           },
         ),
@@ -3182,6 +3411,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     return dynamicTextField;
   }
   addDynamicD(){
+    pressed = false;
     if(Doctor.length != 0){
 
       Doctor = [];
@@ -3209,7 +3439,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 children: <Widget>[
                   new Container(
                     margin: new EdgeInsets.only(left: 10.0),
-                    child: new Text("${index + 1} : ${Doctor[index]}${NumberD[index]}${Specialist[index]}"),
+                    child: new Text("${index + 1} : Name.${Doctor[index]}  Mobile.${NumberD[index]}  Spl.${Specialist[index]}"),
                   ),
                   new Divider()
                 ],
@@ -3237,6 +3467,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     return dynamicTextField;
   }
   addDynamicN(){
+    pressed = false;
     if(Nurse.length != 0){
 
       Nurse = [];
@@ -3250,8 +3481,8 @@ class _EditAddHospital extends State<EditAddHospital> {
     dynamicListN.add(new dynamicWidgetN());
   }
   Widget resultN(){
-    Widget resultN = new Flexible(
-        flex: 1,
+    Widget resultN = new Container(
+        height: 200,
         child: new Card(
           child: ListView.builder(
             itemCount: Nurse.length,
@@ -3263,7 +3494,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                   children: <Widget>[
                     new Container(
                       margin: new EdgeInsets.only(left: 10.0),
-                      child: new Text("${index + 1} : ${Nurse[index]}${NumberN[index]}"),
+                      child: new Text("${index + 1} : Name ${Nurse[index]} Mobile ${NumberN[index]}"),
                     ),
                     new Divider()
                   ],
@@ -3291,6 +3522,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     return dynamicTextField;
   }
   addDynamicS(){
+    pressed = false;
     if(Staff.length != 0){
 
       Staff = [];
@@ -3304,8 +3536,8 @@ class _EditAddHospital extends State<EditAddHospital> {
     dynamicListS.add(new dynamicWidgetS());
   }
   Widget resultS(){
-    Widget resultS = new Flexible(
-        flex: 1,
+    Widget resultS = new Container(
+        height: 200,
         child: new Card(
           child: ListView.builder(
             itemCount: Staff.length,
@@ -3317,7 +3549,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                   children: <Widget>[
                     new Container(
                       margin: new EdgeInsets.only(left: 10.0),
-                      child: new Text("${index + 1} : ${Staff[index]}${NumberS[index]}"),
+                      child: new Text("${index + 1} : Name ${Staff[index]} Mobile ${NumberS[index]}"),
                     ),
                     new Divider()
                   ],
@@ -3330,10 +3562,11 @@ class _EditAddHospital extends State<EditAddHospital> {
   }
 
   submitData() {
-    Doctor = [];
-    NumberD = [];
-    Specialist = [];
-    dynamicListD.forEach((widget){
+    // Doctor = [];
+    // NumberD = [];
+    // Specialist = [];
+    if(pressed==false){
+      dynamicListD.forEach((widget){
       doclist.add(
           {
             "Name":widget.Doctor.text,"Number":widget.NumberD.text,"Specialist":widget.Specialist.text,
@@ -3342,9 +3575,9 @@ class _EditAddHospital extends State<EditAddHospital> {
       print(doclist);
     });
     setState(() {});
-    print(doclist.length);
-    Nurse = [];
-    NumberN = [];
+    print(doclist);
+    // Nurse = [];
+    // NumberN = [];
     dynamicListN.forEach((widget){
       nurlist.add(
           {
@@ -3356,8 +3589,8 @@ class _EditAddHospital extends State<EditAddHospital> {
     });
     setState(() {});
     print(nurlist.length);
-    Staff = [];
-    NumberS = [];
+    // Staff = [];
+    // NumberS = [];
     dynamicListS.forEach((widget){
       stafflist.add(
           {
@@ -3370,6 +3603,27 @@ class _EditAddHospital extends State<EditAddHospital> {
     setState(() {});
     print(stafflist.length);
     AuthService().toast("Data Added Sucessfully");
+    if (_formKey.currentState.validate()&&_checked) {
+      _formKey.currentState.save();
+      setState(() {
+        pageindex++;
+      });
+    }else{
+      AuthService().toast("Please Complete filling data and Submit down below");
+    }
+    print(pressed);
+    pressed = true;
+    print(pressed);
+    }else{
+      AuthService().toast("Data Added Sucessfully");
+      if (_formKey.currentState.validate()&&_checked) {
+        _formKey.currentState.save();
+        setState(() {
+          pageindex++;
+        });
+      }
+      print("Data not added again");
+    }
   }
 }
 
