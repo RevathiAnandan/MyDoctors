@@ -408,7 +408,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 11
+                child: pageindex == 10
                     ? Text(
                   "Save",
                   style: TextStyle(
@@ -433,7 +433,8 @@ class _AddHospitalState extends State<AddHospital> {
                 icon: Icon(Icons.save),
                 onPressed: () {
                   try {
-                    if (_checked&&_formKey.currentState.validate()) {
+                    print(_formKey.currentState.validate());
+                    if (_formKey.currentState.validate()&&_checked) {
                       _formKey.currentState.save();
                       addfreeBeds();
                       ApiService().hospitals(
@@ -477,7 +478,7 @@ class _AddHospitalState extends State<AddHospital> {
                       Navigator.pop(context);
                     }
                     else{
-                      AuthService().toast("Oops you missed some data, please fill it completed");
+                      AuthService().toast("Oops you missed some data, please fill it completely");
                     }
                   } catch (e) {
                     print(e);
@@ -1055,7 +1056,7 @@ class _AddHospitalState extends State<AddHospital> {
         );
       case 2:
         setState(() {});
-        return uploading?CircularProgressIndicator():Container(
+        return uploading?Center(child: CircularProgressIndicator()):Container(
           padding: EdgeInsets.all(20),
           // height: MediaQuery.of(context).size.height,
           child: Form(

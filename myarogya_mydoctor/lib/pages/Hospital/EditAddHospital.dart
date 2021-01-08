@@ -39,8 +39,11 @@ class _EditAddHospital extends State<EditAddHospital> {
   List conbeds = [];
   List covidbeds = [];
   List diagnosis = [];
+  List diagnosis1 = [];
   List health = [];
+  List health1 = [];
   List surgery = [];
+  List surgery1 = [];
   List docnamenum = [];
   List nursenamenum = [];
   List staffnamenum = [];
@@ -169,31 +172,39 @@ class _EditAddHospital extends State<EditAddHospital> {
       });
     }
     print(widget.hospitalValues.diagnosis);
-    for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
-      diagnosis.add({
-        "Type": widget.hospitalValues.diagnosis[i].test,
-        "charges": widget.hospitalValues.diagnosis[i].charge,
-      });
-    }
+    // for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
+    //   diagnosis.add({
+    //     "Type": widget.hospitalValues.diagnosis[i].test,
+    //     "charges": widget.hospitalValues.diagnosis[i].charge,
+    //   });
+    // }
+    // setState(() {});
+    // for(int i=0;i<widget.hospitalValues.health.length;i++) {
+    //   health.add(
+    //       {
+    //         "Type": widget.hospitalValues.health[i].packagename,
+    //         "charges": widget.hospitalValues.health[i].amount
+    //       });
+    // }
+    // setState(() {});
+    // for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
+    //   surgery.add({
+    //     "Type": widget.hospitalValues.surgery[i].surgeryname,
+    //     "charges": widget.hospitalValues.surgery[i].suramount,
+    //   });
+    // }
     setState(() {});
-    for(int i=0;i<widget.hospitalValues.health.length;i++) {
-      health.add(
-          {
-            "Type": widget.hospitalValues.health[i].packagename,
-            "charges": widget.hospitalValues.health[i].amount
-          });
-    }
-    setState(() {});
-    for(int i=0;i<widget.hospitalValues.surgery.length;i++) {
-      surgery.add({
-        "Type": widget.hospitalValues.surgery[i].surgeryname,
-        "charges": widget.hospitalValues.surgery[i].suramount,
-      });
-    }
-    setState(() {});
+    diagnosis1 = widget.hospitalValues.diagnosis;
+    health1 = widget.hospitalValues.health;
+    surgery1 = widget.hospitalValues.surgery;
     print(diagnosis);
     print(health);
     print(surgery);
+    // imagesUrl = widget.hospitalValues.image;
+    widget.hospitalValues.image.forEach((element) {
+      imagesUrl.add(element);
+    });
+    print(imagesUrl);
     print(widget.hospitalValues.doctorslist);
     print(widget.hospitalValues.nurseslist);
     print(widget.hospitalValues.staffslist);
@@ -1443,7 +1454,6 @@ class _EditAddHospital extends State<EditAddHospital> {
                 // Container(
                 //   height: 200,
                 // ),
-
                 Container(
                     child: Center(
                         child:
@@ -1457,7 +1467,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Container(
                   height: 200,
                   child: ListView.builder(
-                    itemCount: widget.hospitalValues.diagnosis.length,
+                    itemCount: diagnosis1.length,
                     itemBuilder: (context, index){
                       return Padding(
                         padding: new EdgeInsets.all(10.0),
@@ -1466,7 +1476,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                           children: <Widget>[
                             new Container(
                               margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${widget.hospitalValues.diagnosis[index].test}  Charge.${widget.hospitalValues.diagnosis[index].charge}"),
+                              child: new Text("${index + 1} : Type.${diagnosis1[index].test}  Charge.${diagnosis1[index].charge}"),
                             ),
                             new Divider()
                           ],
@@ -1606,7 +1616,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Container(
                   height: 200,
                   child: ListView.builder(
-                    itemCount: widget.hospitalValues.health.length,
+                    itemCount: health1.length,
                     itemBuilder: (context, index){
                       return Padding(
                         padding: new EdgeInsets.all(10.0),
@@ -1615,7 +1625,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                           children: <Widget>[
                             new Container(
                               margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${widget.hospitalValues.health[index].packagename}  Charge.${widget.hospitalValues.health[index].amount}"),
+                              child: new Text("${index + 1} : Type.${health1[index].packagename}  Charge.${health1[index].amount}"),
                             ),
                             new Divider()
                           ],
@@ -1759,7 +1769,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Container(
                   height: 200,
                   child: ListView.builder(
-                    itemCount: widget.hospitalValues.surgery.length,
+                    itemCount: surgery1.length,
                     itemBuilder: (context, index){
                       return Padding(
                         padding: new EdgeInsets.all(10.0),
@@ -1768,7 +1778,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                           children: <Widget>[
                             new Container(
                               margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${widget.hospitalValues.surgery[index].surgeryname}  Charge.${widget.hospitalValues.surgery[index].suramount}"),
+                              child: new Text("${index + 1} : Type.${surgery1[index].surgeryname}  Charge.${surgery1[index].suramount}"),
                             ),
                             new Divider()
                           ],
@@ -3360,9 +3370,15 @@ class _EditAddHospital extends State<EditAddHospital> {
       "Type": descController.text,
       "charges": opdController.text
     });
-    setState(() {});
     print(diagnosis.toString());
     clearText();
+    setState(() {});
+    diagnosis1.add({
+      "Type": descController.text,
+      "charges": opdController.text
+    });
+
+
   }
   addHeathCheckup() {
     health.add(
@@ -3370,6 +3386,9 @@ class _EditAddHospital extends State<EditAddHospital> {
     setState(() {});
     print(health.toString());
     clearText();
+    health1.add(
+        {"Type": packController.text, "charges": amtController.text});
+
   }
   addSurgery() {
     surgery.add(
@@ -3377,6 +3396,9 @@ class _EditAddHospital extends State<EditAddHospital> {
     setState(() {});
     print(surgery.toString());
     clearText();
+    surgery1.add(
+        {"Type": surController.text, "charges": suramtController.text});
+
   }
   addTPA() {
     TPAInsurance.add(new AddInsurance(_chosenValue1));
