@@ -56,6 +56,7 @@ class _AddHospitalState extends State<AddHospital> {
   bool is24 = false;
   bool isCovid = false;
   bool isnabh = false;
+  bool uploading = false;
   String popop = mockString(50);
   Widget buildGridView() {
     return GridView.count(
@@ -123,6 +124,9 @@ class _AddHospitalState extends State<AddHospital> {
   //       children: _tasks.length==null?Container():list);
   // }
   upload(filename, filepath) async {
+    setState(() {
+      uploading = true;
+    });
     await FirebaseAuth.instance.signInAnonymously();
     _extension = filename.toString().split('.').last;
     StorageReference ref = FirebaseStorage.instance
@@ -144,6 +148,9 @@ class _AddHospitalState extends State<AddHospital> {
       final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
       imagesUrl.add(downloadUrl);
       print('Upload success');
+      setState(() {
+        uploading = false;
+      });
     } else {
       print('Error from image repo ${snapshot.error.toString()}');
       throw ('This file is not an image');
@@ -426,7 +433,8 @@ class _AddHospitalState extends State<AddHospital> {
                 icon: Icon(Icons.save),
                 onPressed: () {
                   try {
-                    if (_checked) {
+                    if (_checked&&_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
                       addfreeBeds();
                       ApiService().hospitals(
                                             nameController.text,
@@ -467,8 +475,9 @@ class _AddHospitalState extends State<AddHospital> {
                       AuthService()
                           .toast("Your Added Hospital Is Under Verification");
                       Navigator.pop(context);
-                    }else{
-                      AuthService().toast("Please Complete filling data and Submit down below");
+                    }
+                    else{
+                      AuthService().toast("Oops you missed some data, please fill it completed");
                     }
                   } catch (e) {
                     print(e);
@@ -481,32 +490,35 @@ class _AddHospitalState extends State<AddHospital> {
                   : IconButton(
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () {
-                  if (pageindex == 3) {
+                  // if (pageindex == 3) {
 
-                    if (_formKey.currentState.validate()) {
+                    // if (1==1) {
                       _formKey.currentState.save();
                       setState(() {
                         pageindex++;
                       });
-                    }
-                  }else if(pageindex == 10){
-                    if (_formKey.currentState.validate()&&_checked) {
-                      _formKey.currentState.save();
-                      setState(() {
-                        pageindex++;
-                      });
-                    }else{
-                      AuthService().toast("Please Complete filling data and Submit down below");
-                    }
-                  } else {
-                    if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
-                      print("_formkeyValue::"+_formKey.toString());
-                      setState(() {
-                        pageindex++;
-                      });
-                    }
-                  }
+                    // }
+                  // }
+                  // else if(pageindex == 10){
+                  //   if (1==1&&_checked) {
+                  //     _formKey.currentState.save();
+                  //     setState(() {
+                  //       pageindex++;
+                  //     });
+                  //   }
+                  //   else{
+                  //     AuthService().toast("Please Complete filling data and Submit down below");
+                  //   }
+                  // }
+                  // else {
+                  //   if (1==1) {
+                  //     _formKey.currentState.save();
+                  //     print("_formkeyValue::"+_formKey.toString());
+                  //     setState(() {
+                  //       pageindex++;
+                  //     });
+                  //   }
+                  // }
                 },
                 color: Colors.redAccent,
                 iconSize: 30,
@@ -554,6 +566,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: nameController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -581,6 +599,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: regController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -608,6 +632,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
                   controller: addressController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -635,6 +665,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: dateofController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -662,6 +698,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: adminiController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -689,6 +731,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: adminiphoneController,
                   decoration: new InputDecoration(
                     //errorBorder: OutlineInputBorder(),
@@ -786,6 +834,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: pincode,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -813,6 +867,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: awardsController,
                   decoration: new InputDecoration(
                     // errorBorder: OutlineInputBorder(),
@@ -852,6 +912,12 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: ambuController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
                     // FilteringTextInputFormatter.digitsOnly
@@ -883,6 +949,12 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: emerController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
                     // FilteringTextInputFormatter.digitsOnly
@@ -914,6 +986,12 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   controller: bookphController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
                     // FilteringTextInputFormatter.digitsOnly
@@ -944,6 +1022,12 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                   controller: opdbkController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
@@ -971,7 +1055,7 @@ class _AddHospitalState extends State<AddHospital> {
         );
       case 2:
         setState(() {});
-        return new Container(
+        return uploading?CircularProgressIndicator():Container(
           padding: EdgeInsets.all(20),
           // height: MediaQuery.of(context).size.height,
           child: Form(
@@ -1360,12 +1444,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
+                       validator: (value) {
+                         if (value.isEmpty) {
+                           return 'Please enter some text';
+                         }
+                         return null;
+                       },
                       ),
                     ),
                     Container(
@@ -1384,6 +1468,12 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                         controller: chargesController2,
                         style: TextStyle(
                           fontSize: 18,
@@ -1409,7 +1499,10 @@ class _AddHospitalState extends State<AddHospital> {
                         height: 40,child: Center(child: Text("Note:",style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'Lato',
-                ),))),
+                ),
+                      ),
+                      ),
+                    ),
                     Container(
                       width: 250,
                       height: 40,
@@ -1431,12 +1524,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 12,
                           fontFamily: 'Lato',
                         ),
-//                        validator: (value) {
-//                          if (value.isEmpty) {
-//                            return 'Please enter some text';
-//                          }
-//                          return null;
-//                        },
+                       validator: (value) {
+                         if (value.isEmpty) {
+                           return 'Please enter some text';
+                         }
+                         return null;
+                       },
                       ),
                     ),
                   ],
@@ -1541,6 +1634,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: descController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1563,6 +1662,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: opdController,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -1678,6 +1783,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: packController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1699,6 +1810,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: amtController,
                           inputFormatters: <TextInputFormatter>[
                             // FilteringTextInputFormatter.digitsOnly
@@ -1813,6 +1930,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: surController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1834,6 +1957,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: suramtController,
                           inputFormatters: <TextInputFormatter>[
                           //  FilteringTextInputFormatter.digitsOnly

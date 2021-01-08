@@ -22,7 +22,8 @@ class Dropdownlists{
   "The New India Assurance Co. Ltd.",	"Dedicated Healthcare Services TPA (India) Pvt. Ltd",
   "The Oriental Insurance Co. Ltd.",	"MDIndia Health Insurance TPA Private Limited",
  "United India Insurance Co. Ltd.",	"Medicare TPA Services", "Medi Assist India TPA Pvt Ltd","Safeway Insurance TPA Private Limited",
-  "ICICI Prudential Life Insurance Company Limited",	"Good Health Insurance TPA"
+  "ICICI Prudential Life Insurance Company Limited",	"Good Health Insurance TPA",
+    "Not Applicable"
   ];
 
   List<String> accredlist = [
@@ -30,7 +31,7 @@ class Dropdownlists{
     "NCAQ - National Committee for Quality Assurance",
     "HFAP - The Healthcare Facilities Accreditation Program",
     "Quality Council of India", "Joint Commission.org",
-
+    "Not Applicable"
   ];
   List<String> categories = [
     "General",
