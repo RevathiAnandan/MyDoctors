@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myarogya_mydoctor/improvement/MyBookingSettings.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/DoctorUser.dart';
 import 'package:myarogya_mydoctor/model/patient.dart';
@@ -311,7 +312,8 @@ class _AppointmentsState extends State<Appointments> {
                                             BorderRadius.circular(20)),
                                     child: Center(
                                         child: GestureDetector(
-                                            onTap: () => Navigator.pop(context),
+                                            onTap: () {
+                                            },
                                             child: Text("Today's Count",
                                                 style: new TextStyle(
                                                     color: Colors.redAccent,

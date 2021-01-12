@@ -73,7 +73,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                               ApiService().createUser(uid,usermobile,ConstantUtils().Doctor,fcmToken);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,usermobile)),
+                                MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,usermobile,"Doctor")),
                               );
                             },
                             color: Colors.redAccent,
@@ -108,7 +108,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                               ApiService().createUser(uid,usermobile,ConstantUtils().Hospital,fcmToken);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => HospitalDashboard(uid,usermobile)),
+                                MaterialPageRoute(builder: (context) => HospitalDashboard(uid,usermobile,ConstantUtils().Hospital)),
                               );
                             },
                             color: Colors.redAccent,
@@ -140,7 +140,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                               ApiService().createUser(uid,usermobile,ConstantUtils().Patient,fcmToken);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,usermobile)),
+                                MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,usermobile,"Patient")),
                               );
                             },
                             color: Colors.redAccent,

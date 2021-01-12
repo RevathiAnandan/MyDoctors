@@ -12,9 +12,9 @@ import 'package:firebase_database/firebase_database.dart';
     factory ChatModel.fromJson(dynamic json) {
 
       return new ChatModel._(
-        patientMobile: json['patientMobile'] as String,
-        pid: json['pid'] as String,
-        pname: json['pname'] as String
+        patientMobile: json['patientMobile'] as String??"",
+        pid: json['pid'] as String??"",
+        pname: json['pname'] as String??"",
       );
     }
 }

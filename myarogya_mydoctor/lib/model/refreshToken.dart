@@ -8,9 +8,9 @@ class Payment{
   factory Payment.fromJson(dynamic json) {
 
     return new Payment._(
-      status: json['status'] as String,
-      message: json['message'] as String,
-      cftoken: json['cftoken'] as String,
+      status: json['status'] as String??"",
+      message: json['message'] as String??"",
+      cftoken: json['cftoken'] as String??"",
     );
   }
 }

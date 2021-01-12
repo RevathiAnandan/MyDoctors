@@ -21,10 +21,11 @@ import 'package:image/image.dart' as imgresize;
 import 'MyBookingSettings.dart';
 
 class Hospitals extends StatefulWidget {
-  String mobile;
-  String id;
+  final String mobile;
+  final String id;
+  final String category;
 
-  Hospitals(this.mobile, this.id);
+  Hospitals(this.mobile, this.id,this.category);
 
   @override
   _HospitalsState createState() => _HospitalsState();
@@ -98,11 +99,6 @@ class _HospitalsState extends State<Hospitals> {
                                                 .contains(text.toLowerCase()) ||
                                             u.hospitalAddress
                                                 .toLowerCase()
-                                                .contains(text.toLowerCase()) ||
-                                            checkspeciality(
-                                                u.specialities, text) ||
-                                            u.facilities[0]
-                                                .toLowerCase()
                                                 .contains(text.toLowerCase())))
                                         .toList();
                                   });
@@ -144,7 +140,7 @@ class _HospitalsState extends State<Hospitals> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AddHospital(widget.mobile)),
+                        MaterialPageRoute(builder: (context) => AddHospital(widget.id,widget.mobile,widget.category)),
                       );
                     },
                   ),
@@ -161,23 +157,37 @@ class _HospitalsState extends State<Hospitals> {
                   //     showSearch(context: context, delegate: DataSearch());
                   //   },
                   // ),
-                  PopupMenuButton<String>(
+                  IconButton(
                     icon: new Icon(
                       Icons.settings,
                       // Icons.more_vert_rounded,
                       color: Colors.redAccent,
                       size: 35,
                     ),
-                    onSelected: choiceAction,
-                    itemBuilder: (BuildContext context) {
-                      return ConstantsH.choices.map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
-                  )
+                    onPressed: ()=> Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HospitalSettings(widget.id, widget.mobile,widget.category),
+                      ),
+                    ),
+                  ),
+                  // PopupMenuButton<String>(
+                  //   icon: new Icon(
+                  //     Icons.settings,
+                  //     // Icons.more_vert_rounded,
+                  //     color: Colors.redAccent,
+                  //     size: 35,
+                  //   ),
+                  //   onSelected: choiceAction,
+                  //   itemBuilder: (BuildContext context) {
+                  //     return ConstantsH.choices.map((String choice) {
+                  //       return PopupMenuItem<String>(
+                  //         value: choice,
+                  //         child: Text(choice),
+                  //       );
+                  //     }).toList();
+                  //   },
+                  // )
                 ],
               ),
             ];
@@ -554,7 +564,7 @@ class _HospitalsState extends State<Hospitals> {
                                                                       i],
                                                                   key1[i],
                                                                   widget
-                                                                      .mobile),
+                                                                      .mobile,widget.category,widget.id),
                                                         ),
                                                       );
                                                       // ApiService().bookhospital(hospitalvalues[i].bookingPhNo, widget.mobile,"Booked","");
@@ -628,7 +638,7 @@ class _HospitalsState extends State<Hospitals> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HospitalSettings(widget.id, widget.mobile),
+          builder: (context) => HospitalSettings(widget.id, widget.mobile,widget.category),
         ),
       );
     }
@@ -650,11 +660,11 @@ class _HospitalsState extends State<Hospitals> {
           print(snapshot.value);
           // print(snapshot.value["Special Bed Details"]);
           // print(snapshot.value);
-          Map<dynamic, dynamic> values = snapshot.value??"";
+          Map<dynamic, dynamic> values = snapshot.value;
           values.forEach((key, value) {
             print("VAlues:: $value");
             // print(value["hospitalName"]);
-            var refreshToken = Hospital.fromJson(value)??"";
+            var refreshToken = Hospital.fromJson(value);
             hospitalvalues.add(refreshToken);
             filteredhospital.add(refreshToken);
             key1.add(key);
@@ -662,6 +672,8 @@ class _HospitalsState extends State<Hospitals> {
             setState(() {
               isLoading = false;
             });
+            print("hospital::"+hospitalvalues.toString());
+            print("hospital::"+filteredhospital.toString());
           });
         });
       } else {
@@ -751,7 +763,6 @@ class _HospitalsState extends State<Hospitals> {
     print(inputArray);
     if (inputArray.isNotEmpty) {
       minbedtype.clear();
-      print("Harun");
       int minValue = int.parse(inputArray[0].charges)??0;
       if (inputArray.length == 1) {
         minbedtype.add({

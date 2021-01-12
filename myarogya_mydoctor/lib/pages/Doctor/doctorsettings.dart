@@ -94,34 +94,7 @@ class _DoctorSettingsState extends State<DoctorSettings> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.memory,size: 30,color: Colors.redAccent,),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "My Income",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20.0,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
-                        ),)
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+
               Container(
                 height: 60,
                 width: MediaQuery.of(context).size.width,

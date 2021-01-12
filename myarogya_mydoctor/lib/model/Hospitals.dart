@@ -21,6 +21,7 @@ class Hospital{
   String isCovid;
   String isNabh;
   String userno;
+  String termsandconditions;
   List<FreeBeds> freebeds;
   List<ConBeds> conbeds;
   List<CovidBeds> covidbeds;
@@ -70,7 +71,8 @@ class Hospital{
     this.is24,
     this.isCovid,
     this.isNabh,
-    this.award
+    this.award,
+    this.termsandconditions,
   });
 
   factory Hospital.fromJson(dynamic json){
@@ -104,7 +106,7 @@ class Hospital{
       hospitalRegNo: json['hospitalId'] as String??"",
       hospitalName: json['hospitalName'] as String??"",
       hospitalAddress: json['address'] as String??"",
-      dateofIncorporation: json['Date of Incorporation'] as String??"",
+      dateofIncorporation: json['Date of Incorporation'] as String??"00/00/${DateTime.now().year}",
       adminName: json['Administration Name'] as String??"",
       adminPh: json['Administration Ph no'] as String??"",
       accred: _ACCRED,
@@ -134,6 +136,7 @@ class Hospital{
       isNabh: json['NABH'] as String??"",
       award: json['Award'] as String??"",
       userno: json['UserNo'] as String??"",
+      termsandconditions: json['Terms and Conditions'] as String??"No terms and conditions",
     );
   }
 

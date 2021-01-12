@@ -3,17 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
+import 'package:myarogya_mydoctor/pages/patient/mypendings.dart';
+import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class Bookdetailed extends StatefulWidget {
-  Hospital hospitalvalues;
-  String key1;
-  String mobile;
+import 'MyBookingSettings.dart';
 
-  Bookdetailed(this.hospitalvalues,this.key1,this.mobile);
+class Bookdetailed extends StatefulWidget {
+  final Hospital hospitalvalues;
+  final String key1;
+  final String mobile;
+  final String category;
+  final String id;
+
+  Bookdetailed(this.hospitalvalues,this.key1,this.mobile,this.category,this.id);
   @override
   _BookdetailedState createState() => _BookdetailedState();
 }
@@ -167,7 +173,20 @@ class _BookdetailedState extends State<Bookdetailed> {
                                           color: Colors.redAccent)),
                                   onPressed: () {
                                         ApiService().appointment(widget.mobile, widget.hospitalvalues.opdBookingNo, widget.hospitalvalues.hospitalName, "Confirm", 1, DateTime.now().toString(), "", "");
-                                  },
+                                        AuthService().toast("OPD Doctor has been booked");
+                                        if(widget.category=="Patient") {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PatientNewDashboard(widget.id,
+                                                        widget.mobile,
+                                                        widget.category)),
+                                          );
+                                        }else{
+                                          Navigator.pop(context);
+                                        }
+                                        },
                                   color: Colors.redAccent,
                                   child: Text(
                                     "Book OPD",
@@ -2251,9 +2270,9 @@ class _BookdetailedState extends State<Bookdetailed> {
         content: (title=="Rooms")?Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(width:250,child: Text("Room Type: "+list[0]['roomType'])),
-            Container(width:250,child: Text("Charges: "+list[0]['charges'])),
-            Container(width:250,child: Text("Beds Available: "+list[0]['noOfBeds'])),
+            Container(width:250,child: Text("Room Type: "+list[0]['roomType'],style: TextStyle(fontSize: 16))),
+            Container(width:250,child: Text("Charges: "+list[0]['charges'],style: TextStyle(fontSize: 16))),
+            Container(width:250,child: Text("Beds Available: "+list[0]['noOfBeds'],style: TextStyle(fontSize: 16))),
             // Container(
             //   child: TextFormField(
             //     controller: _nameController,
@@ -2270,8 +2289,8 @@ class _BookdetailedState extends State<Bookdetailed> {
           ],
         ):Column(
           children: <Widget>[
-            Container(width:250,child: Text("Type: "+list[0]['Type'])),
-            Container(width:250,child: Text("Charges: "+list[0]['charges'])),
+            Container(width:250,child: Text("Type: "+list[0]['Type'],style: TextStyle(fontSize: 16))),
+            Container(width:250,child: Text("Charges: "+list[0]['charges'],style: TextStyle(fontSize: 16))),
           //   Container(
           //     child: TextFormField(
           //     controller: _nameController,
@@ -2310,9 +2329,11 @@ class _BookdetailedState extends State<Bookdetailed> {
                    fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
                    list3.clear();
                    print("Added!!");
-                   Navigator.pop(context);
-                   Navigator.pop(context);
-                   AuthService().toast("Added Successfully!!");
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => MyBookingSettings(widget.id,widget.mobile)),
+                   );
+                   AuthService().toast("Booked Successfully!!");
                    // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
                  } catch (e) {
                    print(e);
@@ -2322,8 +2343,10 @@ class _BookdetailedState extends State<Bookdetailed> {
                 try {
                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName , widget.mobile, ConstantUtils().CONFIRM, list, "","","","");
                   print("Added!!");
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyBookingSettings(widget.id,widget.mobile)),
+                  );
                   AuthService().toast("Added Successfully!!");
                   // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
                 } catch (e) {

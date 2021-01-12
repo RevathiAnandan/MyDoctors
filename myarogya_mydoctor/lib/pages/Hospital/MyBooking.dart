@@ -18,8 +18,9 @@ import 'hospitaltabsettings.dart';
 class MyBooking extends StatefulWidget {
   final String id;
   final String mobile;
+  final String category;
   final List<Hospital> hospitalvalues;
-  MyBooking(this.id,this.mobile,this.hospitalvalues);
+  MyBooking(this.id,this.mobile,this.hospitalvalues,this.category);
   @override
   _MyBookingState createState() => _MyBookingState();
 }
@@ -47,21 +48,21 @@ class _MyBookingState extends State<MyBooking> {
                IconButton(
                  icon: Icon(Icons.add,color: Colors.redAccent,size: 35,),
                  onPressed: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>AddHospital(widget.mobile)));
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>AddHospital(widget.id,widget.mobile,widget.category)));
                  },
                ),
-               PopupMenuButton<String>(
+               IconButton(
                  icon: Icon(Icons.settings,color: Colors.redAccent,size: 35,),
-                 onSelected: choiceAction,
-                 itemBuilder: (BuildContext context){
-                   return ConstantsHospitalTab.choices.map((String choice){
-                     return PopupMenuItem<String>(
-                       value: choice,
-                       child: Text(choice),
-                     );
-                   }).toList();
+                 onPressed: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) =>
+                           HospitalTabSettings(widget.id,widget.mobile,widget.hospitalvalues),
+                     ),
+                   );
                  },
-               )
+               ),
              ],
              backgroundColor: Colors.white,
              expandedHeight: MediaQuery.of(context).size.height/2.8,
@@ -147,9 +148,13 @@ class _MyBookingState extends State<MyBooking> {
       child: ListView.builder(
           itemCount: dummyData.length,
           itemBuilder:(context,index){
-            print(dummyData[index].bookdetails.toString());
+            print(dummyData[index]);
             return Column(
               children: [
+                Divider(
+                  height: 1,
+                  thickness: 1,
+                ),
                 ListTile(
                   leading: Text((index+1).toString()),
                   title: Text(dummyData[index].userNumber),
@@ -224,14 +229,14 @@ class _MyBookingState extends State<MyBooking> {
         values.forEach((key, values) {
           var refreshToken = Booking.fromJson(values);
           print(refreshToken);
-          // setState(() {
+          setState(() {
             if (refreshToken.bookingNumber == widget.mobile && refreshToken.status!="Cancelled") {
               dummyData.add(refreshToken);
               dummyData1.add(refreshToken);
               keys1.add(key);
               print("fdkjhkfjs"+dummyData[0].status);
             }
-          // });
+          });
         });
       });
     } catch (e) {

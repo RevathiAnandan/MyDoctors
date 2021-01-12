@@ -50,10 +50,10 @@ class _MyAppState extends State<MyApp> {
         // home: Bookdetailed("Revathi"),
         // home: SplashScreen()
         // home: SelectionScreen(),
-        // home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+        home: PatientNewDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937","Patient")
         // home: MyComplainList()
-        home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528"),
-        //  home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937")
+        // home: DoctorNewDashboard("pfEKUrxcZWa5UFTYNwqMimJbVo93", "+918610905528","Doctor"),
+        //  home: HospitalDashboard("2T2HZP3UWJTfMjzr4TbT7hhE9qz1","+919444773937","Hospital")
         );
   }
 }

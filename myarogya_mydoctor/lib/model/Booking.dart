@@ -5,22 +5,24 @@ class Booking{
   String BookingDate;
   String DischargeDate;
   String hospitalName;
+  String cancelDate;
   List<Bookdetails> bookdetails;
 
 
-  Booking._({this.bookingNumber,this.BookingDate, this.userNumber,this.status,this.bookdetails,this.DischargeDate,this.hospitalName});
+  Booking._({this.bookingNumber,this.BookingDate, this.userNumber,this.status,this.bookdetails,this.DischargeDate,this.hospitalName,this.cancelDate});
 
   factory Booking.fromJson(dynamic json) {
     var bking = json["Booking details"] as List;
-    List<Bookdetails> _BKD = bking.map((tagJson) => Bookdetails.fromJson(tagJson)).toList();
+    List<Bookdetails> _BKD = bking?.map((tagJson) => Bookdetails.fromJson(tagJson))?.toList()??[];
     return new Booking._(
       bookdetails: _BKD,
-      bookingNumber: json['BookingNumber'] as String,
-      userNumber: json['UserNumber'] as String,
-      status: json['Status'] as String,
-      BookingDate: json['BookingDate'] as String,
-      DischargeDate: json['DischargeDate'] as String,
-      hospitalName: json['Hospital Name'] as String,
+      bookingNumber: json['BookingNumber'] as String??"",
+      userNumber: json['UserNumber'] as String??"",
+      status: json['Status'] as String??"",
+      BookingDate: json['BookingDate'] as String??"",
+      DischargeDate: json['DischargeDate'] as String??"",
+      hospitalName: json['Hospital Name'] as String??"",
+        cancelDate: json["CancelDate"] as String ?? "",
     );
   }
 }

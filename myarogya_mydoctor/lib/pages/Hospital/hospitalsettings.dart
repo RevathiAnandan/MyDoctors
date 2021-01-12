@@ -10,14 +10,16 @@ import 'package:myarogya_mydoctor/pages/settings/termsandconditions.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import 'CompletedPage.dart';
 import 'HospitalTabPage.dart';
 
 class HospitalSettings extends StatefulWidget {
-  String id;
-  String mobile;
+  final String id;
+  final String mobile;
+  final String category;
 
 
-  HospitalSettings(this.id, this.mobile);
+  HospitalSettings(this.id, this.mobile,this.category);
 
   @override
   _HospitalSettingsState createState() => _HospitalSettingsState();
@@ -155,7 +157,7 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              HospitalTabPage(widget.mobile,widget.id)
+                              CompletedPage(widget.id,widget.mobile,widget.category)
                       ),
                     );
                   },
@@ -171,6 +173,45 @@ class _HospitalSettingsState extends State<HospitalSettings> {
                         ),
                         Text(
                           "My Hospital",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 20.0,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MyIncomePage("My Income",widget.mobile),
+                        ),
+                      );
+                    },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.memory,size: 30,color: Colors.redAccent,),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "My Income",
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 20.0,

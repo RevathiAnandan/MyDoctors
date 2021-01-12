@@ -20,7 +20,6 @@ class AuthService{
 
   //Handle Auth
   Widget handleAuth() {
-    print("HArun");
     // await _pns.initialise();
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
@@ -44,9 +43,9 @@ class AuthService{
     final uid = user.uid.toString();
     final usermobile = user.phoneNumber.toString();
     if( SharedPrefUtil().readPrefStr(ConstantUtils().Category) == ConstantUtils().Doctor){
-      return DoctorNewDashboard(uid,usermobile);
+      return DoctorNewDashboard(uid,usermobile,ConstantUtils().Doctor);
     }else{
-      return PatientNewDashboard(uid,usermobile);
+      return PatientNewDashboard(uid,usermobile,ConstantUtils().Patient);
     }
   }
 
@@ -99,13 +98,13 @@ class AuthService{
         if((snapshot.value) == "Doctor"){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,mobile)),
+            MaterialPageRoute(builder: (context) => DoctorNewDashboard(uid,mobile,"Doctor")),
           );
         }
         else if((snapshot.value) == "Patient"){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,mobile)),
+            MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,mobile,"Patient")),
           );
         }
       });

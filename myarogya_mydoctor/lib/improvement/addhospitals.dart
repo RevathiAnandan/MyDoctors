@@ -1,21 +1,28 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/Hospital/HospitalDashboard.dart';
+import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mock_data/mock_data.dart';
 import 'package:file_picker/file_picker.dart';
 
+import 'hospitals.dart';
+
 class AddHospital extends StatefulWidget {
 
   final String mobile;
+  final String id;
+  final String category;
 
-
-  AddHospital(this.mobile);
+  AddHospital(this.id,this.mobile,this.category);
 
   @override
   _AddHospitalState createState() => _AddHospitalState();
@@ -281,7 +288,7 @@ class _AddHospitalState extends State<AddHospital> {
   int pageindex = 0;
   String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
   String _chosenValue2 =
-      "HFAP - The Healthcare Facilities Accreditation Program";
+      "NABH- National Accreditation Board for Hospitals and Healthcare Providers";
   final TextEditingController nameController = TextEditingController();
   final TextEditingController regController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -317,6 +324,7 @@ class _AddHospitalState extends State<AddHospital> {
   final TextEditingController amtController = TextEditingController();
   final TextEditingController roomtype = TextEditingController();
   final TextEditingController pincode = TextEditingController();
+  final TextEditingController tandccontroller = TextEditingController();
 
   List<bool> _selected = [
     false,
@@ -392,7 +400,9 @@ class _AddHospitalState extends State<AddHospital> {
             leading: (pageindex == 0)
                 ? IconButton(
               icon: Icon(Icons.close),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => {
+                showAlertDialog(context),
+              },
               color: Colors.redAccent,
               iconSize: 30,
             )
@@ -408,7 +418,7 @@ class _AddHospitalState extends State<AddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 10
+                child: pageindex == 11
                     ? Text(
                   "Save",
                   style: TextStyle(
@@ -428,7 +438,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
               ),
-              pageindex == 10
+              pageindex == 11
                   ? IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () {
@@ -470,9 +480,11 @@ class _AddHospitalState extends State<AddHospital> {
                                             isCovid.toString(),
                                             isnabh.toString(),
                                             awardsController.text,
-                        "",
+                                            tandccontroller.text,
+                                            "",
                                             widget.mobile,
                       );
+                      print(tandccontroller.text);
                       AuthService()
                           .toast("Your Added Hospital Is Under Verification");
                       Navigator.pop(context);
@@ -493,24 +505,24 @@ class _AddHospitalState extends State<AddHospital> {
                 onPressed: () {
                   // if (pageindex == 3) {
 
-                    // if (1==1) {
+                    if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       setState(() {
                         pageindex++;
                       });
-                    // }
+                    }
                   // }
-                  // else if(pageindex == 10){
-                  //   if (1==1&&_checked) {
-                  //     _formKey.currentState.save();
-                  //     setState(() {
-                  //       pageindex++;
-                  //     });
-                  //   }
-                  //   else{
-                  //     AuthService().toast("Please Complete filling data and Submit down below");
-                  //   }
-                  // }
+                  else if(pageindex == 10){
+                    if (_checked) {
+                      _formKey.currentState.save();
+                      setState(() {
+                        pageindex++;
+                      });
+                    }
+                    else{
+                      AuthService().toast("Please Complete filling data and Submit down below");
+                    }
+                  }
                   // else {
                   //   if (1==1) {
                   //     _formKey.currentState.save();
@@ -667,11 +679,17 @@ class _AddHospitalState extends State<AddHospital> {
                 ),
                 TextFormField(
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value.contains("/") && value.isEmpty) {
                       return 'Please enter some text';
                     }
                     return null;
                   },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
+                    LengthLimitingTextInputFormatter(10),
+                    _DateFormatter(),
+                  ],
+                  // keyboardType: TextInputType.numberWithOptions(),
                   controller: dateofController,
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -731,6 +749,7 @@ class _AddHospitalState extends State<AddHospital> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 TextFormField(
                   validator: (value) {
                     if (value.isEmpty) {
@@ -738,6 +757,11 @@ class _AddHospitalState extends State<AddHospital> {
                     }
                     return null;
                   },
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  keyboardType: TextInputType.number,
                   controller: adminiphoneController,
                   decoration: new InputDecoration(
                     //errorBorder: OutlineInputBorder(),
@@ -835,6 +859,11 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  inputFormatters: <TextInputFormatter>[
+                    // LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter some text';
@@ -912,6 +941,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: ambuController,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -921,7 +951,7 @@ class _AddHospitalState extends State<AddHospital> {
                   },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    // FilteringTextInputFormatter.digitsOnly
+                    FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -949,6 +979,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: emerController,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -958,7 +989,7 @@ class _AddHospitalState extends State<AddHospital> {
                   },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    // FilteringTextInputFormatter.digitsOnly
+                    FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -986,6 +1017,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: bookphController,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -995,7 +1027,7 @@ class _AddHospitalState extends State<AddHospital> {
                   },
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    // FilteringTextInputFormatter.digitsOnly
+                    FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -1023,6 +1055,7 @@ class _AddHospitalState extends State<AddHospital> {
                   ),
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter some text';
@@ -1032,7 +1065,7 @@ class _AddHospitalState extends State<AddHospital> {
                   controller: opdbkController,
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
-                    // FilteringTextInputFormatter.digitsOnly
+                    FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: new InputDecoration(
                     // border: OutlineInputBorder(),
@@ -1056,7 +1089,13 @@ class _AddHospitalState extends State<AddHospital> {
         );
       case 2:
         setState(() {});
-        return uploading?Center(child: CircularProgressIndicator()):Container(
+        return uploading?Container(height:MediaQuery.of(context).size.height,child: Center(child: Column(
+          children: [
+            CircularProgressIndicator(),
+            Text("Uploading the photos please wait"),
+          ],
+        ))):
+        Container(
           padding: EdgeInsets.all(20),
           // height: MediaQuery.of(context).size.height,
           child: Form(
@@ -1445,12 +1484,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 18,
                           fontFamily: 'Lato',
                         ),
-                       validator: (value) {
-                         if (value.isEmpty) {
-                           return 'Please enter some text';
-                         }
-                         return null;
-                       },
+                       // validator: (value) {
+                       //   if (value.isEmpty) {
+                       //     return 'Please enter some text';
+                       //   }
+                       //   return null;
+                       // },
                       ),
                     ),
                     Container(
@@ -1469,12 +1508,12 @@ class _AddHospitalState extends State<AddHospital> {
                           //disabledBorder: InputBorder.none,
                           // hintText: "Hospital Name"
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
                         controller: chargesController2,
                         style: TextStyle(
                           fontSize: 18,
@@ -1494,7 +1533,6 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 15,
                 ),
                 Row(
-
                   children: [
                     Container(width: 110,
                         height: 40,child: Center(child: Text("Note:",style: TextStyle(
@@ -1525,12 +1563,12 @@ class _AddHospitalState extends State<AddHospital> {
                           fontSize: 12,
                           fontFamily: 'Lato',
                         ),
-                       validator: (value) {
-                         if (value.isEmpty) {
-                           return 'Please enter some text';
-                         }
-                         return null;
-                       },
+                       // validator: (value) {
+                       //   if (value.isEmpty) {
+                       //     return 'Please enter some text';
+                       //   }
+                       //   return null;
+                       // },
                       ),
                     ),
                   ],
@@ -1587,8 +1625,7 @@ class _AddHospitalState extends State<AddHospital> {
                     Flexible(
                       flex:1,
                       child: Container(
-                        // width: 110,
-                        // height: 40,
+                        height: 40,
                         child: Text(
                           "Test Description",
                           style: TextStyle(
@@ -1604,7 +1641,7 @@ class _AddHospitalState extends State<AddHospital> {
                       flex:1,
                       child: Container(
                         // width: 110,
-                        // height: 40,
+                        height: 40,
                         child: Text(
                           "Charges",
                           style: TextStyle(
@@ -1624,7 +1661,6 @@ class _AddHospitalState extends State<AddHospital> {
                     Flexible(
                       flex:1,
                       child: Container(
-                        // width: 180,
                         height: 40,
                         child: TextFormField(
                           decoration: new InputDecoration(
@@ -1635,12 +1671,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: descController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1663,12 +1699,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: opdController,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -1784,12 +1820,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: packController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1811,12 +1847,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: amtController,
                           inputFormatters: <TextInputFormatter>[
                             // FilteringTextInputFormatter.digitsOnly
@@ -1931,12 +1967,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: surController,
                           style: TextStyle(
                             fontSize: 18,
@@ -1958,12 +1994,12 @@ class _AddHospitalState extends State<AddHospital> {
                             //disabledBorder: InputBorder.none,
                             // hintText: "Hospital Name"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value.isEmpty) {
+                          //     return 'Please enter some text';
+                          //   }
+                          //   return null;
+                          // },
                           controller: suramtController,
                           inputFormatters: <TextInputFormatter>[
                           //  FilteringTextInputFormatter.digitsOnly
@@ -3242,21 +3278,6 @@ class _AddHospitalState extends State<AddHospital> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    RaisedButton(
-                      child: Text("Add Doctors"),
-                      onPressed: addDynamicD,
-                    ),
-                    Doctor.length == 0 ? dynamicD() : resultD(),
-                    RaisedButton(
-                      child: Text("Add Nurses"),
-                      onPressed: addDynamicN,
-                    ),
-                    Nurse.length == 0 ? dynamicN() : resultN(),
-                    RaisedButton(
-                      child: Text("Add Staffs"),
-                      onPressed: addDynamicS,
-                    ),
-                    Staff.length == 0 ? dynamicS() : resultS(),
                     Row(
                       children: [
                         Container(
@@ -3281,18 +3302,76 @@ class _AddHospitalState extends State<AddHospital> {
                         ),
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RaisedButton(
+                          child: Text("Remove"),
+                          onPressed: removeDynamicD,
+                        ),
+                         RaisedButton(
+                          child: Text("Add Doctors"),
+                          onPressed: addDynamicD,
+                        ),
+
+                      ],
+                    ),
+                    Doctor.length == 0 ? dynamicD() : resultD(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RaisedButton(
+                          child: Text("Remove"),
+                          onPressed: removeDynamicN,
+                        ),
+                        RaisedButton(
+                          child: Text("Add Nurses"),
+                          onPressed: addDynamicN,
+                        ),
+                      ],
+                    ),
+                    Nurse.length == 0 ? dynamicN() : resultN(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RaisedButton(
+                          child: Text("Remove"),
+                          onPressed: removeDynamicS,
+                        ),
+                        RaisedButton(
+                          child: Text("Add Staffs"),
+                          onPressed: addDynamicS,
+                        ),
+                      ],
+                    ),
+                    Staff.length == 0 ? dynamicS() : resultS(),
+
                   ]
               ),
             ),
           ),
         );
       case 11:
-        return new Container();
+        return new Container(
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.all(10),
+          child: Form(
+            key: _formKey,
+            child: TextFormField(
+              maxLines: 100,
+              controller: tandccontroller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+          ),
+        );
 
     }
   }
 
-  SingleChildScrollView dataBody(String item1, String item2, String item3, List Values) {
+   dataBody(String item1, String item2, String item3, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         sortAscending: true,
@@ -3346,6 +3425,17 @@ class _AddHospitalState extends State<AddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  Values.removeAt(index);
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           initialValue: Values[index]['charges'],
                           onFieldSubmitted: (v) {
                             setState(() {
@@ -3361,8 +3451,7 @@ class _AddHospitalState extends State<AddHospital> {
       ),
     );
   }
-
-  SingleChildScrollView dataBody1(String item1, String item2, List Values) {
+   dataBody1(String item1, String item2, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         columns: [
@@ -3386,7 +3475,6 @@ class _AddHospitalState extends State<AddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
-
                           initialValue: Values[index][item1],
                           onChanged: (v) {
                             setState(() {
@@ -3398,6 +3486,21 @@ class _AddHospitalState extends State<AddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  if(Values==diagnosis) {
+                                    diagnosis.removeAt(index);
+                                  }else if(Values==health){
+                                    health.removeAt(index);
+                                  }
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           keyboardType: TextInputType.number,
                           initialValue: Values[index][item2],
                           onChanged: (v) {
@@ -3414,7 +3517,7 @@ class _AddHospitalState extends State<AddHospital> {
       ),
     );
   }
-  SingleChildScrollView dataBody2(String item1, String item2, List Values) {
+   dataBody2(String item1, String item2, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         columns: [
@@ -3450,6 +3553,17 @@ class _AddHospitalState extends State<AddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                    surgery.removeAt(index);
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           keyboardType: TextInputType.number,
                           initialValue: Values[index][item2],
                           onChanged: (v) {
@@ -3466,7 +3580,7 @@ class _AddHospitalState extends State<AddHospital> {
       ),
     );
   }
-  SingleChildScrollView dataBody3(String title, List Values) {
+   dataBody3(String title, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         columns: [
@@ -3794,6 +3908,22 @@ class _AddHospitalState extends State<AddHospital> {
     }
     dynamicListD.add(new dynamicWidgetD());
   }
+  removeDynamicD(){
+    if(Doctor.length != 0){
+
+      Doctor = [];
+      NumberD = [];
+      Specialist = [];
+      dynamicListD = [];
+    }
+    setState(() {});
+    if (dynamicListD.length == 0 ) {
+      return;
+    }
+    dynamicListD.removeLast();
+    print("Yeahhhhh");
+  }
+
   Widget resultD(){
     Widget resultD = Container(
       height: 200,
@@ -3848,6 +3978,20 @@ class _AddHospitalState extends State<AddHospital> {
     }
     dynamicListN.add(new dynamicWidgetN());
   }
+  removeDynamicN(){
+    if(Nurse.length != 0){
+
+      Nurse = [];
+      NumberN = [];
+      dynamicListN = [];
+    }
+    setState(() {});
+    if (dynamicListN.length == 0 ) {
+      return;
+    }
+    dynamicListN.removeLast();
+  }
+
   Widget resultN(){
     Widget resultN = new Flexible(
         flex: 1,
@@ -3902,6 +4046,20 @@ class _AddHospitalState extends State<AddHospital> {
     }
     dynamicListS.add(new dynamicWidgetS());
   }
+  removeDynamicS(){
+    if(Staff.length != 0){
+
+      Staff = [];
+      NumberS = [];
+      dynamicListS = [];
+    }
+    setState(() {});
+    if (dynamicListS.length == 0 ) {
+      return;
+    }
+    dynamicListS.removeLast();
+  }
+
   Widget resultS(){
     Widget resultS = new Flexible(
         flex: 1,
@@ -3968,7 +4126,56 @@ class _AddHospitalState extends State<AddHospital> {
     });
     setState(() {});
     print(stafflist.length);
-    AuthService().toast("Data Added Sucessfully");
+    AuthService().toast("Data Added Successfully");
+  }
+  showAlertDialog(BuildContext context) async{
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Exit"),
+      onPressed:  () {
+        if (widget.category=="Doctor") {
+          Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DoctorNewDashboard(widget.id,widget.mobile,widget.category)),
+                  );
+        } else if((widget.category=="Patient")){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PatientNewDashboard(widget.id,widget.mobile,widget.category)),
+          );
+        }else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HospitalDashboard(widget.id,widget.mobile,widget.category)),
+          );
+        }
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed:  () async{
+     Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Exit Add Hospital"),
+      content: Text("Your data will be lost if you go out"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 
@@ -4186,50 +4393,62 @@ class dynamicWidgetD extends StatelessWidget {
 //      margin: new EdgeInsets.all(8.0),
       child:Row(
         children: <Widget>[
-          Container(
-            height: 40,
-            width: 140,
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-            child: new TextFormField(
-              controller: Doctor,
-              decoration: const InputDecoration(
-                  labelText: 'Doctor Name',
-                  border: OutlineInputBorder()
+          Expanded(
+
+            child: Container(
+              height: 40,
+              width: 140,
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+              child: new TextFormField(
+                controller: Doctor,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    labelText: 'Doctor Name',
+                    border: OutlineInputBorder()
+                ),
               ),
             ),
           ),
-          Container(
-            height: 40,
-            width: 130,
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-            child: new TextFormField(
-              inputFormatters: <TextInputFormatter>[
-                LengthLimitingTextInputFormatter(10),
-                // FilteringTextInputFormatter.digitsOnly
-              ],
-              controller: NumberD,
-              decoration: const InputDecoration(
-                  labelText: 'Number',
-                  border: OutlineInputBorder()
+          Expanded(
+
+            child: Container(
+              height: 40,
+              width: 115,
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+              child: new TextFormField(
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(10),
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                controller: NumberD,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    labelText: 'Number',
+                    border: OutlineInputBorder()
+                ),
+                keyboardType: TextInputType.number,
               ),
-              keyboardType: TextInputType.number,
             ),
           ),
-          Container(
-            height: 40,
-            width: 110,
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-            child: new TextFormField(
-              // inputFormatters: <TextInputFormatter>[
-              //   LengthLimitingTextInputFormatter(10),
-              //   // FilteringTextInputFormatter.digitsOnly
-              // ],
-              controller: Specialist,
-              decoration: const InputDecoration(
-                  labelText: 'Specialist',
-                  border: OutlineInputBorder()
+          Expanded(
+
+            child: Container(
+              height: 40,
+              width: 110,
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+              child: new TextFormField(
+                // inputFormatters: <TextInputFormatter>[
+                //   LengthLimitingTextInputFormatter(10),
+                //   // FilteringTextInputFormatter.digitsOnly
+                // ],
+                controller: Specialist,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    labelText: 'Specialist',
+                    border: OutlineInputBorder()
+                ),
+                // keyboardType: TextInputType.number,
               ),
-              // keyboardType: TextInputType.number,
             ),
           ),
         ],
@@ -4256,6 +4475,7 @@ class dynamicWidgetN extends StatelessWidget {
             child: new TextFormField(
               controller: Nurse,
               decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   labelText: 'Nurse Name',
                   border: OutlineInputBorder()
               ),
@@ -4268,10 +4488,11 @@ class dynamicWidgetN extends StatelessWidget {
             child: new TextFormField(
               inputFormatters: <TextInputFormatter>[
                 LengthLimitingTextInputFormatter(10),
-                // FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly
               ],
               controller: NumberN,
               decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   labelText: 'Number',
                   border: OutlineInputBorder()
               ),
@@ -4302,6 +4523,7 @@ class dynamicWidgetS extends StatelessWidget {
             child: new TextFormField(
               controller: Staff,
               decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   labelText: 'Staff Name',
                   border: OutlineInputBorder()
               ),
@@ -4314,10 +4536,11 @@ class dynamicWidgetS extends StatelessWidget {
             child: new TextFormField(
               inputFormatters: <TextInputFormatter>[
                 LengthLimitingTextInputFormatter(10),
-                // FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly
               ],
               controller: NumberS,
               decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   labelText: 'Number',
                   border: OutlineInputBorder()
               ),
@@ -4326,6 +4549,97 @@ class dynamicWidgetS extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue prevText, TextEditingValue currText) {
+    int selectionIndex;
+
+    // Get the previous and current input strings
+    String pText = prevText.text;
+    String cText = currText.text;
+    // Abbreviate lengths
+    int cLen = cText.length;
+    int pLen = pText.length;
+
+    if (cLen == 1) {
+      // Can only be 0, 1, 2 or 3
+      if (int.parse(cText) > 3) {
+        // Remove char
+        cText = '';
+      }
+    } else if (cLen == 2 && pLen == 1) {
+      // Days cannot be greater than 31
+      int dd = int.parse(cText.substring(0, 2));
+      if (dd == 0 || dd > 31) {
+        // Remove char
+        cText = cText.substring(0, 1);
+      } else {
+        // Add a / char
+        cText += '/';
+      }
+    } else if (cLen == 4) {
+      // Can only be 0 or 1
+      if (int.parse(cText.substring(3, 4)) > 1) {
+        // Remove char
+        cText = cText.substring(0, 3);
+      }
+    } else if (cLen == 5 && pLen == 4) {
+      // Month cannot be greater than 12
+      int mm = int.parse(cText.substring(3, 5));
+      if (mm == 0 || mm > 12) {
+        // Remove char
+        cText = cText.substring(0, 4);
+      } else {
+        // Add a / char
+        cText += '/';
+      }
+    } else if ((cLen == 3 && pLen == 4) || (cLen == 6 && pLen == 7)) {
+      // Remove / char
+      cText = cText.substring(0, cText.length - 1);
+    } else if (cLen == 3 && pLen == 2) {
+      if (int.parse(cText.substring(2, 3)) > 1) {
+        // Replace char
+        cText = cText.substring(0, 2) + '/';
+      } else {
+        // Insert / char
+        cText =
+            cText.substring(0, pLen) + '/' + cText.substring(pLen, pLen + 1);
+      }
+    } else if (cLen == 6 && pLen == 5) {
+      // Can only be 1 or 2 - if so insert a / char
+      int y1 = int.parse(cText.substring(5, 6));
+      if (y1 < 1 || y1 > 2) {
+        // Replace char
+        cText = cText.substring(0, 5) + '/';
+      } else {
+        // Insert / char
+        cText = cText.substring(0, 5) + '/' + cText.substring(5, 6);
+      }
+    } else if (cLen == 7) {
+      // Can only be 1 or 2
+      int y1 = int.parse(cText.substring(6, 7));
+      if (y1 < 1 || y1 > 2) {
+        // Remove char
+        cText = cText.substring(0, 6);
+      }
+    } else if (cLen == 8) {
+      // Can only be 16 or 20
+      int y2 = int.parse(cText.substring(6, 8));
+      if (y2 < 16 || y2 > 20) {
+        // Remove char
+        cText = cText.substring(0, 7);
+      }
+    }
+
+    selectionIndex = cText.length;
+    return TextEditingValue(
+      text: cText,
+      selection: TextSelection.collapsed(offset: selectionIndex),
     );
   }
 }

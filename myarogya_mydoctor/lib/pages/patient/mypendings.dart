@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myarogya_mydoctor/improvement/MyBookingSettings.dart';
 import 'package:myarogya_mydoctor/model/Appointmnet.dart';
 import 'package:myarogya_mydoctor/model/patient.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_PrescriptionList.dart';
@@ -209,7 +210,7 @@ class _MyPendingsState extends State<MyPendings> {
                           children: <Widget>[
                             Container(
                               width: 160,
-                              height: 40,
+                              height: 50,
                               child: Card(
                                 color: new Color(0xffFFFFFF),
                                 elevation: 6,
@@ -229,7 +230,7 @@ class _MyPendingsState extends State<MyPendings> {
                                         child: Text("My Doctors",
                                             style: new TextStyle(
                                                 color: Colors.redAccent,
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: "Lato")))),
                               ),
@@ -254,7 +255,7 @@ class _MyPendingsState extends State<MyPendings> {
                           children: <Widget>[
                             Container(
                               width: 160,
-                              height: 40,
+                              height: 50,
                               child: Card(
                                 color: new Color(0xffFFFFFF),
                                 elevation: 6,
@@ -262,13 +263,16 @@ class _MyPendingsState extends State<MyPendings> {
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Center(
                                     child: GestureDetector(
-                                        onTap: () {
-                                          AuthService().toast("Coming Soon!!");
-                                        },
-                                        child: Text("My Reports",
+                                        onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MyBookingSettings(widget.id, widget.mobile),
+                                          ),
+                                        ),
+                                        child: Text("Hospital Bookings",
                                             style: new TextStyle(
                                                 color: Colors.redAccent,
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: "Lato")))),
                               ),
@@ -295,10 +299,10 @@ class _MyPendingsState extends State<MyPendings> {
         itemCount: appoint.length,
         itemBuilder: (context, i) => new Column(
           children: <Widget>[
-            new Divider(
-              height: 10.0,
-            ),
+
             new ListTile(
+              leading: Text((i+1).toString(),style:
+              new TextStyle(color: Colors.redAccent,fontSize: 25.0,fontWeight: FontWeight.bold),),
               title: new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -349,7 +353,10 @@ class _MyPendingsState extends State<MyPendings> {
               //     );
               //   }
               // },
-            )
+            ),
+            new Divider(
+              thickness: 1,
+            ),
           ],
         ),
       ),
@@ -412,11 +419,16 @@ class _MyPendingsState extends State<MyPendings> {
             side: BorderSide(color: Colors.redAccent)),
         padding: EdgeInsets.all(10),
         color: Colors.redAccent,
-        child: Text(
+        child: (status!="View")?Text(
           status,
           style:
               TextStyle(color: Colors.white, fontFamily: "Lato", fontSize: 14),
-        ));
+        ):Text(
+          ((appoint[i].BookingTime.split(" ")[1]).split(".")[0]).split(":")[0]+":"+((appoint[i].BookingTime.split(" ")[1]).split(".")[0]).split(":")[1],
+          style:
+          TextStyle(color: Colors.white, fontFamily: "Lato", fontSize: 14),
+        )
+    );
   }
 
   _openPopup(context, index) {

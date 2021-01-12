@@ -51,24 +51,43 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
               ListTile(
                 contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 // title: Text(dummyData[index].userNumber),
-                title:(dummyData[index].hospitalName !=null ) ?Text(dummyData[index].hospitalName,style: TextStyle(
+                title:(dummyData[index].status == "Cancelled") ?Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(dummyData[index].cancelDate.split("/")[0],style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Lato",
+                        fontSize: 12), ),
+                    Text(dummyData[index].hospitalName,style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Lato",
+                        fontSize: 14), ),
+                  ],
+                ):Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(dummyData[index].BookingDate,style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Lato",
-                    fontSize: 18), ):(Text(" ",style: TextStyle(
+                    fontSize: 12), ),
+                Text(dummyData[index].hospitalName,style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Lato",
-                    fontSize: 18),)),
+                    fontSize: 14), ),
+
+                  ],
+                ),
                 subtitle:(dummyData[index].bookdetails[0].packName !=null ) ?Text(dummyData[index].bookdetails[0].packName
                     +" "+"Charges:"+dummyData[index].bookdetails[0].charges,style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Lato",
-                    fontSize: 18), ):(Text(dummyData[index].bookdetails[0].roomType
+                    fontSize: 14), ):(Text("Type: "+dummyData[index].bookdetails[0].roomType
                     +"  "+"Charges:"+dummyData[index].bookdetails[0].charges,style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Lato",
-                    fontSize: 18),)),
+                    fontSize: 14),)),
                 trailing: Container(
-                  width: 200  ,
+                  width: 200,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -77,7 +96,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "Lato",
-                                fontSize: 14)),
+                                fontSize: 12)),
                         textColor: Colors.white,
                         onPressed: (){
                             if(dummyData[index].status=="Confirm"){
@@ -92,10 +111,10 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                         padding: EdgeInsets.all(10),
                         color: Colors.redAccent,
                       ),
-                      PopupMenuButton<String>(
+                      (dummyData[index].status=="Cancelled")?Container(width: 10,):PopupMenuButton<String>(
                         padding: EdgeInsets.all(5),
                         icon: new Icon(
-                          Icons.settings,
+                          Icons.close,
                           color: Colors.redAccent,
 
                         ),
@@ -114,7 +133,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
                   ),
                 ),
               ),
-              Divider()
+              Divider(thickness: 1,),
             ],
           );
 

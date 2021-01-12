@@ -61,7 +61,7 @@ class MyScreenState extends State<MyScreen> {
     return isLoading
         ? Center(child: CircularProgressIndicator())
         : (dummyData.isEmpty
-            ? Center(child: Text("No Data Found!!"))
+            ? Center(child: Text("The data is loading!!"))
             : new ListView.builder(
                 itemCount: dummyData.length,
                 itemBuilder: (context, i) => new Column(

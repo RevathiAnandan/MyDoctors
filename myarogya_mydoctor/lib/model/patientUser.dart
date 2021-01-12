@@ -17,13 +17,13 @@ class PatientUser{
   factory PatientUser.fromJson(dynamic json) {
 
     return new PatientUser._(
-      Name: json['Name'] as String,
-      category: json['category'] as String,
-      mobile: json['mobile'] as String,
-      Age: json['Age'] as String,
-      Gender: json['Gender'] as String,
-      image: json['image'] as String,
-      emailId: json['emailId'] as String,
+      Name: json['Name'] as String??"",
+      category: json['category'] as String??"",
+      mobile: json['mobile'] as String??"",
+      Age: json['Age'] as String??"",
+      Gender: json['Gender'] as String??"",
+      image: json['image'] as String??"",
+      emailId: json['emailId'] as String??"",
     );
   }
 }

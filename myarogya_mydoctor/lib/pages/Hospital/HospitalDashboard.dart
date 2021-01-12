@@ -7,9 +7,10 @@ import 'package:myarogya_mydoctor/pages/complains/DisplayComplains.dart';
 
 import 'MyBooking.dart';
 class HospitalDashboard extends StatefulWidget {
-  String id;
-  String mobile;
-  HospitalDashboard(this.id,this.mobile);
+  final String id;
+  final String mobile;
+  final String category;
+  HospitalDashboard(this.id,this.mobile,this.category);
   @override
   _HospitalDashboardState createState() => _HospitalDashboardState();
 }
@@ -20,8 +21,8 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
   FirebaseDatabase fb = FirebaseDatabase.instance;
   bool isLoading = true;
   List<Widget> _widgetOptions() => [
-    MyBooking(widget.id,widget.mobile,hospitalvalues),
-    Hospitals(widget.mobile,widget.id),
+    MyBooking(widget.id,widget.mobile,hospitalvalues,"Hospital"),
+    Hospitals(widget.mobile,widget.id,"Hospital"),
     HomeScreen(widget.id,widget.mobile),
     DisplayComplains(widget.id,widget.mobile)
   ];
@@ -53,6 +54,7 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
             child: _widgetOptions()[selectedIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               selectedIconTheme: IconThemeData(
                   color: Colors.red,
                   size: 30
@@ -64,7 +66,7 @@ class _HospitalDashboardState extends State<HospitalDashboard> {
 BottomNavigationBarItem(
                     icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Ads')),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.list,color: Colors.redAccent,), title: Text('My Complains')),
+                    icon: Icon(Icons.add_comment,color: Colors.redAccent,), title: Text('My Complains')),
               ],
               currentIndex: selectedIndex,
               fixedColor: Colors.redAccent,

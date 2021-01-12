@@ -12,9 +12,10 @@ import 'package:myarogya_mydoctor/pages/Doctor/update_profile_screen.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:myarogya_mydoctor/services/datasearch.dart';
 class DoctorNewDashboard extends StatefulWidget {
-  String id;
-  String mobile;
-  DoctorNewDashboard(this.id,this.mobile);
+  final String id;
+  final String mobile;
+  final String category;
+  DoctorNewDashboard(this.id,this.mobile,this.category);
   @override
   _DoctorNewDashboardState createState() => _DoctorNewDashboardState();
 }
@@ -25,7 +26,7 @@ class _DoctorNewDashboardState extends State<DoctorNewDashboard> {
 
   List<Widget> _widgetOptions() => [
     Appointments(widget.mobile,widget.id),
-    Hospitals(widget.mobile,widget.id),
+    Hospitals(widget.mobile,widget.id,widget.category),
     HomeScreen(widget.id,widget.mobile),
     DisplayComplains(widget.id,widget.mobile)
   ];

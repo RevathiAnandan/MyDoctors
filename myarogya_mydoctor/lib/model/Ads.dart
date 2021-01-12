@@ -13,15 +13,15 @@ class MyAds{
 
   factory MyAds.fromJson(dynamic json){
     return new MyAds._(
-      name: json["AdName"] as String,
-      productCatogory: json["ProductCatogory"] as String,
-      slogan: json["Slogan"] as String,
-      image: json["Image"] as String,
-      video: json["Video"] as String,
-      mobile: json["Mobile"] as String,
-      views: json["Views"] as int,
-      boring: json["Boring"] as int,
-      topoftop: json["Top of Top"] as int,
+      name: json["AdName"] as String??"",
+      productCatogory: json["ProductCatogory"] as String??"",
+      slogan: json["Slogan"] as String??"",
+      image: json["Image"] as String??"",
+      video: json["Video"] as String??"",
+      mobile: json["Mobile"] as String??"",
+      views: json["Views"] as int??0,
+      boring: json["Boring"] as int??0,
+      topoftop: json["Top of Top"] as int??0,
     );
   }
 

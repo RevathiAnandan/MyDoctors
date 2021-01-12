@@ -1123,7 +1123,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DoctorNewDashboard(widget.userId, widget.mobile),
+                DoctorNewDashboard(widget.userId, widget.mobile,"Doctor"),
           ),
         );
       }
@@ -1157,7 +1157,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         context,
         MaterialPageRoute(
           builder: (context) =>
-              DoctorNewDashboard(widget.userId, widget.mobile),
+              DoctorNewDashboard(widget.userId, widget.mobile,"Doctor"),
         ),
       );
     }
@@ -1174,9 +1174,9 @@ class _ProfileScreenState extends State<ProfileScreen>
           } else {
             Map<dynamic, dynamic> values = snapshot.value;
 
-            print("Harun" + values.toString());
+
             refreshToken = DoctorUser.fromJson(values);
-            print("Harun" + refreshToken.toString());
+
             _doctorId.text = values['registerId'];
             _hospitalName.text = refreshToken.hospitalName;
             _specialist.text = refreshToken.specialist;

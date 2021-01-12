@@ -90,7 +90,7 @@ class _HospitalTabPageState extends State<HospitalTabPage>
         controller: _tabController,
         children: <Widget>[
           // PendingPage(),
-          CompletedPage(widget.mobile)
+          // CompletedPage(widget.mobile)
 //            MyScreen(widget.id,widget.mobile),
 //            ContactsPage(widget.mobile),
         ],

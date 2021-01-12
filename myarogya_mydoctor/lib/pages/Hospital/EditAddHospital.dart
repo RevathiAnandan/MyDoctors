@@ -6,16 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myarogya_mydoctor/improvement/dropdownlists.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
+import 'package:myarogya_mydoctor/pages/Doctor/doctor_new_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
 import 'package:myarogya_mydoctor/services/authService.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mock_data/mock_data.dart';
 import 'package:file_picker/file_picker.dart';
 
+import 'HospitalDashboard.dart';
+
 class EditAddHospital extends StatefulWidget {
-  Hospital hospitalValues;
-  String key1;
-  EditAddHospital(this.hospitalValues,this.key1);
+  final Hospital hospitalValues;
+  final String key1;
+  final String id;
+  final String mobile;
+  final String category;
+  EditAddHospital(this.hospitalValues,this.key1,this.id,this.mobile,this.category);
 
   @override
   _EditAddHospital createState() => _EditAddHospital();
@@ -60,7 +67,8 @@ class _EditAddHospital extends State<EditAddHospital> {
       "Speciality",
       "Facility",
       "Staff Details",
-      "Insurance"
+      "Insurance",
+      "Terms and Conditions",
     ];
   List<String> path = [];
   String _path;
@@ -79,7 +87,7 @@ class _EditAddHospital extends State<EditAddHospital> {
   String popop = mockString(50);
   int pageindex = 0;
   String _chosenValue1 = "Aditya Birla Health Insurance Co. Ltd.";
-  String _chosenValue2 = "HFAP - The Healthcare Facilities Accreditation Program";
+  String _chosenValue2 = "NABH- National Accreditation Board for Hospitals and Healthcare Providers";
   List<String> spl = [];
   List<String> fcl = [];
   List dynamicListD = [];
@@ -133,6 +141,7 @@ class _EditAddHospital extends State<EditAddHospital> {
   final TextEditingController amtController = TextEditingController();
   final TextEditingController roomtype = TextEditingController();
   final TextEditingController pincode = TextEditingController();
+  final TextEditingController tandccontroller = TextEditingController();
 
   List<bool> _selected = [false, false, false, false, false, false, false, false, false, false, false, false,
     false, false, false, false, false, false];
@@ -164,6 +173,8 @@ class _EditAddHospital extends State<EditAddHospital> {
     chargesController.text =  widget.hospitalValues.freebeds[0].charges;
     chargesController1.text =  widget.hospitalValues.conbeds[0].charges;
     chargesController3.text =  widget.hospitalValues.covidbeds[0].charges;
+    tandccontroller.text =  widget.hospitalValues.termsandconditions;
+    notecontroller.text = widget.hospitalValues.note;
     for(int i=0;i<widget.hospitalValues.beds.length;i++){
       Beds.add({
         "roomType": widget.hospitalValues.beds[i].roomType,
@@ -171,7 +182,7 @@ class _EditAddHospital extends State<EditAddHospital> {
         "charges": widget.hospitalValues.beds[i].charges,
       });
     }
-    print(widget.hospitalValues.diagnosis);
+    print("uygfutfg"+widget.hospitalValues.award);
     // for(int i=0;i<widget.hospitalValues.diagnosis.length;i++) {
     //   diagnosis.add({
     //     "Type": widget.hospitalValues.diagnosis[i].test,
@@ -195,6 +206,7 @@ class _EditAddHospital extends State<EditAddHospital> {
     // }
     setState(() {});
     diagnosis1 = widget.hospitalValues.diagnosis;
+
     health1 = widget.hospitalValues.health;
     surgery1 = widget.hospitalValues.surgery;
     print(diagnosis);
@@ -248,8 +260,13 @@ class _EditAddHospital extends State<EditAddHospital> {
         "Insurance Name": widget.hospitalValues.tpalist[i].insurName,
       });
     }
+    for(int i=0;i<widget.hospitalValues.accred.length;i++) {
+      ACCRED.add({
+        "Acredition": widget.hospitalValues.accred[i].accredName,
+      });
+    }
     // TPA.add(widget.hospitalValues.tpalist);
-    fcl.add(widget.hospitalValues.facilities[0]);
+    // fcl.add(widget.hospitalValues.facilities[0]);
     print(fcl.toString());
   }
 
@@ -352,7 +369,7 @@ class _EditAddHospital extends State<EditAddHospital> {
             ),
             actions: [
               Center(
-                child: pageindex == 10
+                child: pageindex == 11
                     ? Text(
                   "Save",
                   style: TextStyle(
@@ -372,55 +389,11 @@ class _EditAddHospital extends State<EditAddHospital> {
                   ),
                 )),
               ),
-              pageindex == 10
+              pageindex == 11
                   ? IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () {
-                  try {
-                    ApiService().hospitals(
-                        nameController.text,
-                        regController.text,
-                        addressController.text,
-                        dateofController.text,
-                        adminiController.text,
-                        pincode.text,
-                        adminiphoneController.text,
-                        ACCRED,
-                        "+91${ambuController.text}",
-                        "+91${emerController.text}",
-                        "+91${bookphController.text}",
-                        "+91${opdbkController.text}",
-                        imagesUrl,
-                        "Completed",
-                        freebeds,
-                        conbeds,
-                        covidbeds,
-                        Beds,
-                        notecontroller.text,
-                        diagnosis,
-                        health,
-                        surgery,
-                        spl,
-                        fcl,
-                        doclist,
-                        nurlist,
-                        stafflist,
-                        TPA,
-                        is24.toString(),
-                        isCovid.toString(),
-                        isnabh.toString(),
-                        awardsController.text,
-                        widget.key1,
-                        "",
-                    );
-                  } catch (e) {
-                    print(e);
-                  }
-                  AuthService()
-                      .toast("Your Added Hospital Is Under Verification");
-                  Navigator.pop(context);
-                  pressed = false;
-                  print(pressed);
+                  showAlertDialog(context);
                 },
                 color: Colors.redAccent,
                 iconSize: 30,
@@ -431,14 +404,13 @@ class _EditAddHospital extends State<EditAddHospital> {
                   if (pageindex == 3) {
                     addfreeBeds();
                     print("page4");
-
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       setState(() {
                         pageindex++;
                       });
                     }
-                  }else if(pageindex == 9){
+                  }else if(pageindex == 10){
                     if (_formKey.currentState.validate()&&_checked) {
                       _formKey.currentState.save();
                       setState(() {
@@ -447,23 +419,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                     }else{
                       AuthService().toast("Please Complete filling data and Submit down below");
                     }
-                  }else if(pageindex == 4){
-                    print("page5");
-                    setState(() {
-                      // health.clear();
-                      pageindex++;
-
-                      print(health);
-                    });
-                    setState(() {
-
-                    });
-                  }  else if(pageindex == 5){
-                    print("page6");
-                    setState(() {
-                      pageindex++;
-                    });
-                  }  else {
+                  }else {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       print("_formkeyValue::"+_formKey.toString());
@@ -1300,6 +1256,47 @@ class _EditAddHospital extends State<EditAddHospital> {
                 SizedBox(
                   height: 15,
                 ),
+                Row(
+                  children: [
+                    Container(width: 110,
+                      height: 40,child: Center(child: Text("Note:",style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Lato',
+                      ),
+                      ),
+                      ),
+                    ),
+                    Container(
+                      width: 230,
+                      height: 40,
+                      child: TextFormField(
+                        // keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          // FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          // focusedBorder: InputBorder.none,
+                          // enabledBorder: InputBorder.none,
+                          //errorBorder: OutlineInputBorder(),
+                          //disabledBorder: InputBorder.none,
+                          // hintText: "Hospital Name"
+                        ),
+                        controller: notecontroller,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Lato',
+                        ),
+                        // validator: (value) {
+                        //   if (value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
+                      ),
+                    ),
+                  ],
+                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -1325,8 +1322,10 @@ class _EditAddHospital extends State<EditAddHospital> {
                   height: 10,
                 ),
                 Container(
-                    child: dataBody(
-                        "Room Type", "No of Beds", "Charges per day", Beds)
+                    child: Center(
+                      child: dataBody(
+                          "Room Type", "No of Beds", "Charges per day", Beds),
+                    )
 //                  ListView.builder(
 //                      shrinkWrap: true,
 //                      itemCount: specialBeds.length,
@@ -1349,29 +1348,32 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Test Description",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // height: 40,
+                        child: Text(
+                          "Test Description",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Charges",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        child: Text(
+                          "Charges",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1380,45 +1382,50 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: descController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: descController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: opdController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          // FilteringTextInputFormatter.digitsOnly
-                        ],
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: opdController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            // FilteringTextInputFormatter.digitsOnly
+                          ],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -1463,7 +1470,11 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      itemCount: diagnosisCharge.length,
 //                      itemBuilder: (_, index) => diagnosisCharge[index]),
                 ),
-                Text("Old Data"),
+                SizedBox(height: 10,),
+                Text("Old Data",style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Lato',
+                ),),
                 Container(
                   height: 200,
                   child: ListView.builder(
@@ -1476,7 +1487,41 @@ class _EditAddHospital extends State<EditAddHospital> {
                           children: <Widget>[
                             new Container(
                               margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${diagnosis1[index].test}  Charge.${diagnosis1[index].charge}"),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      new Text("${index + 1} : Type.${diagnosis1[index].test}    ",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                      ),),
+                                      new Text("Charge.${diagnosis1[index].charge}",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                      ),),
+
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  new InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        diagnosis1.removeAt(index);
+                                      });
+                                    },
+                                    child: Expanded(
+                                      child: Text("Delete",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                        color: Colors.redAccent,
+                                      ),),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             new Divider()
                           ],
@@ -1502,29 +1547,34 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Package Name",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 110,
+                        height: 40,
+                        child: Text(
+                          "Package Name",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Amount",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        height: 40,
+                        child: Text(
+                          "Amount",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1533,45 +1583,51 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: packController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                  Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: packController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: amtController,
-                        inputFormatters: <TextInputFormatter>[
-                          // FilteringTextInputFormatter.digitsOnly
-                        ],
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: amtController,
+                          inputFormatters: <TextInputFormatter>[
+                            // FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -1612,20 +1668,54 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      itemCount: healthCharges.length,
 //                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
-                Text("Old Data"),
+                SizedBox(height: 10,),
+                Text("Old Data",style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Lato',
+                ),),
                 Container(
                   height: 200,
                   child: ListView.builder(
                     itemCount: health1.length,
                     itemBuilder: (context, index){
                       return Padding(
-                        padding: new EdgeInsets.all(10.0),
+                        padding: new EdgeInsets.all(1.0),
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             new Container(
-                              margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${health1[index].packagename}  Charge.${health1[index].amount}"),
+                              margin: new EdgeInsets.only(left: 15.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      new Text("${index + 1} : Type.${health1[index].packagename}",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                      ),),
+                                      new Text("Charge.${health1[index].amount}",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                      ),),
+                                    ],
+                                  ),
+                                  new InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        health1.removeAt(index);
+                                      });
+                                    },
+                                    child: Expanded(
+                                      child: Text("Delete",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                        color: Colors.redAccent,
+                                      ),),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             new Divider()
                           ],
@@ -1651,29 +1741,35 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Surgery Name",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 110,
+                        height: 40,
+                        child: Text(
+                          "Surgery Name",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 110,
-                      height: 40,
-                      child: Text(
-                        "Amount",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 110,
+                        height: 40,
+                        child: Text(
+                          "Amount",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -1682,45 +1778,51 @@ class _EditAddHospital extends State<EditAddHospital> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: surController,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: surController,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 180,
-                      height: 40,
-                      child: TextFormField(
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          // focusedBorder: InputBorder.none,
-                          // enabledBorder: InputBorder.none,
-                          //errorBorder: OutlineInputBorder(),
-                          //disabledBorder: InputBorder.none,
-                          // hintText: "Hospital Name"
-                        ),
-                        controller: suramtController,
-                        inputFormatters: <TextInputFormatter>[
-                          //  FilteringTextInputFormatter.digitsOnly
-                        ],
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Lato',
+                    Flexible(
+                      flex:1,
+                      child: Container(
+                        // width: 180,
+                        height: 40,
+                        child: TextFormField(
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            // focusedBorder: InputBorder.none,
+                            // enabledBorder: InputBorder.none,
+                            //errorBorder: OutlineInputBorder(),
+                            //disabledBorder: InputBorder.none,
+                            // hintText: "Hospital Name"
+                          ),
+                          controller: suramtController,
+                          inputFormatters: <TextInputFormatter>[
+                            //  FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Lato',
+                          ),
                         ),
                       ),
                     ),
@@ -1765,7 +1867,11 @@ class _EditAddHospital extends State<EditAddHospital> {
 //                      itemCount: healthCharges.length,
 //                      itemBuilder: (_, index) => healthCharges[index]),
                 ),
-                Text("Old Data"),
+                SizedBox(height: 10,),
+                Text("Old Data",style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Lato',
+                ),),
                 Container(
                   height: 200,
                   child: ListView.builder(
@@ -1778,7 +1884,38 @@ class _EditAddHospital extends State<EditAddHospital> {
                           children: <Widget>[
                             new Container(
                               margin: new EdgeInsets.only(left: 10.0),
-                              child: new Text("${index + 1} : Type.${surgery1[index].surgeryname}  Charge.${surgery1[index].suramount}"),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      new Text("${index + 1} : Type.${surgery1[index].surgeryname}",style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Lato',
+                                      ),),
+                                       new Text("Charge.${surgery1[index].suramount}",style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Lato',
+                                      ),),
+                                    ],
+                                  ),
+
+                                  new InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        surgery1.removeAt(index);
+                                      });
+                                    },
+                                    child: Expanded(
+                                      child: Text("Delete",style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                        color: Colors.redAccent,
+                                      ),),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             new Divider()
                           ],
@@ -2951,21 +3088,6 @@ class _EditAddHospital extends State<EditAddHospital> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    RaisedButton(
-                      child: Text("Add Doctors"),
-                      onPressed: addDynamicD,
-                    ),
-                    Doctor.length == 0 ? dynamicD() : resultD(),
-                    RaisedButton(
-                      child: Text("Add Nurses"),
-                      onPressed: addDynamicN,
-                    ),
-                    Nurse.length == 0 ? dynamicN() : resultN(),
-                    RaisedButton(
-                      child: Text("Add Staffs"),
-                      onPressed: addDynamicS,
-                    ),
-                    Staff.length == 0 ? dynamicS() : resultS(),
                     Row(
                       children: [
                         Container(
@@ -2990,6 +3112,22 @@ class _EditAddHospital extends State<EditAddHospital> {
                         ),
                       ],
                     ),
+                    RaisedButton(
+                      child: Text("Add Doctors"),
+                      onPressed: addDynamicD,
+                    ),
+                    Doctor.length == 0 ? dynamicD() : resultD(),
+                    RaisedButton(
+                      child: Text("Add Nurses"),
+                      onPressed: addDynamicN,
+                    ),
+                    Nurse.length == 0 ? dynamicN() : resultN(),
+                    RaisedButton(
+                      child: Text("Add Staffs"),
+                      onPressed: addDynamicS,
+                    ),
+                    Staff.length == 0 ? dynamicS() : resultS(),
+
                   ]
               ),
             ),
@@ -3096,11 +3234,119 @@ class _EditAddHospital extends State<EditAddHospital> {
             ),
           ),
         );
+      case 11:
+        return new Container(
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.all(10),
+          child: Form(
+            key: _formKey,
+            child: TextFormField(
+              maxLines: 100,
+              controller: tandccontroller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+          ),
+        );
 
     }
   }
+  showAlertDialog(BuildContext context) async{
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Continue"),
+      onPressed:  () {
+        try {
+          ApiService().hospitals(
+            nameController.text,
+            regController.text,
+            addressController.text,
+            dateofController.text,
+            adminiController.text,
+            pincode.text,
+            adminiphoneController.text,
+            ACCRED,
+            "+91${ambuController.text}",
+            "+91${emerController.text}",
+            "+91${bookphController.text}",
+            "+91${opdbkController.text}",
+            imagesUrl,
+            "Completed",
+            freebeds,
+            conbeds,
+            covidbeds,
+            Beds,
+            notecontroller.text,
+            diagnosis1,
+            health1,
+            surgery1,
+            spl,
+            fcl,
+            doclist,
+            nurlist,
+            stafflist,
+            TPA,
+            is24.toString(),
+            isCovid.toString(),
+            isnabh.toString(),
+            awardsController.text,
+            tandccontroller.text,
+            widget.key1,
+            "",
+          );
+        } catch (e) {
+          print(e);
+        }
+        AuthService()
+            .toast("Your Added Hospital Is Under Verification");
+        if (widget.category=="Doctor") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DoctorNewDashboard(widget.id,widget.mobile,widget.category)),
+          );
+        } else if((widget.category=="Patient")){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PatientNewDashboard(widget.id,widget.mobile,widget.category)),
+          );
+        }else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HospitalDashboard(widget.id,widget.mobile,widget.category)),
+          );
+        }
+        pressed = false;
+        print(pressed);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Back"),
+      onPressed:  () async{
+        Navigator.pop(context);
+      },
+    );
 
-  SingleChildScrollView dataBody(String item1, String item2, String item3, List Values) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Save"),
+      content: Text("Are you sure you want to save the following hospital?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+   dataBody(String item1, String item2, String item3, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         sortAscending: true,
@@ -3118,7 +3364,7 @@ class _EditAddHospital extends State<EditAddHospital> {
                       fontSize: 14,
                       fontFamily: 'Lato'))),
           DataColumn(
-              label: Text(item3,
+              label: Text("Charges",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -3126,7 +3372,7 @@ class _EditAddHospital extends State<EditAddHospital> {
         ],
         rows: List.generate(
           Values.length,
-              (index) {
+              (index){
             return DataRow(cells: [
               DataCell(
                   Center(
@@ -3154,6 +3400,17 @@ class _EditAddHospital extends State<EditAddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  Beds.removeAt(index);
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           initialValue: Values[index]['charges'],
                           onFieldSubmitted: (v) {
                             setState(() {
@@ -3165,13 +3422,13 @@ class _EditAddHospital extends State<EditAddHospital> {
             ]);
           },
         ),
-        columnSpacing: MediaQuery.of(context).size.width * 9 / 100,
+        // columnSpacing: MediaQuery.of(context).size.width * 9 / 100,
       ),
     );
   }
-
-  SingleChildScrollView dataBody1(String item1, String item2, List Values) {
+   dataBody1(String item1, String item2, List Values) {
     return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
       child: DataTable(
         columns: [
           DataColumn(
@@ -3194,6 +3451,7 @@ class _EditAddHospital extends State<EditAddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+
                           initialValue: Values[index][item1],
                           onChanged: (v) {
                             setState(() {
@@ -3205,6 +3463,21 @@ class _EditAddHospital extends State<EditAddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  if(Values==diagnosis) {
+                                    diagnosis.removeAt(index);
+                                  }else if(Values==health){
+                                    health.removeAt(index);
+                                  }
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           keyboardType: TextInputType.number,
                           initialValue: Values[index][item2],
                           onChanged: (v) {
@@ -3221,7 +3494,7 @@ class _EditAddHospital extends State<EditAddHospital> {
       ),
     );
   }
-  SingleChildScrollView dataBody2(String item1, String item2, List values1) {
+   dataBody2(String item1, String item2, List values1) {
     setState(() {});
     return SingleChildScrollView(
       child: DataTable(
@@ -3258,6 +3531,17 @@ class _EditAddHospital extends State<EditAddHospital> {
               DataCell(
                   Center(
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("Onpressed");
+                                setState(() {
+                                  surgery.removeAt(index);
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                           keyboardType: TextInputType.number,
                           initialValue: values1[index][item2],
                           onChanged: (v) {
@@ -3274,8 +3558,7 @@ class _EditAddHospital extends State<EditAddHospital> {
       ),
     );
   }
-
-  SingleChildScrollView dataBody3(String title, List Values) {
+   dataBody3(String title, List Values) {
     return SingleChildScrollView(
       child: DataTable(
         columns: [

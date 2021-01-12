@@ -24,9 +24,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../chat_screen.dart';
 class PatientNewDashboard extends StatefulWidget {
-  String id;
-  String mobile;
-  PatientNewDashboard(this.id,this.mobile);
+  final String id;
+  final String mobile;
+  final String category;
+  PatientNewDashboard(this.id,this.mobile,this.category);
   @override
   _PatientNewDashboardState createState() => _PatientNewDashboardState();
 }
@@ -42,7 +43,7 @@ class _PatientNewDashboardState extends State<PatientNewDashboard> {
 
   List<Widget> _widgetOptions() => [
     MyPendings(widget.id,widget.mobile,"MY DOCTOR"),
-    Hospitals(widget.mobile,widget.id),
+    Hospitals(widget.mobile,widget.id,widget.category),
     HomeScreen(widget.id,widget.mobile),
     DisplayComplains(widget.id,widget.mobile)
   ];

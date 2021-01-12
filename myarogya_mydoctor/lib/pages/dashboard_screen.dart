@@ -95,12 +95,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               (widget.category=="MY DOCTOR")?
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PatientNewDashboard(widget.id,widget.mobile)),
+                MaterialPageRoute(builder: (context) => PatientNewDashboard(widget.id,widget.mobile,"Patient")),
               )
               :
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DoctorNewDashboard(widget.id,widget.mobile)),
+                MaterialPageRoute(builder: (context) => DoctorNewDashboard(widget.id,widget.mobile,"Doctor")),
               );
             },
           ),

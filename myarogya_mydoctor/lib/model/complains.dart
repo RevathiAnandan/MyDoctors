@@ -18,21 +18,21 @@ class Complains{
 
   factory Complains.fromJson(dynamic json){
     return new Complains._(
-      ComplainNumber: json["ComplainNumber"] as String,
-      About: json["About"] as String,
-      location: json["Location"] as String,
-      SendTo: json["SendTo"] as String,
-      Category: json["Category"] as String,
-      Depart: json["Depart"] as String,
-      CompanyName: json["CompanyName"] as String,
-      Govt: json["Govt"] as String,
-      image: json["Image"] as String,
-      video: json["Video"] as String,
-      mobile: json["Mobile"] as String,
-      Risky: json["Risky"] as int,
-      Urgent: json["Urgent"] as int,
-      Priority: json["Priority"] as int,
-      Views: json["Views"] as int,
+      ComplainNumber: json["ComplainNumber"] as String??"",
+      About: json["About"] as String??"",
+      location: json["Location"] as String??"",
+      SendTo: json["SendTo"] as String??"",
+      Category: json["Category"] as String??"",
+      Depart: json["Depart"] as String??"",
+      CompanyName: json["CompanyName"] as String??"",
+      Govt: json["Govt"] as String??"",
+      image: json["Image"] as String??"",
+      video: json["Video"] as String??"",
+      mobile: json["Mobile"] as String??"",
+      Risky: json["Risky"] as int??1,
+      Urgent: json["Urgent"] as int??1,
+      Priority: json["Priority"] as int??1,
+      Views: json["Views"] as int??1,
     );
   }
 

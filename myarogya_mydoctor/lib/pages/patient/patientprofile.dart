@@ -329,7 +329,6 @@ class _PatientProfileState extends State<PatientProfile> {
           if (snapshot.value == null) {
           } else {
             Map<dynamic, dynamic> values = snapshot.value;
-            print("Harun"+values.toString());
             refreshToken = PatientUser.fromJson(values);
             _pName.text = refreshToken.Name;
             _age.text = refreshToken.Age;
