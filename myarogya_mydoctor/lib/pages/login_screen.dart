@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //      });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile)),
+        MaterialPageRoute(builder: (context) => OtpScreen(authResult,mobile,verficationId)),
       );
 
     };
@@ -121,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
         verificationCompleted: verified,
         verificationFailed: verificationfailed,
         codeSent: smsSent,
-        codeAutoRetrievalTimeout: null,
+        codeAutoRetrievalTimeout: (text){
+          print("ytftf"+text);
+        },
     );
 //    if( receiveCode == true) {
 //      Navigator.push(
