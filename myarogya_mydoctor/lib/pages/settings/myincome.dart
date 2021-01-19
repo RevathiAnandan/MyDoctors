@@ -229,23 +229,32 @@ class _MyIncomePageState extends State<MyIncomePage> {
     print("Enter FOr loop");
     print(DateFormat.MMMM().format(DateTime.now()));
     for(int i=0;i<dummyData.length;i++){
-      if(dummyData[i].bookdetails[0].type=="Rooms" && dummyData[i].BookingDate.split(" ")[1]==monthvalue){
-        rooms.add(dummyData[i]);
-        print(dummyData[i].bookdetails[0].noOfBeds);
-        charges = charges + int.parse(dummyData[i].bookdetails[0].noOfBeds);
-      }else if(dummyData[i].bookdetails[0].type=="Pathology"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue){
-        pathology.add(dummyData[i]);
-        print(dummyData[i].bookdetails[0].type);
-        charges = charges + 1;
-        print(dummyData[i].bookdetails[0].type);
-      }else if(dummyData[i].bookdetails[0].type=="Packages"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue){
-        packages.add(dummyData[i]);
-        charges = charges +1;
-        print(dummyData[i].bookdetails[0].type);
-      }else if(dummyData[i].bookdetails[0].type=="Surgery"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue){
-        surgery.add(dummyData[i]);
-        charges = charges + 1;
-        print(dummyData[i].bookdetails[0].type);
+      if (dummyData[i].BookingDate!="") {
+        print(dummyData[i].BookingDate.split(" ")[2]);
+      } else {
+
+      }
+      if (dummyData[i].BookingDate!="") {
+        if(dummyData[i].bookdetails[0].type=="Rooms" && dummyData[i].BookingDate.split(" ")[1]==monthvalue && dummyData[i].BookingDate.split(" ")[2]=="2021"){
+                rooms.add(dummyData[i]);
+                print(dummyData[i].bookdetails[0].noOfBeds);
+                charges = charges + int.parse(dummyData[i].bookdetails[0].noOfBeds);
+              }else if(dummyData[i].bookdetails[0].type=="Pathology"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue&& dummyData[i].BookingDate.split(" ")[2]=="2021"){
+                pathology.add(dummyData[i]);
+                print(dummyData[i].bookdetails[0].type);
+                charges = charges + 1;
+                print(dummyData[i].bookdetails[0].type);
+              }else if(dummyData[i].bookdetails[0].type=="Packages"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue&& dummyData[i].BookingDate.split(" ")[2]=="2021"){
+                packages.add(dummyData[i]);
+                charges = charges +1;
+                print(dummyData[i].bookdetails[0].type);
+              }else if(dummyData[i].bookdetails[0].type=="Surgery"&& dummyData[i].BookingDate.split(" ")[1]==monthvalue&& dummyData[i].BookingDate.split(" ")[2]==DateTime.now().year.toString()){
+                surgery.add(dummyData[i]);
+                charges = charges + 1;
+                print(dummyData[i].bookdetails[0].type);
+              }
+      } else {
+
       }
     }
     print("Out of ForLoop");

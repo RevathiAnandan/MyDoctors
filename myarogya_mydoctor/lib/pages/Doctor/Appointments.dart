@@ -362,7 +362,7 @@ class _AppointmentsState extends State<Appointments> {
               subtitle: Text(dummyData[i].patientMobile),
               trailing: (dummyData[i].status != "Waiting!")
                   ? FlatButton(
-                child: start1!=null?Text(timesplit(start1),
+                child: start1!=null?Text(timesplit(DateTime.parse(dummyData[i].BookingTime)),
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "Lato",
@@ -382,7 +382,8 @@ class _AppointmentsState extends State<Appointments> {
                     AuthService().alertDialog(context, widget.id, widget.mobile);
                   }
                 },
-              ) : FlatButton(
+              )
+                  : FlatButton(
                       child: Text("Confirm",
                           style: TextStyle(
                               color: Colors.white,
@@ -398,6 +399,7 @@ class _AppointmentsState extends State<Appointments> {
                       onPressed: () async {
                         if (start1!=null&&interval1!=null) {
                           if (i == 0) {
+
                           } else {
                             setState(() {
                               start1 = start1.add(
@@ -439,7 +441,7 @@ class _AppointmentsState extends State<Appointments> {
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);
       print(formatter);
-      var db = await fb.reference().child("Appointment");
+      var db = await fb.reference().child("Appointment").orderByKey();
       db.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
