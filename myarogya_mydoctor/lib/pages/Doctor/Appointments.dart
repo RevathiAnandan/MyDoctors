@@ -251,31 +251,32 @@ class _AppointmentsState extends State<Appointments> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                Container(
-                                  width: 130,
-                                  height: 40,
-                                  child: Card(
-                                    color: new Color(0xffFFFFFF),
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Center(
-                                        child: GestureDetector(
-                                            onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DashBoardScreen(
-                                                              widget.mobile,
-                                                              "MY PATIENT",widget.id)),
-                                                ),
-                                            child: Text("My Patients",
-                                                style: new TextStyle(
-                                                    color: Colors.redAccent,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Lato")))),
+                                GestureDetector(
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DashBoardScreen(
+                                                widget.mobile,
+                                                "MY PATIENT",widget.id)),
+                                  ),
+                                  child: Container(
+                                    width: 130,
+                                    height: 40,
+                                    child: Card(
+                                      color: new Color(0xffFFFFFF),
+                                      elevation: 6,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Center(
+                                          child: Text("My Patients",
+                                              style: new TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Lato"))),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 5.0),
@@ -398,7 +399,7 @@ class _AppointmentsState extends State<Appointments> {
                       padding: EdgeInsets.all(10),
                       onPressed: () async {
                         if (start1!=null&&interval1!=null) {
-                          if (i == 0) {
+                          if (dummyData.length == 1) {
 
                           } else {
                             setState(() {

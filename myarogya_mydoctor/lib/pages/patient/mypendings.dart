@@ -208,31 +208,32 @@ class _MyPendingsState extends State<MyPendings> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Container(
-                              width: 160,
-                              height: 50,
-                              child: Card(
-                                color: new Color(0xffFFFFFF),
-                                elevation: 6,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Center(
-                                    child: GestureDetector(
-                                        onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DashBoardScreen(
-                                                          widget.mobile,
-                                                          "MY DOCTOR",
-                                                          widget.id)),
-                                            ),
-                                        child: Text("My Doctors",
-                                            style: new TextStyle(
-                                                color: Colors.redAccent,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: "Lato")))),
+                            GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DashBoardScreen(
+                                            widget.mobile,
+                                            "MY DOCTOR",
+                                            widget.id)),
+                              ),
+                              child: Container(
+                                width: 160,
+                                height: 50,
+                                child: Card(
+                                  color: new Color(0xffFFFFFF),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: Text("My Doctors",
+                                          style: new TextStyle(
+                                              color: Colors.redAccent,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato"))),
+                                ),
                               ),
                             ),
                             SizedBox(height: 5.0),
@@ -253,28 +254,29 @@ class _MyPendingsState extends State<MyPendings> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Container(
-                              width: 160,
-                              height: 50,
-                              child: Card(
-                                color: new Color(0xffFFFFFF),
-                                elevation: 6,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Center(
-                                    child: GestureDetector(
-                                        onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MyBookingSettings(widget.id, widget.mobile),
-                                          ),
-                                        ),
-                                        child: Text("Hospital Bookings",
-                                            style: new TextStyle(
-                                                color: Colors.redAccent,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: "Lato")))),
+                            GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyBookingSettings(widget.id, widget.mobile),
+                                ),
+                              ),
+                              child: Container(
+                                width: 160,
+                                height: 50,
+                                child: Card(
+                                  color: new Color(0xffFFFFFF),
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: Text("Hospital Bookings",
+                                          style: new TextStyle(
+                                              color: Colors.redAccent,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Lato"))),
+                                ),
                               ),
                             ),
                             SizedBox(height: 5.0),
