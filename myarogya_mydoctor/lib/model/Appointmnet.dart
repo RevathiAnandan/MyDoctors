@@ -7,8 +7,11 @@ class Appointmnet{
   int Token;
   String BookingTime;
   String Index;
+  String patientname;
+  String patientage;
+  String patientgender;
 
-  Appointmnet._({this.doctorMobile, this.status,this.patientMobile,this.doctorName,this.date,this.Token,this.BookingTime,this.Index});
+  Appointmnet._({this.doctorMobile, this.status,this.patientMobile,this.doctorName,this.date,this.Token,this.BookingTime,this.Index,this.patientname,this.patientage,this.patientgender});
 
   factory Appointmnet.fromJson(dynamic json) {
 
@@ -22,6 +25,9 @@ class Appointmnet{
         BookingTime: json['BookingTime'] as String??"",
         Index: json['Index'] as String??"",
         Token: json['Token'] as int??1,
+        patientname: json['patientName'] as String??"",
+        patientage: json['patientAge'] as String??"",
+        patientgender: json['patientGender'] as String??"",
       );
     }else
     {

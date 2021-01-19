@@ -1097,7 +1097,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 widget.userId,
                 widget.mobile,
                 ConstantUtils().Doctor,
-                "null",
+                imagelink,
                 doctorId,
                 hospitalName,
                 specialist,

@@ -185,7 +185,7 @@ class ApiService{
 
   }
 
-  Future updatePatientProfile(String id,String mobile,String category,String downloadUrl,String pName,String email,String Age) async{
+  Future updatePatientProfile(String id,String mobile,String category,String downloadUrl,String pName,String email,String Age,String gender) async{
     print(id);
     try {
       return fb.reference().child('User').child(mobile)
@@ -196,6 +196,7 @@ class ApiService{
         "image": downloadUrl,
         "Name": pName,
         "Age":Age,
+        "Gender":gender,
         "emailId": email
       });
 
@@ -204,8 +205,7 @@ class ApiService{
     }
   }
   
-  Future appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key,String index) async{
-
+  Future<dynamic> appointment(String pmobile,String dmobile,String pname,String status,int token,String bookingTime,String key,String index,String patientname,String patientage,String patientgender) async{
     try{
       final now = new DateTime.now();
       String formatter = DateFormat('yMd').format(now);// 28/03/2020
@@ -224,7 +224,11 @@ class ApiService{
         return status;
       }else{
         var db = fb.reference().child("Appointment").push();
-        db.set({
+        print("values");
+        db.update({
+          "patientName": patientname,
+          "patientAge": patientage,
+          "patientGender": patientgender,
           "doctorMobile":dmobile,
           "patientMobile":pmobile,
           "doctorName":pname,
@@ -232,9 +236,9 @@ class ApiService{
           "date": formatter,
           "Token": token,
           "BookingTime":bookingTime,
-          "Index": index
+          "Index": index,
         });
-        return status;
+        return db.key;
       }
     }catch(e){
       print(e);

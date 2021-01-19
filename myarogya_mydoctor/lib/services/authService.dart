@@ -127,7 +127,7 @@ class AuthService{
   alertDialog(BuildContext context,String id,String mobile){
     Alert(
         context: context,
-        title: "Alert",
+        title: "Update",
         content: Column(
             children: <Widget>[
               Text("Please Update Your Profile for Proceed Further!!")

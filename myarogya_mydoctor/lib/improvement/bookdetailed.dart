@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:myarogya_mydoctor/model/Hospitals.dart';
+import 'package:myarogya_mydoctor/model/patientUser.dart';
 import 'package:myarogya_mydoctor/pages/patient/mypendings.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
 import 'package:myarogya_mydoctor/services/ApiService.dart';
@@ -19,7 +20,8 @@ class Bookdetailed extends StatefulWidget {
   final String category;
   final String id;
 
-  Bookdetailed(this.hospitalvalues,this.key1,this.mobile,this.category,this.id);
+  Bookdetailed(
+      this.hospitalvalues, this.key1, this.mobile, this.category, this.id);
   @override
   _BookdetailedState createState() => _BookdetailedState();
 }
@@ -35,11 +37,13 @@ class _BookdetailedState extends State<Bookdetailed> {
     getsurgerytype();
     getnames();
   }
+
   List<String> roomnames = [];
   List<String> roomnames1 = [];
   List<String> pathology = [];
   List<String> health = [];
   List<String> surgery = [];
+  List<PatientUser> dummyData1 = [];
   int bal;
   String values;
   String valuesP;
@@ -52,45 +56,49 @@ class _BookdetailedState extends State<Bookdetailed> {
   int key2;
   String selectedR;
   Radio rb1;
-  List details = ["","",""];
-  int some=3;
-  getnames(){
+  List details = ["", "", ""];
+  int some = 3;
+  getnames() {
     widget.hospitalvalues.beds.forEach((e) {
       print(e.roomType);
       print(e.noOfBeds);
       print(e.charges);
-      details.insert(some,{
-              "count": e.noOfBeds,
-              "charges": e.charges,
+      details.insert(some, {
+        "count": e.noOfBeds,
+        "charges": e.charges,
       });
       some++;
     });
     print(details.toString());
     print("5");
   }
-  getroomtype(){
-      roomnames.add("100% free");
-      roomnames.add("Concessional Beds");
-      roomnames.add("Covid Beds");
-    for(var name in widget.hospitalvalues.beds){
+
+  getroomtype() {
+    roomnames.add("100% free");
+    roomnames.add("Concessional Beds");
+    roomnames.add("Covid Beds");
+    for (var name in widget.hospitalvalues.beds) {
       roomnames.add(name.roomType);
     }
     print("1");
   }
-  getpathologytype(){
-    for(var name in widget.hospitalvalues.diagnosis){
+
+  getpathologytype() {
+    for (var name in widget.hospitalvalues.diagnosis) {
       pathology.add(name.test);
     }
     print("2");
   }
-  gethealthtype(){
-    for(var name in widget.hospitalvalues.health){
+
+  gethealthtype() {
+    for (var name in widget.hospitalvalues.health) {
       health.add(name.packagename);
     }
     print("3");
   }
-  getsurgerytype(){
-    for(var name in widget.hospitalvalues.surgery){
+
+  getsurgerytype() {
+    for (var name in widget.hospitalvalues.surgery) {
       surgery.add(name.surgeryname);
     }
     print("4");
@@ -98,6 +106,7 @@ class _BookdetailedState extends State<Bookdetailed> {
       isLoading = false;
     });
   }
+
   // bool _check = false;
   // bool _check1 = false;
   // bool _check2 = false;
@@ -130,2005 +139,2154 @@ class _BookdetailedState extends State<Bookdetailed> {
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
                   )
                 : Padding(
-          padding: EdgeInsets.fromLTRB(5,0,5,0),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    children: [
-                      Divider(
-                        height: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.redAccent,
-                              blurRadius: 1.0,
-                            ),
-                          ],
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      children: [
+                        Divider(
+                          height: 10,
                         ),
-                        height: 60,
-                        child: ListTile(
-                          title: Container(
-                            //width: 400,
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "OPD Booking",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.redAccent),
-                                ),
-                                MaterialButton(
-                                  height: 30,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(25.0),
-                                      side: BorderSide(
-                                          color: Colors.redAccent)),
-                                  onPressed: () {
-                                        ApiService().appointment(widget.mobile, widget.hospitalvalues.opdBookingNo, widget.hospitalvalues.hospitalName, "Confirm", 1, DateTime.now().toString(), "", "");
-                                        AuthService().toast("OPD Doctor has been booked");
-                                        if(widget.category=="Patient") {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PatientNewDashboard(widget.id,
-                                                        widget.mobile,
-                                                        widget.category)),
-                                          );
-                                        }else{
-                                          Navigator.pop(context);
-                                        }
-                                        },
-                                  color: Colors.redAccent,
-                                  child: Text(
-                                    "Book OPD",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.redAccent,
+                                blurRadius: 1.0,
+                              ),
+                            ],
                           ),
-                          // controlAffinity: ListTileControlAffinity.leading,
-                          //tileColor: Colors.white,
-                        ),
-                      ),
-                      Divider(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.redAccent,
-                              blurRadius: 5.0,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                  Text("Beds",style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.redAccent),),
+                          height: 60,
+                          child: ListTile(
+                            title: Container(
+                              //width: 400,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "OPD Booking",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.redAccent),
+                                  ),
                                   MaterialButton(
                                     height: 30,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(25.0),
+                                            BorderRadius.circular(25.0),
                                         side: BorderSide(
                                             color: Colors.redAccent)),
                                     onPressed: () {
-                                      _openPopup(context,"Rooms",values);
+                                      ApiService().appointment(
+                                          widget.mobile,
+                                          widget.hospitalvalues.opdBookingNo,
+                                          widget.hospitalvalues.hospitalName,
+                                          "Confirm",
+                                          1,
+                                          DateTime.now().toString(),
+                                          "",
+                                          "",dummyData1[i].Name,dummyData1[i].Age,dummyData1[i].Gender);
+                                      AuthService()
+                                          .toast("OPD Doctor has been booked");
+                                      if (widget.category == "Patient") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PatientNewDashboard(
+                                                      widget.id,
+                                                      widget.mobile,
+                                                      widget.category)),
+                                        );
+                                      } else {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    color: Colors.redAccent,
+                                    child: Text(
+                                      "Book OPD",
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // controlAffinity: ListTileControlAffinity.leading,
+                            //tileColor: Colors.white,
+                          ),
+                        ),
+                        Divider(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.redAccent,
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Beds",
+                                    style: TextStyle(
+                                        fontSize: 22, color: Colors.redAccent),
+                                  ),
+                                  MaterialButton(
+                                    height: 30,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: Colors.redAccent)),
+                                    onPressed: () {
+                                      _openPopup(context, "Rooms", values);
                                     },
                                     color: Colors.redAccent,
                                     child: Text(
                                       "Book Bed",
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white),
+                                          fontSize: 14, color: Colors.white),
                                     ),
                                   ),
-                              ],
-                            ),
-                            RadioButtonGroup(
-                              orientation: GroupedButtonsOrientation.VERTICAL,
-                              onChange: (String label, int index) => print("label: $label index: $index"),
-                              margin: const EdgeInsets.only(left: 12.0),
-                              onSelected: (selectedR) => setState((){
-                                values = selectedR;
-                              }),
-                              labels: roomnames,
-                              labelStyle: TextStyle(
-                                fontSize: 15,
+                                ],
                               ),
-                              itemBuilder: (rb1, Text txt, int i){
-                                print(i);
-                                return Row(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Transform.scale(scale:1.25,child: rb1),
-                                    txt,
-                                    (i==0)?Text("  Count:  ",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].noOfBeds,style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==0)?Text(" Rs.",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==0)?Text(widget.hospitalvalues.freebeds[0].charges+" /Day",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==1)?Text("  Count: ",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].noOfBeds,style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==1)?Text(" Rs.",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==1)?Text(widget.hospitalvalues.conbeds[0].charges+" /Day",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==2)?Text("  Count:",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].noOfBeds,style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==2)?Text(" Rs.",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    (i==2)?Text(widget.hospitalvalues.covidbeds[0].charges+" /Day",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container(),
-                                    // setstate(i),
-                                    (i!=0)?(i!=1)?(i!=2)?Text(" Count:"+details[i]['count'],style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container():Container():Container(),
-                                    (i!=0)?(i!=1)?(i!=2)?Text(" Rs.",style: TextStyle(
-                                      fontSize: 17,
-                                    ),):Container():Container():Container(),
-                                    (i!=0)?(i!=1)?(i!=2)?Text(details[i]['charges']+" /Day",style: TextStyle(
-                                      fontSize: 15,
-                                    ),):Container():Container():Container(),
-                                  ],
-                                );
-                              },
-                            ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Text("* "+widget.hospitalvalues.note,style: TextStyle(
-                            fontSize: 14,color: Colors.redAccent)),
+                              RadioButtonGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                onChange: (String label, int index) =>
+                                    print("label: $label index: $index"),
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (selectedR) => setState(() {
+                                  values = selectedR;
+                                }),
+                                labels: roomnames,
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                itemBuilder: (rb1, Text txt, int i) {
+                                  print(i);
+                                  return Row(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Transform.scale(scale: 1.25, child: rb1),
+                                      txt,
+                                      (i == 0)
+                                          ? Text(
+                                              "  Count:  ",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 0)
+                                          ? Text(
+                                              widget.hospitalvalues.freebeds[0]
+                                                  .noOfBeds,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 0)
+                                          ? Text(
+                                              " Rs.",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 0)
+                                          ? Text(
+                                              widget.hospitalvalues.freebeds[0]
+                                                      .charges +
+                                                  " /Day",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 1)
+                                          ? Text(
+                                              "  Count: ",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 1)
+                                          ? Text(
+                                              widget.hospitalvalues.conbeds[0]
+                                                  .noOfBeds,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 1)
+                                          ? Text(
+                                              " Rs.",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 1)
+                                          ? Text(
+                                              widget.hospitalvalues.conbeds[0]
+                                                      .charges +
+                                                  " /Day",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 2)
+                                          ? Text(
+                                              "  Count:",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 2)
+                                          ? Text(
+                                              widget.hospitalvalues.covidbeds[0]
+                                                  .noOfBeds,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 2)
+                                          ? Text(
+                                              " Rs.",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      (i == 2)
+                                          ? Text(
+                                              widget.hospitalvalues.covidbeds[0]
+                                                      .charges +
+                                                  " /Day",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          : Container(),
+                                      // setstate(i),
+                                      (i != 0)
+                                          ? (i != 1)
+                                              ? (i != 2)
+                                                  ? Text(
+                                                      " Count:" +
+                                                          details[i]['count'],
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    )
+                                                  : Container()
+                                              : Container()
+                                          : Container(),
+                                      (i != 0)
+                                          ? (i != 1)
+                                              ? (i != 2)
+                                                  ? Text(
+                                                      " Rs.",
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                      ),
+                                                    )
+                                                  : Container()
+                                              : Container()
+                                          : Container(),
+                                      (i != 0)
+                                          ? (i != 1)
+                                              ? (i != 2)
+                                                  ? Text(
+                                                      details[i]['charges'] +
+                                                          " /Day",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    )
+                                                  : Container()
+                                              : Container()
+                                          : Container(),
+                                    ],
+                                  );
+                                },
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("* " + widget.hospitalvalues.note,
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.redAccent)),
+                              ),
+                              //     RadioButtonGroup(
+                              //   orientation: GroupedButtonsOrientation.VERTICAL,
+                              //   onChange: (String label, int index) => print("label: $label index: $index"),
+                              //   margin: const EdgeInsets.only(left: 12.0),
+                              //   onSelected: (selectedR) => setState((){
+                              //     values = selectedR;
+                              //   }),
+                              //   labels: roomnames1,
+                              //   labelStyle: TextStyle(
+                              //     fontSize: 15,
+                              //   ),
+                              //   itemBuilder: (rb1, Text txt, int i){
+                              //     return Row(
+                              //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //       children: <Widget>[
+                              //         Transform.scale(scale:1.25,child: rb1),
+                              //         txt,
+                              //         Text("  Count:",style: TextStyle(
+                              //           fontSize: 15,
+                              //         ),),
+                              //         Text(widget.hospitalvalues.beds[i].noOfBeds,style: TextStyle(
+                              //           fontSize: 15,
+                              //         ),),
+                              //         Text(" Rs.",style: TextStyle(
+                              //           fontSize: 17,
+                              //         ),),
+                              //         Text(widget.hospitalvalues.beds[i].charges+" /Day",style: TextStyle(
+                              //           fontSize: 15,
+                              //         ),),
+                              //       ],
+                              //     );
+                              //   },
+                              // ),
+                              //     RadioButtonGroup(
+                              //   orientation: GroupedButtonsOrientation.VERTICAL,
+                              //    onChange: (String label, int index) => print("label: $label index: $index"),
+                              //   margin: const EdgeInsets.only(left: 12.0),
+                              //   onSelected: (String selected) => setState((){
+                              //     values = selected;
+                              //   }),
+                              //   labels: roomnames,
+                              //   itemBuilder: (Radio rb, Text txt, int i){
+                              //     print(i);
+                              //     return Row(
+                              //       children: <Widget>[
+                              //         rb,
+                              //         txt,
+                              //         (i==0)?Text(widget.hospitalvalues.freebeds[0].noOfBeds):Container(),
+                              //         (i==0)?Text(widget.hospitalvalues.freebeds[0].charges):Container(),
+                              //         (i==1)?Text(widget.hospitalvalues.conbeds[0].noOfBeds):Container(),
+                              //         (i==1)?Text(widget.hospitalvalues.conbeds[0].charges):Container(),
+                              //         (i==2)?Text(widget.hospitalvalues.covidbeds[0].noOfBeds):Container(),
+                              //         (i==2)?Text(widget.hospitalvalues.covidbeds[0].charges):Container(),
+                              //       ],
+                              //     );
+                              //   },
+                              // ),
+                              //     RadioButtonGroup(
+                              //       labels: roomnames,
+                              //       onChange: (String label, int index) => print("label: $label index: $index"),
+                              //       onSelected: (String label) {
+                              //         setState(() {
+                              //           values = label;
+                              //         });
+                              //     },
+                              //     ),
+                            ],
+                          ),
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text("Rooms",style: TextStyle(
+                          //             fontSize: 22,
+                          //             color: Colors.redAccent),),
+                          //         MaterialButton(
+                          //           height: 30,
+                          //           shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //               BorderRadius.circular(25.0),
+                          //               side: BorderSide(
+                          //                   color: Colors.redAccent)),
+                          //           onPressed: () {},
+                          //           color: Colors.redAccent,
+                          //           child: Text(
+                          //             "Book Rooms",
+                          //             style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 color: Colors.white),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     Divider(
+                          //       height: 10,
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].roomType +
+                          //                           " beds",
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .freebeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check,
+                          //         onChanged: (v) {
+                          //           setState(() {
+                          //             _check = !_check;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .conbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check1,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             selectedContacts.contains({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 ? selectedContacts.remove({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 : selectedContacts.add({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             });
+                          //             // addlist(widget.hospitalvalues
+                          //             //     .conbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //             // selectedContacts.clear();
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check1 = !_check1;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .covidbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check2,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             addlist(widget.hospitalvalues
+                          //                 .covidbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check2 = !_check2;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     new ConstrainedBox(
+                          //       constraints: BoxConstraints(maxHeight: 1000),
+                          //       child: new ListView.builder(
+                          //         physics: ScrollPhysics(),
+                          //         shrinkWrap: true,
+                          //         itemCount: widget.hospitalvalues.beds.length,
+                          //         itemBuilder: (context, i) {
+                          //           return Container(
+                          //             decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(15),
+                          //               color: Colors.white,
+                          //               boxShadow: [
+                          //                 BoxShadow(
+                          //                   color: Colors.grey,
+                          //                   blurRadius: 5.0,
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             height: 50,
+                          //             child: CheckboxListTile(
+                          //               title: Container(
+                          //                 width: 400,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Container(
+                          //                       width:210,
+                          //                       child: Row(
+                          //                         mainAxisAlignment:
+                          //                         MainAxisAlignment.spaceBetween,
+                          //                         children: [
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .roomType ,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .noOfBeds,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       "Rs. " +
+                          //                           widget.hospitalvalues
+                          //                               .beds[i]
+                          //                               .charges,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               // controlAffinity: ListTileControlAffinity.leading,
+                          //               //tileColor: Colors.white,
+                          //               value: check[i],
+                          //               onChanged: (bool v) {
+                          //                 setState(() {
+                          //                   Itemchange(v, i);
+                          //                 });
+                          //               },
+                          //             ),
+                          //           );
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
-                        //     RadioButtonGroup(
-                        //   orientation: GroupedButtonsOrientation.VERTICAL,
-                        //   onChange: (String label, int index) => print("label: $label index: $index"),
-                        //   margin: const EdgeInsets.only(left: 12.0),
-                        //   onSelected: (selectedR) => setState((){
-                        //     values = selectedR;
-                        //   }),
-                        //   labels: roomnames1,
-                        //   labelStyle: TextStyle(
-                        //     fontSize: 15,
+                        Divider(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.redAccent,
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Pathology",
+                                    style: TextStyle(
+                                        fontSize: 22, color: Colors.redAccent),
+                                  ),
+                                  MaterialButton(
+                                    height: 30,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: Colors.redAccent)),
+                                    onPressed: () {
+                                      _openPopup(context, "Pathology", valuesP);
+                                    },
+                                    color: Colors.redAccent,
+                                    child: Text(
+                                      "Book Pathology",
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              RadioButtonGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                onChange: (String label, int index) =>
+                                    print("label: $label index: $index"),
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (String selected) => setState(() {
+                                  valuesP = selected;
+                                }),
+                                labels: pathology,
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                itemBuilder: (Radio rb, Text txt, int i) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Transform.scale(scale: 1.5, child: rb),
+                                      txt,
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Charges: ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        widget
+                                            .hospitalvalues.diagnosis[i].charge,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              // RadioButtonGroup(
+                              //   labels: pathology,
+                              //   onChange: (String label, int index) => print("label: $label index: $index"),
+                              //   onSelected: (String label) {
+                              //     setState(() {
+                              //       valuesP = label;
+                              //     });
+                              //   },
+                              // ),
+                            ],
+                          ),
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text("Rooms",style: TextStyle(
+                          //             fontSize: 22,
+                          //             color: Colors.redAccent),),
+                          //         MaterialButton(
+                          //           height: 30,
+                          //           shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //               BorderRadius.circular(25.0),
+                          //               side: BorderSide(
+                          //                   color: Colors.redAccent)),
+                          //           onPressed: () {},
+                          //           color: Colors.redAccent,
+                          //           child: Text(
+                          //             "Book Rooms",
+                          //             style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 color: Colors.white),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     Divider(
+                          //       height: 10,
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].roomType +
+                          //                           " beds",
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .freebeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check,
+                          //         onChanged: (v) {
+                          //           setState(() {
+                          //             _check = !_check;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .conbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check1,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             selectedContacts.contains({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 ? selectedContacts.remove({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 : selectedContacts.add({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             });
+                          //             // addlist(widget.hospitalvalues
+                          //             //     .conbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //             // selectedContacts.clear();
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check1 = !_check1;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .covidbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check2,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             addlist(widget.hospitalvalues
+                          //                 .covidbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check2 = !_check2;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     new ConstrainedBox(
+                          //       constraints: BoxConstraints(maxHeight: 1000),
+                          //       child: new ListView.builder(
+                          //         physics: ScrollPhysics(),
+                          //         shrinkWrap: true,
+                          //         itemCount: widget.hospitalvalues.beds.length,
+                          //         itemBuilder: (context, i) {
+                          //           return Container(
+                          //             decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(15),
+                          //               color: Colors.white,
+                          //               boxShadow: [
+                          //                 BoxShadow(
+                          //                   color: Colors.grey,
+                          //                   blurRadius: 5.0,
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             height: 50,
+                          //             child: CheckboxListTile(
+                          //               title: Container(
+                          //                 width: 400,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Container(
+                          //                       width:210,
+                          //                       child: Row(
+                          //                         mainAxisAlignment:
+                          //                         MainAxisAlignment.spaceBetween,
+                          //                         children: [
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .roomType ,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .noOfBeds,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       "Rs. " +
+                          //                           widget.hospitalvalues
+                          //                               .beds[i]
+                          //                               .charges,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               // controlAffinity: ListTileControlAffinity.leading,
+                          //               //tileColor: Colors.white,
+                          //               value: check[i],
+                          //               onChanged: (bool v) {
+                          //                 setState(() {
+                          //                   Itemchange(v, i);
+                          //                 });
+                          //               },
+                          //             ),
+                          //           );
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                        ),
+                        Divider(
+                          height: 10,
+                        ),
+                        // Container(
+                        //   padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(15),
+                        //     border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
+                        //     color: Colors.white,
+                        //     boxShadow: [
+                        //       BoxShadow(
+                        //         color: Colors.redAccent,
+                        //         blurRadius: 5.0,
+                        //       ),
+                        //     ],
                         //   ),
-                        //   itemBuilder: (rb1, Text txt, int i){
-                        //     return Row(
-                        //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: <Widget>[
-                        //         Transform.scale(scale:1.25,child: rb1),
-                        //         txt,
-                        //         Text("  Count:",style: TextStyle(
-                        //           fontSize: 15,
-                        //         ),),
-                        //         Text(widget.hospitalvalues.beds[i].noOfBeds,style: TextStyle(
-                        //           fontSize: 15,
-                        //         ),),
-                        //         Text(" Rs.",style: TextStyle(
-                        //           fontSize: 17,
-                        //         ),),
-                        //         Text(widget.hospitalvalues.beds[i].charges+" /Day",style: TextStyle(
-                        //           fontSize: 15,
-                        //         ),),
-                        //       ],
-                        //     );
-                        //   },
-                        // ),
-                        //     RadioButtonGroup(
-                        //   orientation: GroupedButtonsOrientation.VERTICAL,
-                        //    onChange: (String label, int index) => print("label: $label index: $index"),
-                        //   margin: const EdgeInsets.only(left: 12.0),
-                        //   onSelected: (String selected) => setState((){
-                        //     values = selected;
-                        //   }),
-                        //   labels: roomnames,
-                        //   itemBuilder: (Radio rb, Text txt, int i){
-                        //     print(i);
-                        //     return Row(
-                        //       children: <Widget>[
-                        //         rb,
-                        //         txt,
-                        //         (i==0)?Text(widget.hospitalvalues.freebeds[0].noOfBeds):Container(),
-                        //         (i==0)?Text(widget.hospitalvalues.freebeds[0].charges):Container(),
-                        //         (i==1)?Text(widget.hospitalvalues.conbeds[0].noOfBeds):Container(),
-                        //         (i==1)?Text(widget.hospitalvalues.conbeds[0].charges):Container(),
-                        //         (i==2)?Text(widget.hospitalvalues.covidbeds[0].noOfBeds):Container(),
-                        //         (i==2)?Text(widget.hospitalvalues.covidbeds[0].charges):Container(),
-                        //       ],
-                        //     );
-                        //   },
-                        // ),
-                        //     RadioButtonGroup(
-                        //       labels: roomnames,
-                        //       onChange: (String label, int index) => print("label: $label index: $index"),
-                        //       onSelected: (String label) {
-                        //         setState(() {
-                        //           values = label;
-                        //         });
-                        //     },
-                        //     ),
-                          ],
-                        ),
-                        // Column(
-                        //   children: [
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text("Rooms",style: TextStyle(
-                        //             fontSize: 22,
-                        //             color: Colors.redAccent),),
-                        //         MaterialButton(
-                        //           height: 30,
-                        //           shape: RoundedRectangleBorder(
-                        //               borderRadius:
-                        //               BorderRadius.circular(25.0),
-                        //               side: BorderSide(
-                        //                   color: Colors.redAccent)),
-                        //           onPressed: () {},
-                        //           color: Colors.redAccent,
-                        //           child: Text(
-                        //             "Book Rooms",
-                        //             style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.white),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     Divider(
-                        //       height: 10,
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].roomType +
-                        //                           " beds",
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .freebeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check,
-                        //         onChanged: (v) {
-                        //           setState(() {
-                        //             _check = !_check;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .conbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check1,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             selectedContacts.contains({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 ? selectedContacts.remove({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 : selectedContacts.add({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             });
-                        //             // addlist(widget.hospitalvalues
-                        //             //     .conbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //             // selectedContacts.clear();
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check1 = !_check1;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .covidbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check2,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             addlist(widget.hospitalvalues
-                        //                 .covidbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check2 = !_check2;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     new ConstrainedBox(
-                        //       constraints: BoxConstraints(maxHeight: 1000),
-                        //       child: new ListView.builder(
-                        //         physics: ScrollPhysics(),
-                        //         shrinkWrap: true,
-                        //         itemCount: widget.hospitalvalues.beds.length,
-                        //         itemBuilder: (context, i) {
-                        //           return Container(
-                        //             decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(15),
-                        //               color: Colors.white,
-                        //               boxShadow: [
-                        //                 BoxShadow(
-                        //                   color: Colors.grey,
-                        //                   blurRadius: 5.0,
-                        //                 ),
-                        //               ],
+                        //   child: Column(
+                        //     children: [
+                        //       Row(
+                        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           Text("Health Package",style: TextStyle(
+                        //               fontSize: 22,
+                        //               color: Colors.redAccent),),
+                        //           MaterialButton(
+                        //             height: 30,
+                        //             shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                 BorderRadius.circular(25.0),
+                        //                 side: BorderSide(
+                        //                     color: Colors.redAccent)),
+                        //             onPressed: () {},
+                        //             color: Colors.redAccent,
+                        //             child: Text(
+                        //               "Book Packages",
+                        //               style: TextStyle(
+                        //                   fontSize: 14,
+                        //                   color: Colors.white),
                         //             ),
-                        //             height: 50,
-                        //             child: CheckboxListTile(
-                        //               title: Container(
-                        //                 width: 400,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Container(
-                        //                       width:210,
-                        //                       child: Row(
-                        //                         mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceBetween,
-                        //                         children: [
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .roomType ,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .noOfBeds,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                         ],
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Divider(
+                        //         height: 10,
+                        //       ),
+                        //       new ConstrainedBox(
+                        //         constraints: BoxConstraints(maxHeight: 1000),
+                        //         child: new ListView.builder(
+                        //           physics: ScrollPhysics(),
+                        //           shrinkWrap: true,
+                        //           itemCount: widget.hospitalvalues.health.length,
+                        //           itemBuilder: (context, i) {
+                        //             return Container(
+                        //               decoration: BoxDecoration(
+                        //                 borderRadius: BorderRadius.circular(15),
+                        //                 color: Colors.white,
+                        //                 boxShadow: [
+                        //                   BoxShadow(
+                        //                     color: Colors.grey,
+                        //                     blurRadius: 5.0,
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //               height: 50,
+                        //               child: CheckboxListTile(
+                        //                 title: Container(
+                        //                   width: 400,
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                     MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       Text(
+                        //                         widget.hospitalvalues
+                        //                             .health[i]
+                        //                             .packagename +
+                        //                             "                          ",
+                        //                         style: TextStyle(
+                        //                             fontSize: 16,
+                        //                             color: Colors.redAccent),
                         //                       ),
-                        //                     ),
-                        //                     Text(
-                        //                       "Rs. " +
-                        //                           widget.hospitalvalues
-                        //                               .beds[i]
-                        //                               .charges,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               //tileColor: Colors.white,
-                        //               value: check[i],
-                        //               onChanged: (bool v) {
-                        //                 setState(() {
-                        //                   Itemchange(v, i);
-                        //                 });
-                        //               },
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                      ),
-                      Divider(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.redAccent,
-                              blurRadius: 5.0,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Pathology",style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.redAccent),),
-                                MaterialButton(
-                                  height: 30,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(25.0),
-                                      side: BorderSide(
-                                          color: Colors.redAccent)),
-                                  onPressed: () {
-                                    _openPopup(context,"Pathology",valuesP);
-                                  },
-                                  color: Colors.redAccent,
-                                  child: Text(
-                                    "Book Pathology",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            RadioButtonGroup(
-                              orientation: GroupedButtonsOrientation.VERTICAL,
-                              onChange: (String label, int index) => print("label: $label index: $index"),
-                              margin: const EdgeInsets.only(left: 12.0),
-                              onSelected: (String selected) => setState((){
-                                valuesP = selected;
-                              }),
-                              labels: pathology,
-                              labelStyle: TextStyle(
-                                fontSize: 15,
-                              ),
-                              itemBuilder: (Radio rb, Text txt, int i){
-                                return Row(
-                                  children: <Widget>[
-                                    Transform.scale(scale:1.5,child: rb),
-                                    txt,
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text("Charges: ",style: TextStyle(
-                                      fontSize: 15,
-                                    ),),
-                                    Text(widget.hospitalvalues.diagnosis[i].charge,style: TextStyle(
-                                      fontSize: 15,
-                                    ),),
-                                  ],
-                                );
-                              },
-                            ),
-                            // RadioButtonGroup(
-                            //   labels: pathology,
-                            //   onChange: (String label, int index) => print("label: $label index: $index"),
-                            //   onSelected: (String label) {
-                            //     setState(() {
-                            //       valuesP = label;
-                            //     });
-                            //   },
-                            // ),
-                          ],
-                        ),
-                        // Column(
-                        //   children: [
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text("Rooms",style: TextStyle(
-                        //             fontSize: 22,
-                        //             color: Colors.redAccent),),
-                        //         MaterialButton(
-                        //           height: 30,
-                        //           shape: RoundedRectangleBorder(
-                        //               borderRadius:
-                        //               BorderRadius.circular(25.0),
-                        //               side: BorderSide(
-                        //                   color: Colors.redAccent)),
-                        //           onPressed: () {},
-                        //           color: Colors.redAccent,
-                        //           child: Text(
-                        //             "Book Rooms",
-                        //             style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.white),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     Divider(
-                        //       height: 10,
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].roomType +
-                        //                           " beds",
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .freebeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check,
-                        //         onChanged: (v) {
-                        //           setState(() {
-                        //             _check = !_check;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .conbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check1,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             selectedContacts.contains({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 ? selectedContacts.remove({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 : selectedContacts.add({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             });
-                        //             // addlist(widget.hospitalvalues
-                        //             //     .conbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //             // selectedContacts.clear();
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check1 = !_check1;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .covidbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check2,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             addlist(widget.hospitalvalues
-                        //                 .covidbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check2 = !_check2;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     new ConstrainedBox(
-                        //       constraints: BoxConstraints(maxHeight: 1000),
-                        //       child: new ListView.builder(
-                        //         physics: ScrollPhysics(),
-                        //         shrinkWrap: true,
-                        //         itemCount: widget.hospitalvalues.beds.length,
-                        //         itemBuilder: (context, i) {
-                        //           return Container(
-                        //             decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(15),
-                        //               color: Colors.white,
-                        //               boxShadow: [
-                        //                 BoxShadow(
-                        //                   color: Colors.grey,
-                        //                   blurRadius: 5.0,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             height: 50,
-                        //             child: CheckboxListTile(
-                        //               title: Container(
-                        //                 width: 400,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Container(
-                        //                       width:210,
-                        //                       child: Row(
-                        //                         mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceBetween,
-                        //                         children: [
-                        //                           Text(
+                        //                       Text(
+                        //                         "Rs. " +
                         //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .roomType ,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .noOfBeds,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                         ],
+                        //                                 .health[i]
+                        //                                 .amount,
+                        //                         style: TextStyle(
+                        //                             fontSize: 16,
+                        //                             color: Colors.redAccent),
                         //                       ),
-                        //                     ),
-                        //                     Text(
-                        //                       "Rs. " +
-                        //                           widget.hospitalvalues
-                        //                               .beds[i]
-                        //                               .charges,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
+                        //                     ],
+                        //                   ),
                         //                 ),
+                        //                 // controlAffinity: ListTileControlAffinity.leading,
+                        //                 //tileColor: Colors.white,
+                        //                 value: check2[i],
+                        //                 onChanged: (bool v) {
+                        //                   setState(() {
+                        //                     Itemchange2(v, i);
+                        //                   });
+                        //                 },
                         //               ),
-                        //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               //tileColor: Colors.white,
-                        //               value: check[i],
-                        //               onChanged: (bool v) {
-                        //                 setState(() {
-                        //                   Itemchange(v, i);
-                        //                 });
-                        //               },
-                        //             ),
-                        //           );
-                        //         },
+                        //             );
+                        //           },
+                        //         ),
                         //       ),
-                        //     ),
-                        //   ],
+                        //     ],
+                        //   ),
                         // ),
-                      ),
-                      Divider(
-                        height: 10,
-                      ),
-                      // Container(
-                      //   padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(15),
-                      //     border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                      //     color: Colors.white,
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //         color: Colors.redAccent,
-                      //         blurRadius: 5.0,
-                      //       ),
-                      //     ],
-                      //   ),
-                      //   child: Column(
-                      //     children: [
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Text("Health Package",style: TextStyle(
-                      //               fontSize: 22,
-                      //               color: Colors.redAccent),),
-                      //           MaterialButton(
-                      //             height: 30,
-                      //             shape: RoundedRectangleBorder(
-                      //                 borderRadius:
-                      //                 BorderRadius.circular(25.0),
-                      //                 side: BorderSide(
-                      //                     color: Colors.redAccent)),
-                      //             onPressed: () {},
-                      //             color: Colors.redAccent,
-                      //             child: Text(
-                      //               "Book Packages",
-                      //               style: TextStyle(
-                      //                   fontSize: 14,
-                      //                   color: Colors.white),
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Divider(
-                      //         height: 10,
-                      //       ),
-                      //       new ConstrainedBox(
-                      //         constraints: BoxConstraints(maxHeight: 1000),
-                      //         child: new ListView.builder(
-                      //           physics: ScrollPhysics(),
-                      //           shrinkWrap: true,
-                      //           itemCount: widget.hospitalvalues.health.length,
-                      //           itemBuilder: (context, i) {
-                      //             return Container(
-                      //               decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(15),
-                      //                 color: Colors.white,
-                      //                 boxShadow: [
-                      //                   BoxShadow(
-                      //                     color: Colors.grey,
-                      //                     blurRadius: 5.0,
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //               height: 50,
-                      //               child: CheckboxListTile(
-                      //                 title: Container(
-                      //                   width: 400,
-                      //                   child: Row(
-                      //                     mainAxisAlignment:
-                      //                     MainAxisAlignment.spaceBetween,
-                      //                     children: [
-                      //                       Text(
-                      //                         widget.hospitalvalues
-                      //                             .health[i]
-                      //                             .packagename +
-                      //                             "                          ",
-                      //                         style: TextStyle(
-                      //                             fontSize: 16,
-                      //                             color: Colors.redAccent),
-                      //                       ),
-                      //                       Text(
-                      //                         "Rs. " +
-                      //                             widget.hospitalvalues
-                      //                                 .health[i]
-                      //                                 .amount,
-                      //                         style: TextStyle(
-                      //                             fontSize: 16,
-                      //                             color: Colors.redAccent),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 ),
-                      //                 // controlAffinity: ListTileControlAffinity.leading,
-                      //                 //tileColor: Colors.white,
-                      //                 value: check2[i],
-                      //                 onChanged: (bool v) {
-                      //                   setState(() {
-                      //                     Itemchange2(v, i);
-                      //                   });
-                      //                 },
-                      //               ),
-                      //             );
-                      //           },
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.redAccent,
-                              blurRadius: 5.0,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Health Packages",style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.redAccent),),
-                                MaterialButton(
-                                  height: 30,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(25.0),
-                                      side: BorderSide(
-                                          color: Colors.redAccent)),
-                                  onPressed: () {
-                                    _openPopup(context,"Health",valuesH);
-                                  },
-                                  color: Colors.redAccent,
-                                  child: Text(
-                                    "Book Health Packages",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            RadioButtonGroup(
-                              orientation: GroupedButtonsOrientation.VERTICAL,
-                              onChange: (String label, int index) => print("label: $label index: $index"),
-                              margin: const EdgeInsets.only(left: 12.0),
-                              onSelected: (String selected) => setState((){
-                                valuesH = selected;
-                              }),
-                              labels: health,
-                              labelStyle: TextStyle(
-                                fontSize: 15,
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.redAccent,
+                                blurRadius: 5.0,
                               ),
-                              itemBuilder: (Radio rb, Text txt, int i){
-                                return Row(
-                                  children: <Widget>[
-                                    Transform.scale(scale:1.5,child: rb),
-                                    txt,
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text("Charges: ",style: TextStyle(
-                                      fontSize: 15,
-                                    ),),
-                                    Text(widget.hospitalvalues.health[i].amount,style: TextStyle(
-                                fontSize: 15,
-                                ),),
-                                  ],
-                                );
-                              },
-                            ),
-                            // RadioButtonGroup(
-                            //   labels: health,
-                            //   onChange: (String label, int index) => print("label: $label index: $index"),
-                            //   onSelected: (String label) {
-                            //     setState(() {
-                            //       valuesH = label;
-                            //     });
-                            //   },
-                            // ),
-                          ],
-                        ),
-                        // Column(
-                        //   children: [
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text("Rooms",style: TextStyle(
-                        //             fontSize: 22,
-                        //             color: Colors.redAccent),),
-                        //         MaterialButton(
-                        //           height: 30,
-                        //           shape: RoundedRectangleBorder(
-                        //               borderRadius:
-                        //               BorderRadius.circular(25.0),
-                        //               side: BorderSide(
-                        //                   color: Colors.redAccent)),
-                        //           onPressed: () {},
-                        //           color: Colors.redAccent,
-                        //           child: Text(
-                        //             "Book Rooms",
-                        //             style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.white),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     Divider(
-                        //       height: 10,
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].roomType +
-                        //                           " beds",
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .freebeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check,
-                        //         onChanged: (v) {
-                        //           setState(() {
-                        //             _check = !_check;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .conbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check1,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             selectedContacts.contains({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 ? selectedContacts.remove({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 : selectedContacts.add({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             });
-                        //             // addlist(widget.hospitalvalues
-                        //             //     .conbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //             // selectedContacts.clear();
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check1 = !_check1;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .covidbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check2,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             addlist(widget.hospitalvalues
-                        //                 .covidbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check2 = !_check2;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     new ConstrainedBox(
-                        //       constraints: BoxConstraints(maxHeight: 1000),
-                        //       child: new ListView.builder(
-                        //         physics: ScrollPhysics(),
-                        //         shrinkWrap: true,
-                        //         itemCount: widget.hospitalvalues.beds.length,
-                        //         itemBuilder: (context, i) {
-                        //           return Container(
-                        //             decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(15),
-                        //               color: Colors.white,
-                        //               boxShadow: [
-                        //                 BoxShadow(
-                        //                   color: Colors.grey,
-                        //                   blurRadius: 5.0,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             height: 50,
-                        //             child: CheckboxListTile(
-                        //               title: Container(
-                        //                 width: 400,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Container(
-                        //                       width:210,
-                        //                       child: Row(
-                        //                         mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceBetween,
-                        //                         children: [
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .roomType ,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .noOfBeds,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                     Text(
-                        //                       "Rs. " +
-                        //                           widget.hospitalvalues
-                        //                               .beds[i]
-                        //                               .charges,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               //tileColor: Colors.white,
-                        //               value: check[i],
-                        //               onChanged: (bool v) {
-                        //                 setState(() {
-                        //                   Itemchange(v, i);
-                        //                 });
-                        //               },
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                      ),
-                      Divider(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.redAccent, style: BorderStyle.solid),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.redAccent,
-                              blurRadius: 5.0,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Surgery Packages",style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.redAccent),),
-                                MaterialButton(
-                                  height: 30,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(25.0),
-                                      side: BorderSide(
-                                          color: Colors.redAccent)),
-                                  onPressed: () {
-                                    _openPopup(context,"Surgery",valuesS);
-                                  },
-                                  color: Colors.redAccent,
-                                  child: Text(
-                                    "Book Surgery",
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Health Packages",
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white),
+                                        fontSize: 22, color: Colors.redAccent),
                                   ),
-                                ),
-                              ],
-                            ),
-                            RadioButtonGroup(
-                              orientation: GroupedButtonsOrientation.VERTICAL,
-                              onChange: (String label, int index) => print("label: $label index: $index"),
-                              margin: const EdgeInsets.only(left: 12.0),
-                              onSelected: (String selected) => setState((){
-                                valuesS = selected;
-                              }),
-                              labels: surgery,
-                              labelStyle: TextStyle(
-                                fontSize: 15,
-                              ),
-                              itemBuilder: (Radio rb, Text txt, int i){
-                                return Row(
-                                  children: <Widget>[
-                                    Transform.scale(scale:1.5,child: rb),
-                                    txt,
-                                    SizedBox(
-                                      width: 10,
+                                  MaterialButton(
+                                    height: 30,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: Colors.redAccent)),
+                                    onPressed: () {
+                                      _openPopup(context, "Health", valuesH);
+                                    },
+                                    color: Colors.redAccent,
+                                    child: Text(
+                                      "Book Health Packages",
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
                                     ),
-                                    Text("Charges: ",style: TextStyle(
-                                      fontSize: 15,
-                                    ),),
-                                    Text(widget.hospitalvalues.surgery[i].suramount,style: TextStyle(
-                                      fontSize: 15,
-                                    ),),
-                                  ],
-                                );
-                              },
-                            ),
-                            // RadioButtonGroup(
-                            //   labels: surgery,
-                            //   onChange: (String label, int index) => print("label: $label index: $index"),
-                            //   onSelected: (String label){
-                            //     setState(() {
-                            //       valuesS = label;
-                            //     });
-                            //   },
-                            // ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text("* Deposit may required",style: TextStyle(
-                                  fontSize: 14,color: Colors.redAccent)),
-                            ),
-                          ],
+                                  ),
+                                ],
+                              ),
+                              RadioButtonGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                onChange: (String label, int index) =>
+                                    print("label: $label index: $index"),
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (String selected) => setState(() {
+                                  valuesH = selected;
+                                }),
+                                labels: health,
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                itemBuilder: (Radio rb, Text txt, int i) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Transform.scale(scale: 1.5, child: rb),
+                                      txt,
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Charges: ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.hospitalvalues.health[i].amount,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              // RadioButtonGroup(
+                              //   labels: health,
+                              //   onChange: (String label, int index) => print("label: $label index: $index"),
+                              //   onSelected: (String label) {
+                              //     setState(() {
+                              //       valuesH = label;
+                              //     });
+                              //   },
+                              // ),
+                            ],
+                          ),
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text("Rooms",style: TextStyle(
+                          //             fontSize: 22,
+                          //             color: Colors.redAccent),),
+                          //         MaterialButton(
+                          //           height: 30,
+                          //           shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //               BorderRadius.circular(25.0),
+                          //               side: BorderSide(
+                          //                   color: Colors.redAccent)),
+                          //           onPressed: () {},
+                          //           color: Colors.redAccent,
+                          //           child: Text(
+                          //             "Book Rooms",
+                          //             style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 color: Colors.white),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     Divider(
+                          //       height: 10,
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].roomType +
+                          //                           " beds",
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .freebeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check,
+                          //         onChanged: (v) {
+                          //           setState(() {
+                          //             _check = !_check;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .conbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check1,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             selectedContacts.contains({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 ? selectedContacts.remove({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 : selectedContacts.add({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             });
+                          //             // addlist(widget.hospitalvalues
+                          //             //     .conbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //             // selectedContacts.clear();
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check1 = !_check1;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .covidbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check2,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             addlist(widget.hospitalvalues
+                          //                 .covidbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check2 = !_check2;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     new ConstrainedBox(
+                          //       constraints: BoxConstraints(maxHeight: 1000),
+                          //       child: new ListView.builder(
+                          //         physics: ScrollPhysics(),
+                          //         shrinkWrap: true,
+                          //         itemCount: widget.hospitalvalues.beds.length,
+                          //         itemBuilder: (context, i) {
+                          //           return Container(
+                          //             decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(15),
+                          //               color: Colors.white,
+                          //               boxShadow: [
+                          //                 BoxShadow(
+                          //                   color: Colors.grey,
+                          //                   blurRadius: 5.0,
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             height: 50,
+                          //             child: CheckboxListTile(
+                          //               title: Container(
+                          //                 width: 400,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Container(
+                          //                       width:210,
+                          //                       child: Row(
+                          //                         mainAxisAlignment:
+                          //                         MainAxisAlignment.spaceBetween,
+                          //                         children: [
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .roomType ,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .noOfBeds,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       "Rs. " +
+                          //                           widget.hospitalvalues
+                          //                               .beds[i]
+                          //                               .charges,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               // controlAffinity: ListTileControlAffinity.leading,
+                          //               //tileColor: Colors.white,
+                          //               value: check[i],
+                          //               onChanged: (bool v) {
+                          //                 setState(() {
+                          //                   Itemchange(v, i);
+                          //                 });
+                          //               },
+                          //             ),
+                          //           );
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
+                        Divider(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.redAccent,
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Surgery Packages",
+                                    style: TextStyle(
+                                        fontSize: 22, color: Colors.redAccent),
+                                  ),
+                                  MaterialButton(
+                                    height: 30,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        side: BorderSide(
+                                            color: Colors.redAccent)),
+                                    onPressed: () {
+                                      _openPopup(context, "Surgery", valuesS);
+                                    },
+                                    color: Colors.redAccent,
+                                    child: Text(
+                                      "Book Surgery",
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              RadioButtonGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                onChange: (String label, int index) =>
+                                    print("label: $label index: $index"),
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (String selected) => setState(() {
+                                  valuesS = selected;
+                                }),
+                                labels: surgery,
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                itemBuilder: (Radio rb, Text txt, int i) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Transform.scale(scale: 1.5, child: rb),
+                                      txt,
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Charges: ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.hospitalvalues.surgery[i]
+                                            .suramount,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              // RadioButtonGroup(
+                              //   labels: surgery,
+                              //   onChange: (String label, int index) => print("label: $label index: $index"),
+                              //   onSelected: (String label){
+                              //     setState(() {
+                              //       valuesS = label;
+                              //     });
+                              //   },
+                              // ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("* Deposit may required",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.redAccent)),
+                              ),
+                            ],
+                          ),
 
-                        // Column(
-                        //   children: [
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text("Rooms",style: TextStyle(
-                        //             fontSize: 22,
-                        //             color: Colors.redAccent),),
-                        //         MaterialButton(
-                        //           height: 30,
-                        //           shape: RoundedRectangleBorder(
-                        //               borderRadius:
-                        //               BorderRadius.circular(25.0),
-                        //               side: BorderSide(
-                        //                   color: Colors.redAccent)),
-                        //           onPressed: () {},
-                        //           color: Colors.redAccent,
-                        //           child: Text(
-                        //             "Book Rooms",
-                        //             style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.white),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     Divider(
-                        //       height: 10,
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].roomType +
-                        //                           " beds",
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.freebeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .freebeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check,
-                        //         onChanged: (v) {
-                        //           setState(() {
-                        //             _check = !_check;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.conbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .conbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check1,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             selectedContacts.contains({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 ? selectedContacts.remove({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             })
-                        //                 : selectedContacts.add({
-                        //               "Type" : widget.hospitalvalues
-                        //                   .conbeds[0].roomType,
-                        //               "Count" : widget.hospitalvalues
-                        //                   .conbeds[0].noOfBeds,
-                        //               "Charges" : widget.hospitalvalues
-                        //                   .conbeds[0].charges,
-                        //             });
-                        //             // addlist(widget.hospitalvalues
-                        //             //     .conbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //             // selectedContacts.clear();
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check1 = !_check1;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(15),
-                        //         color: Colors.white,
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //             color: Colors.grey,
-                        //             blurRadius: 5.0,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       height: 50,
-                        //       child: CheckboxListTile(
-                        //         title: Container(
-                        //           width: 400,
-                        //           child: Row(
-                        //             mainAxisAlignment:
-                        //             MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Container(
-                        //                 width: 210,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].roomType,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                     Text(
-                        //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               Text(
-                        //                 "Rs. " +
-                        //                     widget.hospitalvalues
-                        //                         .covidbeds[0]
-                        //                         .charges,
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.redAccent),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         // controlAffinity: ListTileControlAffinity.leading,
-                        //         //tileColor: Colors.white,
-                        //         value: _check2,
-                        //         onChanged: (v) {
-                        //           if (v) {
-                        //             addlist(widget.hospitalvalues
-                        //                 .covidbeds[0]);
-                        //             print(selectedContacts.toString());
-                        //           } else {
-                        //             // removelist();
-                        //             print(selectedContacts.toString());
-                        //           }
-                        //           print("Vaues::"+v.toString());
-                        //           setState(() {
-                        //             _check2 = !_check2;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //     // Divider(
-                        //     //   height: 10,
-                        //     // ),
-                        //     new ConstrainedBox(
-                        //       constraints: BoxConstraints(maxHeight: 1000),
-                        //       child: new ListView.builder(
-                        //         physics: ScrollPhysics(),
-                        //         shrinkWrap: true,
-                        //         itemCount: widget.hospitalvalues.beds.length,
-                        //         itemBuilder: (context, i) {
-                        //           return Container(
-                        //             decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(15),
-                        //               color: Colors.white,
-                        //               boxShadow: [
-                        //                 BoxShadow(
-                        //                   color: Colors.grey,
-                        //                   blurRadius: 5.0,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             height: 50,
-                        //             child: CheckboxListTile(
-                        //               title: Container(
-                        //                 width: 400,
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                   MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Container(
-                        //                       width:210,
-                        //                       child: Row(
-                        //                         mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceBetween,
-                        //                         children: [
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .roomType ,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                           Text(
-                        //                             widget.hospitalvalues
-                        //                                 .beds[i]
-                        //                                 .noOfBeds,
-                        //                             style: TextStyle(
-                        //                                 fontSize: 16,
-                        //                                 color: Colors.redAccent),
-                        //                           ),
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                     Text(
-                        //                       "Rs. " +
-                        //                           widget.hospitalvalues
-                        //                               .beds[i]
-                        //                               .charges,
-                        //                       style: TextStyle(
-                        //                           fontSize: 16,
-                        //                           color: Colors.redAccent),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               // controlAffinity: ListTileControlAffinity.leading,
-                        //               //tileColor: Colors.white,
-                        //               value: check[i],
-                        //               onChanged: (bool v) {
-                        //                 setState(() {
-                        //                   Itemchange(v, i);
-                        //                 });
-                        //               },
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                      ),
-                    ],
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text("Rooms",style: TextStyle(
+                          //             fontSize: 22,
+                          //             color: Colors.redAccent),),
+                          //         MaterialButton(
+                          //           height: 30,
+                          //           shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //               BorderRadius.circular(25.0),
+                          //               side: BorderSide(
+                          //                   color: Colors.redAccent)),
+                          //           onPressed: () {},
+                          //           color: Colors.redAccent,
+                          //           child: Text(
+                          //             "Book Rooms",
+                          //             style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 color: Colors.white),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     Divider(
+                          //       height: 10,
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].roomType +
+                          //                           " beds",
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.freebeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .freebeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check,
+                          //         onChanged: (v) {
+                          //           setState(() {
+                          //             _check = !_check;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.conbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .conbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check1,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             selectedContacts.contains({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 ? selectedContacts.remove({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             })
+                          //                 : selectedContacts.add({
+                          //               "Type" : widget.hospitalvalues
+                          //                   .conbeds[0].roomType,
+                          //               "Count" : widget.hospitalvalues
+                          //                   .conbeds[0].noOfBeds,
+                          //               "Charges" : widget.hospitalvalues
+                          //                   .conbeds[0].charges,
+                          //             });
+                          //             // addlist(widget.hospitalvalues
+                          //             //     .conbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //             // selectedContacts.clear();
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check1 = !_check1;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(15),
+                          //         color: Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey,
+                          //             blurRadius: 5.0,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       height: 50,
+                          //       child: CheckboxListTile(
+                          //         title: Container(
+                          //           width: 400,
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //             children: [
+                          //               Container(
+                          //                 width: 210,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].roomType,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                     Text(
+                          //                       widget.hospitalvalues.covidbeds[0].noOfBeds,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 "Rs. " +
+                          //                     widget.hospitalvalues
+                          //                         .covidbeds[0]
+                          //                         .charges,
+                          //                 style: TextStyle(
+                          //                     fontSize: 16,
+                          //                     color: Colors.redAccent),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         // controlAffinity: ListTileControlAffinity.leading,
+                          //         //tileColor: Colors.white,
+                          //         value: _check2,
+                          //         onChanged: (v) {
+                          //           if (v) {
+                          //             addlist(widget.hospitalvalues
+                          //                 .covidbeds[0]);
+                          //             print(selectedContacts.toString());
+                          //           } else {
+                          //             // removelist();
+                          //             print(selectedContacts.toString());
+                          //           }
+                          //           print("Vaues::"+v.toString());
+                          //           setState(() {
+                          //             _check2 = !_check2;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     // Divider(
+                          //     //   height: 10,
+                          //     // ),
+                          //     new ConstrainedBox(
+                          //       constraints: BoxConstraints(maxHeight: 1000),
+                          //       child: new ListView.builder(
+                          //         physics: ScrollPhysics(),
+                          //         shrinkWrap: true,
+                          //         itemCount: widget.hospitalvalues.beds.length,
+                          //         itemBuilder: (context, i) {
+                          //           return Container(
+                          //             decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(15),
+                          //               color: Colors.white,
+                          //               boxShadow: [
+                          //                 BoxShadow(
+                          //                   color: Colors.grey,
+                          //                   blurRadius: 5.0,
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             height: 50,
+                          //             child: CheckboxListTile(
+                          //               title: Container(
+                          //                 width: 400,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Container(
+                          //                       width:210,
+                          //                       child: Row(
+                          //                         mainAxisAlignment:
+                          //                         MainAxisAlignment.spaceBetween,
+                          //                         children: [
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .roomType ,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                           Text(
+                          //                             widget.hospitalvalues
+                          //                                 .beds[i]
+                          //                                 .noOfBeds,
+                          //                             style: TextStyle(
+                          //                                 fontSize: 16,
+                          //                                 color: Colors.redAccent),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       "Rs. " +
+                          //                           widget.hospitalvalues
+                          //                               .beds[i]
+                          //                               .charges,
+                          //                       style: TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.redAccent),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //               // controlAffinity: ListTileControlAffinity.leading,
+                          //               //tileColor: Colors.white,
+                          //               value: check[i],
+                          //               onChanged: (bool v) {
+                          //                 setState(() {
+                          //                   Itemchange(v, i);
+                          //                 });
+                          //               },
+                          //             ),
+                          //           );
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
       ),
     );
   }
-
 
   Widget getspeciality(List speciality) {
     List<Widget> list = new List<Widget>();
@@ -2143,112 +2301,110 @@ class _BookdetailedState extends State<Bookdetailed> {
         ),
       ));
     }
+    patientdetails();
     return new Wrap(spacing: 5.0, runSpacing: 3.0, children: list);
   }
-  _openPopup(context,String title,String label)  {
+
+  _openPopup(context, String title, String label) {
     print("Open pop up");
-    List list=[];
+    List list = [];
     if (title == "Rooms") {
-      if(widget.hospitalvalues.freebeds[0].roomType==label){
+      if (widget.hospitalvalues.freebeds[0].roomType == label) {
         setState(() {
           topic = "Free Bed Details";
-            key2 = 0;
+          key2 = 0;
         });
-            list.add({
-              "roomType":label,
-              "noOfBeds":widget.hospitalvalues.freebeds[0].noOfBeds,
-              'charges':widget.hospitalvalues.freebeds[0].charges,
-              "typeofbooking": "Rooms",
-            });
-            print("100 free added");
-          }
-          else if(widget.hospitalvalues.conbeds[0].roomType==label){
+        list.add({
+          "roomType": label,
+          "noOfBeds": widget.hospitalvalues.freebeds[0].noOfBeds,
+          'charges': widget.hospitalvalues.freebeds[0].charges,
+          "typeofbooking": "Rooms",
+        });
+        print("100 free added");
+      } else if (widget.hospitalvalues.conbeds[0].roomType == label) {
         setState(() {
           topic = "Concessional Bed Details";
           key2 = 0;
         });
-            list.add({
-              "roomType":label,
-              "noOfBeds":widget.hospitalvalues.conbeds[0].noOfBeds,
-              'charges':widget.hospitalvalues.conbeds[0].charges,
-              "typeofbooking": "Rooms",
-            });
-          }
-          else if(widget.hospitalvalues.covidbeds[0].roomType==label){
+        list.add({
+          "roomType": label,
+          "noOfBeds": widget.hospitalvalues.conbeds[0].noOfBeds,
+          'charges': widget.hospitalvalues.conbeds[0].charges,
+          "typeofbooking": "Rooms",
+        });
+      } else if (widget.hospitalvalues.covidbeds[0].roomType == label) {
         setState(() {
           topic = "Covid Bed Details";
           key2 = 0;
         });
-            list.add({
-              "roomType":label,
-              "noOfBeds":widget.hospitalvalues.covidbeds[0].noOfBeds,
-              'charges':widget.hospitalvalues.covidbeds[0].charges,
-              "typeofbooking": "Rooms",
-            });
-          }
-          else{
-               widget.hospitalvalues.beds.asMap().forEach((key, value) {
-                 print("Key:::"+key.toString());setState(() {
-                   topic = "Special Bed Details";
+        list.add({
+          "roomType": label,
+          "noOfBeds": widget.hospitalvalues.covidbeds[0].noOfBeds,
+          'charges': widget.hospitalvalues.covidbeds[0].charges,
+          "typeofbooking": "Rooms",
+        });
+      } else {
+        widget.hospitalvalues.beds.asMap().forEach((key, value) {
+          print("Key:::" + key.toString());
+          setState(() {
+            topic = "Special Bed Details";
           });
-          if(value.roomType==label){
+          if (value.roomType == label) {
             setState(() {
               key2 = key;
             });
 
             list.add({
-              "roomType":label,
-              "noOfBeds":value.noOfBeds,
-              'charges':value.charges,
+              "roomType": label,
+              "noOfBeds": value.noOfBeds,
+              'charges': value.charges,
               "typeofbooking": "Rooms",
             });
           }
         });
-          //   for(var name  in widget.hospitalvalues.beds){
-          //     setState(() {
-          //       topic = "Special Bed Details";
-          //     });
-          //     if(name.roomType==label){
-          //       list.add({
-          //         "roomType":label,
-          //         "noOfBeds":name.noOfBeds,
-          //         'charges':name.charges,
-          //       });
-          //     }
-          //   }
-          }
-    }
-    else if(title == "Pathology"){
+        //   for(var name  in widget.hospitalvalues.beds){
+        //     setState(() {
+        //       topic = "Special Bed Details";
+        //     });
+        //     if(name.roomType==label){
+        //       list.add({
+        //         "roomType":label,
+        //         "noOfBeds":name.noOfBeds,
+        //         'charges':name.charges,
+        //       });
+        //     }
+        //   }
+      }
+    } else if (title == "Pathology") {
       setState(() {
         topic = "Diagnosis Details";
       });
-      for(var name in widget.hospitalvalues.diagnosis){
-        if(name.test==label){
+      for (var name in widget.hospitalvalues.diagnosis) {
+        if (name.test == label) {
           list.add({
-            "Type":label,
-            "charges":name.charge,
-            "packName":title,
+            "Type": label,
+            "charges": name.charge,
+            "packName": title,
             "typeofbooking": "Pathology",
           });
           setState(() {});
         }
       }
-    }
-    else if(title == "Health"){
+    } else if (title == "Health") {
       setState(() {
         topic = "Health Package";
       });
-      for(var name in widget.hospitalvalues.health){
-        if(name.packagename==label){
+      for (var name in widget.hospitalvalues.health) {
+        if (name.packagename == label) {
           list.add({
-            "Type":label,
-            "charges":name.amount,
-            "packName":title,
+            "Type": label,
+            "charges": name.amount,
+            "packName": title,
             "typeofbooking": "Packages",
           });
         }
       }
-    }else if(title == "Surgery") {
+    } else if (title == "Surgery") {
       setState(() {
         topic = "Surgery Packages";
       });
@@ -2257,116 +2413,178 @@ class _BookdetailedState extends State<Bookdetailed> {
           list.add({
             "Type": label,
             "charges": name.suramount,
-            "packName":title,
+            "packName": title,
             "typeofbooking": "Surgery",
           });
         }
       }
     }
     print("end calculation");
-    (list.isEmpty||list==null)?AuthService().toast("Please select any bed type"): Alert(
-        context: context,
-        title: title,
-        content: (title=="Rooms")?Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(width:250,child: Text("Room Type: "+list[0]['roomType'],style: TextStyle(fontSize: 16))),
-            Container(width:250,child: Text("Charges: "+list[0]['charges'],style: TextStyle(fontSize: 16))),
-            Container(width:250,child: Text("Beds Available: "+list[0]['noOfBeds'],style: TextStyle(fontSize: 16))),
-            // Container(
-            //   child: TextFormField(
-            //     controller: _nameController,
-            //     onChanged: (v) => bookingcount = v,
-            //     decoration: InputDecoration(
-            //       hintText: 'Booking bed count'
-            //     ),
-            //     validator: (v){
-            //       if(v.trim().isEmpty) return 'Please enter something';
-            //       return null;
-            //     },
-            //   ),
-            // ),
-          ],
-        ):Column(
-          children: <Widget>[
-            Container(width:250,child: Text("Type: "+list[0]['Type'],style: TextStyle(fontSize: 16))),
-            Container(width:250,child: Text("Charges: "+list[0]['charges'],style: TextStyle(fontSize: 16))),
-          //   Container(
-          //     child: TextFormField(
-          //     controller: _nameController,
-          //     onChanged: (v) => bookingcount = v,
-          //     decoration: InputDecoration(
-          //         hintText: 'Booking bed count'
-          //     ),
-          //     validator: (v){
-          //     if(v.trim().isEmpty) return 'Please enter something';
-          //       return null;
-          //     },
-          // ),
-          //   ),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            onPressed: () {
-              if (list[0]['noOfBeds'] != null) {
-                 bal = int.parse(list[0]['noOfBeds'])-1;
-                 list3.add({
-                   "roomType":label,
-                   "noOfBeds":bal.toString(),
-                   'charges':list[0]['charges'],
-                 });
-                 list4.add({
-                   "roomType":label,
-                   "noOfBeds": "1",
-                   'charges':list[0]['charges'],
-                   "typeofbooking": "Rooms",
-                 });
-                 print("added");
-                 try {
-                   ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName, widget.mobile, ConstantUtils().CONFIRM, list4, "","","","");
-                   print("Added!!");
-                   fb.reference().child("Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}").set(bal.toString());
-                   list3.clear();
-                   print("Added!!");
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => MyBookingSettings(widget.id,widget.mobile)),
-                   );
-                   AuthService().toast("Booked Successfully!!");
-                   // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
-                 } catch (e) {
-                   print(e);
-                 }
-              }else{
-                print("added");
-                try {
-                  ApiService().bookhospital(widget.hospitalvalues.bookingPhNo,widget.hospitalvalues.hospitalName , widget.mobile, ConstantUtils().CONFIRM, list, "","","","");
-                  print("Added!!");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyBookingSettings(widget.id,widget.mobile)),
-                  );
-                  AuthService().toast("Added Successfully!!");
-                  // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
-                } catch (e) {
-                  print(e);
-                }
-              }
-
-            },
-            child: Text(
-              "Confirm",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ),
-        ]).show();
+    (list.isEmpty || list == null)
+        ? AuthService().toast("Please select any bed type")
+        : Alert(
+            context: context,
+            title: title,
+            content: (title == "Rooms")
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                          width: 250,
+                          child: Text("Room Type: " + list[0]['roomType'],
+                              style: TextStyle(fontSize: 16))),
+                      Container(
+                          width: 250,
+                          child: Text("Charges: " + list[0]['charges'],
+                              style: TextStyle(fontSize: 16))),
+                      Container(
+                          width: 250,
+                          child: Text("Beds Available: " + list[0]['noOfBeds'],
+                              style: TextStyle(fontSize: 16))),
+                      // Container(
+                      //   child: TextFormField(
+                      //     controller: _nameController,
+                      //     onChanged: (v) => bookingcount = v,
+                      //     decoration: InputDecoration(
+                      //       hintText: 'Booking bed count'
+                      //     ),
+                      //     validator: (v){
+                      //       if(v.trim().isEmpty) return 'Please enter something';
+                      //       return null;
+                      //     },
+                      //   ),
+                      // ),
+                    ],
+                  )
+                : Column(
+                    children: <Widget>[
+                      Container(
+                          width: 250,
+                          child: Text("Type: " + list[0]['Type'],
+                              style: TextStyle(fontSize: 16))),
+                      Container(
+                          width: 250,
+                          child: Text("Charges: " + list[0]['charges'],
+                              style: TextStyle(fontSize: 16))),
+                      //   Container(
+                      //     child: TextFormField(
+                      //     controller: _nameController,
+                      //     onChanged: (v) => bookingcount = v,
+                      //     decoration: InputDecoration(
+                      //         hintText: 'Booking bed count'
+                      //     ),
+                      //     validator: (v){
+                      //     if(v.trim().isEmpty) return 'Please enter something';
+                      //       return null;
+                      //     },
+                      // ),
+                      //   ),
+                    ],
+                  ),
+            buttons: [
+                DialogButton(
+                  onPressed: () {
+                    if (list[0]['noOfBeds'] != null) {
+                      bal = int.parse(list[0]['noOfBeds']) - 1;
+                      list3.add({
+                        "roomType": label,
+                        "noOfBeds": bal.toString(),
+                        'charges': list[0]['charges'],
+                      });
+                      list4.add({
+                        "roomType": label,
+                        "noOfBeds": "1",
+                        'charges': list[0]['charges'],
+                        "typeofbooking": "Rooms",
+                      });
+                      print("added");
+                      try {
+                        ApiService().bookhospital(
+                            widget.hospitalvalues.bookingPhNo,
+                            widget.hospitalvalues.hospitalName,
+                            widget.mobile,
+                            ConstantUtils().CONFIRM,
+                            list4,
+                            "",
+                            "",
+                            "",
+                            "");
+                        print("Added!!");
+                        fb
+                            .reference()
+                            .child(
+                                "Hospitals/${widget.key1}/$topic/$key2/${"noOfBeds"}")
+                            .set(bal.toString());
+                        list3.clear();
+                        print("Added!!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MyBookingSettings(widget.id, widget.mobile)),
+                        );
+                        AuthService().toast("Booked Successfully!!");
+                        // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
+                      } catch (e) {
+                        print(e);
+                      }
+                    } else {
+                      print("added");
+                      try {
+                        ApiService().bookhospital(
+                            widget.hospitalvalues.bookingPhNo,
+                            widget.hospitalvalues.hospitalName,
+                            widget.mobile,
+                            ConstantUtils().CONFIRM,
+                            list,
+                            "",
+                            "",
+                            "",
+                            "");
+                        print("Added!!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MyBookingSettings(widget.id, widget.mobile)),
+                        );
+                        AuthService().toast("Added Successfully!!");
+                        // fb.reference().child("Hospitals").child(widget.key1).update({topic:list3});
+                      } catch (e) {
+                        print(e);
+                      }
+                    }
+                  },
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+              ]).show();
   }
+
   int i = 0;
-  setstate(){
-    var list = new List<int>.generate(widget.hospitalvalues.beds.length, (i) => i+1);
-    for(;i<widget.hospitalvalues.beds.length;i++){
+  setstate() {
+    var list =
+        new List<int>.generate(widget.hospitalvalues.beds.length, (i) => i + 1);
+    for (; i < widget.hospitalvalues.beds.length; i++) {
       return list[i];
     }
+  }
+
+  Future patientdetails() async {
+    var db1 = await fb.reference().child("User").child(widget.mobile);
+    db1.once().then((DataSnapshot snapshot) {
+      print(snapshot.value);
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        var refreshToken = PatientUser.fromJson(values);
+        print(refreshToken);
+        setState(() {
+          dummyData1.add(refreshToken);
+          print(dummyData1.length);
+        });
+      });
+    });
   }
 }

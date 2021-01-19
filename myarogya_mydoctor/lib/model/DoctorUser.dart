@@ -65,7 +65,7 @@ class DoctorUser {
       registerId: json['registerId'] as String??"",
       specialist: json['specialist'] as String??"",
       EndTime: json['End Time'] as String??"",
-      StartTime: json['Start Time'] as String??"",
+      StartTime: json['Start Time'] as String??"${DateTime.now()}/10:00",
       Intervals: json['Consulting Interval'] as String??"",
       Hospital_Address: json['Hospital Address'] as String??"",
       image: json['image'] as String??"",

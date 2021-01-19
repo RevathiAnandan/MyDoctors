@@ -358,15 +358,15 @@ class _AppointmentsState extends State<Appointments> {
                       fontFamily: "Lato",
                       color: Colors.redAccent,
                       fontSize: 25)),
-              title: Text(dummyData[i].doctorName),
+              title: Text(dummyData[i].patientname+" "+dummyData[i].patientage+" "+dummyData[i].patientgender),
               subtitle: Text(dummyData[i].patientMobile),
               trailing: (dummyData[i].status != "Waiting!")
                   ? FlatButton(
-                child: Text(timesplit(start1),
+                child: start1!=null?Text(timesplit(start1),
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "Lato",
-                        fontSize: 14)),
+                        fontSize: 14)):Text(dummyData[i].status),
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius:
@@ -376,10 +376,13 @@ class _AppointmentsState extends State<Appointments> {
                 padding: EdgeInsets.all(10),
                 color: Colors.redAccent,
                 onPressed: () {
-                  AuthService().toast("Next Appointment:"+timesplit(start1));
+                  if (start1!=null&&interval1!=null) {
+                    AuthService().toast("Next Appointment:"+timesplit(start1));
+                  } else {
+                    AuthService().alertDialog(context, widget.id, widget.mobile);
+                  }
                 },
-              )
-                  : FlatButton(
+              ) : FlatButton(
                       child: Text("Confirm",
                           style: TextStyle(
                               color: Colors.white,
@@ -409,7 +412,7 @@ class _AppointmentsState extends State<Appointments> {
                               "View",
                               i + 1,
                               start1.toString(),
-                              keys1[i],h.toString());
+                              keys1[i],h.toString(),"","","");
                           ApiService().trigger=false;
                         }else{
                           AuthService().alertDialog(context, widget.id, widget.mobile);
@@ -460,6 +463,7 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   Future<DoctorUser> getprofileDetails() async {
+    print(DateTime.now());
     try {
       var db = await fb.reference().child("User").child(widget.mobile);
       db.once().then((DataSnapshot snapshot) {

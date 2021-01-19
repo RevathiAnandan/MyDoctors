@@ -7,6 +7,7 @@ import 'package:myarogya_mydoctor/model/MyPatient.dart';
 import 'package:myarogya_mydoctor/model/chat_model.dart';
 import 'package:myarogya_mydoctor/model/myDoctorModel.dart';
 import 'package:myarogya_mydoctor/model/patient.dart';
+import 'package:myarogya_mydoctor/model/patientUser.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/createPrecription.dart';
 import 'package:myarogya_mydoctor/pages/Doctor/doctor_PrescriptionList.dart';
 import 'package:myarogya_mydoctor/pages/patient/PrescriptionList.dart';
@@ -31,6 +32,9 @@ class MyScreen extends StatefulWidget {
 
 class MyScreenState extends State<MyScreen> {
   List dummyData = [];
+  String pname;
+  String p_age;
+  String p_gender;
   List appoint = [];
   List localappoint = [];
   List<String> appointkey = [];
@@ -83,8 +87,11 @@ class MyScreenState extends State<MyScreen> {
                         padding: EdgeInsets.all(10),
                         color: Colors.redAccent,
                         onPressed: (){
-                          ApiService().appointment(widget.mobile, dummyData[i].phone,
-                              dummyData[i].name, "Waiting!",i, "", "", i.toString());
+                          Future <dynamic> service = ApiService().appointment(widget.mobile, dummyData[i].phone,
+                              dummyData[i].name, "Waiting!",i, "", "", i.toString(),pname,p_age,p_gender);
+                          service.then((value) => {
+                            print(value)
+                          });
                           AuthService().toast("Requesting for Confirmation");
                           ApiService().trigger=true;
                           //todo:Enhancement should be done
@@ -200,6 +207,17 @@ class MyScreenState extends State<MyScreen> {
           });
         });
       });
+      var db1 = await fb
+          .reference()
+          .child("User")
+          .child(widget.mobile);
+
+      db1.once().then((DataSnapshot snapshot) {
+        pname = snapshot.value['Name'];
+        p_age = snapshot.value['Age'];
+        p_gender = snapshot.value['Gender'];
+      });
+
       getAppointments();
     } catch (e) {
       print(e);
@@ -252,7 +270,7 @@ class MyScreenState extends State<MyScreen> {
         onPressed: () {
           if (status == "Book Now") {
             ApiService().appointment(widget.mobile, dummyData[i].phone,
-                dummyData[i].name, "Waiting!", 0, "", "", i.toString());
+                dummyData[i].name, "Waiting!", 0, "", "", i.toString(),pname,p_age,p_gender);
             AuthService().toast("Requesting for Confirmation");
             setState(() {
               buttonStatus = "Waiting!";
