@@ -2506,7 +2506,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                             ConstantUtils().CONFIRM,
                             list4,
                             "",
-                            "",
+                            "Yet to be confirmed",
                             "",
                             "");
                         print("Added!!");
@@ -2538,7 +2538,7 @@ class _BookdetailedState extends State<Bookdetailed> {
                             ConstantUtils().CONFIRM,
                             list,
                             "",
-                            "",
+                            "Yet to be confirmed",
                             "",
                             "");
                         print("Added!!");

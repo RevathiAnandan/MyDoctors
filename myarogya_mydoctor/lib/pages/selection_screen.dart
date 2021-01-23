@@ -39,12 +39,12 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   child: new Column(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(height: 350),
+                      SizedBox(height: 100),
                       Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text('Get registered as a:', style: TextStyle(color:new Color(0xff323F4B), fontSize: 32, fontWeight: FontWeight.w700,fontFamily: "Lato"))
                       ),
-                      SizedBox(height: 200),
+                      SizedBox(height: 20),
                       Row(
                         children: [
                           Flexible(
@@ -54,7 +54,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                               child:Container(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  child: Text("DOCTOR (CLINIC)",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                                  child: Text("DOCTOR (CLINIC)",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 12)),
                                   textColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0),
@@ -86,7 +86,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                               child:Container(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  child: Text("HOSPITAL",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 14)),
+                                  child: Text("HOSPITAL",style: TextStyle(color: Colors.white,fontFamily: "Lato",fontSize: 12)),
                                   textColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0),
@@ -115,7 +115,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 170),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         constraints: const BoxConstraints(

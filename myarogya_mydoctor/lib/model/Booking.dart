@@ -19,7 +19,7 @@ class Booking{
       bookingNumber: json['BookingNumber'] as String??"",
       userNumber: json['UserNumber'] as String??"",
       status: json['Status'] as String??"",
-      BookingDate: json['BookingDate'] as String??"",
+      BookingDate: json['BookingDate'] as String??"Yet to be Confirmed",
       DischargeDate: json['DischargeDate'] as String??"",
       hospitalName: json['Hospital Name'] as String??"",
         cancelDate: json["CancelDate"] as String ?? "",

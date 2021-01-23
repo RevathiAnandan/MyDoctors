@@ -8,6 +8,7 @@ import 'package:myarogya_mydoctor/pages/dashboard_screen.dart';
 import 'package:myarogya_mydoctor/pages/login_screen.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_dashboard.dart';
 import 'package:myarogya_mydoctor/pages/patient/patient_new_dashboard.dart';
+import 'package:myarogya_mydoctor/pages/selection_screen.dart';
 import 'package:myarogya_mydoctor/utils/const.dart';
 import 'package:myarogya_mydoctor/utils/sharedPrefUtil.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -90,6 +91,7 @@ class AuthService{
     final User user = await _auth.currentUser;
     final uid = user.uid.toString();
     final mobile = user.phoneNumber.toString();
+    bool isLoading = true;
     if(uid != null){
       var db = fb.reference().child("User").child(mobile).child("category");
       db.once().then((DataSnapshot snapshot){
@@ -105,6 +107,11 @@ class AuthService{
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PatientNewDashboard(uid,mobile,"Patient")),
+          );
+        }else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectionScreen()),
           );
         }
       });

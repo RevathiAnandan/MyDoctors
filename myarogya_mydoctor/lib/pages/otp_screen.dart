@@ -87,13 +87,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         padding: EdgeInsets.all(16),
                         onPressed: (){
-
                         if (validate == true) {
                           AuthService().signInWithOTP(context,text,widget.verId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SelectionScreen()),
-                          );
                         } else {
                           AuthService().toast("Please Enter the OTP!!");
                         }

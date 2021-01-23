@@ -61,9 +61,20 @@ dependencies:
   grouped_buttons: ^1.0.4
   carousel_slider: ^2.3.1
   like_button: ^1.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/launcher.png"
+  image_path_android: "assets/icon/launcher.png"
+  image_path_ios: "assets/icon/launcher.png"
+  adaptive_icon_background: "assets/icon/launcher.png"
+  adaptive_icon_foreground: "assets/icon/launcher.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -78,6 +89,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icon/launcher.png
     - assets/images/loginbg.png
     - assets/images/logo.png
     - assets/images/splashbg.png

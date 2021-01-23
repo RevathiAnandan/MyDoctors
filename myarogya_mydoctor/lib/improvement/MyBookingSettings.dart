@@ -49,6 +49,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
           return Column(
             children: [
               ListTile(
+                onTap: ()=> print(DateTime.now().toString()),
                 contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 // title: Text(dummyData[index].userNumber),
                 title:(dummyData[index].status == "Cancelled") ?Column(
@@ -144,7 +145,7 @@ class _MyBookingSettingsState extends State<MyBookingSettings> {
   Future<Booking> getBooking() async {
     try {
       var db = await fb.reference().child("HospitalBookings");
-      db.once().then((DataSnapshot snapshot) {
+      db.orderByChild("BookingDate").once().then((DataSnapshot snapshot) {
         print(snapshot.value);
         Map<dynamic, dynamic> values = snapshot.value;
         //print(values.keys);
